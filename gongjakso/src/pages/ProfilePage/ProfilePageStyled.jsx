@@ -105,5 +105,39 @@ export const BoxDetail = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding-bottom: 90px;
+`;
+
+export const NoPortfolio = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 72rem;
+    height: 25.688rem;
+    background-color: #f7f7f7;
+    border: 1.5px dotted var(--system-grey4, #d2d2d7);
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    padding: 3.813rem 22.25rem;
+    border-radius: 1rem;
+    gap: 4.5rem;
+    line-height: 2.088rem;
+    font-family: 'PreRegular';
+`;
+
+export const MakePortfolioBtn = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.box1};
+    color: white;
+    width: 25rem;
+    height: 4.5rem;
+    gap: 0.625rem;
+    padding: 1.625rem 7.25rem;
+    border-radius: 1rem;
+    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-family: 'PreMedium';
 `;
