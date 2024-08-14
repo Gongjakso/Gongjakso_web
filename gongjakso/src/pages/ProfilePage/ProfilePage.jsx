@@ -34,20 +34,24 @@ const ProfilePage = () => {
 
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
     const closePortfolioModal = () => setShowModal(false); // 모달 닫기
-
-    // 스크롤 방지
     useEffect(() => {
-        document.body.style.cssText = `
+        if (showModal) {
+            document.body.style.cssText = `
           position: fixed; 
           top: -${window.scrollY}px;
-          overflow-y: scroll;
+          overflow-y: hidden;
           width: 100%;`;
-        return () => {
+        } else {
             const scrollY = document.body.style.top;
             document.body.style.cssText = '';
             window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        }
+
+        // Cleanup function to restore scroll on unmount or when modal closes
+        return () => {
+            document.body.style.cssText = '';
         };
-    }, []);
+    }, [showModal]);
 
     return (
         <div>

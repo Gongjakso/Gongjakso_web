@@ -1,6 +1,8 @@
 import * as S from './Portfolio.Styled';
 import { SelectInput } from '../../components/common/Input/Input';
+import SelectCalendar from '../../components/common/Calendar/SelectCalendar';
 import { useState } from 'react';
+import moment from 'moment';
 
 const MakePortfolio = () => {
     // Initialize state for sections with empty fields
@@ -11,7 +13,7 @@ const MakePortfolio = () => {
         { id: 1, companyName: '', position: '', description: '' },
     ]);
     const [activitySections, setActivitySections] = useState([
-        { id: 1, activityName: '', activityStatus: '재학 중' },
+        { id: 1, activityName: '', activityStatus: '활동 중' },
     ]);
     const [awardSections, setAwardSections] = useState([
         { id: 1, competitionName: '', award: '' },
@@ -21,10 +23,9 @@ const MakePortfolio = () => {
     ]);
     const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
 
-    // Example options
     const gradeStatus_options = ['1학년', '2학년', '3학년', '4학년'];
     const status_options = ['재학 중', '휴학 중', '졸업', '졸업 유예'];
-    const activityStatus_options = ['재학 중', '휴학 중', '졸업', '졸업 유예'];
+    const activityStatus_options = ['활동 중', '활동 종료'];
 
     const addSection = (sectionSetter, currentSections) => {
         sectionSetter([...currentSections, { id: currentSections.length + 1 }]);
@@ -33,6 +34,18 @@ const MakePortfolio = () => {
         setSnsLinks([...snsLinks, { id: snsLinks.length + 1, link: '' }]);
     };
 
+    const [dates, setDates] = useState([]);
+    const transformAndSetDates = (startDate, endDate) => {
+        const parsedStartDate = new Date(startDate);
+        const parsedEndDate = new Date(endDate);
+        const formattedStartDate = `${parsedStartDate.toISOString().split('T')[0]}T02:32:22.376895959`;
+        const formattedEndDate = `${parsedEndDate.toISOString().split('T')[0]}T02:32:22.376895959`;
+        setDates({ startDate: formattedStartDate, endDate: formattedEndDate });
+    };
+
+    const handleCareerDate = selectedDates => {
+        transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
+    };
     return (
         <div>
             <S.TopBox>
@@ -134,6 +147,12 @@ const MakePortfolio = () => {
                                         e.target.value;
                                     setCareerSections(updatedSections);
                                 }}
+                            />
+                        </S.InputContainer>
+                        <S.InputContainer>
+                            <SelectCalendar
+                                onApply={handleCareerDate}
+                                dates={dates}
                             />
                         </S.InputContainer>
                         <S.InputContainer>

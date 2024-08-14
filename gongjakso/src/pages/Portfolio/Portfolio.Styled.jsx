@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import linkicon from '../../assets/images/linkIcon.svg';
 import plus from '../../assets/images/PlusIcon.svg';
+import pdf from '../../assets/images/pdf.svg';
 import { SelectInput } from '../../components/common/Input/Input';
 
 export const TopBox = styled.div`
@@ -51,6 +52,17 @@ export const SubTitle = styled.p`
     display: flex;
     align-items: center;
     margin: 0 auto;
+    line-height: 1.79rem;
+`;
+
+export const UploadInfo = styled.p`
+    width: 100%;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    font-weight: 500;
+    color: #565656;
+    margin: 0.625rem 0;
+    line-height: 1.343rem;
+    margin-bottom: 1.5rem;
 `;
 
 export const LinkIcon = styled.div`
@@ -180,4 +192,58 @@ export const Textarea = styled.textarea`
     resize: none;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+`;
+
+export const FileUploadBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 69rem;
+    height: 15.125rem;
+    background-color: #f7f7f7;
+    border: 1.5px dotted var(--system-grey4, #d2d2d7);
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    padding: 2rem 27.313rem;
+    border-radius: 1rem;
+    gap: 1.188rem;
+    line-height: 2.088rem;
+    font-family: 'PreRegular';
+    margin: 1rem 0;
+    margin-bottom: 7rem;
+`;
+
+export const pdfImg = styled.div`
+    background: url(${pdf});
+    width: 6.75rem;
+    height: 3.75rem;
+    border: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+`;
+
+export const UploadBtn = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.box1};
+    color: white;
+    width: 15rem;
+    height: 3.25rem;
+    padding: 0.813rem 2.625rem;
+    border-radius: 1rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    font-family: 'PreMedium';
+`;
+
+export const ErrorMessage = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
 `;
