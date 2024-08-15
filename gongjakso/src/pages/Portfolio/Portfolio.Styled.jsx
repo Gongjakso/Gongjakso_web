@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import linkicon from '../../assets/images/linkIcon.svg';
 import plus from '../../assets/images/PlusIcon.svg';
 import pdf from '../../assets/images/pdf.svg';
+import trash from '../../assets/images/trash.svg';
 import { SelectInput } from '../../components/common/Input/Input';
 
 export const TopBox = styled.div`
@@ -22,7 +23,7 @@ export const BoxDetail = styled.div`
 export const PortfolioInfo = styled.div`
     display: flex;
     flex-direction: column;
-    width: 69rem;
+    width: 74rem;
 `;
 
 export const UserName = styled.span`
@@ -39,7 +40,7 @@ export const Description = styled.span`
 `;
 
 export const GlobalBox = styled.div`
-    width: 69rem; // 원하는 너비로 설정
+    width: 74rem;
     margin: 5rem auto 0 auto; // 가운데 정렬
 `;
 
@@ -246,4 +247,25 @@ export const ErrorMessage = styled.span`
     align-items: center;
     justify-content: center;
     color: red;
+`;
+
+export const DeleteBtn = styled.div`
+    background: url(${trash});
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-left: 2rem;
+    background-size: contain;
+`;
+
+export const BtnWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+`;
+
+export const BtnBox = styled.div`
+    height: 19.219rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 `;

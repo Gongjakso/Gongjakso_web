@@ -33,7 +33,33 @@ const MakePortfolio = () => {
     const addSNSLink = () => {
         setSnsLinks([...snsLinks, { id: snsLinks.length + 1, link: '' }]);
     };
+    const handleDeleteSection = (sectionType, id) => {
+        const deleteSection = (sections, setSections) => {
+            if (sections.length > 1) {
+                setSections(sections.filter(section => section.id !== id));
+            }
+        };
 
+        switch (sectionType) {
+            case 'education':
+                deleteSection(educationSections, setEducationSections);
+                break;
+            case 'career':
+                deleteSection(careerSections, setCareerSections);
+                break;
+            case 'activity':
+                deleteSection(activitySections, setActivitySections);
+                break;
+            case 'award':
+                deleteSection(awardSections, setAwardSections);
+                break;
+            case 'certificate':
+                deleteSection(certificateSections, setCertificateSections);
+                break;
+            default:
+                break;
+        }
+    };
     const [dates, setDates] = useState([]);
     const transformAndSetDates = (startDate, endDate) => {
         const parsedStartDate = new Date(startDate);
@@ -112,6 +138,11 @@ const MakePortfolio = () => {
                                     case={true}
                                 />
                             </S.Fillter1>
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('education', section.id)
+                                }
+                            />
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -126,47 +157,72 @@ const MakePortfolio = () => {
                     />
                 </S.TitleSection>
                 {careerSections.map((section, index) => (
-                    <S.BoxDetail key={section.id}>
-                        <S.InputContainer>
-                            <S.CompanyInput
-                                placeholder="회사명"
-                                value={section.companyName}
-                                onChange={e => {
-                                    const updatedSections = [...careerSections];
-                                    updatedSections[index].companyName =
-                                        e.target.value;
-                                    setCareerSections(updatedSections);
+                    <S.BoxDetail
+                        key={section.id}
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <S.BtnWrapper>
+                            <S.InputContainer>
+                                <S.CompanyInput
+                                    placeholder="회사명"
+                                    value={section.companyName}
+                                    onChange={e => {
+                                        const updatedSections = [
+                                            ...careerSections,
+                                        ];
+                                        updatedSections[index].companyName =
+                                            e.target.value;
+                                        setCareerSections(updatedSections);
+                                    }}
+                                />
+                                <S.PositionInput
+                                    placeholder="부서명/직책"
+                                    value={section.position}
+                                    onChange={e => {
+                                        const updatedSections = [
+                                            ...careerSections,
+                                        ];
+                                        updatedSections[index].position =
+                                            e.target.value;
+                                        setCareerSections(updatedSections);
+                                    }}
+                                />
+                            </S.InputContainer>
+                            <S.InputContainer>
+                                <SelectCalendar
+                                    onApply={handleCareerDate}
+                                    dates={dates}
+                                />
+                            </S.InputContainer>
+                            <S.InputContainer>
+                                <S.Textarea
+                                    placeholder="경력사항을 설명해주세요."
+                                    value={section.description}
+                                    onChange={e => {
+                                        const updatedSections = [
+                                            ...careerSections,
+                                        ];
+                                        updatedSections[index].description =
+                                            e.target.value;
+                                        setCareerSections(updatedSections);
+                                    }}
+                                />
+                            </S.InputContainer>
+                        </S.BtnWrapper>
+                        <S.BtnBox>
+                            <S.DeleteBtn
+                                style={{
+                                    display: 'flex',
+                                    alignContent: ' center',
                                 }}
+                                onClick={() =>
+                                    handleDeleteSection('career', section.id)
+                                }
                             />
-                            <S.PositionInput
-                                placeholder="부서명/직책"
-                                value={section.position}
-                                onChange={e => {
-                                    const updatedSections = [...careerSections];
-                                    updatedSections[index].position =
-                                        e.target.value;
-                                    setCareerSections(updatedSections);
-                                }}
-                            />
-                        </S.InputContainer>
-                        <S.InputContainer>
-                            <SelectCalendar
-                                onApply={handleCareerDate}
-                                dates={dates}
-                            />
-                        </S.InputContainer>
-                        <S.InputContainer>
-                            <S.Textarea
-                                placeholder="경력사항을 설명해주세요."
-                                value={section.description}
-                                onChange={e => {
-                                    const updatedSections = [...careerSections];
-                                    updatedSections[index].description =
-                                        e.target.value;
-                                    setCareerSections(updatedSections);
-                                }}
-                            />
-                        </S.InputContainer>
+                        </S.BtnBox>
                     </S.BoxDetail>
                 ))}
 
@@ -210,6 +266,11 @@ const MakePortfolio = () => {
                                     case={true}
                                 />
                             </S.Fillter1>
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('activity', section.id)
+                                }
+                            />
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -245,6 +306,11 @@ const MakePortfolio = () => {
                                         e.target.value;
                                     setAwardSections(updatedSections);
                                 }}
+                            />
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('award', section.id)
+                                }
                             />
                         </S.InputContainer>
                     </S.BoxDetail>
@@ -289,6 +355,14 @@ const MakePortfolio = () => {
                                     setCertificateSections(updatedSections);
                                 }}
                             />
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection(
+                                        'certificate',
+                                        section.id,
+                                    )
+                                }
+                            />
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -308,6 +382,17 @@ const MakePortfolio = () => {
                                     const updatedLinks = [...snsLinks];
                                     updatedLinks[index].link = e.target.value;
                                     setSnsLinks(updatedLinks);
+                                }}
+                            />
+                            <S.DeleteBtn
+                                onClick={() => {
+                                    if (snsLinks.length > 1) {
+                                        setSnsLinks(
+                                            snsLinks.filter(
+                                                link => link.id !== section.id,
+                                            ),
+                                        );
+                                    }
                                 }}
                             />
                         </S.LinkContainer>

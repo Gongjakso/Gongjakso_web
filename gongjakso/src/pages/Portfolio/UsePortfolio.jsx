@@ -82,6 +82,17 @@ const UsePortfolio = () => {
                                     setSnsLinks(updatedLinks);
                                 }}
                             />
+                            <S.DeleteBtn
+                                onClick={() => {
+                                    if (snsLinks.length > 1) {
+                                        setSnsLinks(
+                                            snsLinks.filter(
+                                                link => link.id !== section.id,
+                                            ),
+                                        );
+                                    }
+                                }}
+                            />
                         </S.LinkContainer>
                     </S.BoxDetail>
                 ))}
