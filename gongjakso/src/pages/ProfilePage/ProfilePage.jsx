@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './ProfilePageStyled';
 import TeamBox from '../TeamBox/TeamBox';
-import { getMyInfo, getMyParticipated } from '../../service/profile_service';
-import { getMyRecruiting } from '../../service/profile_service';
-import { getMyApplied } from '../../service/profile_service';
+import {
+    getMyInfo,
+    getMyParticipated,
+    getMyRecruiting,
+    getMyApplied,
+} from '../../service/profile_service';
+import SelectPortfolio from '../../features/modal/SelectPortfolio';
 
 const ProfilePage = () => {
-    const [data, setProfileData] = useState(); //프로필 내용
+    const [data, setProfileData] = useState(); // 프로필 내용
     const [postContent1, setPostContent1] = useState();
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
-    const [postId, setPostId] = useState();
+    const [showModal, setShowModal] = useState(false); // 모달 상태
 
     useEffect(() => {
         getMyInfo().then(response => {
-            setProfileData(response?.data); // 'response'를 바로 전달
+            setProfileData(response?.data);
         });
         getMyRecruiting().then(response => {
             setPostContent1(response?.data.slice(0, 2));
@@ -27,6 +31,27 @@ const ProfilePage = () => {
             setPostContent3(response?.data.participationLists);
         });
     }, []);
+
+    const openPortfolioModal = () => setShowModal(true); // 모달 열기
+    const closePortfolioModal = () => setShowModal(false); // 모달 닫기
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.cssText = `
+          position: fixed; 
+          top: -${window.scrollY}px;
+          overflow-y: hidden;
+          width: 100%;`;
+        } else {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        }
+
+        // Cleanup function to restore scroll on unmount or when modal closes
+        return () => {
+            document.body.style.cssText = '';
+        };
+    }, [showModal]);
 
     return (
         <div>
@@ -46,6 +71,16 @@ const ProfilePage = () => {
                 </Link>
             </S.TopBox>
             <S.GlobalBox>
+                <S.BoxDetail style={{ gap: '2.375rem' }}>
+                    <S.SubTitle>나의 포트폴리오</S.SubTitle>
+                    <S.NoPortfolio>
+                        아직 포트폴리오가 없어요! <br />
+                        포트폴리오를 채워 팀빌딩 확률을 높여보세요
+                        <S.MakePortfolioBtn onClick={openPortfolioModal}>
+                            포트폴리오 만들기
+                        </S.MakePortfolioBtn>
+                    </S.NoPortfolio>
+                </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
                     {postContent1?.map(postContent1 => (
@@ -114,6 +149,11 @@ const ProfilePage = () => {
                     ))}
                 </S.BoxDetail>
             </S.GlobalBox>
+
+            <SelectPortfolio
+                showModal={showModal}
+                closePortfolioModal={closePortfolioModal}
+            />
         </div>
     );
 };

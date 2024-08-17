@@ -4,6 +4,8 @@ import RouteChangeTracker from '../utils/RouteChangeTracker';
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const DefaultLayout = lazy(() => import('../Layout/DefaultLayout'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
+const MakePortfolio = lazy(() => import('../pages/Portfolio/MakePortfolio'));
+const UsePortfolio = lazy(() => import('../pages/Portfolio/UsePortfolio'));
 const TeamPart = lazy(
     () => import('../pages/ProfileParticipated/ParticipatedTeam'),
 );
@@ -87,6 +89,14 @@ const Router = () => {
                             <Route
                                 path="/kakao/callback"
                                 element={<KakaoRedirectPage />}
+                            />
+                            <Route
+                                path="/profile/makeportfolio"
+                                element={<MakePortfolio />}
+                            />
+                            <Route
+                                path="/profile/useportfolio"
+                                element={<UsePortfolio />}
                             />
                         </Route>
                     </Routes>
