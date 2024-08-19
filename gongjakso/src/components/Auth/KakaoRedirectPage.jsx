@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import * as S from './KakaoRedirectPage.Styled';
 
 const KakaoRedirectPage = () => {
+    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
     const code = new URL(window.location.href).searchParams.get('code');
     useEffect(() => {
-        getToken(code)
+        getToken(code, REDIRECT_URI)
             .then(result => {
                 console.log(result);
                 localStorage.setItem('accessToken', result?.accessToken);
@@ -14,7 +15,7 @@ const KakaoRedirectPage = () => {
             .catch(error => {
                 console.error('Error occurred while getting token:', error);
             });
-    }, [code]);
+    }, [REDIRECT_URI, code]);
     return (
         <S.Container>
             <S.Spinner />
