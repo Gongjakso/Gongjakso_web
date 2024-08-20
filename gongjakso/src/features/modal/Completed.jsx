@@ -53,14 +53,7 @@ const Completed = props => {
                         $h="450px"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.Backbtn
-                            onClick={() => {
-                                props.setApplyCheck(false);
-                            }}
-                        >
-                            <img src={Close} alt="close-btn" />
-                        </S.Backbtn>
-                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>공모전 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
@@ -72,7 +65,6 @@ const Completed = props => {
                                 $c="black"
                                 onClick={() => {
                                     props.setApplyCheck(false);
-                                    props.setApply(true);
                                 }}
                             >
                                 돌아가기
@@ -88,7 +80,7 @@ const Completed = props => {
                                         : submitProjectApply();
                                 }}
                             >
-                                지원하기
+                                제출하기
                             </S.newBtn>
                         </S.ApplyBox2>
                     </S.Modal>
@@ -103,12 +95,47 @@ const Completed = props => {
                     >
                         <S.Backbtn
                             onClick={() => {
-                                navigate('/' + props.title[1]);
+                                navigate('/contest');
                             }}
                         >
                             <img src={Close} alt="close-btn" />
                         </S.Backbtn>
-                        <S.MainTitle>{props.title[0]} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>공모전 팀 지원하기</S.MainTitle>
+                        <S.CompletedBox>
+                            <p>지원이 완료되었습니다!</p>
+                            <p>
+                                모집 결과는 마이페이지에서 확인하실 수 있습니다.
+                            </p>
+                        </S.CompletedBox>
+
+                        <S.ApplyBox>
+                            <S.ApplyBtn
+                                $w="350px"
+                                onClick={() => {
+                                    navigate('/profile');
+                                }}
+                            >
+                                마이페이지로 이동하기
+                            </S.ApplyBtn>
+                        </S.ApplyBox>
+                    </S.Modal>
+                </S.Background>
+            )}
+            {props.case === 3 && (
+                <S.Background>
+                    <S.Modal
+                        $w="850px"
+                        $h="400px"
+                        $bc={({ theme }) => theme.box1}
+                    >
+                        <S.Backbtn
+                            onClick={() => {
+                                props.setgoToMy(false);
+                            }}
+                        >
+                            <img src={Close} alt="close-btn" />
+                        </S.Backbtn>
+                        {/* <S.MainTitle>공모전 팀 지원하기</S.MainTitle> */}
                         <S.CompletedBox>
                             <p>지원이 완료되었습니다!</p>
                             <p>

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactGA from 'react-ga';
 import { useParams } from 'react-router-dom';
 import * as S from './DetailPageStyled';
+import * as T from '../../features/modal/ApplyModal.styled';
 import useCustomNavigate from '../../hooks/useNavigate';
 import Close from '../../assets/images/Close.svg';
 import Logo from '../../assets/images/BlackLogo.svg';
@@ -12,6 +13,7 @@ import DoScrap from '../../assets/images/Scrap.svg';
 import arrow from '../../assets/images/Arrow.svg';
 import googleform from '../../assets/images/GoogleFormLink.svg';
 import postLink from '../../assets/images/postLink.svg';
+import MypageLink from '../../assets/images/MypageLink.svg';
 import ApplyModal from '../../features/modal/ApplyModal';
 import Completed from '../../features/modal/Completed';
 import ClickApply from '../../features/modal/ClickApply';
@@ -43,6 +45,8 @@ const DetailPageContest = () => {
     // 지원완료 버튼
     const [completed, setCompleted] = useState(false);
 
+    const [goToMy, setgoToMy] = useState(false);
+
     // 모달창 구분 목적
     const [title] = useState(['공모전', 'contest']);
 
@@ -58,9 +62,44 @@ const DetailPageContest = () => {
     // 지원자 applyId
     const [userId, setuserId] = useState('');
 
+    // ** 지원서 작성 파트 **
+
+    const [showWarning, setShowWarning] = useState(false); // 주의사항 여부
+
+    const [inputCount, setInputCount] = useState(0); // 글자 수
+    const [inputValue, setInputValue] = useState(''); // 지원 이유
+
+    const [clickedFields, setClickedFields] = useState(null); // 지원 분야 배열
+
+    // 나의 포트폴리오 존재 유무
+    const [havePortfolio, setHavePortfolio] = useState(false);
+
+    const [isclosed, setIsClosed] = useState(true); // 포트폴리오 비공개 여부
+
+    const [clickedPort, setClickedPort] = useState(null);
+
+    const scrollToRef = useRef(null);
+
     // API 관련 변수
     const [postData, setpostData] = useState([]);
-    const [category, setCategory] = useState([]);
+
+    // TODO: category mockdata 설정 (api 구현 후 수정 예정)
+    const [category, setCategory] = useState([
+        {
+            categoryType: 'PLAN',
+            size: 10,
+        },
+        {
+            categoryType: 'DESIGN',
+            size: 5,
+        },
+    ]);
+
+    const [portfolioData] = useState([
+        '포트폴리오 제목1',
+        '포트폴리오 제목2',
+        '포트폴리오 제목3',
+    ]);
 
     const [scrapNum, setscrapNum] = useState();
     const [scrapStatus, setscrapStatus] = useState('');
@@ -70,33 +109,33 @@ const DetailPageContest = () => {
     const [postId] = useState(id);
 
     //GA 이벤트를 위한 설정
-    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    // ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 
-    useEffect(() => {
-        getCheckStatus(id).then(res => {
-            setcheckStatus(res?.data.role);
-        });
+    // useEffect(() => {
+    //     getCheckStatus(id).then(res => {
+    //         setcheckStatus(res?.data.role);
+    //     });
 
-        getPostDetail(id).then(res => {
-            setpostData(res?.data);
-            setCategory(res?.data.categories);
-            setscrapNum(res?.data.scrapCount);
-            setapplyTitle(res?.data.title);
-        });
-        getScrap(id).then(res => {
-            setscrapStatus(res?.data.scrapStatus);
-        });
-    }, [id]);
+    //     getPostDetail(id).then(res => {
+    //         setpostData(res?.data);
+    //         setCategory(res?.data.categories);
+    //         setscrapNum(res?.data.scrapCount);
+    //         setapplyTitle(res?.data.title);
+    //     });
+    //     getScrap(id).then(res => {
+    //         setscrapStatus(res?.data.scrapStatus);
+    //     });
+    // }, [id]);
 
-    useEffect(() => {
-        // checkStatus가 'APPLICANT'이고, id가 변경될 때마다 실행
-        if (checkStatus === 'APPLICANT') {
-            getMyApplication(id).then(res => {
-                setapplyType(res?.data.applyType);
-                setuserId(res?.data.applyId);
-            });
-        }
-    }, [checkStatus, id]);
+    // useEffect(() => {
+    //     checkStatus가 'APPLICANT'이고, id가 변경될 때마다 실행
+    //     if (checkStatus === 'APPLICANT') {
+    //         getMyApplication(id).then(res => {
+    //             setapplyType(res?.data.applyType);
+    //             setuserId(res?.data.applyId);
+    //         });
+    //     }
+    // }, [checkStatus, id]);
 
     // 활동기간 수정 함수
     const formatDate = dateString => {
@@ -133,26 +172,71 @@ const DetailPageContest = () => {
         window.open(linkurl, '_blank');
     };
 
+    // 폼 선택
+    const ClickForm = (type, item) => {
+        if (type === 'fields') {
+            setClickedFields(item);
+        } else if (type === 'Port') {
+            setClickedPort(item);
+            setIsClosed(item === 'none');
+        }
+    };
+
+    const isClosedClick = () => {
+        setIsClosed(!isclosed);
+    };
+
+    useEffect(() => {
+        if (apply && scrollToRef.current) {
+            scrollToRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [apply]);
+
+    // 지원 이유 작성란 기능 설정
+    const textarea = useRef();
+    const handleResizeHeight = () => {
+        textarea.current.style.height = 'auto';
+        textarea.current.style.height = textarea.current.scrollHeight + 'px';
+    };
+    const onInputHandler = e => {
+        if (e.target.value.length > 1000) {
+            e.target.value = e.target.value.slice(0, 1000);
+        }
+        setInputCount(e.target.value.length);
+        setInputValue(e.target.value);
+    };
+
+    // 필수 항목 검사
+    const WarningApply = () => {
+        if (clickedFields === null) {
+            setShowWarning(true);
+        } else {
+            // 필수항목이 선택되었을 때만 post 처리
+            setApplyCheck(true);
+        }
+    };
+
     return (
         <>
             {myAppOpen ? (
                 <ClickmyApply id={postId} setOpen={setmyAppOpen} type={false} />
             ) : null}
 
-            {apply === true ? (
-                <ApplyModal
-                    apply={apply}
-                    setApply={setApply}
-                    title={title}
-                    setCompleted={setCompleted}
-                    category={category}
-                    id={postId}
+            {applyCheck && (
+                <Completed
+                    case={1}
+                    id={id}
                     setApplyCheck={setApplyCheck}
+                    clickedFields={clickedFields}
+                    inputValue={inputValue}
+                    setCompleted={setCompleted}
                 />
-            ) : null}
+            )}
 
             {/* 지원완료 모달 (확인사살 모달 아님!) */}
-            {completed === true ? <Completed title={title} case={2} /> : null}
+            {completed === true ? <Completed case={2} /> : null}
+
+            {goToMy && <Completed case={3} setgoToMy={setgoToMy} />}
             {showApply && (
                 <ClickApply
                     setShowApply={setShowApply}
@@ -239,14 +323,8 @@ const DetailPageContest = () => {
                 <S.Background $s="1100px">
                     <S.BlueBox
                         $bg={({ theme }) => theme.Light1}
-                        $boxSize="1400px"
+                        $boxSize={apply ? '2500px' : '1400px'}
                     >
-                        <S.TextBox>
-                            <S.TextTitle>공고 마감일</S.TextTitle>
-                            <S.TextDetail>
-                                {formatDate(postData?.finishDate)}
-                            </S.TextDetail>
-                        </S.TextBox>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
                             <S.TextDetail>
@@ -264,7 +342,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             <S.TextTitle>모집 분야</S.TextTitle>
                             <S.TextDetail>
-                                {category?.map((item, i) => (
+                                {category.map((item, i) => (
                                     <S.RoundForm key={i}>
                                         {item.categoryType === 'PLAN' &&
                                             `기획 ${item.size}`}
@@ -381,16 +459,144 @@ const DetailPageContest = () => {
                                     </S.ApplyButton>
                                 ) : (
                                     <S.ApplyButton
-                                        $bc="none"
-                                        $bg={({ theme }) => theme.box1}
+                                        $apply={apply}
                                         onClick={() => {
                                             setApply(true);
                                         }}
                                     >
-                                        지원하기
+                                        지원서 작성하기
                                     </S.ApplyButton>
                                 )}
                             </S.Globalstyle>
+                        )}
+
+                        {apply ? (
+                            <div ref={scrollToRef}>
+                                <S.ApplicationBg>
+                                    {/* TODO : api 공모전 이름 받아오기 */}
+                                    <S.ApplicationTitle>
+                                        공모전 팀 지원하기
+                                    </S.ApplicationTitle>
+                                </S.ApplicationBg>
+                                <T.DetailBox>
+                                    <T.WarningBox>
+                                        <T.SubTitle>지원 분야</T.SubTitle>
+                                        {showWarning && (
+                                            <T.WarningTitle>
+                                                * 지원 분야를 선택해주세요!
+                                            </T.WarningTitle>
+                                        )}
+                                    </T.WarningBox>
+                                    <T.FormBox>
+                                        {category?.map((item, i) => (
+                                            <T.RoundForm
+                                                key={i}
+                                                $isselected={
+                                                    clickedFields ===
+                                                    item.categoryType
+                                                }
+                                                onClick={() =>
+                                                    ClickForm(
+                                                        'fields',
+                                                        item.categoryType,
+                                                    )
+                                                }
+                                            >
+                                                {item.categoryType === 'PLAN' &&
+                                                    '기획'}
+                                                {item.categoryType ===
+                                                    'DESIGN' && '디자인'}
+                                                {item.categoryType === 'FE' &&
+                                                    '프론트엔드'}
+                                                {item.categoryType === 'BE' &&
+                                                    '백엔드'}
+                                                {item.categoryType === 'ETC' &&
+                                                    '기타'}
+                                                {item.categoryType ===
+                                                    'LATER' && '추후조정'}
+                                            </T.RoundForm>
+                                        ))}
+                                    </T.FormBox>
+                                </T.DetailBox>
+
+                                <T.DetailBox>
+                                    <T.SubTitle>나의 포트폴리오</T.SubTitle>
+                                    {havePortfolio ? (
+                                        <T.FormBox>
+                                            {portfolioData?.map((item, i) => (
+                                                <T.PortForm
+                                                    key={i}
+                                                    $isselected={
+                                                        clickedPort === item
+                                                    }
+                                                    onClick={() =>
+                                                        ClickForm('Port', item)
+                                                    }
+                                                >
+                                                    {item}
+                                                </T.PortForm>
+                                            ))}
+                                            <T.RoundForm
+                                                $isselected={isclosed}
+                                                // onClick={isClosedClick}
+                                                onClick={() =>
+                                                    ClickForm('Port', 'none')
+                                                }
+                                            >
+                                                비공개
+                                            </T.RoundForm>
+                                        </T.FormBox>
+                                    ) : (
+                                        <T.FormBox>
+                                            <img
+                                                src={MypageLink}
+                                                alt="mypage-link"
+                                                onClick={() => {
+                                                    setgoToMy(true);
+                                                }}
+                                            />
+                                            <T.RoundForm
+                                                $isselected={isclosed}
+                                                onClick={isClosedClick}
+                                            >
+                                                비공개
+                                            </T.RoundForm>
+                                        </T.FormBox>
+                                    )}
+                                </T.DetailBox>
+
+                                <T.DetailBox>
+                                    <T.SubTitle>지원 이유</T.SubTitle>
+                                    <T.TextBox>
+                                        <T.InputArea
+                                            $maxHeight="27rem"
+                                            ref={textarea}
+                                            onChange={onInputHandler}
+                                            onInput={handleResizeHeight}
+                                            maxLength={'1000'}
+                                            rows={1}
+                                            placeholder={
+                                                '* 해당 공모전 팀에 합류하고 싶은 이유를 작성해주세요!(최대 1000자)'
+                                            }
+                                        ></T.InputArea>
+                                        <T.InputNum>
+                                            <span>{inputCount}</span>
+                                            <span>/1000</span>
+                                        </T.InputNum>
+                                    </T.TextBox>
+                                </T.DetailBox>
+
+                                <T.ApplyBox>
+                                    <S.ApplicationBtn
+                                        $w="280px"
+                                        onClick={WarningApply}
+                                    >
+                                        제출하기
+                                    </S.ApplicationBtn>
+                                </T.ApplyBox>
+                            </div>
+                        ) : (
+                            ''
                         )}
                     </S.BlueBox>
                 </S.Background>
