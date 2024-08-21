@@ -14,7 +14,7 @@ import arrow from '../../assets/images/Arrow.svg';
 import googleform from '../../assets/images/GoogleFormLink.svg';
 import postLink from '../../assets/images/postLink.svg';
 import MypageLink from '../../assets/images/MypageLink.svg';
-import ApplyModal from '../../features/modal/ApplyModal';
+import goPortfolio from '../../assets/images/goPortfolio.svg';
 import Completed from '../../features/modal/Completed';
 import ClickApply from '../../features/modal/ClickApply';
 import {
@@ -45,11 +45,6 @@ const DetailPageContest = () => {
     // 지원완료 버튼
     const [completed, setCompleted] = useState(false);
 
-    const [goToMy, setgoToMy] = useState(false);
-
-    // 모달창 구분 목적
-    const [title] = useState(['공모전', 'contest']);
-
     // 지원자 지원서 열람
     const [myAppOpen, setmyAppOpen] = useState(false);
 
@@ -63,7 +58,6 @@ const DetailPageContest = () => {
     const [userId, setuserId] = useState('');
 
     // ** 지원서 작성 파트 **
-
     const [showWarning, setShowWarning] = useState(false); // 주의사항 여부
 
     const [inputCount, setInputCount] = useState(0); // 글자 수
@@ -74,13 +68,19 @@ const DetailPageContest = () => {
     // 나의 포트폴리오 존재 유무
     const [havePortfolio, setHavePortfolio] = useState(false);
 
-    const [isclosed, setIsClosed] = useState(true); // 포트폴리오 비공개 여부
+    // 포트폴리오 만들러가기 버튼
+    const [goToMy, setgoToMy] = useState(false);
 
+    // 포트폴리오 비공개 여부
+    const [isclosed, setIsClosed] = useState(true);
+
+    // 포트폴리오 선택 배열
     const [clickedPort, setClickedPort] = useState(null);
 
+    // 스크롤 내리기 관련
     const scrollToRef = useRef(null);
 
-    // API 관련 변수
+    // ** API 관련 변수 **
     const [postData, setpostData] = useState([]);
 
     // TODO: category mockdata 설정 (api 구현 후 수정 예정)
@@ -95,6 +95,7 @@ const DetailPageContest = () => {
         },
     ]);
 
+    // TODO: 나의 포트폴리오 mockdata 설정 (api 구현 후 수정 예정)
     const [portfolioData] = useState([
         '포트폴리오 제목1',
         '포트폴리오 제목2',
@@ -165,6 +166,7 @@ const DetailPageContest = () => {
         setscrapStatus(current => !current);
     };
 
+    // 링크 이동
     const openNewWindow = linkurl => {
         if (!/^https?:\/\//i.test(linkurl)) {
             linkurl = 'https://' + linkurl;
@@ -182,10 +184,12 @@ const DetailPageContest = () => {
         }
     };
 
+    // 포트폴리오 비공개 버튼
     const isClosedClick = () => {
         setIsClosed(!isclosed);
     };
 
+    // 지원서 폼 자동 스크롤 관련
     useEffect(() => {
         if (apply && scrollToRef.current) {
             scrollToRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -520,7 +524,23 @@ const DetailPageContest = () => {
                                 </T.DetailBox>
 
                                 <T.DetailBox>
-                                    <T.SubTitle>나의 포트폴리오</T.SubTitle>
+                                    <S.TitleFormBox>
+                                        <T.SubTitle>나의 포트폴리오</T.SubTitle>
+                                        {havePortfolio && (
+                                            <img
+                                                src={goPortfolio}
+                                                alt="porfolio-link"
+                                                onClick={() => {
+                                                    // 링크 수정해야 함!!
+                                                    window.open(
+                                                        'http://localhost:3000/profile',
+                                                        '_blank',
+                                                    );
+                                                }}
+                                            ></img>
+                                        )}
+                                    </S.TitleFormBox>
+
                                     {havePortfolio ? (
                                         <T.FormBox>
                                             {portfolioData?.map((item, i) => (
@@ -538,7 +558,6 @@ const DetailPageContest = () => {
                                             ))}
                                             <T.RoundForm
                                                 $isselected={isclosed}
-                                                // onClick={isClosedClick}
                                                 onClick={() =>
                                                     ClickForm('Port', 'none')
                                                 }

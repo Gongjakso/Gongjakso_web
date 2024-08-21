@@ -225,7 +225,7 @@ export const ApplicationTitle = styled.div`
 
 export const ApplicationBtn = styled.button`
     position: absolute;
-    bottom: 15rem;
+    bottom: 12rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,4 +238,14 @@ export const ApplicationBtn = styled.button`
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;
+`;
+
+export const TitleFormBox = styled.div`
+    display: flex;
+    img {
+        margin-left: 1.5rem;
+        margin-top: -0.3rem;
+        width: 15rem;
+        cursor: pointer;
+    }
 `;

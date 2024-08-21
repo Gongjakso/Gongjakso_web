@@ -125,34 +125,38 @@ const Completed = props => {
                 <S.Background>
                     <S.Modal
                         $w="850px"
-                        $h="400px"
+                        $h="420px"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.Backbtn
-                            onClick={() => {
-                                props.setgoToMy(false);
-                            }}
-                        >
-                            <img src={Close} alt="close-btn" />
-                        </S.Backbtn>
-                        {/* <S.MainTitle>공모전 팀 지원하기</S.MainTitle> */}
+                        <S.MainTitle>포트폴리오 만들러 가기</S.MainTitle>
                         <S.CompletedBox>
-                            <p>지원이 완료되었습니다!</p>
                             <p>
-                                모집 결과는 마이페이지에서 확인하실 수 있습니다.
+                                포트폴리오 페이지로 이동 시 지원 내용이 저장되지
+                                않습니다.
                             </p>
+                            <p>이동하시겠습니까?</p>
                         </S.CompletedBox>
 
-                        <S.ApplyBox>
-                            <S.ApplyBtn
-                                $w="350px"
+                        <S.ApplyBox2>
+                            <S.newBtn
+                                $bg={({ theme }) => theme.Grey}
+                                $c="black"
+                                onClick={() => {
+                                    props.setgoToMy(false);
+                                }}
+                            >
+                                돌아가기
+                            </S.newBtn>
+                            <S.newBtn
+                                $bg={({ theme }) => theme.box1}
+                                $c="white"
                                 onClick={() => {
                                     navigate('/profile');
                                 }}
                             >
-                                마이페이지로 이동하기
-                            </S.ApplyBtn>
-                        </S.ApplyBox>
+                                만들러 가기
+                            </S.newBtn>
+                        </S.ApplyBox2>
                     </S.Modal>
                 </S.Background>
             )}
