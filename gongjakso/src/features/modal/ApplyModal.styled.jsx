@@ -53,6 +53,7 @@ export const MainTitle = styled.div`
 // 텍스트 전체 틀
 export const DetailBox = styled.div`
     padding: 15px;
+    margin-top: 0.8rem;
     position: relative;
 `;
 
@@ -61,8 +62,7 @@ export const DetailBox2 = styled.div`
 `;
 
 export const SubTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.md};
-    letter-spacing: 0.5px;
+    font-size: ${({ theme }) => theme.fontSize.l};
     font-family: 'PreBold';
 `;
 
@@ -72,20 +72,30 @@ export const FormBox = styled.div`
     flex-flow: wrap;
     top: 60px;
     left: 0;
+    img {
+        margin-top: 1.4rem;
+        margin-right: 1.7rem;
+        width: 17rem;
+        cursor: pointer;
+    }
 `;
 
 export const RoundForm = styled.button`
     min-width: 120px;
     height: auto;
     border: 1px solid #a3a3a3;
-    border-radius: 30px;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    border-radius: 20px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     text-align: center;
-    padding: 8px;
-    margin-right: 10px;
+    padding: 0.7rem;
+    margin-right: 1rem;
     margin-top: 20px;
     background-color: ${props => (props.$isselected ? 'black' : 'white')};
     color: ${props => (props.$isselected ? 'white' : props.theme.subFont)};
+`;
+
+export const PortForm = styled(RoundForm)`
+    min-width: 250px;
 `;
 
 // textarea 감싸는 틀
@@ -113,12 +123,12 @@ export const InputArea = styled.textarea`
     max-height: ${props => props.$maxHeight};
     display: block;
     border: none;
-    border-bottom: 1.5px solid black;
+    border-bottom: 2px solid black;
     padding: 5px;
     resize: vertical;
     overflow: hidden;
-    color: #5c5c5c;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    color: black;
+    font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreRegular';
     line-height: 1.5;
     &:focus {
