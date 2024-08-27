@@ -10,7 +10,7 @@ export const IconButton = styled.button`
         if ($active) {
             if ($type === 'project') {
                 return theme.Pink;
-            } else if ($type === 'contest') {
+            } else if ($type === 'contest' || 'contestList') {
                 return theme.Main2;
             }
             return theme.main;

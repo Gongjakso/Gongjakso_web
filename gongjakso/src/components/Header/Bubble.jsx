@@ -107,12 +107,7 @@ const Bubble = ({ closeBubble }) => {
                                 handleButtonClick('/participatedTeam')
                             }
                         >
-                            <span>내가 참여한 공모전/프로젝트</span>
-                            <S.ArrowImage />
-                        </S.SubTitle>
-                        <S.GreyLine />
-                        <S.SubTitle onClick={() => handleButtonClick('/scrap')}>
-                            <span>나의 스크랩</span>
+                            <span>내가 참여한 공모전</span>
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />

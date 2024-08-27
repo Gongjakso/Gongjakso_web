@@ -1,6 +1,9 @@
 import { React, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteChangeTracker from '../utils/RouteChangeTracker';
+const ContestListPage = lazy(
+    () => import('../pages/ContestListPage/ContestListPage'),
+);
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const DefaultLayout = lazy(() => import('../Layout/DefaultLayout'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
@@ -45,6 +48,10 @@ const Router = () => {
                     <Routes>
                         <Route element={<DefaultLayout />}>
                             <Route path="/" element={<HomePage />} />
+                            <Route
+                                path="/contestList"
+                                element={<ContestListPage />}
+                            />
                             <Route path="/contest" element={<PostMainPage />} />
                             <Route path="/project" element={<PostMainPage />} />
                             <Route path="/calendar" element={<Calendar />} />
