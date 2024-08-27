@@ -5,29 +5,32 @@ import * as S from './Header.Styled';
 import Bubble from './Bubble';
 
 import {
-    CalendarBtn,
     ContestBtn,
-    ProfileBtn,
     ProjectBtn,
     TeambuildBtn,
+    CalendarBtn,
+    ProfileBtn,
+    ContestListBtn,
 } from './Buttons';
 
 const Header = () => {
     const location = useLocation();
     const [hover, setHover] = useState({
+        contestList: false,
         contest: false,
-        project: false,
-        login: false,
-        teambuild: false,
-        calendar: false,
+        // project: false,
+        // login: false,
+        // teambuild: false,
+        // calendar: false,
         profile: false,
     });
     const [showBubble, setShowBubble] = useState(false);
     const activeTab = path => {
+        if (path.includes('/contestList')) return 'contestList';
         if (path.includes('/contest')) return 'contest';
-        if (path.includes('/project')) return 'project';
-        if (path.includes('/teambuild')) return 'teambuild';
-        if (path.includes('/calendar')) return 'calendar';
+        // if (path.includes('/project')) return 'project';
+        // if (path.includes('/teambuild')) return 'teambuild';
+        // if (path.includes('/calendar')) return 'calendar';
         if (path.includes('/profile')) return 'profile';
         if (path.includes('/login')) return 'login';
         return '';
@@ -50,12 +53,20 @@ const Header = () => {
     return (
         <S.Header>
             <S.HeaderBase>
-                <S.logo>
-                    <Link exact="true" to="/">
-                        <img src={logoImage} alt="logo" />
-                    </Link>
-                </S.logo>
                 <S.ItemList>
+                    <S.logo>
+                        <Link exact="true" to="/">
+                            <img src={logoImage} alt="logo" />
+                        </Link>
+                    </S.logo>
+                    <li>
+                        <ContestListBtn
+                            hover={hover}
+                            setHover={setHover}
+                            active={active}
+                            setActive={setActive}
+                        />
+                    </li>
                     <li>
                         <ContestBtn
                             hover={hover}
@@ -64,7 +75,7 @@ const Header = () => {
                             setActive={setActive}
                         />
                     </li>
-                    <li>
+                    {/* <li>
                         <ProjectBtn
                             hover={hover}
                             setHover={setHover}
@@ -87,26 +98,23 @@ const Header = () => {
                             active={active}
                             setActive={setActive}
                         />
-                    </li>
-
-                    <S.ProfileArea>
-                        <li>
-                            <ProfileBtn
-                                hover={hover}
-                                setHover={setHover}
-                                active={active}
-                                setActive={setActive}
-                                onClick={handleProfileIconClick}
-                            />
-                        </li>
-                        {showBubble && (
-                            <Bubble
-                                closeBubble={closeBubble}
-                                handleProfileIconClick={handleProfileIconClick}
-                            />
-                        )}
-                    </S.ProfileArea>
+                    </li> */}
                 </S.ItemList>
+                <S.ProfileArea>
+                    <ProfileBtn
+                        hover={hover}
+                        setHover={setHover}
+                        active={active}
+                        setActive={setActive}
+                        onClick={handleProfileIconClick}
+                    />
+                    {showBubble && (
+                        <Bubble
+                            closeBubble={closeBubble}
+                            handleProfileIconClick={handleProfileIconClick}
+                        />
+                    )}
+                </S.ProfileArea>
             </S.HeaderBase>
         </S.Header>
     );

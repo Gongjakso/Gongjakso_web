@@ -72,6 +72,7 @@ export const Fillter1 = styled.div`
     width: 220px;
     border-radius: 10px;
     border: 1.5px solid #c4c4c4;
+    padding: 12px 18px;
     display: flex;
     align-items: center;
 `;
@@ -82,6 +83,14 @@ export const Fillter2 = styled.div`
     display: flex;
     justify-content: center;
 `;
+export const Fillterbox1 = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 10px;
+    margin-bottom: 30px;
+`;
 
 export const PostContent = styled.div`
     width: 100%;
@@ -91,6 +100,15 @@ export const PostContent = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+`;
+export const ContestContent = styled.div`
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 27px;
 `;
 
 export const TeamBoxContent = styled.div``;

@@ -12,7 +12,8 @@ export const Header = styled.div`
 `;
 export const HeaderBase = styled.div`
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-around;
     align-items: center;
     height: 40px;
 `;
