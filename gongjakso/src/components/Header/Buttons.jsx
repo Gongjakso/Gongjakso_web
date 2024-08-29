@@ -23,10 +23,11 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
 
     const getIconName = () => {
         const iconNames = {
+            contestList: '공모전 리스트',
             contest: '공모전 공고',
-            project: '프로젝트 공고',
-            teambuild: '팀빌딩',
-            calendar: '캘린더',
+            // project: '프로젝트 공고',
+            // teambuild: '팀빌딩',
+            // calendar: '캘린더',
             profile: 'MY',
             login: isLoggedIn ? '로그아웃' : '로그인',
         };
@@ -96,7 +97,9 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
                     setActive(type);
                     if (['profile', 'teambuild', 'calendar'].includes(type)) {
                         handleProfileClick();
-                    } else if (['project', 'contest'].includes(type)) {
+                    } else if (
+                        ['project', 'contestList', 'contest'].includes(type)
+                    ) {
                         setPath(type);
                         handlePostingClick();
                     } else if (type === 'login') {
@@ -133,15 +136,18 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
 export const ContestBtn = props => (
     <GenericIconButton type="contest" {...props} />
 );
-export const ProjectBtn = props => (
-    <GenericIconButton type="project" {...props} />
+export const ContestListBtn = props => (
+    <GenericIconButton type="contestList" {...props} />
 );
-export const TeambuildBtn = props => (
-    <GenericIconButton type="teambuild" {...props} />
-);
-export const CalendarBtn = props => (
-    <GenericIconButton type="calendar" {...props} />
-);
+// export const ProjectBtn = props => (
+//     <GenericIconButton type="project" {...props} />
+// );
+// export const TeambuildBtn = props => (
+//     <GenericIconButton type="teambuild" {...props} />
+// );
+// export const CalendarBtn = props => (
+//     <GenericIconButton type="calendar" {...props} />
+// );
 export const ProfileBtn = props => (
     <GenericIconButton type="profile" {...props} />
 );
