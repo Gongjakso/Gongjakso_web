@@ -111,6 +111,11 @@ const Bubble = ({ closeBubble }) => {
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />
+                        <S.SubTitle onClick={() => handleButtonClick('/scrap')}>
+                            <span>나의 스크랩</span>
+                            <S.ArrowImage />
+                        </S.SubTitle>
+                        <S.GreyLine />
                     </S.ItemBox>
                 </S.BoxContainer>
                 <S.LoginButton onClick={() => handleLogin('/login')}>
