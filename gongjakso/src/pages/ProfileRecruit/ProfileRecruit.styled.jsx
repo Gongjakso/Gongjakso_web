@@ -229,9 +229,8 @@ export const TableBox = styled.div`
     height: 100%;
     margin: 15px 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    padding-right: 100px;
 `;
 
 export const User = styled(TableBox)`
@@ -282,7 +281,7 @@ export const ShowPortBtn = styled.button`
 `;
 
 export const StateBtn = styled.div`
-    width: 45%;
+    width: 33%;
     padding: 10px;
     color: white;
     font-size: ${({ theme }) => theme.fontSize.base};
