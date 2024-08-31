@@ -81,6 +81,8 @@ const ProfileRecruit = () => {
         );
         setStatuses(newStatuses);
         saveStatusesToLocalStorage(newStatuses); // 상태 저장
+
+        alert('지원자가 합류되었습니다.');
     };
 
     // 목데이터 설정
