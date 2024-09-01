@@ -17,10 +17,63 @@ const ProfilePage = () => {
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false); // 모달 상태
 
+    const mockRecruitingTeams = [
+        {
+            postId: 1,
+            postType: true,
+            title: '프로젝트 팀 모집',
+            max_person: 5,
+            current_person: 3,
+            startDate: '2024-01-01',
+            endDate: '2024-12-31',
+        },
+        {
+            postId: 2,
+            postType: false,
+            title: '공모전 팀 모집',
+            max_person: 10,
+            current_person: 8,
+            startDate: '2024-02-01',
+            endDate: '2024-11-30',
+        },
+    ];
+
+    const mockAppliedTeams = [
+        {
+            postId: 3,
+            postType: true,
+            title: '지원한 프로젝트',
+            max_person: 7,
+            current_person: 5,
+            startDate: '2024-03-01',
+            endDate: '2024-10-31',
+        },
+    ];
+
+    const mockParticipatedTeams = [
+        {
+            postId: 4,
+            postType: false,
+            postStatus: 'ACTIVE',
+            title: '참여한 공모전',
+            max_person: 4,
+            current_person: 4,
+            startDate: '2024-01-01',
+            endDate: '2024-12-31',
+        },
+    ];
+
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
+
+        // 서버에서 받아온 데이터를 모방하여 설정
+        setPostContent1(mockRecruitingTeams);
+        setPostContent2(mockAppliedTeams);
+        setPostContent3(mockParticipatedTeams);
+
+        /*
         getMyRecruiting().then(response => {
             setPostContent1(response?.data.slice(0, 2));
         });
@@ -30,24 +83,25 @@ const ProfilePage = () => {
         getMyParticipated(1, 2).then(response => {
             setPostContent3(response?.data.participationLists);
         });
+*/
     }, []);
 
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
     const closePortfolioModal = () => setShowModal(false); // 모달 닫기
+
     useEffect(() => {
         if (showModal) {
             document.body.style.cssText = `
-          position: fixed; 
-          top: -${window.scrollY}px;
-          overflow-y: hidden;
-          width: 100%;`;
+                position: fixed; 
+                top: -${window.scrollY}px;
+                overflow-y: hidden;
+                width: 100%;`;
         } else {
             const scrollY = document.body.style.top;
             document.body.style.cssText = '';
             window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
         }
 
-        // Cleanup function to restore scroll on unmount or when modal closes
         return () => {
             document.body.style.cssText = '';
         };
@@ -83,20 +137,15 @@ const ProfilePage = () => {
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
-                    {postContent1?.map(postContent1 => (
+                    {postContent1?.map(post => (
                         <TeamBox
-                            key={postContent1?.postId}
+                            key={post?.postId}
                             showMoreDetail={true}
                             showWaitingJoin={false}
                             showSubBox={true}
-                            borderColor={
-                                postContent1.postType === true
-                                    ? 'rgba(231, 137, 255, 0.5)'
-                                    : 'rgba(0, 163, 255, 0.5)'
-                            }
-                            postContent={postContent1}
+                            postContent={post}
                             isMyParticipation={false}
-                            postId={postContent1?.postId}
+                            postId={post?.postId}
                         />
                     ))}
                 </S.BoxDetail>
@@ -107,43 +156,43 @@ const ProfilePage = () => {
                             <S.ArrowImage />
                         </Link>
                     </S.SubTitle>
-                    {postContent2?.map(postContent2 => (
+                    {postContent2?.map(post => (
                         <TeamBox
-                            key={postContent2?.postId}
+                            key={post?.postId}
                             showMoreDetail={false}
                             showWaitingJoin={true}
                             showSubBox={true}
                             borderColor={
-                                postContent2.postType === true
+                                post.postType === true
                                     ? 'rgba(231, 137, 255, 0.5)'
                                     : 'rgba(0, 163, 255, 0.5)'
                             }
-                            postContent={postContent2}
+                            postContent={post}
                             isMyParticipation={false}
                         />
                     ))}
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>
-                        <span>내가 참여한 공모전/프로젝트</span>
+                        <span>내가 참여한 공모전</span>
                         <Link to="/participatedTeam">
                             <S.ArrowImage />
                         </Link>
                     </S.SubTitle>
-                    {postContent3?.map((postContent3, index) => (
+                    {postContent3?.map(post => (
                         <TeamBox
-                            key={postContent3?.postId}
+                            key={post?.postId}
                             showMoreDetail={false}
                             borderColor={
-                                postContent3?.postStatus !== 'ACTIVE'
+                                post?.postStatus !== 'ACTIVE'
                                     ? 'rgba(111, 111, 111, 1)'
-                                    : postContent3.postType === true
+                                    : post.postType === true
                                       ? 'rgba(231, 137, 255, 0.5)'
                                       : 'rgba(0, 163, 255, 0.5)'
                             }
                             showWaitingJoin={false}
                             showSubBox={false}
-                            postContent={postContent3}
+                            postContent={post}
                             isMyParticipation={true}
                         />
                     ))}
