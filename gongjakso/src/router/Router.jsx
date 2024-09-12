@@ -1,6 +1,7 @@
 import { React, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteChangeTracker from '../utils/RouteChangeTracker';
+import ContestDetailPage from '../pages/ContestDetailPage/ContestDetailPage';
 const ContestListPage = lazy(
     () => import('../pages/ContestListPage/ContestListPage'),
 );
@@ -51,6 +52,10 @@ const Router = () => {
                             <Route
                                 path="/contestList"
                                 element={<ContestListPage />}
+                            />
+                            <Route
+                                path="/contestList/:id"
+                                element={<ContestDetailPage />}
                             />
                             <Route path="/contest" element={<PostMainPage />} />
                             <Route path="/project" element={<PostMainPage />} />
