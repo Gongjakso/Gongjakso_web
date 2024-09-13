@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import * as S from './ContestDetailPage.Styled';
 import Multilevel from '../../components/common/Input/Multilevel';
 import { SelectInput } from '../../components/common/Input/Input';
 import { useForm } from 'react-hook-form';
 import TeamBox from '../TeamBox/TeamBox';
 import NoContents from '../../features/NoContents/NoContents';
+import useCustomNavigate from '../../hooks/useNavigate';
 
 const ContestDetailPage = () => {
     const location = useLocation();
@@ -13,6 +14,7 @@ const ContestDetailPage = () => {
     const [selectedCityData, setSelectedCityData] = useState('');
     const [selectedTownData, setSelectedTownData] = useState('');
     const [sortBy, setSortBy] = useState('createdAt');
+    const navigate = useCustomNavigate();
 
     const posts = [
         {
@@ -107,6 +109,9 @@ const ContestDetailPage = () => {
             setSortBy(null);
         }
     };
+    const handleTeamBuildClick = () => {
+        navigate('/teambuild');
+    };
 
     return (
         <>
@@ -138,7 +143,9 @@ const ContestDetailPage = () => {
                 </S.ContestDetail>
                 <S.ContestButtonOption>
                     <S.GotohomeBtn>홈페이지로 바로가기</S.GotohomeBtn>
-                    <S.TeamBuildBtn>팀빌딩하기</S.TeamBuildBtn>
+                    <S.TeamBuildBtn onClick={handleTeamBuildClick}>
+                        팀빌딩하기
+                    </S.TeamBuildBtn>
                 </S.ContestButtonOption>
                 <S.ContestInfo>
                     <S.ContestTitle>
