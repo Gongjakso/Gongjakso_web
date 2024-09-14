@@ -39,13 +39,14 @@ export const FireImage = styled(Fire)`
     margin-right: 4px;
 `;
 
-export const ContestTitle = styled.h1`
+export const ContestTitle = styled.h2`
     font-family: 'Pretendard', sans-serif;
     font-size: 16px;
     font-weight: 700;
     line-height: 19.09px;
     text-align: left;
 `;
+
 export const ContestCompany = styled.h2`
     font-family: 'Pretendard', sans-serif;
     font-size: 13px;

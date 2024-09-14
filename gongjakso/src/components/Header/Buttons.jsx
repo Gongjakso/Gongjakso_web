@@ -19,7 +19,9 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
 
     const location = useLocation();
 
-    const currentPage = location.pathname.substring(1);
+    const currentPage = location.pathname.substring(1).includes('/')
+        ? location.pathname.split('/')[1]
+        : location.pathname.substring(1);
 
     const getIconName = () => {
         const iconNames = {
@@ -79,6 +81,7 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
     const closeBubble = () => {
         setBubbleOpen(false);
     };
+
     return (
         <>
             <S.IconButton
