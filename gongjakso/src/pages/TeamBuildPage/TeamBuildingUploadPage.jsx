@@ -425,16 +425,27 @@ const TeamBuildingUploadPage = ({ posts }) => {
                         />
                     </S.Label>
                     <S.Label>
-                        <S.TapP>공모전 예상 기간</S.TapP>
-                        <SelectCalendar onApply={handleApply} dates={dates} />
+                        <S.TapP>예상 기간</S.TapP>
+                        <S.DateSet>
+                            <SelectDate
+                                value={handleDateChange}
+                                onChange={handleDateChange}
+                                text={'시작날짜를 입력해주세요.'}
+                            />
+                            {/* <SelectCalendar
+                                onApply={handleApply}
+                                dates={dates}
+                            /> */}
+                            <SelectDate
+                                value={handleDateChange}
+                                onChange={handleDateChange}
+                                text={'종료날짜를 입력해주세요.'}
+                            />
+                        </S.DateSet>
                     </S.Label>
-                    <S.Label>
+                    {/* <S.Label>
                         <S.TapP>공고 마감일</S.TapP>
-                        <SelectDate
-                            value={handleDateChange}
-                            onChange={handleDateChange}
-                        />
-                    </S.Label>
+                    </S.Label> */}
                     <S.Label>
                         <S.TapP>문의사항</S.TapP>
                         <S.Complain>

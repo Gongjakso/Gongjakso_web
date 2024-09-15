@@ -4,14 +4,14 @@ import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import { ko } from 'date-fns/locale';
 
-const SelectDate = ({ onChange, value }) => {
-    const [nowDate, setNowDate] = useState('');
+const SelectDate = ({ onChange, value, text }) => {
+    const [nowDate, setNowDate] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const today = new Date();
 
     useEffect(() => {
         const today = moment().format('YYYY-MM-DD');
-        setNowDate(today);
+        // setNowDate(today);
     }, []);
 
     const handleToggleCalendar = () => {
@@ -27,7 +27,7 @@ const SelectDate = ({ onChange, value }) => {
     return (
         <S.CalendarContainer>
             <S.DropdownButton onClick={handleToggleCalendar}>
-                마감일: {nowDate}
+                {nowDate === undefined ? text : nowDate}
             </S.DropdownButton>
             <S.CalendarWrapper $isopen={isOpen.toString()}>
                 <Calendar

@@ -152,3 +152,10 @@ export const Button = styled.button`
     font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreMedium';
 `;
+
+export const DateSet = styled.div`
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
