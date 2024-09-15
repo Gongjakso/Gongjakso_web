@@ -1,11 +1,18 @@
 import * as S from './Portfolio.Styled';
 import { SelectInput } from '../../components/common/Input/Input';
 import SelectCalendar from '../../components/common/Calendar/SelectCalendar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { getMyInfo } from '../../service/profile_service';
+import { getPortfolio, postPortfolio } from '../../service/portfolio_service';
 
-const MakePortfolio = () => {
-    // Initialize state for sections with empty fields
+const MakePortfolio = ({ userId }) => {
+    const [data, setProfileData] = useState();
+    const [portfolio, setPortfolio] = useState(null);
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState();
+
     const [educationSections, setEducationSections] = useState([
         { id: 1, schoolName: '', gradeStatus: '1학년', status: '재학 중' },
     ]);
@@ -60,7 +67,9 @@ const MakePortfolio = () => {
                 break;
         }
     };
+
     const [dates, setDates] = useState([]);
+    const navigate = useNavigate();
     const transformAndSetDates = (startDate, endDate) => {
         const parsedStartDate = new Date(startDate);
         const parsedEndDate = new Date(endDate);
@@ -72,17 +81,44 @@ const MakePortfolio = () => {
     const handleCareerDate = selectedDates => {
         transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
     };
+
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data); // 'response'를 바로 전달
+        });
+    }, []);
+
+    useEffect(() => {
+        const fetchPortfolio = async () => {
+            try {
+                const data = await getPortfolio(userId);
+                setPortfolio(data);
+            } catch (err) {
+                setError('Error fetching portfolio');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPortfolio();
+    }, [userId]);
     return (
         <div>
             <S.TopBox>
                 <S.PortfolioInfo>
-                    <S.UserName>김지은님의 포트폴리오</S.UserName>
+                    <S.UserName>{data?.name}님의 포트폴리오</S.UserName>
                     <S.Description>
                         포트폴리오 완성도를 높이면 팀 합류 확률이 올라가요!
                     </S.Description>
                 </S.PortfolioInfo>
             </S.TopBox>
             <S.GlobalBox>
+                <S.TitleSection>
+                    <S.SubTitle>포트폴리오 이름</S.SubTitle>
+                </S.TitleSection>
+                <S.InputContainer>
+                    <S.NameInput placeholder="포트폴리오 이름을 입력해주세요." />
+                </S.InputContainer>
                 {/* 학력 Section */}
                 <S.TitleSection>
                     <S.SubTitle>학력</S.SubTitle>
@@ -399,7 +435,7 @@ const MakePortfolio = () => {
                     </S.BoxDetail>
                 ))}
                 <S.BtnContainer>
-                    <S.BackBtn>돌아가기</S.BackBtn>
+                    <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>
                     <S.SaveBtn>저장하기</S.SaveBtn>
                 </S.BtnContainer>
             </S.GlobalBox>

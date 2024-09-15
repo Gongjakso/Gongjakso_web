@@ -21,7 +21,7 @@ export const DetailBox = styled.div`
 `;
 
 export const InfoBox = styled.div`
-    position: relative;
+    position: absolute;
     transform: translateY(150%);
     padding-right: 50px;
     line-height: 25px;
@@ -29,6 +29,7 @@ export const InfoBox = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    margin-left: -28rem;
 `;
 
 //이름
@@ -64,9 +65,12 @@ export const SubTitle = styled.p`
 //프로필 이미지
 export const ProfileImage = styled(My_page_big)`
     width: 200px;
-    transform: translateY(50%);
+    transform: translate(50%, 50%);
+    right: 50%;
+    position: absolute;
     display: flex;
     justify-content: center;
+    align-items: center;
 `;
 
 export const EditImage = styled(Edit)`
@@ -140,4 +144,19 @@ export const MakePortfolioBtn = styled.button`
     border-radius: 1rem;
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-family: 'PreMedium';
+`;
+
+export const PortfolioContent = styled.div`
+    font-size: 1rem;
+    font-weight: bold;
+`;
+
+export const ViewPortfolioBtn = styled.button`
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
 `;

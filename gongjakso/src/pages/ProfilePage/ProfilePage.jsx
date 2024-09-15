@@ -9,6 +9,7 @@ import {
     getMyApplied,
 } from '../../service/profile_service';
 import SelectPortfolio from '../../features/modal/SelectPortfolio';
+import { checkPortfolioExists } from '../../service/portfolio_service';
 
 const ProfilePage = () => {
     const [data, setProfileData] = useState(); // 프로필 내용
@@ -17,6 +18,7 @@ const ProfilePage = () => {
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false); // 모달 상태
 
+    const [portfolioExists, setPortfolioExists] = useState(false);
     const mockRecruitingTeams = [
         {
             postId: 1,
@@ -68,6 +70,14 @@ const ProfilePage = () => {
             setProfileData(response?.data);
         });
 
+        const checkPortfolio = async () => {
+            if (data?.portfolioId) {
+                const exists = await checkPortfolioExists(data.portfolioId);
+                setPortfolioExists(exists !== null);
+            }
+        };
+
+        checkPortfolio();
         // 서버에서 받아온 데이터를 모방하여 설정
         setPostContent1(mockRecruitingTeams);
         setPostContent2(mockAppliedTeams);
@@ -120,20 +130,34 @@ const ProfilePage = () => {
                     <S.MajorTitle>{data?.major}</S.MajorTitle>
                 </S.InfoBox>
                 <S.ProfileImage />
-                <Link to="/teamPortfolio">
+                {/* <Link to="/teamPortfolio">
                     <S.PortfolioBox>나의 포트폴리오</S.PortfolioBox>
-                </Link>
+                </Link> */}
             </S.TopBox>
             <S.GlobalBox>
                 <S.BoxDetail style={{ gap: '2.375rem' }}>
                     <S.SubTitle>나의 포트폴리오</S.SubTitle>
-                    <S.NoPortfolio>
-                        아직 포트폴리오가 없어요! <br />
-                        포트폴리오를 채워 팀빌딩 확률을 높여보세요
-                        <S.MakePortfolioBtn onClick={openPortfolioModal}>
-                            포트폴리오 만들기
-                        </S.MakePortfolioBtn>
-                    </S.NoPortfolio>
+                    {portfolioExists ? (
+                        <S.PortfolioBox>
+                            {/* 포트폴리오가 있을 때 보여줄 컴포넌트 */}
+                            <S.PortfolioContent>
+                                {data?.portfolio?.title}
+                            </S.PortfolioContent>
+                            <Link to="/portfolioDetail">
+                                <S.ViewPortfolioBtn>
+                                    포트폴리오 보기
+                                </S.ViewPortfolioBtn>
+                            </Link>
+                        </S.PortfolioBox>
+                    ) : (
+                        <S.NoPortfolio>
+                            아직 포트폴리오가 없어요! <br />
+                            포트폴리오를 채워 팀빌딩 확률을 높여보세요
+                            <S.MakePortfolioBtn onClick={openPortfolioModal}>
+                                포트폴리오 만들기
+                            </S.MakePortfolioBtn>
+                        </S.NoPortfolio>
+                    )}
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>

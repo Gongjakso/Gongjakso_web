@@ -18,12 +18,13 @@ export const BoxDetail = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 70rem;
     margin-bottom: 1rem;
 `;
 export const PortfolioInfo = styled.div`
     display: flex;
     flex-direction: column;
-    width: 74rem;
+    width: 64rem;
 `;
 
 export const UserName = styled.span`
@@ -40,7 +41,7 @@ export const Description = styled.span`
 `;
 
 export const GlobalBox = styled.div`
-    width: 74rem;
+    width: 64rem;
     margin: 5rem auto 0 auto; // 가운데 정렬
 `;
 
@@ -95,7 +96,7 @@ export const LinkContainer = styled.div`
 
 export const TitleSection = styled.div`
     display: flex;
-    width: 69rem;
+    width: 64rem;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 1rem;
@@ -125,6 +126,7 @@ export const BackBtn = styled.button`
     height: 4rem;
     background-color: ${({ theme }) => theme.Grey};
     color: black;
+    cursor: pointer;
     padding: 1rem 6rem;
     border-radius: 1rem;
     font-family: 'PreMedium';
@@ -137,18 +139,23 @@ export const SaveBtn = styled.button`
     background-color: ${({ theme }) => theme.box1};
     color: white;
     padding: 1rem 6rem;
+    cursor: pointer;
     border-radius: 1rem;
     font-family: 'PreMedium';
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.mdd};
 `;
 
+export const NameInput = styled(SNSInput)`
+    width: 64rem;
+`;
 export const TestInput = styled(SNSInput)`
     width: 32.188rem;
 `;
 
 export const InputContainer = styled.div`
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     gap: 0.625rem;
     width: 100%;
@@ -175,14 +182,14 @@ export const Fillter1 = styled.div`
 `;
 
 export const CompanyInput = styled(SNSInput)`
-    width: 39rem;
+    width: 37rem;
 `;
 export const PositionInput = styled(SNSInput)`
-    width: 29.188rem;
+    width: 27rem;
 `;
 
 export const Textarea = styled.textarea`
-    width: 69rem;
+    width: 64rem;
     height: 9.813rem;
     border: 1.5px solid var(--system-grey4, #d2d2d7);
     padding: 0.983rem 1.125rem;
@@ -205,7 +212,7 @@ export const FileUploadBox = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 69rem;
+    width: 64rem;
     height: 15.125rem;
     background-color: #f7f7f7;
     border: 1.5px dotted var(--system-grey4, #d2d2d7);
@@ -236,6 +243,7 @@ export const UploadBtn = styled.button`
     color: white;
     width: 15rem;
     height: 3.25rem;
+    cursor: pointer;
     padding: 0.813rem 2.625rem;
     border-radius: 1rem;
     font-size: ${({ theme }) => theme.fontSize.md};
@@ -254,11 +262,14 @@ export const DeleteBtn = styled.div`
     width: 3.25rem;
     height: 3.25rem;
     margin-left: 2rem;
+    cursor: pointer;
     background-size: contain;
+    background-repeat: no-repeat;
 `;
 
 export const BtnWrapper = styled.div`
     display: flex;
+    width: 64rem;
     flex-direction: column;
     gap: 0.5rem;
 `;
