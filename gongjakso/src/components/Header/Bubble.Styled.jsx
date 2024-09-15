@@ -15,7 +15,7 @@ export const BubbleContainer = styled.div`
     justify-content: center;
     top: 55px;
     width: 370px;
-    right: 5%;
+    right: -50px;
     display: flex;
     border-radius: 20px;
     border: 2px solid #eee;
