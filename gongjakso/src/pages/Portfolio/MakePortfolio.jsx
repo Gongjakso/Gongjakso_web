@@ -93,10 +93,6 @@ const MakePortfolio = ({ portfolioId }) => {
     const handleCareerDate = selectedDates => {
         transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
     };
-    const toggleCheck = () => {
-        setIsChecked(!isChecked); // 체크 상태를 토글
-    };
-
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data); // 'response'를 바로 전달

@@ -176,11 +176,17 @@ export const EducationInput = styled(SNSInput)`
 `;
 
 export const Fillter1 = styled.div`
-    width: 16rem;
+    width: 220px;
+    height: 3.438rem;
+    font-family: 'PreRegular';
     border-radius: 0.688rem;
+    color: #828293;
+    font-size: ${({ theme }) => theme.fontSize.m};
     border: 1.5px solid ${({ theme }) => theme.Grey};
     display: flex;
+    padding: 12px 18px;
     align-items: center;
+    z-index: 100;
 `;
 
 export const CompanyInput = styled(SNSInput)`
