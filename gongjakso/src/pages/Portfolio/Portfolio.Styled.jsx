@@ -3,6 +3,8 @@ import linkicon from '../../assets/images/linkIcon.svg';
 import plus from '../../assets/images/PlusIcon.svg';
 import pdf from '../../assets/images/pdf.svg';
 import trash from '../../assets/images/trash.svg';
+import unchecked from '../../assets/images/unchecked.svg';
+import checked from '../../assets/images/checked.svg';
 import { SelectInput } from '../../components/common/Input/Input';
 
 export const TopBox = styled.div`
@@ -279,4 +281,20 @@ export const BtnBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+`;
+
+export const CheckContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+`;
+export const CareerCheck = styled.div``;
+
+export const CheckImg = styled.div`
+    background-image: url(${props => (props.checked ? checked : unchecked)});
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    background-repeat: no-repeat;
 `;

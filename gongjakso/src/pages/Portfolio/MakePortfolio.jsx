@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
 import { getPortfolio, postPortfolio } from '../../service/portfolio_service';
 
-const MakePortfolio = ({ userId }) => {
+const MakePortfolio = ({ portfolioId }) => {
     const [data, setProfileData] = useState();
+    const [isChecked, setIsChecked] = useState(false);
+    const [portfolioName, setPortfolioName] = useState('');
     const [portfolio, setPortfolio] = useState(null);
     const [error, setError] = useState();
     const [loading, setLoading] = useState();
@@ -17,7 +19,13 @@ const MakePortfolio = ({ userId }) => {
         { id: 1, schoolName: '', gradeStatus: '1학년', status: '재학 중' },
     ]);
     const [careerSections, setCareerSections] = useState([
-        { id: 1, companyName: '', position: '', description: '' },
+        {
+            id: 1,
+            companyName: '',
+            position: '',
+            description: '',
+            isActive: false,
+        },
     ]);
     const [activitySections, setActivitySections] = useState([
         { id: 1, activityName: '', activityStatus: '활동 중' },
@@ -81,6 +89,9 @@ const MakePortfolio = ({ userId }) => {
     const handleCareerDate = selectedDates => {
         transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
     };
+    const toggleCheck = () => {
+        setIsChecked(!isChecked); // 체크 상태를 토글
+    };
 
     useEffect(() => {
         getMyInfo().then(response => {
@@ -89,19 +100,46 @@ const MakePortfolio = ({ userId }) => {
     }, []);
 
     useEffect(() => {
+        if (!portfolioId) {
+            // portfolioId가 없을 때는 fetchPortfolio를 호출하지 않음
+            return;
+        }
+
         const fetchPortfolio = async () => {
             try {
-                const data = await getPortfolio(userId);
+                const data = await getPortfolio(portfolioId);
                 setPortfolio(data);
-            } catch (err) {
-                setError('Error fetching portfolio');
-            } finally {
-                setLoading(false);
+            } catch (error) {
+                console.error('Failed to fetch portfolio:', error);
             }
         };
 
         fetchPortfolio();
-    }, [userId]);
+    }, [portfolioId]);
+
+    const handleSavePortfolio = async () => {
+        const portfolioData = {
+            portfolioId,
+            portfolioName,
+            education: educationSections,
+            career: careerSections,
+            activity: activitySections,
+            awards: awardSections,
+            certificates: certificateSections,
+            snsLinks,
+        };
+
+        try {
+            setLoading(true);
+            await postPortfolio(portfolioData);
+            alert('포트폴리오가 저장되었습니다.');
+        } catch (err) {
+            console.error('Error saving portfolio', err);
+            setError('Error saving portfolio');
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div>
             <S.TopBox>
@@ -117,7 +155,11 @@ const MakePortfolio = ({ userId }) => {
                     <S.SubTitle>포트폴리오 이름</S.SubTitle>
                 </S.TitleSection>
                 <S.InputContainer>
-                    <S.NameInput placeholder="포트폴리오 이름을 입력해주세요." />
+                    <S.NameInput
+                        placeholder="포트폴리오 이름을 입력해주세요."
+                        value={portfolioName}
+                        onChange={e => setPortfolioName(e.target.value)}
+                    />
                 </S.InputContainer>
                 {/* 학력 Section */}
                 <S.TitleSection>
@@ -232,6 +274,25 @@ const MakePortfolio = ({ userId }) => {
                                     onApply={handleCareerDate}
                                     dates={dates}
                                 />
+                                <SelectCalendar
+                                    onApply={handleCareerDate}
+                                    dates={dates}
+                                />
+                                <S.CheckContainer>
+                                    <S.CareerCheck>재직 중</S.CareerCheck>
+                                    <S.CheckImg
+                                        onClick={() => {
+                                            const updatedSections = [
+                                                ...careerSections,
+                                            ];
+                                            updatedSections[index].isActive =
+                                                !updatedSections[index]
+                                                    .isActive;
+                                            setCareerSections(updatedSections);
+                                        }}
+                                        checked={section.isActive}
+                                    />
+                                </S.CheckContainer>
                             </S.InputContainer>
                             <S.InputContainer>
                                 <S.Textarea
@@ -436,7 +497,9 @@ const MakePortfolio = ({ userId }) => {
                 ))}
                 <S.BtnContainer>
                     <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>
-                    <S.SaveBtn>저장하기</S.SaveBtn>
+                    <S.SaveBtn onClick={handleSavePortfolio}>
+                        저장하기
+                    </S.SaveBtn>
                 </S.BtnContainer>
             </S.GlobalBox>
         </div>

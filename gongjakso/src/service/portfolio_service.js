@@ -14,14 +14,14 @@ export const checkPortfolioExists = async portfolioId => {
     }
 };
 
-export const postPortfolio = async id => {
-    const reqURL = `mypage/portfoilo`;
+export const postPortfolio = async portfolioData => {
+    const reqURL = `mypage/portfolio`;
 
     try {
-        const response = await axiosInstance.post(reqURL);
+        const response = await axiosInstance.post(reqURL, portfolioData);
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error('Error posting portfolio:', error);
     }
 };
 
@@ -37,23 +37,21 @@ export const getPortfolio = async id => {
         return error.response.data.code;
     }
 };
-
-export const EditPortfolio = async id => {
+export const EditPortfolio = async (id, portfolioData) => {
     const reqURL = `mypage/portfolio/${id}`;
 
     try {
-        const response = await axiosInstance.put(reqURL);
+        const response = await axiosInstance.put(reqURL, portfolioData);
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.error('Error editing portfolio:', error);
     }
 };
-
 export const deletePortfolio = async id => {
     const reqURL = `mypage/portfolio/${id}`;
     try {
         await axiosInstance.delete(reqURL);
     } catch (error) {
-        console.log(error);
+        console.log('Error deleting portfolio:', error);
     }
 };

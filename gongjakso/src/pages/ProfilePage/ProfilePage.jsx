@@ -70,14 +70,6 @@ const ProfilePage = () => {
             setProfileData(response?.data);
         });
 
-        const checkPortfolio = async () => {
-            if (data?.portfolioId) {
-                const exists = await checkPortfolioExists(data.portfolioId);
-                setPortfolioExists(exists !== null);
-            }
-        };
-
-        checkPortfolio();
         // 서버에서 받아온 데이터를 모방하여 설정
         setPostContent1(mockRecruitingTeams);
         setPostContent2(mockAppliedTeams);
@@ -95,6 +87,25 @@ const ProfilePage = () => {
         });
 */
     }, []);
+
+    useEffect(() => {
+        const checkPortfolio = async () => {
+            try {
+                // data?.id 또는 data?.memberId로 포트폴리오 확인
+                if (data?.memberId) {
+                    const exists = await checkPortfolioExists(data.memberId); // 멤버 ID로 포트폴리오 확인
+                    console.log('Portfolio Exists:', exists);
+                    setPortfolioExists(exists !== null);
+                }
+            } catch (error) {
+                console.error('Error checking portfolio existence:', error);
+            }
+        };
+
+        if (data) {
+            checkPortfolio();
+        }
+    }, [data]);
 
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
     const closePortfolioModal = () => setShowModal(false); // 모달 닫기
