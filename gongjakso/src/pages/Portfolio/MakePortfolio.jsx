@@ -1,15 +1,13 @@
 import * as S from './Portfolio.Styled';
 import { SelectInput } from '../../components/common/Input/Input';
-import SelectCalendar from '../../components/common/Calendar/SelectCalendar';
 import { useState, useEffect } from 'react';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
 import { getPortfolio, postPortfolio } from '../../service/portfolio_service';
+import SelectOne from '../../components/common/Calendar/SelectOne';
 
 const MakePortfolio = ({ portfolioId }) => {
     const [data, setProfileData] = useState();
-    const [isChecked, setIsChecked] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
     const [portfolio, setPortfolio] = useState(null);
     const [error, setError] = useState();
@@ -82,17 +80,43 @@ const MakePortfolio = ({ portfolioId }) => {
     };
     const [dates, setDates] = useState([]);
     const navigate = useNavigate();
-    const transformAndSetDates = (startDate, endDate) => {
-        const parsedStartDate = new Date(startDate);
-        const parsedEndDate = new Date(endDate);
-        const formattedStartDate = `${parsedStartDate.toISOString().split('T')[0]}T02:32:22.376895959`;
-        const formattedEndDate = `${parsedEndDate.toISOString().split('T')[0]}T02:32:22.376895959`;
-        setDates({ startDate: formattedStartDate, endDate: formattedEndDate });
+    const handleApplyDate = (date, type, sectionId, sectionType) => {
+        const updatedSections = {
+            education: [...educationSections],
+            career: [...careerSections],
+            activity: [...activitySections],
+            award: [...awardSections],
+            certificate: [...certificateSections],
+        };
+
+        const sectionIndex = updatedSections[sectionType].findIndex(
+            section => section.id === sectionId,
+        );
+
+        if (sectionIndex !== -1) {
+            updatedSections[sectionType][sectionIndex][type] = date;
+            switch (sectionType) {
+                case 'education':
+                    setEducationSections(updatedSections.education);
+                    break;
+                case 'career':
+                    setCareerSections(updatedSections.career);
+                    break;
+                case 'activity':
+                    setActivitySections(updatedSections.activity);
+                    break;
+                case 'award':
+                    setAwardSections(updatedSections.award);
+                    break;
+                case 'certificate':
+                    setCertificateSections(updatedSections.certificate);
+                    break;
+                default:
+                    break;
+            }
+        }
     };
 
-    const handleCareerDate = selectedDates => {
-        transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
-    };
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data); // 'response'를 바로 전달
@@ -121,12 +145,37 @@ const MakePortfolio = ({ portfolioId }) => {
         const portfolioData = {
             portfolioId,
             portfolioName,
-            education: educationSections,
-            career: careerSections,
-            activity: activitySections,
-            awards: awardSections,
-            certificates: certificateSections,
-            snsLinks,
+            educationList: educationSections.map(section => ({
+                school: section.schoolName,
+                grade: section.gradeStatus,
+                status: section.status,
+                isActive: section.isActive,
+            })),
+            workList: careerSections.map(section => ({
+                company: section.companyName,
+                partition: section.position,
+                enteredAt: section.enteredAt,
+                exitedAt: section.exitedAt,
+                isActive: section.isActive,
+                detail: section.description,
+            })),
+            activityList: activitySections.map(section => ({
+                name: section.activityName,
+                isActive: section.activityStatus,
+            })),
+            awardList: awardSections.map(section => ({
+                contestName: section.competitionName,
+                awardName: section.award,
+                awardDate: section.awardDate,
+            })),
+            certificateList: certificateSections.map(section => ({
+                name: section.examName,
+                rating: section.score,
+                certificationDate: section.certificationDate,
+            })),
+            snsList: snsLinks.map(link => ({
+                snsLink: link.link,
+            })),
         };
 
         try {
@@ -216,17 +265,14 @@ const MakePortfolio = ({ portfolioId }) => {
                                     case={true}
                                 />
                             </S.Fillter1>
-                            {educationSections.length > 1 && (
-                                <S.DeleteBtn
-                                    onClick={() =>
-                                        handleDeleteSection(
-                                            'education',
-                                            section.id,
-                                        )
-                                    }
-                                />
-                            )}
                         </S.InputContainer>
+                        {educationSections.length > 1 && (
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('education', section.id)
+                                }
+                            />
+                        )}
                     </S.BoxDetail>
                 ))}
 
@@ -274,14 +320,32 @@ const MakePortfolio = ({ portfolioId }) => {
                                 />
                             </S.InputContainer>
                             <S.InputContainer>
-                                <SelectCalendar
-                                    onApply={handleCareerDate}
-                                    dates={dates}
-                                />
-                                <SelectCalendar
-                                    onApply={handleCareerDate}
-                                    dates={dates}
-                                />
+                                <S.CalendarSection>
+                                    <SelectOne
+                                        onApply={date =>
+                                            handleApplyDate(
+                                                date,
+                                                'enteredAt',
+                                                section.id,
+                                                'career',
+                                            )
+                                        }
+                                        placeholder={'입사일'}
+                                        width={'27.5rem'}
+                                    />
+                                    <SelectOne
+                                        onApply={date =>
+                                            handleApplyDate(
+                                                date,
+                                                'exitedAt',
+                                                section.id,
+                                                'career',
+                                            )
+                                        }
+                                        placeholder={'퇴사일'}
+                                        width={'27.5rem'}
+                                    />
+                                </S.CalendarSection>
                                 <S.CheckContainer>
                                     <S.CareerCheck>재직 중</S.CareerCheck>
                                     <S.CheckImg
@@ -372,17 +436,14 @@ const MakePortfolio = ({ portfolioId }) => {
                                     case={true}
                                 />
                             </S.Fillter1>
-                            {activitySections.length > 1 && (
-                                <S.DeleteBtn
-                                    onClick={() =>
-                                        handleDeleteSection(
-                                            'activity',
-                                            section.id,
-                                        )
-                                    }
-                                />
-                            )}
                         </S.InputContainer>
+                        {activitySections.length > 1 && (
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('activity', section.id)
+                                }
+                            />
+                        )}
                     </S.BoxDetail>
                 ))}
 
@@ -418,14 +479,26 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setAwardSections(updatedSections);
                                 }}
                             />
-                            {awardSections.length > 1 && (
-                                <S.DeleteBtn
-                                    onClick={() =>
-                                        handleDeleteSection('award', section.id)
-                                    }
-                                />
-                            )}
+                            <SelectOne
+                                onApply={date =>
+                                    handleApplyDate(
+                                        date,
+                                        'awardDate',
+                                        section.id,
+                                        'award',
+                                    )
+                                }
+                                placeholder={'수상 날짜'}
+                                width={'16rem'}
+                            />
                         </S.InputContainer>
+                        {awardSections.length > 1 && (
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection('award', section.id)
+                                }
+                            />
+                        )}
                     </S.BoxDetail>
                 ))}
 
@@ -468,17 +541,29 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setCertificateSections(updatedSections);
                                 }}
                             />
-                            {certificateSections.length > 1 && (
-                                <S.DeleteBtn
-                                    onClick={() =>
-                                        handleDeleteSection(
-                                            'certificate',
-                                            section.id,
-                                        )
-                                    }
-                                />
-                            )}
+                            <SelectOne
+                                onApply={date =>
+                                    handleApplyDate(
+                                        date,
+                                        'certificationDate',
+                                        section.id,
+                                        'certificateList',
+                                    )
+                                }
+                                placeholder={'취득 날짜'}
+                                width={'16rem'}
+                            />
                         </S.InputContainer>
+                        {certificateSections.length > 1 && (
+                            <S.DeleteBtn
+                                onClick={() =>
+                                    handleDeleteSection(
+                                        'certificate',
+                                        section.id,
+                                    )
+                                }
+                            />
+                        )}
                     </S.BoxDetail>
                 ))}
 

@@ -18,7 +18,6 @@ export const TopBox = styled.div`
 
 export const BoxDetail = styled.div`
     display: flex;
-    flex-direction: column;
     gap: 0.5rem;
     width: 70rem;
     margin-bottom: 1rem;
@@ -283,7 +282,6 @@ export const BtnWrapper = styled.div`
 `;
 
 export const BtnBox = styled.div`
-    height: 19.219rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -292,6 +290,7 @@ export const BtnBox = styled.div`
 export const CheckContainer = styled.div`
     display: flex;
     align-items: center;
+    height: 3.438rem;
     gap: 10px;
     justify-content: space-between;
 `;
@@ -306,4 +305,9 @@ export const CheckImg = styled.div`
     width: 33px;
     height: 33px;
     background-repeat: no-repeat;
+`;
+
+export const CalendarSection = styled.div`
+    display: flex;
+    gap: 0.625rem;
 `;
