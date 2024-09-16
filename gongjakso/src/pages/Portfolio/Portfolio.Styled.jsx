@@ -295,7 +295,10 @@ export const CheckContainer = styled.div`
     gap: 10px;
     justify-content: space-between;
 `;
-export const CareerCheck = styled.div``;
+export const CareerCheck = styled.div`
+    font-family: 'PreRegular';
+    font-size: ${({ theme }) => theme.fontSize.m};
+`;
 
 export const CheckImg = styled.div`
     background-image: url(${props => (props.checked ? checked : unchecked)});
