@@ -100,7 +100,7 @@ export const PortfolioBox = styled.button`
 `;
 
 export const GlobalBox = styled.div`
-    width: 1200px; // 원하는 너비로 설정
+    width: 100%;
     margin: 180px auto 0 auto; // 가운데 정렬
 `;
 
