@@ -16,11 +16,16 @@ const MakePortfolio = ({ portfolioId }) => {
     const [loading, setLoading] = useState();
 
     const [educationSections, setEducationSections] = useState([
-        { id: 1, schoolName: '', gradeStatus: '1학년', status: '재학 중' },
+        {
+            id: Date.now(),
+            schoolName: '',
+            gradeStatus: '1학년',
+            status: '재학 중',
+        },
     ]);
     const [careerSections, setCareerSections] = useState([
         {
-            id: 1,
+            id: Date.now(),
             companyName: '',
             position: '',
             description: '',
@@ -28,31 +33,31 @@ const MakePortfolio = ({ portfolioId }) => {
         },
     ]);
     const [activitySections, setActivitySections] = useState([
-        { id: 1, activityName: '', activityStatus: '활동 중' },
+        { id: Date.now(), activityName: '', activityStatus: '활동 중' },
     ]);
     const [awardSections, setAwardSections] = useState([
-        { id: 1, competitionName: '', award: '' },
+        { id: Date.now(), competitionName: '', award: '' },
     ]);
     const [certificateSections, setCertificateSections] = useState([
-        { id: 1, examName: '', score: '' },
+        { id: Date.now(), examName: '', score: '' },
     ]);
-    const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
+    const [snsLinks, setSnsLinks] = useState([{ id: Date.now(), link: '' }]);
 
     const gradeStatus_options = ['1학년', '2학년', '3학년', '4학년'];
     const status_options = ['재학 중', '휴학 중', '졸업', '졸업 유예'];
     const activityStatus_options = ['활동 중', '활동 종료'];
 
     const addSection = (sectionSetter, currentSections) => {
-        sectionSetter([...currentSections, { id: currentSections.length + 1 }]);
+        sectionSetter([...currentSections, { id: Date.now() }]);
     };
+
     const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: snsLinks.length + 1, link: '' }]);
+        setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
     };
+
     const handleDeleteSection = (sectionType, id) => {
         const deleteSection = (sections, setSections) => {
-            if (sections.length > 1) {
-                setSections(sections.filter(section => section.id !== id));
-            }
+            setSections(sections.filter(section => section.id !== id));
         };
 
         switch (sectionType) {
@@ -75,7 +80,6 @@ const MakePortfolio = ({ portfolioId }) => {
                 break;
         }
     };
-
     const [dates, setDates] = useState([]);
     const navigate = useNavigate();
     const transformAndSetDates = (startDate, endDate) => {
@@ -216,11 +220,16 @@ const MakePortfolio = ({ portfolioId }) => {
                                     case={true}
                                 />
                             </S.Fillter1>
-                            <S.DeleteBtn
-                                onClick={() =>
-                                    handleDeleteSection('education', section.id)
-                                }
-                            />
+                            {educationSections.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() =>
+                                        handleDeleteSection(
+                                            'education',
+                                            section.id,
+                                        )
+                                    }
+                                />
+                            )}
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -239,7 +248,6 @@ const MakePortfolio = ({ portfolioId }) => {
                         key={section.id}
                         style={{
                             flexDirection: 'row',
-                            justifyContent: 'center',
                         }}
                     >
                         <S.BtnWrapper>
@@ -309,17 +317,22 @@ const MakePortfolio = ({ portfolioId }) => {
                                 />
                             </S.InputContainer>
                         </S.BtnWrapper>
-                        <S.BtnBox>
-                            <S.DeleteBtn
-                                style={{
-                                    display: 'flex',
-                                    alignContent: ' center',
-                                }}
-                                onClick={() =>
-                                    handleDeleteSection('career', section.id)
-                                }
-                            />
-                        </S.BtnBox>
+                        {careerSections.length > 1 && (
+                            <S.BtnBox>
+                                <S.DeleteBtn
+                                    style={{
+                                        display: 'flex',
+                                        alignContent: 'center',
+                                    }}
+                                    onClick={() =>
+                                        handleDeleteSection(
+                                            'career',
+                                            section.id,
+                                        )
+                                    }
+                                />
+                            </S.BtnBox>
+                        )}
                     </S.BoxDetail>
                 ))}
 
@@ -363,11 +376,16 @@ const MakePortfolio = ({ portfolioId }) => {
                                     case={true}
                                 />
                             </S.Fillter1>
-                            <S.DeleteBtn
-                                onClick={() =>
-                                    handleDeleteSection('activity', section.id)
-                                }
-                            />
+                            {activitySections.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() =>
+                                        handleDeleteSection(
+                                            'activity',
+                                            section.id,
+                                        )
+                                    }
+                                />
+                            )}
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -404,11 +422,13 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setAwardSections(updatedSections);
                                 }}
                             />
-                            <S.DeleteBtn
-                                onClick={() =>
-                                    handleDeleteSection('award', section.id)
-                                }
-                            />
+                            {awardSections.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() =>
+                                        handleDeleteSection('award', section.id)
+                                    }
+                                />
+                            )}
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -452,14 +472,16 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setCertificateSections(updatedSections);
                                 }}
                             />
-                            <S.DeleteBtn
-                                onClick={() =>
-                                    handleDeleteSection(
-                                        'certificate',
-                                        section.id,
-                                    )
-                                }
-                            />
+                            {certificateSections.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() =>
+                                        handleDeleteSection(
+                                            'certificate',
+                                            section.id,
+                                        )
+                                    }
+                                />
+                            )}
                         </S.InputContainer>
                     </S.BoxDetail>
                 ))}
@@ -481,17 +503,20 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setSnsLinks(updatedLinks);
                                 }}
                             />
-                            <S.DeleteBtn
-                                onClick={() => {
-                                    if (snsLinks.length > 1) {
-                                        setSnsLinks(
-                                            snsLinks.filter(
-                                                link => link.id !== section.id,
-                                            ),
-                                        );
-                                    }
-                                }}
-                            />
+                            {snsLinks.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() => {
+                                        if (snsLinks.length > 1) {
+                                            setSnsLinks(
+                                                snsLinks.filter(
+                                                    link =>
+                                                        link.id !== section.id,
+                                                ),
+                                            );
+                                        }
+                                    }}
+                                />
+                            )}
                         </S.LinkContainer>
                     </S.BoxDetail>
                 ))}

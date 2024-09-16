@@ -80,7 +80,7 @@ export const LinkIcon = styled.div`
 `;
 
 export const SNSInput = styled.input`
-    width: 65.109rem;
+    width: 60rem;
     height: 3.438rem;
     border: 1.5px solid var(--system-grey4, #d2d2d7);
     padding: 0.983rem 1.125rem;
@@ -160,7 +160,7 @@ export const InputContainer = styled.div`
     justify-content: space-between;
     flex-direction: row;
     gap: 0.625rem;
-    width: 100%;
+    width: 64rem;
 `;
 
 export const ScoreInput = styled(SNSInput)`
@@ -172,11 +172,11 @@ export const ActivityInput = styled(SNSInput)`
 `;
 
 export const EducationInput = styled(SNSInput)`
-    width: 33.25rem;
+    width: 33rem;
 `;
 
 export const Fillter1 = styled.div`
-    width: 16.813rem;
+    width: 16rem;
     border-radius: 0.688rem;
     border: 1.5px solid ${({ theme }) => theme.Grey};
     display: flex;

@@ -14,7 +14,7 @@ const UsePortfolio = () => {
         fileInput.current.click();
     };
     const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: snsLinks.length + 1, link: '' }]);
+        setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
     };
 
     const handleChange = e => {
@@ -92,17 +92,20 @@ const UsePortfolio = () => {
                                     setSnsLinks(updatedLinks);
                                 }}
                             />
-                            <S.DeleteBtn
-                                onClick={() => {
-                                    if (snsLinks.length > 1) {
-                                        setSnsLinks(
-                                            snsLinks.filter(
-                                                link => link.id !== section.id,
-                                            ),
-                                        );
-                                    }
-                                }}
-                            />
+                            {snsLinks.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() => {
+                                        if (snsLinks.length > 1) {
+                                            setSnsLinks(
+                                                snsLinks.filter(
+                                                    link =>
+                                                        link.id !== section.id,
+                                                ),
+                                            );
+                                        }
+                                    }}
+                                />
+                            )}
                         </S.LinkContainer>
                     </S.BoxDetail>
                 ))}
