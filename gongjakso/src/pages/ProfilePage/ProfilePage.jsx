@@ -129,7 +129,7 @@ const ProfilePage = () => {
     }, [showModal]);
 
     return (
-        <div>
+        <div style={{ paddingBottom: '10rem' }}>
             <S.TopBox>
                 <S.InfoBox>
                     <S.DetailBox>
@@ -146,7 +146,7 @@ const ProfilePage = () => {
                 </Link> */}
             </S.TopBox>
             <S.GlobalBox>
-                <S.BoxDetail style={{ gap: '2.375rem' }}>
+                <S.BoxDetail>
                     <S.SubTitle>나의 포트폴리오</S.SubTitle>
                     {portfolioExists ? (
                         <S.PortfolioBox>

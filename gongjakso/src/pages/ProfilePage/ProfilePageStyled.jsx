@@ -56,7 +56,7 @@ export const SubTitle = styled.p`
     width: 1000px;
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: 900;
-    margin-bottom: 25px;
+    padding-bottom: 25px;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -123,10 +123,10 @@ export const NoPortfolio = styled.div`
     height: 25.688rem;
     background-color: #f7f7f7;
     border: 1.5px dotted var(--system-grey4, #d2d2d7);
-    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-size: ${({ theme }) => theme.fontSize.mdd};
     padding: 3.813rem 22.25rem;
     border-radius: 1rem;
-    gap: 4.5rem;
+    gap: 4rem;
     line-height: 2.088rem;
     font-family: 'PreRegular';
 `;
