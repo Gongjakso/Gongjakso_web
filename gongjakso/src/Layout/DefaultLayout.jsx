@@ -12,13 +12,13 @@ const DefaultLayout = () => {
     const isLogining = location.pathname.includes('/auth/kakao/');
 
     return (
-        <>
+        <S.Div>
             {isContestDetail ? null : isProjectDetail2 ? null : isLogining ? null : (
                 <Header />
             )}
             <Outlet />
             {isLogining ? null : <Footer />}
-        </>
+        </S.Div>
     );
 };
 export default DefaultLayout;
