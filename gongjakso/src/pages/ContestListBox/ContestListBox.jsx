@@ -1,7 +1,13 @@
 import React from 'react';
 import * as S from './ContestListBox.Styled';
 
-const ContestListBox = ({ contestTitle, image, contestId, remainDate }) => {
+const ContestListBox = ({
+    contestTitle,
+    image,
+    contestId,
+    remainDate,
+    company,
+}) => {
     return (
         <S.ContestContainer>
             <S.RemainDate>
@@ -10,7 +16,7 @@ const ContestListBox = ({ contestTitle, image, contestId, remainDate }) => {
             </S.RemainDate>
             <S.ContestImg src={image} alt="" />
             <S.ContestTitle>{contestTitle}</S.ContestTitle>
-            <S.ContestCompany>{contestId}</S.ContestCompany>
+            <S.ContestCompany>{company}</S.ContestCompany>
         </S.ContestContainer>
     );
 };

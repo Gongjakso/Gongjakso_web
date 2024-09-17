@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { SelectInput } from '../../components/common/Input/Input';
 import ContestListBox from '../ContestListBox/ContestListBox';
 import Pagination from '../../components/Pagination/Pagination';
+import { getContestList } from '../../service/post_service';
 
 const ContestListPage = () => {
     const [banners, setBanners] = useState([]);
@@ -23,40 +24,14 @@ const ContestListPage = () => {
     const authenticated = localStorage.getItem('accessToken');
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
 
-    let setContestList = [
-        {
-            contestTitle: '공모전 1',
-            image: 'https://s3-alpha-sig.figma.com/img/27fd/a982/c6f3325db1ae92f85c1e159ebfd1448d?Expires=1725235200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=d-5HCU2jEuFfvIe8F0~PqJe77V7MBS5FRoxkTV67LhV0-EPEkGC7jwRTo1btGgnV6ZdEyjlIJUfNexng0-g684MDEiKzDlHXpoxHHsARBOsBo8NduZPLBwpnbEYIEWTcDURkdChKuoxk-WhePq8PtWgMj1BswIvTorAWLYPjY2koftMgutXOs40kM5vIR2TDc5YqA6CoMghRidG5e6g01qiiITz23AT1p-mZC8goY-6UJhW6MKXHN1~jHRzxlF1C1fHiiF2896dd8HUwUlK-lEuNadBd16c-yeiGkBDv2tLx3NXEmw7d89DDxwxs9tkSEDV711IWbuB75OLe9U9iag__',
-            contestId: 1,
-            remainDate: 'D-1',
-        },
-        {
-            contestTitle: '공모전 2', // Fixed typo here
-            image: 'https://s3-alpha-sig.figma.com/img/27fd/a982/c6f3325db1ae92f85c1e159ebfd1448d?Expires=1725235200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=d-5HCU2jEuFfvIe8F0~PqJe77V7MBS5FRoxkTV67LhV0-EPEkGC7jwRTo1btGgnV6ZdEyjlIJUfNexng0-g684MDEiKzDlHXpoxHHsARBOsBo8NduZPLBwpnbEYIEWTcDURkdChKuoxk-WhePq8PtWgMj1BswIvTorAWLYPjY2koftMgutXOs40kM5vIR2TDc5YqA6CoMghRidG5e6g01qiiITz23AT1p-mZC8goY-6UJhW6MKXHN1~jHRzxlF1C1fHiiF2896dd8HUwUlK-lEuNadBd16c-yeiGkBDv2tLx3NXEmw7d89DDxwxs9tkSEDV711IWbuB75OLe9U9iag__',
-            contestId: 2,
-            remainDate: 'D-2',
-        },
-        {
-            contestTitle: '공모전 2', // Fixed typo here
-            image: 'https://s3-alpha-sig.figma.com/img/27fd/a982/c6f3325db1ae92f85c1e159ebfd1448d?Expires=1725235200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=d-5HCU2jEuFfvIe8F0~PqJe77V7MBS5FRoxkTV67LhV0-EPEkGC7jwRTo1btGgnV6ZdEyjlIJUfNexng0-g684MDEiKzDlHXpoxHHsARBOsBo8NduZPLBwpnbEYIEWTcDURkdChKuoxk-WhePq8PtWgMj1BswIvTorAWLYPjY2koftMgutXOs40kM5vIR2TDc5YqA6CoMghRidG5e6g01qiiITz23AT1p-mZC8goY-6UJhW6MKXHN1~jHRzxlF1C1fHiiF2896dd8HUwUlK-lEuNadBd16c-yeiGkBDv2tLx3NXEmw7d89DDxwxs9tkSEDV711IWbuB75OLe9U9iag__',
-            contestId: 3,
-            remainDate: 'D-2',
-        },
-        {
-            contestTitle: '공모전 2', // Fixed typo here
-            image: 'https://s3-alpha-sig.figma.com/img/27fd/a982/c6f3325db1ae92f85c1e159ebfd1448d?Expires=1725235200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=d-5HCU2jEuFfvIe8F0~PqJe77V7MBS5FRoxkTV67LhV0-EPEkGC7jwRTo1btGgnV6ZdEyjlIJUfNexng0-g684MDEiKzDlHXpoxHHsARBOsBo8NduZPLBwpnbEYIEWTcDURkdChKuoxk-WhePq8PtWgMj1BswIvTorAWLYPjY2koftMgutXOs40kM5vIR2TDc5YqA6CoMghRidG5e6g01qiiITz23AT1p-mZC8goY-6UJhW6MKXHN1~jHRzxlF1C1fHiiF2896dd8HUwUlK-lEuNadBd16c-yeiGkBDv2tLx3NXEmw7d89DDxwxs9tkSEDV711IWbuB75OLe9U9iag__',
-            contestId: 4,
-            remainDate: 'D-2',
-        },
-    ];
-
     const [page, setPage] = useState(1);
-    const [contestListTotalPage, setContestListTotalPage] = useState(
-        setContestList.length,
-    );
+    const [contestListTotalPage, setContestListTotalPage] = useState();
 
-    const [contestListPosts, setContestListPosts] = useState(setContestList);
-    // const [contestListPosts, setContestListPosts] = useState(0);
+    const [contestListPosts, setContestListPosts] = useState();
+
+    useEffect(() => {
+        setPage(1);
+    }, [sortBy]);
 
     useEffect(() => {
         getProjectBanner().then(res => {
@@ -64,6 +39,10 @@ const ContestListPage = () => {
             setBanners(imageUrls);
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
+        });
+        getContestList().then(res => {
+            setContestListPosts(res?.data.contestList);
+            setContestListTotalPage(res?.data.totalPages);
         });
     }, []);
 
@@ -108,6 +87,12 @@ const ContestListPage = () => {
         }
     };
 
+    const loadContestList = (page, sort) => {
+        getContestList(page, sort).then(res => {
+            setContestListPosts(res?.data.contestList);
+            setContestListTotalPage(res?.data.totalPages);
+        });
+    };
     return (
         <>
             <TopButton />
@@ -146,17 +131,18 @@ const ContestListPage = () => {
                 <S.ContestContent>
                     {contestListPosts && contestListPosts.length > 0 ? (
                         contestListPosts.map(contest => (
-                            <React.Fragment key={contest?.contestId}>
+                            <React.Fragment key={contest?.id}>
                                 {isLoggedIn ? (
                                     <Link
-                                        to={`/contestList/${contest?.contestId}`}
+                                        to={`/contestList/${contest?.id}`}
                                         state={{ contestData: contest }}
                                     >
                                         <ContestListBox
-                                            contestTitle={contest.contestTitle} // Pass individual props
-                                            image={contest.image}
-                                            contestId={contest.contestId}
-                                            remainDate={contest.remainDate}
+                                            contestTitle={contest.title} // Pass individual props
+                                            image={contest.imgUrl}
+                                            contestId={contest.id}
+                                            remainDate={contest.dayState}
+                                            company={contest.institution}
                                         />
                                     </Link>
                                 ) : (
@@ -166,6 +152,7 @@ const ContestListPage = () => {
                                             image={contest.image}
                                             contestId={contest.contestId}
                                             remainDate={contest.remainDate}
+                                            company={contest.institution}
                                         />
                                     </button>
                                 )}
@@ -185,7 +172,7 @@ const ContestListPage = () => {
                     total={contestListTotalPage}
                     page={page}
                     setPage={setPage}
-                    // loadPosts={loadProjectPosts}
+                    loadPosts={loadContestList}
                 />
             </S.MainContent>
         </>

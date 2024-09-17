@@ -16,7 +16,8 @@ export const ContestImg = styled.img`
 `;
 
 export const RemainDate = styled.div`
-    width: 75px;
+    width: auto;
+    padding: 10px;
     height: 27px;
     display: flex;
     align-items: center;
