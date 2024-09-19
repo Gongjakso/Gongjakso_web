@@ -25,7 +25,7 @@ export const ContestInfo = styled.div`
     margin-right: 15px;
 `;
 
-export const ContestTitle = styled.h2`
+export const ContestTitle = styled.p`
     font-family: The Jamsil OTF;
     font-size: 38px;
     font-weight: 700;

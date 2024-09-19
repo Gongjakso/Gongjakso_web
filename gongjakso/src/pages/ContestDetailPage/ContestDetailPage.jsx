@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as S from './ContestDetailPage.Styled';
 import Multilevel from '../../components/common/Input/Multilevel';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import TeamBox from '../TeamBox/TeamBox';
 import NoContents from '../../features/NoContents/NoContents';
 import useCustomNavigate from '../../hooks/useNavigate';
+import { getContestDetail } from '../../service/post_service';
 
 const ContestDetailPage = () => {
     const location = useLocation();
@@ -15,58 +16,16 @@ const ContestDetailPage = () => {
     const [selectedTownData, setSelectedTownData] = useState('');
     const [sortBy, setSortBy] = useState('createdAt');
     const navigate = useCustomNavigate();
+    const [contestId, setContestId] = useState(contestData?.id);
+    const [contestPosts, setContestPosts] = useState();
+    const [contestDetail, setContestDetail] = useState();
 
-    const posts = [
-        {
-            postId: 1,
-            content: '내용1',
-            title: '제목1',
-            isMyParticipation: true,
-            memberName: '최현진',
-            leaderName: '김지은',
-            name: '이정진',
-            startDate: '2024-09-11',
-            endDate: '2024-10-08',
-            finishDate: '2024-10-20',
-            daysRemaining: 29,
-            scrapCount: 2,
-            postStatus: 'ACTIVE',
-        },
-        {
-            postId: 2,
-            content: '내용2',
-            title: '제목2',
-            isMyParticipation: false,
-            memberName: '최현진',
-            leaderName: '김지은',
-            name: '이정진',
-            startDate: '2024-09-11',
-            endDate: '2024-10-08',
-            finishDate: '2024-10-20',
-            daysRemaining: 13,
-            scrapCount: 7,
-            postStatus: 'ACTIVE',
-        },
-        {
-            postId: 3,
-            content: '내용3',
-            title: '제목3',
-            isMyParticipation: null,
-            memberName: '최현진',
-            leaderName: '김지은',
-            name: '이정진',
-            startDate: '2024-09-11',
-            endDate: '2024-10-08',
-            finishDate: '2024-10-20',
-            daysRemaining: 5,
-            scrapCount: 10,
-            postStatus: 'ACTIVE',
-        },
-    ];
+    useEffect(() => {
+        getContestDetail(contestId).then(res => {
+            setContestDetail(res?.data);
+        });
+    }, [contestId]);
 
-    console.log(posts);
-
-    const [contestPosts, setContestPosts] = useState(posts);
     // const [contestPosts, setContestPosts] = useState();
 
     const handleSelectedDataCity = data => {
@@ -117,28 +76,36 @@ const ContestDetailPage = () => {
         <>
             <S.MainContent>
                 <S.ContestDetail>
-                    <S.ContestImg src={contestData?.image} />
+                    <S.ContestImg src={contestDetail?.imgUrl} />
                     <S.ContestInfo>
                         <S.ContestInfoTop>
                             <S.ContestTitle>
-                                {contestData?.contestTitle}
+                                {contestDetail?.title}
                             </S.ContestTitle>
                             <S.RemainDate>
                                 <S.FireImage />
-                                {contestData?.remainDate}
+                                {contestDetail?.dayState}
                             </S.RemainDate>
                         </S.ContestInfoTop>
-                        <S.Organization>주최기관</S.Organization>
+                        <S.Organization>
+                            {contestDetail?.institution}
+                        </S.Organization>
                         <S.InfoContent>
-                            조회수 :<S.InfoSpan>186회</S.InfoSpan>
+                            조회수 :
+                            <S.InfoSpan>
+                                {contestDetail?.viewCount}회
+                            </S.InfoSpan>
                         </S.InfoContent>
                         <S.InfoContent>
                             <p>진행기간</p>
-                            <S.InfoSpan>yy.mm.dd~yy.mm.dd</S.InfoSpan>
+                            <S.InfoSpan>
+                                {contestDetail?.startedAt}~
+                                {contestDetail?.finishedAt}
+                            </S.InfoSpan>
                         </S.InfoContent>
                         <S.Headline />
                         <S.InfoContent>설명글</S.InfoContent>
-                        <S.InfoSpan>공모전설명내용</S.InfoSpan>
+                        <S.InfoSpan>{contestDetail?.body}</S.InfoSpan>
                     </S.ContestInfo>
                 </S.ContestDetail>
                 <S.ContestButtonOption>
@@ -149,7 +116,7 @@ const ContestDetailPage = () => {
                 </S.ContestButtonOption>
                 <S.ContestInfo>
                     <S.ContestTitle>
-                        {contestData?.contestTitle}의 팀 찾기
+                        {contestDetail?.contestTitle}의 팀 찾기
                     </S.ContestTitle>
                     <S.Organization>
                         현재 N명이 팀을 모집하고 있어요

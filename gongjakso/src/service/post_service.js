@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 import axios from 'axios';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
-
+const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;
 export const postPosting = async postContent => {
     const reqURL = `post`;
 
@@ -120,6 +120,36 @@ export const patchCompletedPost = async post_id => {
 
     try {
         const response = await axiosInstance.patch(reqURL);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getContestList = async () => {
+    const reqURL = `contest/search?word=&size=12&page=1`;
+
+    try {
+        const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getContestDetail = async contest_id => {
+    const reqURL = `contest/${contest_id}`;
+
+    try {
+        const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         return response.data;
     } catch (error) {
         console.log(error);
