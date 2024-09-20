@@ -4,7 +4,7 @@ import { Input } from '../../components/common/Input/Input';
 import { useForm } from 'react-hook-form';
 import CountGuest from '../../components/common/CountGuest/CountGuest';
 import SelectCalendar from '../../components/common/Calendar/SelectCalendar';
-import { postPosting } from '../../service/post_service';
+import { postContestTeam, postPosting } from '../../service/post_service';
 import Multilevel from '../../components/common/Input/Multilevel';
 import SelectDate from '../../components/common/Calendar/SelectDate';
 import moment from 'moment';
@@ -200,22 +200,23 @@ const TeamBuildingUploadPage = ({ posts }) => {
         // console.log(endDates);
         const newData = {
             title: title,
-            contents: description,
+            body: description,
             contestLink: data.link, //공모전 주소
-            startDate: dates.startDate,
-            endDate: dates.endDate,
-            finishDate: endDates.endDate, // 공고 마감일
-            maxPerson: data.people,
-            stackNames: [],
-            categories: category?.categories, //참여하는 팀의 역할
-            meetingMethod: meeting,
-            meetingCity: selectedCityData,
-            meetingTown: selectedTownData,
+            startedAt: dates.startDate,
+            finishedAt: dates.endDate,
+            recruit_finished_at: endDates.endDate, // 공고 마감일
+            total_count: data.people,
+            // stackNames: [],
+            recruit_part: category?.categories, //참여하는 팀의 역할
+            meeting_method: meeting,
+            province: selectedCityData,
+            district: selectedTownData,
             questionMethod: complaint,
-            questionLink: data.complainLink,
-            postType: false,
+            channel_link: data.complainLink,
+            // postType: false,
         };
-        postPosting(newData).then(res => {
+        console.log(newData);
+        postContestTeam(14, newData).then(res => {
             if (res === 5000) {
                 dispatch(
                     openAlertModal({

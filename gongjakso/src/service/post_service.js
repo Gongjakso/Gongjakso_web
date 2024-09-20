@@ -37,6 +37,21 @@ export const getContestTeamList = async (
         console.log(error);
     }
 };
+export const postContestTeam = async (contest_id, contestContent) => {
+    const reqURL = `contest/${contest_id}/team/create`;
+
+    try {
+        const response = await axiosInstanceV2.post(reqURL, {
+            ...contestContent,
+        });
+        console.log(response);
+        console.log(...contestContent);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error.response.data.code;
+    }
+};
 
 export const getPostDetail = async (id, role) => {
     const reqURL = `post/${id}`;
