@@ -12,14 +12,14 @@ const RecruitedTeam = () => {
 
     useEffect(() => {
         getMyRecruiting(page, 6).then(response => {
+            setPostContent1(response?.data.content);
             setTotalPage(response?.data?.totalPages);
-            setPostContent1(response?.data);
         });
     }, [page]);
 
     const loadParticipatedPosts = page => {
         getMyRecruiting(page, 6).then(response => {
-            setPostContent1(response?.data);
+            setPostContent1(response?.data.content);
             setTotalPage(response?.data?.totalPages);
         });
     };
