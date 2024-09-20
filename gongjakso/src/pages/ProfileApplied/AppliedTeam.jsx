@@ -17,7 +17,7 @@ const TeamSupport = () => {
         });
     }, [page]);
 
-    const loadParticipatedPosts = page => {
+    const loadAppliedPosts = page => {
         getMyApplied(page, 6).then(response => {
             setPostContent2(response?.data.content);
             setTotalPage(response?.data.totalPages);
@@ -38,6 +38,7 @@ const TeamSupport = () => {
                         showMoreDetail={false}
                         showWaitingJoin={true}
                         showSubBox={true}
+                        /* -- 프로젝트 제거로 인한 주석 처리
                         borderColor={
                             postContent2.postType === true
                                 ? 'rgba(231, 137, 255, 0.5)'
@@ -45,13 +46,14 @@ const TeamSupport = () => {
                         }
                         postContent={postContent2}
                         isMyParticipation={false}
+                        */
                     />
                 ))}
                 <Pagination
                     total={totalPage}
                     page={page}
                     setPage={setPage}
-                    loadPosts={loadParticipatedPosts}
+                    loadPosts={loadAppliedPosts}
                 />
             </S.BoxDetail>
         </div>

@@ -11,19 +11,17 @@ const TeamPart = () => {
 
     useEffect(() => {
         getMyParticipated(page, 6).then(response => {
-            setTotalPage(response?.data?.totalPages);
+            setTotalPage(response?.data.totalPages);
             setPostContent3(response?.data?.content);
         });
     }, [page]);
 
     const loadParticipatedPosts = page => {
         getMyParticipated(page, 6).then(response => {
-            setPostContent3(response?.data?.content);
+            setPostContent3(response?.data.content);
             setTotalPage(response?.data?.totalPages);
         });
     };
-
-    // console.log(isLeader);
 
     return (
         <div>
@@ -32,16 +30,14 @@ const TeamPart = () => {
                 <S.Title>내가 참여한 공모전/프로젝트</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent3?.participationLists?.map(postContent3 => (
+                {postContent3?.map(postContent3 => (
                     <TeamBox
                         key={postContent3?.postId}
                         showMoreDetail={false}
                         borderColor={
-                            postContent3?.postStatus !== 'ACTIVE' //활동 완료인 경우 테두리 검정색
-                                ? 'rgba(111, 111, 111, 1)'
-                                : postContent3.postType === true
-                                  ? 'rgba(231, 137, 255, 0.5)'
-                                  : 'rgba(0, 163, 255, 0.5)'
+                            postContent3?.postStatus !== 'ACTIVE'
+                                ? 'rgba(111, 111, 111, 1)' // 활동 완료 -> 테두리 검정색
+                                : 'rgba(195, 233, 255, 0.5)' // 활동 중 -> 테두리 파란색
                         }
                         showWaitingJoin={false}
                         showSubBox={false}
@@ -49,7 +45,6 @@ const TeamPart = () => {
                         isMyParticipation={true}
                     />
                 ))}
-
                 <Pagination
                     total={totalPage}
                     page={page}

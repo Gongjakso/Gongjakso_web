@@ -17,7 +17,7 @@ const RecruitedTeam = () => {
         });
     }, [page]);
 
-    const loadParticipatedPosts = page => {
+    const loadRecruitedPosts = page => {
         getMyRecruiting(page, 6).then(response => {
             setPostContent1(response?.data.content);
             setTotalPage(response?.data?.totalPages);
@@ -47,7 +47,7 @@ const RecruitedTeam = () => {
                     total={totalPage}
                     page={page}
                     setPage={setPage}
-                    loadPosts={loadParticipatedPosts}
+                    loadPosts={loadRecruitedPosts}
                 />
             </S.BoxDetail>
         </div>

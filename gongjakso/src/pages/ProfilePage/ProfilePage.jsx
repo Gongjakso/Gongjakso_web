@@ -129,9 +129,7 @@ const ProfilePage = () => {
                             borderColor={
                                 post?.postStatus !== 'ACTIVE'
                                     ? 'rgba(111, 111, 111, 1)'
-                                    : post.postType === true
-                                      ? 'rgba(231, 137, 255, 0.5)'
-                                      : 'rgba(0, 163, 255, 0.5)'
+                                    : 'rgba(195, 233, 255, 0.5)'
                             }
                             showWaitingJoin={false}
                             showSubBox={false}
