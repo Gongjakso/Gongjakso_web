@@ -17,73 +17,20 @@ const ProfilePage = () => {
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false); // 모달 상태
 
-    const mockRecruitingTeams = [
-        {
-            postId: 1,
-            postType: true,
-            title: '프로젝트 팀 모집',
-            max_person: 5,
-            current_person: 3,
-            startDate: '2024-01-01',
-            endDate: '2024-12-31',
-        },
-        {
-            postId: 2,
-            postType: false,
-            title: '공모전 팀 모집',
-            max_person: 10,
-            current_person: 8,
-            startDate: '2024-02-01',
-            endDate: '2024-11-30',
-        },
-    ];
-
-    const mockAppliedTeams = [
-        {
-            postId: 3,
-            postType: true,
-            title: '지원한 프로젝트',
-            max_person: 7,
-            current_person: 5,
-            startDate: '2024-03-01',
-            endDate: '2024-10-31',
-        },
-    ];
-
-    const mockParticipatedTeams = [
-        {
-            postId: 4,
-            postType: false,
-            postStatus: 'ACTIVE',
-            title: '참여한 공모전',
-            max_person: 4,
-            current_person: 4,
-            startDate: '2024-01-01',
-            endDate: '2024-12-31',
-        },
-    ];
-
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
 
-        // 서버에서 받아온 데이터를 모방하여 설정
-        setPostContent1(mockRecruitingTeams);
-        setPostContent2(mockAppliedTeams);
-        setPostContent3(mockParticipatedTeams);
-
-        /*
         getMyRecruiting().then(response => {
-            setPostContent1(response?.data.slice(0, 2));
+            setPostContent1(response?.data?.content.slice(0, 2));
         });
         getMyApplied(1, 2).then(response => {
-            setPostContent2(response?.data.content);
+            setPostContent2(response?.data?.content);
         });
         getMyParticipated(1, 2).then(response => {
-            setPostContent3(response?.data.participationLists);
+            setPostContent3(response?.data?.content);
         });
-*/
     }, []);
 
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
@@ -139,13 +86,13 @@ const ProfilePage = () => {
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
                     {postContent1?.map(post => (
                         <TeamBox
-                            key={post?.postId}
+                            key={post?.id}
                             showMoreDetail={true}
                             showWaitingJoin={false}
                             showSubBox={true}
                             postContent={post}
                             isMyParticipation={false}
-                            postId={post?.postId}
+                            id={post?.id}
                         />
                     ))}
                 </S.BoxDetail>
@@ -158,15 +105,11 @@ const ProfilePage = () => {
                     </S.SubTitle>
                     {postContent2?.map(post => (
                         <TeamBox
-                            key={post?.postId}
+                            key={post?.id}
                             showMoreDetail={false}
                             showWaitingJoin={true}
                             showSubBox={true}
-                            borderColor={
-                                post.postType === true
-                                    ? 'rgba(231, 137, 255, 0.5)'
-                                    : 'rgba(0, 163, 255, 0.5)'
-                            }
+                            borderColor={'rgba(0, 163, 255, 0.5)'}
                             postContent={post}
                             isMyParticipation={false}
                         />
@@ -181,7 +124,7 @@ const ProfilePage = () => {
                     </S.SubTitle>
                     {postContent3?.map(post => (
                         <TeamBox
-                            key={post?.postId}
+                            key={post?.id}
                             showMoreDetail={false}
                             borderColor={
                                 post?.postStatus !== 'ACTIVE'

@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 import axios from 'axios';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;

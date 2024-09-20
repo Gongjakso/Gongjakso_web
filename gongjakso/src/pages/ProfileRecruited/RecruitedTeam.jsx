@@ -6,13 +6,23 @@ import Pagination from '../../components/Pagination/Pagination';
 import { getMyRecruiting } from '../../service/profile_service';
 
 const RecruitedTeam = () => {
+    const [page, setPage] = useState(1);
     const [postContent1, setPostContent1] = useState([]);
+    const [totalPage, setTotalPage] = useState();
 
     useEffect(() => {
-        getMyRecruiting().then(response => {
+        getMyRecruiting(page, 6).then(response => {
+            setTotalPage(response?.data?.totalPages);
             setPostContent1(response?.data);
         });
-    }, []);
+    }, [page]);
+
+    const loadParticipatedPosts = page => {
+        getMyRecruiting(page, 6).then(response => {
+            setPostContent1(response?.data);
+            setTotalPage(response?.data?.totalPages);
+        });
+    };
 
     return (
         <div>
@@ -33,6 +43,12 @@ const RecruitedTeam = () => {
                         postId={postContent1?.postId}
                     />
                 ))}
+                <Pagination
+                    total={totalPage}
+                    page={page}
+                    setPage={setPage}
+                    loadPosts={loadParticipatedPosts}
+                />
             </S.BoxDetail>
         </div>
     );

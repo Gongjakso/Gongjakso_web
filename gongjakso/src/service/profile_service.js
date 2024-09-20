@@ -1,4 +1,5 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
+import axios from 'axios';
 
 //나의 정보
 export const putMyInfo = async (name, major, job, status, phone) => {
@@ -30,12 +31,13 @@ export const getMyInfo = async () => {
 };
 
 //팀박스->내가 모집 중
-export const getMyRecruiting = async () => {
-    const reqURL = `post/my`;
+export const getMyRecruiting = async (page, size) => {
+    const reqURL = `team/my-recruit?page=${page}&size=${size}&sort=`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
-        return response.data;
+        const response = await axiosInstanceV2.get(reqURL);
+        // console.log(response?.data.code);
+        return response?.data;
     } catch (error) {
         console.log('내가 모집 중인 게시글을 가져올 수 없습니다.', error);
     }
@@ -46,24 +48,23 @@ export const getMyApplied = async (page, size) => {
     const reqURL = `apply/my?page=${page}&size=${size}&sort=`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
-        return response.data;
+        const response = await axiosInstanceV2.get(reqURL);
+        return response?.data;
     } catch (error) {
         console.log('내가 지원한 게시글을 가져올 수 없습니다.');
     }
 };
 
 //팀박스->내가 참여
-
 //내가 참여 상세페이지
 export const getMyParticipated = async (page, size) => {
-    const reqURL = `apply/my-participation-post?page=${page}&size=${size}`;
+    const reqURL = `team/my-apply?page=${page}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
-        return response.data;
+        const response = await axiosInstanceV2.get(reqURL);
+        return response?.data;
     } catch (error) {
-        console.log(error);
+        console.log('내가 참여한 게시글을 가져올 수 없습니다.', error);
     }
 };
 

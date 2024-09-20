@@ -18,7 +18,7 @@ const TeamBox = ({
     showSubBox,
     postContent,
     isMyParticipation,
-    postId,
+    id,
     overlayType,
 }) => {
     const [isOverlayVisible, setIsOverlayVisible] = useState(true);
@@ -30,31 +30,29 @@ const TeamBox = ({
     );
 
     useEffect(() => {
-        const overlayVisibility = localStorage.getItem(
-            `overlayVisible-${postId}`,
-        );
+        const overlayVisibility = localStorage.getItem(`overlayVisible-${id}`);
         if (overlayVisibility === 'false') {
             setIsOverlayVisible(false);
         }
-    }, [postId]);
+    }, [id]);
 
     useEffect(() => {
         // 특정 경로에서만 getCheckStatus 함수 호출
         if (location.pathname === '/participatedTeam') {
-            getCheckStatus(postContent?.postId).then(response => {
+            getCheckStatus(postContent?.id).then(response => {
                 const imLeader = response?.data?.role === 'LEADER';
                 setIsLeader(imLeader);
             });
         }
-    }, [location.pathname, postContent?.postId]);
+    }, [location.pathname, postContent?.id]);
 
     const hideOverlay = () => {
         setIsOverlayVisible(false);
     };
 
-    const handleAPIRequest = postId => {
+    const handleAPIRequest = id => {
         // 활동 종료 api
-        patchCompletedPost(postId).then(response => {
+        patchCompletedPost(id).then(response => {
             if (response?.code === 1000) {
                 dispatch(
                     openAlertModal({
@@ -101,7 +99,7 @@ const TeamBox = ({
         dispatch(closeConfirmModal());
     };
 
-    const startDate = new Date(postContent?.startDate)
+    const startedAt = new Date(postContent?.startedAt)
         .toLocaleDateString('ko-KR', {
             year: 'numeric',
             month: '2-digit',
@@ -110,7 +108,7 @@ const TeamBox = ({
         .split('. ')
         .join('.');
 
-    const finishDate = new Date(postContent?.finishDate)
+    const finishedAt = new Date(postContent?.finishedAt)
         .toLocaleDateString('ko-KR', {
             year: 'numeric',
             month: '2-digit',
@@ -119,7 +117,7 @@ const TeamBox = ({
         .split('. ')
         .join('.');
 
-    const endDate = new Date(postContent?.endDate)
+    const recruitFinishedAt = new Date(postContent?.recruitFinishedAt)
         .toLocaleDateString('ko-KR', {
             year: 'numeric',
             month: '2-digit',
@@ -165,20 +163,22 @@ const TeamBox = ({
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
                             {isMyParticipation === false &&
-                                `| ${postContent?.memberName} | ${startDate}~${endDate} |`}
+                                `| ${postContent?.memberName} | ${startedAt}~${finishedAt} |`}
+                            {/*내가 참여한 공모전*/}
                             {isMyParticipation === true &&
-                                `| ${postContent?.leaderName} | ${startDate}~${finishDate} |`}
+                                `| ${postContent?.memberName} | ${startedAt}~${finishedAt} |`}
+                            {/*내가 모집 중인 공모전*/}
                             {isMyParticipation === null &&
-                                `| ${postContent?.name} | ${startDate}~${endDate} |`}
+                                `| ${postContent?.memberName} | ${startedAt}~${finishedAt} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.daysRemaining < 0
+                                {postContent?.dDay < 0
                                     ? '마감된 공고'
-                                    : `마감 D-${postContent?.daysRemaining}`}
+                                    : `마감 D-${postContent?.dDay}`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
@@ -192,10 +192,7 @@ const TeamBox = ({
                             onClick={
                                 isLeader
                                     ? postContent?.postStatus === 'ACTIVE'
-                                        ? () =>
-                                              handleOpenModal(
-                                                  postContent?.postId,
-                                              )
+                                        ? () => handleOpenModal(postContent?.id)
                                         : null
                                     : null
                             }
@@ -261,7 +258,7 @@ const TeamBox = ({
                         </S.WaitingJoin>
                     )}
                     {showMoreDetail && (
-                        <Link to={`/teamdetail/${postId}`}>
+                        <Link to={`/teamdetail/${id}`}>
                             <S.MoreDetail />
                         </Link>
                     )}

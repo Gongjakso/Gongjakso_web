@@ -1,4 +1,6 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
+
+const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;
 
 export const getRecruitTeam = async post_id => {
     const reqURL = `apply/${post_id}`;
@@ -46,14 +48,15 @@ export const patchCancel = async post_id => {
     }
 };
 
-export const getApplyList = async (post_id, page) => {
-    const reqURL = `apply/${post_id}/applylist?page=${page - 1}&size=11`;
+export const getApplyList = async page => {
+    const reqURL = `apply/my?page=${page - 1}&size=6`; // End point와 page 사이즈 수정
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstance.get(`${BaseUrlV2}${reqURL}`);
         return response.data;
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 

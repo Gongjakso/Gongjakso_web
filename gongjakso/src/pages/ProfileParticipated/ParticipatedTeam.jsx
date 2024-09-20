@@ -12,13 +12,13 @@ const TeamPart = () => {
     useEffect(() => {
         getMyParticipated(page, 6).then(response => {
             setTotalPage(response?.data?.totalPages);
-            setPostContent3(response?.data);
+            setPostContent3(response?.data?.content);
         });
     }, [page]);
 
     const loadParticipatedPosts = page => {
         getMyParticipated(page, 6).then(response => {
-            setPostContent3(response?.data);
+            setPostContent3(response?.data?.content);
             setTotalPage(response?.data?.totalPages);
         });
     };
