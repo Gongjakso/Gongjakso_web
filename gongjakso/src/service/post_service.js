@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 import axios from 'axios';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;
@@ -10,6 +10,22 @@ export const postPosting = async postContent => {
             ...postContent,
         });
         console.log(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error.response.data.code;
+    }
+};
+
+export const postContestTeam = async (contest_id, contestContent) => {
+    const reqURL = `contest/${contest_id}/team/create`;
+
+    try {
+        const response = await axiosInstanceV2.post(reqURL, {
+            ...contestContent,
+        });
+        console.log(response);
+        console.log(...contestContent);
         return response;
     } catch (error) {
         console.log(error);

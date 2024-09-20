@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export const getToken = async (code, REDIRECT_URI) => {
