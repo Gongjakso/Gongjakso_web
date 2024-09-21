@@ -91,7 +91,6 @@ const MakePortfolio = ({ portfolioId }) => {
     const [dates, setDates] = useState([]);
     const navigate = useNavigate();
     const handleApplyDate = (date, type, sectionId, sectionType) => {
-        console.log(`Date passed to ${type}:`, date); // 전달된 날짜 확인
         const sectionHandlers = {
             education: {
                 state: educationSections,
@@ -118,7 +117,6 @@ const MakePortfolio = ({ portfolioId }) => {
         if (sectionIndex !== -1) {
             updatedSections[sectionIndex][type] = date; // 선택된 날짜 반영
             setState(updatedSections); // 상태 업데이트
-            console.log('Updated sections:', updatedSections); // 업데이트된 섹션 출력
         }
     };
 
@@ -135,7 +133,6 @@ const MakePortfolio = ({ portfolioId }) => {
                 try {
                     const response = await getPortfolio(id);
                     const portfolioData = response.data.data;
-                    console.log('Portfolio Data:', portfolioData);
                     setPortfolioName(portfolioData.portfolioName || '');
                     setEducationSections(
                         portfolioData.educationList.length
@@ -306,10 +303,8 @@ const MakePortfolio = ({ portfolioId }) => {
             let response;
             if (id) {
                 response = await EditPortfolio(id, portfolioData);
-                console.log('Update Response:', response); // 수정 응답 확인
             } else {
                 response = await postPortfolio(portfolioData);
-                console.log('Create Response:', response); // 저장 응답 확인
             }
             alert(
                 id

@@ -152,9 +152,6 @@ const ProfilePage = () => {
         const portfolioToEdit = portfolioList.find(
             portfolio => portfolio.PortfolioId === portfolioId,
         );
-        console.log(portfolioId);
-
-        console.log(portfolioToEdit);
         if (portfolioToEdit) {
             navigate(`/profile/makeportfolio/${portfolioId}`);
         }
