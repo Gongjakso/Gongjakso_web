@@ -11,7 +11,7 @@ const DeleteModal = ({ showModal, closeModal, confirmDelete, title }) => {
                 <S.ModalTitle>포트폴리오 삭제</S.ModalTitle>
                 <S.ModalDesc>
                     삭제한 포트폴리오는 복구할 수 없습니다.
-                    <br /> {title}을 삭제하시겠습니까?
+                    <br /> [{title}]을 삭제하시겠습니까?
                 </S.ModalDesc>
                 <S.DeleteButton onClick={confirmDelete}>
                     삭제하기

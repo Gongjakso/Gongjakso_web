@@ -23,7 +23,7 @@ export const ModalContent = styled.div`
     border-radius: 2.189rem;
     border: 0.206rem solid ${({ theme }) => theme.box1};
     max-width: 53rem;
-    max-height: 25rem;
+    max-height: 26rem;
     height: 100%;
     width: 100%;
     gap: 1.2rem;
@@ -93,6 +93,7 @@ export const DeleteButton = styled.div`
 export const ModalDesc = styled.span`
     font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreMedium';
+    text-align: center;
     font-weight: 700;
     line-height: 21.48px;
     width: 70%;
