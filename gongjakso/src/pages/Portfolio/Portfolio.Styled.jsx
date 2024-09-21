@@ -185,7 +185,6 @@ export const Fillter1 = styled.div`
     display: flex;
     padding: 12px 18px;
     align-items: center;
-    z-index: 100;
 `;
 
 export const CompanyInput = styled(SNSInput)`

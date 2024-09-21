@@ -1,9 +1,13 @@
 import * as S from './Portfolio.Styled';
 import { SelectInput } from '../../components/common/Input/Input';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
-import { getPortfolio, postPortfolio } from '../../service/portfolio_service';
+import {
+    EditPortfolio,
+    getPortfolio,
+    postPortfolio,
+} from '../../service/portfolio_service';
 import SelectOne from '../../components/common/Calendar/SelectOne';
 
 const MakePortfolio = ({ portfolioId }) => {
@@ -12,13 +16,14 @@ const MakePortfolio = ({ portfolioId }) => {
     const [portfolio, setPortfolio] = useState(null);
     const [error, setError] = useState();
     const [loading, setLoading] = useState();
+    const { id } = useParams();
 
     const [educationSections, setEducationSections] = useState([
         {
             id: Date.now(),
             schoolName: '',
             gradeStatus: '1학년',
-            status: '재학 중',
+            state: '재학 중',
         },
     ]);
     const [careerSections, setCareerSections] = useState([
@@ -81,39 +86,32 @@ const MakePortfolio = ({ portfolioId }) => {
     const [dates, setDates] = useState([]);
     const navigate = useNavigate();
     const handleApplyDate = (date, type, sectionId, sectionType) => {
-        const updatedSections = {
-            education: [...educationSections],
-            career: [...careerSections],
-            activity: [...activitySections],
-            award: [...awardSections],
-            certificate: [...certificateSections],
+        const sectionHandlers = {
+            education: {
+                state: educationSections,
+                setState: setEducationSections,
+            },
+            career: { state: careerSections, setState: setCareerSections },
+            activity: {
+                state: activitySections,
+                setState: setActivitySections,
+            },
+            award: { state: awardSections, setState: setAwardSections },
+            certificate: {
+                state: certificateSections,
+                setState: setCertificateSections,
+            },
         };
 
-        const sectionIndex = updatedSections[sectionType].findIndex(
+        const { state, setState } = sectionHandlers[sectionType];
+        const updatedSections = [...state];
+        const sectionIndex = updatedSections.findIndex(
             section => section.id === sectionId,
         );
 
         if (sectionIndex !== -1) {
-            updatedSections[sectionType][sectionIndex][type] = date;
-            switch (sectionType) {
-                case 'education':
-                    setEducationSections(updatedSections.education);
-                    break;
-                case 'career':
-                    setCareerSections(updatedSections.career);
-                    break;
-                case 'activity':
-                    setActivitySections(updatedSections.activity);
-                    break;
-                case 'award':
-                    setAwardSections(updatedSections.award);
-                    break;
-                case 'certificate':
-                    setCertificateSections(updatedSections.certificate);
-                    break;
-                default:
-                    break;
-            }
+            updatedSections[sectionIndex][type] = date;
+            setState(updatedSections); // 상태 업데이트
         }
     };
 
@@ -124,37 +122,145 @@ const MakePortfolio = ({ portfolioId }) => {
     }, []);
 
     useEffect(() => {
-        if (!portfolioId) {
-            // portfolioId가 없을 때는 fetchPortfolio를 호출하지 않음
-            return;
+        if (id) {
+            // 포트폴리오 수정 모드
+            const fetchPortfolioData = async () => {
+                try {
+                    const response = await getPortfolio(id);
+                    const portfolioData = response.data.data;
+                    console.log('Portfolio Data:', portfolioData);
+                    setPortfolioName(portfolioData.portfolioName || '');
+                    setEducationSections(
+                        portfolioData.educationList.length
+                            ? portfolioData.educationList.map(section => ({
+                                  schoolName: section.school || '',
+                                  gradeStatus: section.grade || '1학년',
+                                  state: section.state || '재학 중',
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      schoolName: '',
+                                      gradeStatus: '1학년',
+                                      state: '재학 중',
+                                  },
+                              ],
+                    );
+
+                    setCareerSections(
+                        portfolioData.workList.length
+                            ? portfolioData.workList.map(section => ({
+                                  companyName: section.company || '',
+                                  position: section.partition || '',
+                                  description: section.detail || '',
+                                  enteredAt: section.enteredAt || null,
+                                  exitedAt: section.exitedAt || null,
+                                  isActive: section.isActive || false,
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      companyName: '',
+                                      position: '',
+                                      description: '',
+                                      isActive: false,
+                                  },
+                              ],
+                    );
+
+                    setActivitySections(
+                        portfolioData.activityList.length
+                            ? portfolioData.activityList.map(section => ({
+                                  activityName: section.name || '',
+                                  activityStatus: section.isActive
+                                      ? '활동 중'
+                                      : '활동 종료',
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      activityName: '',
+                                      activityStatus: '활동 중',
+                                  },
+                              ],
+                    );
+
+                    setAwardSections(
+                        portfolioData.awardList.length
+                            ? portfolioData.awardList.map(section => ({
+                                  competitionName: section.contestName || '',
+                                  award: section.awardName || '',
+                                  awardDate: section.awardDate || null,
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      competitionName: '',
+                                      award: '',
+                                  },
+                              ],
+                    );
+
+                    setCertificateSections(
+                        portfolioData.certificateList.length
+                            ? portfolioData.certificateList.map(section => ({
+                                  examName: section.name || '',
+                                  score: section.rating || '',
+                                  certificationDate:
+                                      section.certificationDate || null,
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      examName: '',
+                                      score: '',
+                                  },
+                              ],
+                    );
+
+                    setSnsLinks(
+                        portfolioData.snsList.length
+                            ? portfolioData.snsList.map(link => ({
+                                  link: link.snsLink || '',
+                                  id: Date.now(),
+                              }))
+                            : [
+                                  {
+                                      id: Date.now(),
+                                      link: '',
+                                  },
+                              ],
+                    );
+                } catch (err) {
+                    console.error('Error fetching portfolio:', err);
+                    setError(
+                        '포트폴리오 데이터를 불러오는 중 오류가 발생했습니다.',
+                    );
+                }
+            };
+            fetchPortfolioData();
         }
-
-        const fetchPortfolio = async () => {
-            try {
-                const data = await getPortfolio(portfolioId);
-                setPortfolio(data);
-            } catch (error) {
-                console.error('Failed to fetch portfolio:', error);
-            }
-        };
-
-        fetchPortfolio();
-    }, [portfolioId]);
+    }, [id]);
 
     const handleSavePortfolio = async () => {
         const portfolioData = {
-            portfolioId,
+            portfolioId: id,
             portfolioName,
             educationList: educationSections.map(section => ({
                 school: section.schoolName,
                 grade: section.gradeStatus,
-                status: section.status,
+                state: section.state,
             })),
             workList: careerSections.map(section => ({
                 company: section.companyName,
                 partition: section.position,
-                enteredAt: section.enteredAt,
-                exitedAt: section.exitedAt,
+                enteredAt: section.enteredAt ? section.enteredAt : null,
+                exitedAt: section.exitedAt ? section.exitedAt : null,
                 isActive: section.isActive,
                 detail: section.description,
             })),
@@ -165,12 +271,14 @@ const MakePortfolio = ({ portfolioId }) => {
             awardList: awardSections.map(section => ({
                 contestName: section.competitionName,
                 awardName: section.award,
-                awardDate: section.awardDate,
+                awardDate: section.awardDate ? section.awardDate : null,
             })),
             certificateList: certificateSections.map(section => ({
                 name: section.examName,
                 rating: section.score,
-                certificationDate: section.certificationDate,
+                certificationDate: section.certificationDate
+                    ? section.certificationDate
+                    : null,
             })),
             snsList: snsLinks.map(link => ({
                 snsLink: link.link,
@@ -179,15 +287,28 @@ const MakePortfolio = ({ portfolioId }) => {
 
         try {
             setLoading(true);
-            await postPortfolio(portfolioData);
-            alert('포트폴리오가 저장되었습니다.');
+            let response;
+            if (id) {
+                response = await EditPortfolio(id, portfolioData);
+                console.log('Update Response:', response); // 수정 응답 확인
+            } else {
+                response = await postPortfolio(portfolioData);
+                console.log('Create Response:', response); // 저장 응답 확인
+            }
+            alert(
+                id
+                    ? '포트폴리오가 성공적으로 수정되었습니다.'
+                    : '포트폴리오가 성공적으로 저장되었습니다.',
+            );
+            navigate('/profile');
         } catch (err) {
             console.error('Error saving portfolio', err);
-            setError('Error saving portfolio');
+            setError('포트폴리오 저장 중 오류가 발생했습니다.');
         } finally {
             setLoading(false);
         }
     };
+
     return (
         <div>
             <S.TopBox>
@@ -223,7 +344,7 @@ const MakePortfolio = ({ portfolioId }) => {
                         <S.InputContainer>
                             <S.EducationInput
                                 placeholder="학교명"
-                                value={section.schoolName}
+                                value={section.schoolName || ''}
                                 onChange={e => {
                                     const updatedSections = [
                                         ...educationSections,
@@ -237,7 +358,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                 <SelectInput
                                     id={`Gradestatus-${index}`}
                                     selectOptions={gradeStatus_options}
-                                    placeholder={gradeStatus_options[0]}
+                                    placeholder={
+                                        section.gradeStatus ||
+                                        gradeStatus_options[0]
+                                    } // 기본 placeholder 처리
+                                    value={section.gradeStatus || ''} // value가 없을 때만 placeholder를 사용
                                     onChange={value => {
                                         const updatedSections = [
                                             ...educationSections,
@@ -253,12 +378,15 @@ const MakePortfolio = ({ portfolioId }) => {
                                 <SelectInput
                                     id={`Educationstatus-${index}`}
                                     selectOptions={status_options}
-                                    placeholder={status_options[0]}
+                                    placeholder={
+                                        section.state || status_options[0]
+                                    }
+                                    value={section.state || ''}
                                     onChange={value => {
                                         const updatedSections = [
                                             ...educationSections,
                                         ];
-                                        updatedSections[index].status = value;
+                                        updatedSections[index].state = value;
                                         setEducationSections(updatedSections);
                                     }}
                                     case={true}
@@ -295,7 +423,7 @@ const MakePortfolio = ({ portfolioId }) => {
                             <S.InputContainer>
                                 <S.CompanyInput
                                     placeholder="회사명"
-                                    value={section.companyName}
+                                    value={section.companyName || ''}
                                     onChange={e => {
                                         const updatedSections = [
                                             ...careerSections,
@@ -307,7 +435,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                 />
                                 <S.PositionInput
                                     placeholder="부서명/직책"
-                                    value={section.position}
+                                    value={section.position || ''}
                                     onChange={e => {
                                         const updatedSections = [
                                             ...careerSections,
@@ -329,8 +457,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                                 'career',
                                             )
                                         }
-                                        placeholder={'입사일'}
+                                        placeholder={
+                                            section.enteredAt || '입사일'
+                                        }
                                         width={'27.5rem'}
+                                        value={section.enteredAt || null}
                                     />
                                     <SelectOne
                                         onApply={date =>
@@ -341,8 +472,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                                 'career',
                                             )
                                         }
-                                        placeholder={'퇴사일'}
+                                        placeholder={
+                                            section.exitedAt || '퇴사일'
+                                        }
                                         width={'27.5rem'}
+                                        value={section.exitedAt || null}
                                     />
                                 </S.CalendarSection>
                                 <S.CheckContainer>
@@ -364,7 +498,7 @@ const MakePortfolio = ({ portfolioId }) => {
                             <S.InputContainer>
                                 <S.Textarea
                                     placeholder="경력사항을 설명해주세요."
-                                    value={section.description}
+                                    value={section.description || ''}
                                     onChange={e => {
                                         const updatedSections = [
                                             ...careerSections,
@@ -409,7 +543,7 @@ const MakePortfolio = ({ portfolioId }) => {
                         <S.InputContainer>
                             <S.ActivityInput
                                 placeholder="활동명"
-                                value={section.activityName}
+                                value={section.activityName || ''}
                                 onChange={e => {
                                     const updatedSections = [
                                         ...activitySections,
@@ -423,7 +557,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                 <SelectInput
                                     id={`Activitystatus-${index}`}
                                     selectOptions={activityStatus_options}
-                                    placeholder={activityStatus_options[0]}
+                                    placeholder={
+                                        section.activityStatus ||
+                                        activityStatus_options[0]
+                                    }
+                                    value={section.activityStatus || ''}
                                     onChange={value => {
                                         const updatedSections = [
                                             ...activitySections,
@@ -460,7 +598,7 @@ const MakePortfolio = ({ portfolioId }) => {
                         <S.InputContainer>
                             <S.TestInput
                                 placeholder="대회명"
-                                value={section.competitionName}
+                                value={section.competitionName || ''}
                                 onChange={e => {
                                     const updatedSections = [...awardSections];
                                     updatedSections[index].competitionName =
@@ -470,7 +608,7 @@ const MakePortfolio = ({ portfolioId }) => {
                             />
                             <S.ScoreInput
                                 placeholder="수상"
-                                value={section.award}
+                                value={section.award || ''}
                                 onChange={e => {
                                     const updatedSections = [...awardSections];
                                     updatedSections[index].award =
@@ -487,8 +625,9 @@ const MakePortfolio = ({ portfolioId }) => {
                                         'award',
                                     )
                                 }
-                                placeholder={'수상 날짜'}
+                                placeholder={section.awardDate || '수상 날짜'}
                                 width={'16rem'}
+                                value={section.awardDate || null}
                             />
                         </S.InputContainer>
                         {awardSections.length > 1 && (
@@ -518,7 +657,7 @@ const MakePortfolio = ({ portfolioId }) => {
                         <S.InputContainer>
                             <S.TestInput
                                 placeholder="시험명"
-                                value={section.examName}
+                                value={section.examName || ''}
                                 onChange={e => {
                                     const updatedSections = [
                                         ...certificateSections,
@@ -530,7 +669,7 @@ const MakePortfolio = ({ portfolioId }) => {
                             />
                             <S.ScoreInput
                                 placeholder="점수/급수"
-                                value={section.score}
+                                value={section.score || ''}
                                 onChange={e => {
                                     const updatedSections = [
                                         ...certificateSections,
@@ -546,11 +685,14 @@ const MakePortfolio = ({ portfolioId }) => {
                                         date,
                                         'certificationDate',
                                         section.id,
-                                        'certificateList',
+                                        'certificate',
                                     )
                                 }
-                                placeholder={'취득 날짜'}
                                 width={'16rem'}
+                                placeholder={
+                                    section.certificationDate || '취득 날짜'
+                                }
+                                value={section.certificationDate || ''}
                             />
                         </S.InputContainer>
                         {certificateSections.length > 1 && (

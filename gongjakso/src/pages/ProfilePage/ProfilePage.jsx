@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from './ProfilePageStyled';
 import TeamBox from '../TeamBox/TeamBox';
 
@@ -16,13 +16,15 @@ import {
     updatePortfolio, // Assuming you have a service for updating portfolios
 } from '../../service/portfolio_service';
 
+const MAX_PORTFOLIOS = 3;
+
 const ProfilePage = () => {
     const [data, setProfileData] = useState(); // 프로필 내용
     const [postContent1, setPostContent1] = useState();
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false); // 모달 상태
-
+    const navigate = useNavigate();
     const [portfolioExists, setPortfolioExists] = useState(false);
     const [portfolioList, setPortfolioList] = useState([]);
 
@@ -136,9 +138,18 @@ const ProfilePage = () => {
             console.error('Error deleting portfolio:', error);
         }
     };
+
     const handleEditPortfolio = portfolioId => {
-        // 포트폴리오 수정 로직 추가
-        setShowModal(true);
+        // Find the portfolio to be edited
+        const portfolioToEdit = portfolioList.find(
+            portfolio => portfolio.PortfolioId === portfolioId,
+        );
+        console.log(portfolioId);
+
+        console.log(portfolioToEdit);
+        if (portfolioToEdit) {
+            navigate(`/profile/makeportfolio/${portfolioId}`);
+        }
     };
 
     useEffect(() => {
@@ -178,32 +189,37 @@ const ProfilePage = () => {
             </S.TopBox>
             <S.GlobalBox>
                 <S.BoxDetail>
-                    <S.SubTitle>나의 포트폴리오</S.SubTitle>
+                    <S.SubTitleContainer>
+                        <S.SubTitle>나의 포트폴리오</S.SubTitle>
+                        {portfolioList.length < MAX_PORTFOLIOS && (
+                            <S.Plus onClick={openPortfolioModal} />
+                        )}
+                    </S.SubTitleContainer>
                     {portfolioExists ? (
                         <S.PortfolioList>
                             {portfolioList.map(portfolio => (
-                                <S.PortfolioContainer>
-                                    <div key={portfolioList.PortfolioId}>
-                                        <S.PortfolioTitle>
-                                            {portfolio.PortfolioTitle}
-                                        </S.PortfolioTitle>
-                                        <S.PortfolioButtons>
-                                            <S.EditPortfolioButton
-                                                onClick={() =>
-                                                    handleEditPortfolio(
-                                                        portfolio.PortfolioId,
-                                                    )
-                                                }
-                                            />
-                                            <S.DeletePortfolioButton
-                                                onClick={() =>
-                                                    handleDeletePortfolio(
-                                                        portfolio.PortfolioId,
-                                                    )
-                                                }
-                                            />
-                                        </S.PortfolioButtons>
-                                    </div>
+                                <S.PortfolioContainer
+                                    key={portfolio.PortfolioId}
+                                >
+                                    <S.PortfolioTitle>
+                                        {portfolio.PortfolioName}
+                                    </S.PortfolioTitle>
+                                    <S.PortfolioButtons>
+                                        <S.EditPortfolioButton
+                                            onClick={() =>
+                                                handleEditPortfolio(
+                                                    portfolio.PortfolioId,
+                                                )
+                                            }
+                                        />
+                                        <S.DeletePortfolioButton
+                                            onClick={() =>
+                                                handleDeletePortfolio(
+                                                    portfolio.PortfolioId,
+                                                )
+                                            }
+                                        />
+                                    </S.PortfolioButtons>
                                 </S.PortfolioContainer>
                             ))}
                         </S.PortfolioList>

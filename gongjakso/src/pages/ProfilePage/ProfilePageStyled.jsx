@@ -4,6 +4,7 @@ import { ReactComponent as Edit } from '../../assets/images/Edit.svg';
 import { ReactComponent as Arrow } from '../../assets/images/Arrow.svg';
 import deleteBtn from '../../assets/images/deleteIcon.svg';
 import editBtn from '../../assets/images/editIcon.svg';
+import plus from '../../assets/images/PlusIcon.svg';
 
 export const TopBox = styled.div`
     height: 250px;
@@ -164,13 +165,15 @@ export const ViewPortfolioBtn = styled.button`
 `;
 
 export const PortfolioTitle = styled.span`
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-family: 'PreRegular';
+    font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
 export const PortfolioButtons = styled.div`
     display: flex;
+    justify-content: flex-end;
     gap: 0.5rem;
+    flex-direction: row;
 `;
 
 export const EditPortfolioButton = styled.button`
@@ -197,15 +200,35 @@ export const PortfolioContainer = styled.div`
     width: 1000px;
     height: 6rem;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     border-radius: 24px;
     border: 2px solid #c3e9ff;
     background: #e5f5ff;
+    padding: 3rem 3.5rem;
+    box-sizing: border-box;
 `;
 
 export const PortfolioList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+`;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+`;
+
+export const Plus = styled.div`
+    width: 1.688rem;
+    height: 1.688rem;
+    background: url(${plus});
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    margin-bottom: 25px;
 `;
