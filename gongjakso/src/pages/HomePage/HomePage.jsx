@@ -29,6 +29,15 @@ const HomePage = () => {
             });
         }
     }, [isLoggedIn]);
+
+    const handleButtonClick = () => {
+        if (isLoggedIn) {
+            navigate('/contest'); // 로그인 상태일 때 공모전 공고 페이지로 이동
+        } else {
+            navigate('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
+        }
+    };
+
     return (
         <>
             <TopButton />
@@ -40,8 +49,11 @@ const HomePage = () => {
                     </S.SubTitle>
                 </S.TitleWrapper>
                 <S.Section>
-                    <S.LoginBtn onClick={() => navigate('/login')}>
-                        공작소 로그인하러가기
+                    {' '}
+                    <S.LoginBtn onClick={handleButtonClick}>
+                        {isLoggedIn
+                            ? '공모전 공고 바로가기'
+                            : '공작소 로그인하러가기'}
                         <S.Arrow />
                     </S.LoginBtn>
                     <S.PageImg />
