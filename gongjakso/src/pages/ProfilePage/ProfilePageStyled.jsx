@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { ReactComponent as My_page_big } from '../../assets/images/My_page_big.svg';
 import { ReactComponent as Edit } from '../../assets/images/Edit.svg';
 import { ReactComponent as Arrow } from '../../assets/images/Arrow.svg';
+import deleteBtn from '../../assets/images/deleteIcon.svg';
+import editBtn from '../../assets/images/editIcon.svg';
 
 export const TopBox = styled.div`
     height: 250px;
@@ -159,4 +161,51 @@ export const ViewPortfolioBtn = styled.button`
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 0.875rem;
+`;
+
+export const PortfolioTitle = styled.span`
+    font-size: 1.2rem;
+    font-weight: bold;
+`;
+
+export const PortfolioButtons = styled.div`
+    display: flex;
+    gap: 0.5rem;
+`;
+
+export const EditPortfolioButton = styled.button`
+    background: url(${editBtn});
+    border: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 3.5rem;
+    height: 3.5rem;
+    transform: scale(0.8);
+`;
+
+export const DeletePortfolioButton = styled.button`
+    background: url(${deleteBtn});
+    border: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 3.6rem;
+    height: 3.6rem;
+    transform: scale(0.8);
+`;
+
+export const PortfolioContainer = styled.div`
+    width: 1000px;
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 24px;
+    border: 2px solid #c3e9ff;
+    background: #e5f5ff;
+`;
+
+export const PortfolioList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 `;

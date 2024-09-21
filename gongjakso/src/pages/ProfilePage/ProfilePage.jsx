@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './ProfilePageStyled';
 import TeamBox from '../TeamBox/TeamBox';
+
 import {
     getMyInfo,
     getMyParticipated,
@@ -9,7 +10,11 @@ import {
     getMyApplied,
 } from '../../service/profile_service';
 import SelectPortfolio from '../../features/modal/SelectPortfolio';
-import { checkPortfolioExists } from '../../service/portfolio_service';
+import {
+    getAllPortfolio,
+    deletePortfolio, // Assuming you have a service for deleting portfolios
+    updatePortfolio, // Assuming you have a service for updating portfolios
+} from '../../service/portfolio_service';
 
 const ProfilePage = () => {
     const [data, setProfileData] = useState(); // 프로필 내용
@@ -19,6 +24,8 @@ const ProfilePage = () => {
     const [showModal, setShowModal] = useState(false); // 모달 상태
 
     const [portfolioExists, setPortfolioExists] = useState(false);
+    const [portfolioList, setPortfolioList] = useState([]);
+
     const mockRecruitingTeams = [
         {
             postId: 1,
@@ -89,26 +96,50 @@ const ProfilePage = () => {
     }, []);
 
     useEffect(() => {
-        const checkPortfolio = async () => {
+        const fetchPortfolios = async () => {
             try {
-                // data?.id 또는 data?.memberId로 포트폴리오 확인
-                if (data?.memberId) {
-                    const exists = await checkPortfolioExists(data.memberId); // 멤버 ID로 포트폴리오 확인
-                    console.log('Portfolio Exists:', exists);
-                    setPortfolioExists(exists !== null);
+                const response = await getAllPortfolio();
+                const portfolios = response?.data?.data;
+
+                if (portfolios && portfolios.length > 0) {
+                    setPortfolioExists(true);
+                    setPortfolioList(portfolios); // 전체 포트폴리오 목록 저장
+                } else {
+                    setPortfolioExists(false);
                 }
             } catch (error) {
-                console.error('Error checking portfolio existence:', error);
+                console.error('Error fetching portfolios:', error);
             }
         };
 
-        if (data) {
-            checkPortfolio();
-        }
-    }, [data]);
+        fetchPortfolios();
+    }, []);
 
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
     const closePortfolioModal = () => setShowModal(false); // 모달 닫기
+
+    const handleDeletePortfolio = async portfolioId => {
+        try {
+            // Delete the portfolio from the server
+            await deletePortfolio(portfolioId);
+
+            setPortfolioList(prevPortfolios =>
+                prevPortfolios.filter(
+                    portfolio => portfolio.PortfolioId !== portfolioId,
+                ),
+            );
+
+            if (portfolioList.length === 1) {
+                setPortfolioExists(false);
+            }
+        } catch (error) {
+            console.error('Error deleting portfolio:', error);
+        }
+    };
+    const handleEditPortfolio = portfolioId => {
+        // 포트폴리오 수정 로직 추가
+        setShowModal(true);
+    };
 
     useEffect(() => {
         if (showModal) {
@@ -149,17 +180,33 @@ const ProfilePage = () => {
                 <S.BoxDetail>
                     <S.SubTitle>나의 포트폴리오</S.SubTitle>
                     {portfolioExists ? (
-                        <S.PortfolioBox>
-                            {/* 포트폴리오가 있을 때 보여줄 컴포넌트 */}
-                            <S.PortfolioContent>
-                                {data?.portfolio?.title}
-                            </S.PortfolioContent>
-                            <Link to="/portfolioDetail">
-                                <S.ViewPortfolioBtn>
-                                    포트폴리오 보기
-                                </S.ViewPortfolioBtn>
-                            </Link>
-                        </S.PortfolioBox>
+                        <S.PortfolioList>
+                            {portfolioList.map(portfolio => (
+                                <S.PortfolioContainer>
+                                    <div key={portfolioList.PortfolioId}>
+                                        <S.PortfolioTitle>
+                                            {portfolio.PortfolioTitle}
+                                        </S.PortfolioTitle>
+                                        <S.PortfolioButtons>
+                                            <S.EditPortfolioButton
+                                                onClick={() =>
+                                                    handleEditPortfolio(
+                                                        portfolio.PortfolioId,
+                                                    )
+                                                }
+                                            />
+                                            <S.DeletePortfolioButton
+                                                onClick={() =>
+                                                    handleDeletePortfolio(
+                                                        portfolio.PortfolioId,
+                                                    )
+                                                }
+                                            />
+                                        </S.PortfolioButtons>
+                                    </div>
+                                </S.PortfolioContainer>
+                            ))}
+                        </S.PortfolioList>
                     ) : (
                         <S.NoPortfolio>
                             아직 포트폴리오가 없어요! <br />

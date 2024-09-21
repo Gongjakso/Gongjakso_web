@@ -149,7 +149,6 @@ const MakePortfolio = ({ portfolioId }) => {
                 school: section.schoolName,
                 grade: section.gradeStatus,
                 status: section.status,
-                isActive: section.isActive,
             })),
             workList: careerSections.map(section => ({
                 company: section.companyName,
@@ -161,7 +160,7 @@ const MakePortfolio = ({ portfolioId }) => {
             })),
             activityList: activitySections.map(section => ({
                 name: section.activityName,
-                isActive: section.activityStatus,
+                isActive: section.activityStatus === '활동 중',
             })),
             awardList: awardSections.map(section => ({
                 contestName: section.competitionName,
