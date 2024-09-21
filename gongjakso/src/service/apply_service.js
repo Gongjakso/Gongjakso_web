@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const getRecruitTeam = async post_id => {
     const reqURL = `apply/${post_id}`;

@@ -12,6 +12,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(config => {
     accessToken && (config.headers.Authorization = `Bearer ${accessToken}`);
+
     return config;
 });
 
@@ -25,7 +26,7 @@ const axiosInstanceV2 = axios.create({
 
 axiosInstanceV2.interceptors.request.use(config => {
     accessToken && (config.headers.Authorization = `Bearer ${accessToken}`);
+
     return config;
 });
-
-export default axiosInstance;
+export { axiosInstance, axiosInstanceV2 };

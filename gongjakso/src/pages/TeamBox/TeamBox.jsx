@@ -41,12 +41,12 @@ const TeamBox = ({
     useEffect(() => {
         // 특정 경로에서만 getCheckStatus 함수 호출
         if (location.pathname === '/participatedTeam') {
-            getCheckStatus(postContent?.postId).then(response => {
+            getCheckStatus(postContent?.id).then(response => {
                 const imLeader = response?.data?.role === 'LEADER';
                 setIsLeader(imLeader);
             });
         }
-    }, [location.pathname, postContent?.postId]);
+    }, [location.pathname, postContent?.id]);
 
     const hideOverlay = () => {
         setIsOverlayVisible(false);
@@ -165,24 +165,25 @@ const TeamBox = ({
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
                             {isMyParticipation === false &&
-                                `| ${postContent?.memberName} | ${startDate}~${endDate} |`}
+                                `| ${postContent?.memberName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                             {isMyParticipation === true &&
-                                `| ${postContent?.leaderName} | ${startDate}~${finishDate} |`}
+                                `| ${postContent?.leaderName} | ${postContent?.startedAt}~${postContent?.recruitFinishedAt} |`}
                             {isMyParticipation === null &&
-                                `| ${postContent?.name} | ${startDate}~${endDate} |`}
+                                // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
+                                `| ${postContent?.memberName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.daysRemaining < 0
+                                {postContent?.dDay < 0
                                     ? '마감된 공고'
-                                    : `마감 D-${postContent?.daysRemaining}`}
+                                    : `마감 D-${postContent?.dDay}`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
-                                {postContent?.scrapCount}회
+                                {postContent?.viewCount}회
                             </S.ScrapNum>
                         </S.SubBox>
                     ) : (
