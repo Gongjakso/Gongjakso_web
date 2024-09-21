@@ -51,7 +51,7 @@ export const TextArea = styled.textarea.attrs(props => ({
     /* font-family: 'PreMedium'; */
     overflow: auto;
     resize: vertical;
-    padding: 10px 0;
+    /* padding: 10px 0; */
     border-style: none;
     resize: none;
     border-bottom: 1px solid ${({ theme }) => theme.border};

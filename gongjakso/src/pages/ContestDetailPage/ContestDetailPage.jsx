@@ -110,7 +110,7 @@ const ContestDetailPage = () => {
         }
     };
     const handleTeamBuildClick = () => {
-        navigate('/teambuild');
+        navigate('/teambuild', { contestDetail });
     };
 
     const handlegotoHomePage = () => {
@@ -169,7 +169,7 @@ const ContestDetailPage = () => {
                         '{contestDetail?.title}'의 팀 찾기
                     </S.ContestTitle>
                     <S.Organization>
-                        현재 {contestPosts.length}명이 팀을 모집하고 있어요
+                        현재 {contestPosts?.length}명이 팀을 모집하고 있어요
                     </S.Organization>
                     <S.Fillterbox>
                         <Multilevel

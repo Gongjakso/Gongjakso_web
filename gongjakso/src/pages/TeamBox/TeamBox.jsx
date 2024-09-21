@@ -170,7 +170,7 @@ const TeamBox = ({
                                 `| ${postContent?.leaderName} | ${postContent?.startedAt}~${postContent?.recruitFinishedAt} |`}
                             {isMyParticipation === null &&
                                 // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
-                                `| ${postContent?.memberName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
+                                `| ${postContent?.leaderName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (

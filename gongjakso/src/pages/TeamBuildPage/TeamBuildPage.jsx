@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './TeamBuildPage.Styled';
 import TeamBuildingUploadPage from './TeamBuildingUploadPage';
+import { useLocation } from 'react-router-dom';
 
 const TeamBuildPage = () => {
     const [currentContent, setCurrentContent] = useState('contest'); // default 값을 설정
@@ -9,6 +10,8 @@ const TeamBuildPage = () => {
         setButtonClicked(content);
         setCurrentContent(content);
     };
+    const location = useLocation();
+    const contestData = location.state?.contestDetail;
 
     return (
         <>
@@ -45,7 +48,10 @@ const TeamBuildPage = () => {
                 </S.TitleContent> */}
                 {/* {currentContent === 'contest' && ( */}
                 <S.BuildDiv>
-                    <TeamBuildingUploadPage posts={currentContent} />
+                    <TeamBuildingUploadPage
+                        posts={currentContent}
+                        contestData={contestData}
+                    />
                 </S.BuildDiv>
                 {/* )} */}
                 {/* {currentContent === 'project' && (

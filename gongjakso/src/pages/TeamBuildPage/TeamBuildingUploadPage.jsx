@@ -12,7 +12,7 @@ import { openAlertModal } from '../../features/modal/modalSlice/alertModalSlice'
 import { useDispatch } from 'react-redux';
 import AlertModal from '../../components/common/AlertModal/AlertModal';
 
-const TeamBuildingUploadPage = ({ posts }) => {
+const TeamBuildingUploadPage = ({ posts, contestData }) => {
     const dispatch = useDispatch();
 
     const language = [
@@ -44,8 +44,6 @@ const TeamBuildingUploadPage = ({ posts }) => {
         setDescription(event.target.value);
     };
 
-    // const titleValue = watch('title')?.length; // 'title' 필드의 값을 감시
-    // setTitleValue(watch('title'));
     const handleTitleChange = event => {
         if (event.target.value.length > 20) {
             event.target.value = event.target.value.slice(0, 20);
@@ -91,12 +89,6 @@ const TeamBuildingUploadPage = ({ posts }) => {
         register,
         handleSubmit,
         watch,
-        // setFocus,
-        // setValue,
-        // setError,
-        // clearErrors,
-        // control,
-        // trigger,
         formState: { errors, isSubmitted },
     } = useForm({
         mode: 'onSubmit',
@@ -199,9 +191,9 @@ const TeamBuildingUploadPage = ({ posts }) => {
     const submitContestBuild = data => {
         // console.log(endDates);
         const newData = {
-            title: title,
+            title: contestData?.title,
             body: description,
-            contestLink: data.link, //공모전 주소
+            // contestLink: contestData?.contestLink, //공모전 주소
             startedAt: dates.startDate,
             finishedAt: dates.endDate,
             recruit_finished_at: endDates.endDate, // 공고 마감일
@@ -251,59 +243,59 @@ const TeamBuildingUploadPage = ({ posts }) => {
             }
         });
     };
-    const submitProjectBuild = data => {
-        const newData = {
-            title: title,
-            contents: description,
-            contestLink: '',
-            startDate: dates.startDate,
-            endDate: dates.endDate,
-            finishDate: endDates.endDate,
-            maxPerson: data.people,
-            stackNames: selectedLanguage,
-            categories: category?.categories,
-            meetingMethod: meeting,
-            meetingCity: selectedCityData,
-            meetingTown: selectedTownData,
-            questionMethod: complaint,
-            questionLink: data.complainLink,
-            postType: true,
-        };
-        postPosting(newData).then(res => {
-            if (res === 5000) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '프로젝트 팀빌딩',
-                        modalContent: '공고를 더 이상 생성할 수 없습니다!',
-                    }),
-                );
-            } else if (res === 2000) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '프로젝트 팀빌딩',
-                        modalContent:
-                            '공고의 세부 항목 중 빠진것이 없는지 확인해주세요!',
-                    }),
-                );
-            } else if (res === 5004) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '프로젝트 팀빌딩',
-                        modalContent:
-                            '파트별 인원수가 전체 인원수와 일치하지 않습니다.',
-                    }),
-                );
-            } else {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '프로젝트 팀빌딩',
-                        modalContent: '공고가 생성되었습니다!',
-                        redirectUrl: '/project',
-                    }),
-                );
-            }
-        });
-    };
+    // const submitProjectBuild = data => {
+    //     const newData = {
+    //         title: contestData?.title,
+    //         contents: description,
+    //         contestLink: '',
+    //         startDate: dates.startDate,
+    //         endDate: dates.endDate,
+    //         finishDate: endDates.endDate,
+    //         maxPerson: data.people,
+    //         stackNames: selectedLanguage,
+    //         categories: category?.categories,
+    //         meetingMethod: meeting,
+    //         meetingCity: selectedCityData,
+    //         meetingTown: selectedTownData,
+    //         questionMethod: complaint,
+    //         questionLink: data.complainLink,
+    //         postType: true,
+    //     };
+    //     postPosting(newData).then(res => {
+    //         if (res === 5000) {
+    //             dispatch(
+    //                 openAlertModal({
+    //                     titleContent: '프로젝트 팀빌딩',
+    //                     modalContent: '공고를 더 이상 생성할 수 없습니다!',
+    //                 }),
+    //             );
+    //         } else if (res === 2000) {
+    //             dispatch(
+    //                 openAlertModal({
+    //                     titleContent: '프로젝트 팀빌딩',
+    //                     modalContent:
+    //                         '공고의 세부 항목 중 빠진것이 없는지 확인해주세요!',
+    //                 }),
+    //             );
+    //         } else if (res === 5004) {
+    //             dispatch(
+    //                 openAlertModal({
+    //                     titleContent: '프로젝트 팀빌딩',
+    //                     modalContent:
+    //                         '파트별 인원수가 전체 인원수와 일치하지 않습니다.',
+    //                 }),
+    //             );
+    //         } else {
+    //             dispatch(
+    //                 openAlertModal({
+    //                     titleContent: '프로젝트 팀빌딩',
+    //                     modalContent: '공고가 생성되었습니다!',
+    //                     redirectUrl: '/project',
+    //                 }),
+    //             );
+    //         }
+    //     });
+    // };
 
     return (
         <S.Container>
@@ -324,14 +316,14 @@ const TeamBuildingUploadPage = ({ posts }) => {
                         <S.TextArea
                             name=""
                             id="title"
-                            value={title}
+                            value={contestData?.title}
                             onChange={handleTitleChange}
-                            placeholder="공모전 이름을 입력해주세요. *게시 후 수정할 수 없습니다."
+                            readOnly
                         />
-                        <S.InputNum>
+                        {/* <S.InputNum>
                             <span>{titleCount}</span>
                             <span>/20</span>
-                        </S.InputNum>
+                        </S.InputNum> */}
                     </S.Label>
 
                     <S.Label>
@@ -352,15 +344,12 @@ const TeamBuildingUploadPage = ({ posts }) => {
                     </S.Label>
 
                     <S.Label>
-                        <Input
-                            label={'공모전 홈페이지'}
-                            type={'url'}
-                            id={'link'}
-                            placeholder={
-                                '공모전 홈페이지 또는 공고 링크를 업로드 해주세요.'
-                            }
-                            register={register}
-                            registerOptions={{}}
+                        <S.TapT>공모전 홈페이지</S.TapT>
+                        <S.TextArea
+                            name=""
+                            id="link"
+                            value={contestData?.contestLink}
+                            readOnly
                         />
                     </S.Label>
 
@@ -488,7 +477,8 @@ const TeamBuildingUploadPage = ({ posts }) => {
                     </S.ButtonContent>
                 </>
             )}
-            {posts === 'project' && (
+            {/* 
+{posts === 'project' && (
                 <>
                     <S.Title>
                         모집 기본 정보를 입력해주세요
@@ -612,7 +602,8 @@ const TeamBuildingUploadPage = ({ posts }) => {
                     </S.Label>
                     <S.Label>
                         <S.TapP>공고 마감일</S.TapP>
-                        {/* <SelectCalendar onApply={handleEndApply} /> */}
+                        {<SelectCalendar onApply={handleEndApply} /> }*/
+            /*
                         <SelectDate
                             value={handleDateChange}
                             onChange={handleDateChange}
@@ -655,10 +646,10 @@ const TeamBuildingUploadPage = ({ posts }) => {
                         </S.Button>
                         <S.Button onClick={handleSubmit(submitProjectBuild)}>
                             모집 시작하기
-                        </S.Button>
+                        </S.Button> }
                     </S.ButtonContent>
                 </>
-            )}
+            )} */}
             <AlertModal />
         </S.Container>
     );
