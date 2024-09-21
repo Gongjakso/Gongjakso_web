@@ -11,7 +11,10 @@ const TeamBuildPage = () => {
         setCurrentContent(content);
     };
     const location = useLocation();
-    const contestData = location.state?.contestDetail;
+    const contestDetail = location.state?.contestDetail;
+    const contestData = location.state?.contestData;
+
+    console.log(contestDetail);
 
     return (
         <>
@@ -50,6 +53,7 @@ const TeamBuildPage = () => {
                 <S.BuildDiv>
                     <TeamBuildingUploadPage
                         posts={currentContent}
+                        contestDetail={contestDetail}
                         contestData={contestData}
                     />
                 </S.BuildDiv>

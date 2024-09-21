@@ -110,7 +110,7 @@ const ContestDetailPage = () => {
         }
     };
     const handleTeamBuildClick = () => {
-        navigate('/teambuild', { contestDetail });
+        navigate('/teambuild', { contestDetail, contestData });
     };
 
     const handlegotoHomePage = () => {

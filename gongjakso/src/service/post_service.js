@@ -25,7 +25,6 @@ export const getContestTeamList = async (
     page,
     sortBy,
 ) => {
-    console.log(id, selectedCityData, selectedTownData, page, sortBy);
     const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sort=${sortBy}`;
     // const reqURL = `contest/${id}/team/list?province=서울&district=강남구&page=0&size=6&sort=`;
 
@@ -45,11 +44,11 @@ export const postContestTeam = async (contest_id, contestContent) => {
             ...contestContent,
         });
         console.log(response);
-        console.log(...contestContent);
+        console.log({ ...contestContent });
         return response;
     } catch (error) {
         console.log(error);
-        return error.response.data.code;
+        return error.response?.data.code;
     }
 };
 

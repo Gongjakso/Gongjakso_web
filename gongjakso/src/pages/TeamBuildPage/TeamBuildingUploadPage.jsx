@@ -12,7 +12,7 @@ import { openAlertModal } from '../../features/modal/modalSlice/alertModalSlice'
 import { useDispatch } from 'react-redux';
 import AlertModal from '../../components/common/AlertModal/AlertModal';
 
-const TeamBuildingUploadPage = ({ posts, contestData }) => {
+const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
     const dispatch = useDispatch();
 
     const language = [
@@ -28,7 +28,6 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
         'FLUTTER',
         'ETC',
     ];
-
     const [meeting, setMeeting] = useState('OFFLINE');
     const [complaint, setComplaint] = useState('true');
     const [description, setDescription] = useState('');
@@ -58,31 +57,28 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
 
     const [btn, setBtn] = useState(false);
 
-    const [dates, setDates] = useState([]);
-    const [endDates, setEndDates] = useState('');
+    const [startDates, setStartDates] = useState('');
+    const [finishDates, setFinishDates] = useState('');
+    const [recruitFinish, setRecruitFinish] = useState('');
 
     const [selectedTownData, setSelectedTownData] = useState('');
     const [selectedCityData, setSelectedCityData] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState();
 
     //프로젝트/공모전 기간 설정
-    const transformAndSetDates = (startDate, endDate) => {
-        const parsedStartDate = new Date(startDate);
-        const parsedEndDate = new Date(endDate);
-        const formattedStartDate = `${parsedStartDate.toISOString().split('T')[0]}T02:32:22.376895959`;
-        const formattedEndDate = `${parsedEndDate.toISOString().split('T')[0]}T02:32:22.376895959`;
-        setDates({ startDate: formattedStartDate, endDate: formattedEndDate });
-    };
+    // const transformAndSetDates = (startDate, endDate) => {
+    //     const parsedStartDate = new Date(startDate);
+    //     const parsedEndDate = new Date(endDate);
+    //     const formattedStartDate = `${parsedStartDate.toISOString().split('T')[0]}T02:32:22.376895959`;
+    //     const formattedEndDate = `${parsedEndDate.toISOString().split('T')[0]}T02:32:22.376895959`;
+    //     setDates({ startDate: formattedStartDate, endDate: formattedEndDate });
+    // };
 
-    //마감 일 기간 포맷팅
-    const transformAndSetEndDates = selectDate => {
+    //날짜 포맷팅
+    const transformAndSetDates = selectDate => {
         const parsedSelectDate = moment(selectDate);
-        const formattedSelectDate = parsedSelectDate.format(
-            'YYYY-MM-DDTHH:mm:ss.SSSSSSSSS',
-        );
-        setEndDates({
-            endDate: formattedSelectDate,
-        });
+        const formattedSelectDate = parsedSelectDate.format('YYYY-MM-DD');
+        return formattedSelectDate;
     };
 
     const {
@@ -160,18 +156,24 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
     }, [languages]);
 
     //프로젝트/공모전 기한 설정
-    const handleApply = selectedDates => {
-        // console.log(selectedDates);
-        transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
-    };
+    // const handleApply = selectedDates => {
+    //     // console.log(selectedDates);
+    //     transformAndSetDates(selectedDates.startDate, selectedDates.endDate);
+    // };
     //마감 기한 연장 설정
     // console.log(dates);
-    const handleDateChange = date => {
-        transformAndSetEndDates(date);
+    const handleDateStartChange = date => {
+        setStartDates(transformAndSetDates(date));
+    };
+    const handleDateFinishedChange = date => {
+        setFinishDates(transformAndSetDates(date));
+    };
+    const handleDateStartRecruitFinishedChange = date => {
+        setRecruitFinish(transformAndSetDates(date));
     };
 
     const handleCategory = selectCategory => {
-        // console.log(selectCategory.totalSelectedGuests);
+        // console.log(selectCategory.category);
         //선택한 인원의 숫자 가져오기
         setCategory(selectCategory.category);
     };
@@ -191,24 +193,24 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
     const submitContestBuild = data => {
         // console.log(endDates);
         const newData = {
-            title: contestData?.title,
+            title: contestDetail?.title,
             body: description,
             // contestLink: contestData?.contestLink, //공모전 주소
-            startedAt: dates.startDate,
-            finishedAt: dates.endDate,
-            recruit_finished_at: endDates.endDate, // 공고 마감일
+            started_at: startDates,
+            finished_at: finishDates,
+            recruit_finished_at: recruitFinish, // 공고 마감일
             total_count: data.people,
             // stackNames: [],
-            recruit_part: category?.categories, //참여하는 팀의 역할
+            recruit_part: category?.recruit_part, //참여하는 팀의 역할
             meeting_method: meeting,
             province: selectedCityData,
             district: selectedTownData,
-            questionMethod: complaint,
+            channel_method: complaint,
             channel_link: data.complainLink,
             // postType: false,
         };
         console.log(newData);
-        postContestTeam(14, newData).then(res => {
+        postContestTeam(contestData?.id, newData).then(res => {
             if (res === 5000) {
                 dispatch(
                     openAlertModal({
@@ -316,7 +318,7 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
                         <S.TextArea
                             name=""
                             id="title"
-                            value={contestData?.title}
+                            value={contestDetail?.title}
                             onChange={handleTitleChange}
                             readOnly
                         />
@@ -348,7 +350,7 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
                         <S.TextArea
                             name=""
                             id="link"
-                            value={contestData?.contestLink}
+                            value={contestDetail?.contestLink}
                             readOnly
                         />
                     </S.Label>
@@ -418,8 +420,8 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
                         <S.TapP>예상 기간</S.TapP>
                         <S.DateSet>
                             <SelectDate
-                                value={handleDateChange}
-                                onChange={handleDateChange}
+                                value={handleDateStartChange}
+                                onChange={handleDateStartChange}
                                 text={'시작날짜를 입력해주세요.'}
                             />
                             {/* <SelectCalendar
@@ -427,9 +429,19 @@ const TeamBuildingUploadPage = ({ posts, contestData }) => {
                                 dates={dates}
                             /> */}
                             <SelectDate
-                                value={handleDateChange}
-                                onChange={handleDateChange}
+                                value={handleDateFinishedChange}
+                                onChange={handleDateFinishedChange}
                                 text={'종료날짜를 입력해주세요.'}
+                            />
+                        </S.DateSet>
+                    </S.Label>
+                    <S.Label>
+                        <S.TapP>공고 마감일자</S.TapP>
+                        <S.DateSet>
+                            <SelectDate
+                                value={handleDateStartRecruitFinishedChange}
+                                onChange={handleDateStartRecruitFinishedChange}
+                                text={'공고 마감일을 입력해주세요.'}
                             />
                         </S.DateSet>
                     </S.Label>
