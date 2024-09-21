@@ -6,6 +6,7 @@ export const MainContent = styled.div`
     max-width: 1000px;
     margin: 0 auto;
     margin-top: 90px;
+    margin-bottom: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,6 +59,11 @@ export const RemainDate = styled.div`
     background-color: ${({ theme }) => theme.Purple};
     padding-left: 10px;
     padding-right: 10px;
+`;
+
+export const SpanP = styled.p`
+    width: auto;
+    min-width: 50px;
 `;
 
 export const FireImage = styled(Fire)`

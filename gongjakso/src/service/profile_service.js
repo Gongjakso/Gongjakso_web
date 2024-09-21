@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 //나의 정보
 export const putMyInfo = async (name, major, job, status, phone) => {

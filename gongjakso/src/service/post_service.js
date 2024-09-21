@@ -1,7 +1,8 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 import axios from 'axios';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;
+
 export const postPosting = async postContent => {
     const reqURL = `post`;
 
@@ -14,6 +15,26 @@ export const postPosting = async postContent => {
     } catch (error) {
         console.log(error);
         return error.response.data.code;
+    }
+};
+
+export const getContestTeamList = async (
+    id,
+    selectedCityData,
+    selectedTownData,
+    page,
+    sortBy,
+) => {
+    console.log(id, selectedCityData, selectedTownData, page, sortBy);
+    const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sort=${sortBy}`;
+    // const reqURL = `contest/${id}/team/list?province=서울&district=강남구&page=0&size=6&sort=`;
+
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
+        console.log(response?.data);
+        return response?.data;
+    } catch (error) {
+        console.log(error);
     }
 };
 

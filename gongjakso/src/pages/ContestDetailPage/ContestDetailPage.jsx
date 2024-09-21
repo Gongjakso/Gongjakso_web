@@ -7,24 +7,65 @@ import { useForm } from 'react-hook-form';
 import TeamBox from '../TeamBox/TeamBox';
 import NoContents from '../../features/NoContents/NoContents';
 import useCustomNavigate from '../../hooks/useNavigate';
-import { getContestDetail } from '../../service/post_service';
+import {
+    getContestDetail,
+    getContestTeamList,
+} from '../../service/post_service';
+import Pagination from '../../components/Pagination/Pagination';
 
 const ContestDetailPage = () => {
     const location = useLocation();
     const contestData = location.state?.contestData;
     const [selectedCityData, setSelectedCityData] = useState('');
     const [selectedTownData, setSelectedTownData] = useState('');
-    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortBy, setSortBy] = useState('');
     const navigate = useCustomNavigate();
     const [contestId, setContestId] = useState(contestData?.id);
     const [contestPosts, setContestPosts] = useState();
     const [contestDetail, setContestDetail] = useState();
+    const [contentHtml, setContentHtml] = useState('');
+    const [page, setPage] = useState(1);
+    const [contestTeamTotalPage, setContestTeamTotalPage] = useState();
+
+    useEffect(() => {
+        setPage(1);
+    }, [sortBy]);
+
+    const loadContestTeam = (
+        contestId,
+        selectedCityData,
+        selectedTownData,
+        page,
+        sortBy,
+    ) => {
+        getContestTeamList(
+            contestId,
+            selectedCityData,
+            selectedTownData,
+            page,
+            sortBy,
+        ).then(res => {
+            console.log(res?.data);
+            setContestPosts(res?.data.content);
+            setContestTeamTotalPage(res?.data.totalPages);
+        });
+    };
 
     useEffect(() => {
         getContestDetail(contestId).then(res => {
+            console.log(res);
             setContestDetail(res?.data);
+            // const formattedContent = res?.data.body.replace(/\n/g, '<br>');
+            setContentHtml(res?.data.body);
         });
-    }, [contestId]);
+        loadContestTeam(
+            contestId,
+            selectedCityData,
+            selectedTownData,
+            page,
+            sortBy,
+        );
+    }, [contestId, page, selectedCityData, selectedTownData, sortBy]);
 
     // const [contestPosts, setContestPosts] = useState();
 
@@ -72,6 +113,10 @@ const ContestDetailPage = () => {
         navigate('/teambuild');
     };
 
+    const handlegotoHomePage = () => {
+        window.open(contestDetail?.contestLink, '_blank');
+    };
+
     return (
         <>
             <S.MainContent>
@@ -84,7 +129,7 @@ const ContestDetailPage = () => {
                             </S.ContestTitle>
                             <S.RemainDate>
                                 <S.FireImage />
-                                {contestDetail?.dayState}
+                                <S.SpanP>{contestDetail?.dayState}</S.SpanP>
                             </S.RemainDate>
                         </S.ContestInfoTop>
                         <S.Organization>
@@ -105,21 +150,26 @@ const ContestDetailPage = () => {
                         </S.InfoContent>
                         <S.Headline />
                         <S.InfoContent>설명글</S.InfoContent>
-                        <S.InfoSpan>{contestDetail?.body}</S.InfoSpan>
+                        <S.InfoSpan
+                            dangerouslySetInnerHTML={{ __html: contentHtml }}
+                        />
+                        {/* <S.InfoSpan>{contestDetail?.body}</S.InfoSpan> */}
                     </S.ContestInfo>
                 </S.ContestDetail>
                 <S.ContestButtonOption>
-                    <S.GotohomeBtn>홈페이지로 바로가기</S.GotohomeBtn>
+                    <S.GotohomeBtn onClick={handlegotoHomePage}>
+                        홈페이지로 바로가기
+                    </S.GotohomeBtn>
                     <S.TeamBuildBtn onClick={handleTeamBuildClick}>
                         팀빌딩하기
                     </S.TeamBuildBtn>
                 </S.ContestButtonOption>
                 <S.ContestInfo>
                     <S.ContestTitle>
-                        {contestDetail?.contestTitle}의 팀 찾기
+                        '{contestDetail?.title}'의 팀 찾기
                     </S.ContestTitle>
                     <S.Organization>
-                        현재 N명이 팀을 모집하고 있어요
+                        현재 {contestPosts.length}명이 팀을 모집하고 있어요
                     </S.Organization>
                     <S.Fillterbox>
                         <Multilevel
@@ -141,27 +191,43 @@ const ContestDetailPage = () => {
                             />
                         </S.Fillter1>
                     </S.Fillterbox>
-                    <S.ContestContent>
-                        {contestPosts ? (
-                            contestPosts.map(contest => (
-                                <React.Fragment key={contest?.postId}>
-                                    <TeamBox
-                                        showWaitingJoin={false}
-                                        showSubBox={true}
-                                        borderColor={'rgba(0, 163, 255, 0.5)'}
-                                        showMoreDetail={false}
-                                        postContent={contest}
-                                        isMyParticipation={null}
-                                    />
-                                </React.Fragment>
-                            ))
-                        ) : (
-                            <NoContents
-                                mainTxt={'찾으시는 내용을 발견하지 못했어요!'}
-                                subTxt={'다른 내용을 검색해보세요'}
+                    {contestPosts && contestPosts.length > 0 ? (
+                        <>
+                            <S.ContestContent>
+                                {contestPosts?.map(contest => (
+                                    <React.Fragment key={contest?.id}>
+                                        <Link to={`/contest/${contest?.id}`}>
+                                            <TeamBox
+                                                showWaitingJoin={false}
+                                                showSubBox={true}
+                                                borderColor={
+                                                    'rgba(0, 163, 255, 0.5)'
+                                                }
+                                                showMoreDetail={false}
+                                                postContent={contest}
+                                                isMyParticipation={null}
+                                            />
+                                        </Link>
+                                    </React.Fragment>
+                                ))}
+                            </S.ContestContent>
+                            <Pagination
+                                total={contestTeamTotalPage}
+                                page={page}
+                                setPage={setPage}
+                                loadPosts={loadContestTeam}
                             />
-                        )}
-                    </S.ContestContent>
+                        </>
+                    ) : (
+                        <S.ContestContent>
+                            <NoContents
+                                mainTxt={
+                                    '아직 팀을 모집하고 있는 사람이 없어요'
+                                }
+                                subTxt={'첫 팀빌딩의 주인공이 되어보세요!'}
+                            />
+                        </S.ContestContent>
+                    )}
                 </S.ContestInfo>
             </S.MainContent>
         </>
