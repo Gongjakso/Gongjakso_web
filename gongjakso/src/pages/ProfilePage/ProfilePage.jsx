@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as S from './ProfilePageStyled';
 import TeamBox from '../TeamBox/TeamBox';
-
+import DeleteModal from '../../features/modal/DeleteModal';
 import {
     getMyInfo,
     getMyParticipated,
@@ -24,6 +24,9 @@ const ProfilePage = () => {
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false); // 모달 상태
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
+    const [selectedPortfolioName, setSelectedPortfolioName] = useState('');
     const navigate = useNavigate();
     const [portfolioExists, setPortfolioExists] = useState(false);
     const [portfolioList, setPortfolioList] = useState([]);
@@ -120,22 +123,27 @@ const ProfilePage = () => {
     const openPortfolioModal = () => setShowModal(true); // 모달 열기
     const closePortfolioModal = () => setShowModal(false); // 모달 닫기
 
-    const handleDeletePortfolio = async portfolioId => {
-        try {
-            // Delete the portfolio from the server
-            await deletePortfolio(portfolioId);
+    const handleDeletePortfolio = (portfolioId, portfolioName) => {
+        setSelectedPortfolioId(portfolioId); // 삭제할 포트폴리오 ID 저장
+        setSelectedPortfolioName(portfolioName); // 포트폴리오 이름 저장
+        setShowDeleteModal(true); // 삭제 모달 열기
+    };
 
+    const confirmDelete = async () => {
+        try {
+            await deletePortfolio(selectedPortfolioId);
             setPortfolioList(prevPortfolios =>
                 prevPortfolios.filter(
-                    portfolio => portfolio.PortfolioId !== portfolioId,
+                    portfolio => portfolio.PortfolioId !== selectedPortfolioId,
                 ),
             );
-
             if (portfolioList.length === 1) {
                 setPortfolioExists(false);
             }
         } catch (error) {
             console.error('Error deleting portfolio:', error);
+        } finally {
+            setShowDeleteModal(false); // 삭제 후 모달 닫기
         }
     };
 
@@ -216,6 +224,7 @@ const ProfilePage = () => {
                                             onClick={() =>
                                                 handleDeletePortfolio(
                                                     portfolio.PortfolioId,
+                                                    portfolio.PortfolioName,
                                                 )
                                             }
                                         />
@@ -296,10 +305,15 @@ const ProfilePage = () => {
                     ))}
                 </S.BoxDetail>
             </S.GlobalBox>
-
             <SelectPortfolio
                 showModal={showModal}
                 closePortfolioModal={closePortfolioModal}
+            />
+            <DeleteModal
+                showModal={showDeleteModal}
+                closeModal={() => setShowDeleteModal(false)}
+                confirmDelete={confirmDelete}
+                title={selectedPortfolioName}
             />
         </div>
     );

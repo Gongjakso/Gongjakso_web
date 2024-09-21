@@ -56,7 +56,7 @@ export const MajorTitle = styled.p`
 
 //소제목
 export const SubTitle = styled.p`
-    width: 68rem;
+    width: 1000px;
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: 900;
     padding-bottom: 25px;
@@ -201,7 +201,7 @@ export const DeletePortfolioButton = styled.button`
 `;
 
 export const PortfolioContainer = styled.div`
-    width: 68rem;
+    width: 1000px;
     height: 6rem;
     display: flex;
     flex-direction: row;
@@ -224,7 +224,7 @@ export const SubTitleContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 68rem;
+    width: 1000px;
 `;
 
 export const Plus = styled.div`
