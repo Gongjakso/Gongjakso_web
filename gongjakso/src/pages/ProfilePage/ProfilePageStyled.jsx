@@ -56,7 +56,7 @@ export const MajorTitle = styled.p`
 
 //소제목
 export const SubTitle = styled.p`
-    width: 1000px;
+    width: 68rem;
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: 900;
     padding-bottom: 25px;
@@ -166,6 +166,10 @@ export const ViewPortfolioBtn = styled.button`
 
 export const PortfolioTitle = styled.span`
     font-family: 'PreRegular';
+    white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 '...'으로 표시 */
+    max-width: 700px;
     font-size: ${({ theme }) => theme.fontSize.md};
 `;
 
@@ -197,7 +201,7 @@ export const DeletePortfolioButton = styled.button`
 `;
 
 export const PortfolioContainer = styled.div`
-    width: 1000px;
+    width: 68rem;
     height: 6rem;
     display: flex;
     flex-direction: row;
@@ -220,7 +224,7 @@ export const SubTitleContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1000px;
+    width: 68rem;
 `;
 
 export const Plus = styled.div`

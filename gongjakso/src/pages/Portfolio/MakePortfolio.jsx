@@ -3,6 +3,8 @@ import { SelectInput } from '../../components/common/Input/Input';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
+import { v4 as uuidv4 } from 'uuid'; // UUID import
+
 import {
     EditPortfolio,
     getPortfolio,
@@ -20,7 +22,7 @@ const MakePortfolio = ({ portfolioId }) => {
 
     const [educationSections, setEducationSections] = useState([
         {
-            id: Date.now(),
+            id: uuidv4(),
             schoolName: '',
             gradeStatus: '1학년',
             state: '재학 중',
@@ -28,7 +30,7 @@ const MakePortfolio = ({ portfolioId }) => {
     ]);
     const [careerSections, setCareerSections] = useState([
         {
-            id: Date.now(),
+            id: uuidv4(),
             companyName: '',
             position: '',
             description: '',
@@ -36,31 +38,33 @@ const MakePortfolio = ({ portfolioId }) => {
         },
     ]);
     const [activitySections, setActivitySections] = useState([
-        { id: Date.now(), activityName: '', activityStatus: '활동 중' },
+        { id: uuidv4(), activityName: '', activityStatus: '활동 중' },
     ]);
     const [awardSections, setAwardSections] = useState([
-        { id: Date.now(), competitionName: '', award: '' },
+        { id: uuidv4(), competitionName: '', award: '' },
     ]);
     const [certificateSections, setCertificateSections] = useState([
-        { id: Date.now(), examName: '', score: '' },
+        { id: uuidv4(), examName: '', score: '' },
     ]);
-    const [snsLinks, setSnsLinks] = useState([{ id: Date.now(), link: '' }]);
+    const [snsLinks, setSnsLinks] = useState([{ id: uuidv4(), link: '' }]);
 
     const gradeStatus_options = ['1학년', '2학년', '3학년', '4학년'];
     const status_options = ['재학 중', '휴학 중', '졸업', '졸업 유예'];
     const activityStatus_options = ['활동 중', '활동 종료'];
 
     const addSection = (sectionSetter, currentSections) => {
-        sectionSetter([...currentSections, { id: Date.now() }]);
+        sectionSetter([...currentSections, { id: uuidv4() }]);
     };
 
     const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
+        setSnsLinks([...snsLinks, { id: uuidv4(), link: '' }]);
     };
 
     const handleDeleteSection = (sectionType, id) => {
         const deleteSection = (sections, setSections) => {
-            setSections(sections.filter(section => section.id !== id));
+            setSections(prevSections =>
+                prevSections.filter(section => section.id !== id),
+            );
         };
 
         switch (sectionType) {
@@ -83,9 +87,11 @@ const MakePortfolio = ({ portfolioId }) => {
                 break;
         }
     };
+
     const [dates, setDates] = useState([]);
     const navigate = useNavigate();
     const handleApplyDate = (date, type, sectionId, sectionType) => {
+        console.log(`Date passed to ${type}:`, date); // 전달된 날짜 확인
         const sectionHandlers = {
             education: {
                 state: educationSections,
@@ -110,8 +116,9 @@ const MakePortfolio = ({ portfolioId }) => {
         );
 
         if (sectionIndex !== -1) {
-            updatedSections[sectionIndex][type] = date;
+            updatedSections[sectionIndex][type] = date; // 선택된 날짜 반영
             setState(updatedSections); // 상태 업데이트
+            console.log('Updated sections:', updatedSections); // 업데이트된 섹션 출력
         }
     };
 
@@ -136,11 +143,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                   schoolName: section.school || '',
                                   gradeStatus: section.grade || '1학년',
                                   state: section.state || '재학 중',
-                                  id: Date.now(),
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       schoolName: '',
                                       gradeStatus: '1학년',
                                       state: '재학 중',
@@ -154,14 +161,14 @@ const MakePortfolio = ({ portfolioId }) => {
                                   companyName: section.company || '',
                                   position: section.partition || '',
                                   description: section.detail || '',
-                                  enteredAt: section.enteredAt || null,
-                                  exitedAt: section.exitedAt || null,
+                                  enteredAt: section.enteredAt || '',
+                                  exitedAt: section.exitedAt || '',
                                   isActive: section.isActive || false,
-                                  id: Date.now(),
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       companyName: '',
                                       position: '',
                                       description: '',
@@ -177,11 +184,11 @@ const MakePortfolio = ({ portfolioId }) => {
                                   activityStatus: section.isActive
                                       ? '활동 중'
                                       : '활동 종료',
-                                  id: Date.now(),
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       activityName: '',
                                       activityStatus: '활동 중',
                                   },
@@ -193,12 +200,12 @@ const MakePortfolio = ({ portfolioId }) => {
                             ? portfolioData.awardList.map(section => ({
                                   competitionName: section.contestName || '',
                                   award: section.awardName || '',
-                                  awardDate: section.awardDate || null,
-                                  id: Date.now(),
+                                  awardDate: section.awardDate || '',
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       competitionName: '',
                                       award: '',
                                   },
@@ -211,12 +218,12 @@ const MakePortfolio = ({ portfolioId }) => {
                                   examName: section.name || '',
                                   score: section.rating || '',
                                   certificationDate:
-                                      section.certificationDate || null,
-                                  id: Date.now(),
+                                      section.certificationDate || '',
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       examName: '',
                                       score: '',
                                   },
@@ -227,11 +234,11 @@ const MakePortfolio = ({ portfolioId }) => {
                         portfolioData.snsList.length
                             ? portfolioData.snsList.map(link => ({
                                   link: link.snsLink || '',
-                                  id: Date.now(),
+                                  id: uuidv4(),
                               }))
                             : [
                                   {
-                                      id: Date.now(),
+                                      id: uuidv4(),
                                       link: '',
                                   },
                               ],
@@ -246,6 +253,17 @@ const MakePortfolio = ({ portfolioId }) => {
             fetchPortfolioData();
         }
     }, [id]);
+    const formatDate = date => {
+        const validDate = date instanceof Date ? date : new Date(date);
+
+        if (!validDate || isNaN(validDate.getTime())) {
+            return null; // 유효하지 않은 날짜일 경우 null 반환
+        }
+        const year = validDate.getFullYear();
+        const month = String(validDate.getMonth() + 1).padStart(2, '0'); // 월을 2자리로 포맷
+        const day = String(validDate.getDate()).padStart(2, '0'); // 일을 2자리로 포맷
+        return `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 반환
+    };
 
     const handleSavePortfolio = async () => {
         const portfolioData = {
@@ -259,8 +277,8 @@ const MakePortfolio = ({ portfolioId }) => {
             workList: careerSections.map(section => ({
                 company: section.companyName,
                 partition: section.position,
-                enteredAt: section.enteredAt ? section.enteredAt : null,
-                exitedAt: section.exitedAt ? section.exitedAt : null,
+                enteredAt: formatDate(section.enteredAt),
+                exitedAt: formatDate(section.exitedAt),
                 isActive: section.isActive,
                 detail: section.description,
             })),
@@ -271,14 +289,12 @@ const MakePortfolio = ({ portfolioId }) => {
             awardList: awardSections.map(section => ({
                 contestName: section.competitionName,
                 awardName: section.award,
-                awardDate: section.awardDate ? section.awardDate : null,
+                awardDate: formatDate(section.awardDate),
             })),
             certificateList: certificateSections.map(section => ({
                 name: section.examName,
                 rating: section.score,
-                certificationDate: section.certificationDate
-                    ? section.certificationDate
-                    : null,
+                certificationDate: formatDate(section.certificationDate),
             })),
             snsList: snsLinks.map(link => ({
                 snsLink: link.link,
@@ -461,7 +477,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                             section.enteredAt || '입사일'
                                         }
                                         width={'27.5rem'}
-                                        value={section.enteredAt || null}
+                                        value={section.enteredAt || ''}
                                     />
                                     <SelectOne
                                         onApply={date =>
@@ -476,7 +492,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                             section.exitedAt || '퇴사일'
                                         }
                                         width={'27.5rem'}
-                                        value={section.exitedAt || null}
+                                        value={section.exitedAt || ''}
                                     />
                                 </S.CalendarSection>
                                 <S.CheckContainer>
@@ -627,7 +643,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                 }
                                 placeholder={section.awardDate || '수상 날짜'}
                                 width={'16rem'}
-                                value={section.awardDate || null}
+                                value={section.awardDate || ''}
                             />
                         </S.InputContainer>
                         {awardSections.length > 1 && (
