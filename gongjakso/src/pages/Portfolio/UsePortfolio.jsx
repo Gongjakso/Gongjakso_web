@@ -1,7 +1,11 @@
 import * as S from './Portfolio.Styled';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { getMyInfo } from '../../service/profile_service';
+import { useNavigate } from 'react-router-dom';
 
 const UsePortfolio = () => {
+    const [data, setProfileData] = useState();
+    const navigate = useNavigate();
     const fileInput = useRef(null);
     const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
     const [error, setError] = useState(''); // State for error messages
@@ -10,7 +14,7 @@ const UsePortfolio = () => {
         fileInput.current.click();
     };
     const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: snsLinks.length + 1, link: '' }]);
+        setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
     };
 
     const handleChange = e => {
@@ -30,11 +34,17 @@ const UsePortfolio = () => {
         }
     };
 
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data);
+        });
+    }, []);
+
     return (
         <div>
             <S.TopBox>
                 <S.PortfolioInfo>
-                    <S.UserName>김지은님의 포트폴리오</S.UserName>
+                    <S.UserName>{data?.name}님의 포트폴리오</S.UserName>
                     <S.Description>
                         포트폴리오 완성도를 높이면 팀 합류 확률이 올라가요!
                     </S.Description>
@@ -82,22 +92,25 @@ const UsePortfolio = () => {
                                     setSnsLinks(updatedLinks);
                                 }}
                             />
-                            <S.DeleteBtn
-                                onClick={() => {
-                                    if (snsLinks.length > 1) {
-                                        setSnsLinks(
-                                            snsLinks.filter(
-                                                link => link.id !== section.id,
-                                            ),
-                                        );
-                                    }
-                                }}
-                            />
+                            {snsLinks.length > 1 && (
+                                <S.DeleteBtn
+                                    onClick={() => {
+                                        if (snsLinks.length > 1) {
+                                            setSnsLinks(
+                                                snsLinks.filter(
+                                                    link =>
+                                                        link.id !== section.id,
+                                                ),
+                                            );
+                                        }
+                                    }}
+                                />
+                            )}
                         </S.LinkContainer>
                     </S.BoxDetail>
                 ))}
                 <S.BtnContainer>
-                    <S.BackBtn>돌아가기</S.BackBtn>
+                    <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>
                     <S.SaveBtn>저장하기</S.SaveBtn>
                 </S.BtnContainer>
             </S.GlobalBox>
