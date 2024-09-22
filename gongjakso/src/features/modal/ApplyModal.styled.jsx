@@ -24,13 +24,14 @@ export const Modal = styled.div`
     transform: translate(-50%, -50%);
     background: white;
     border-radius: 40px;
-    padding: 50px;
+    padding: 50px 100px;
     /* width: 60%; //추가 해봤어요
     height: 90%; //추가 해봤어요 */
 `;
 
 export const Backbtn = styled.button`
     position: absolute;
+
     right: 6%;
 `;
 
@@ -44,7 +45,7 @@ export const Decisionbtn = styled.div`
 
 export const MainTitle = styled.div`
     text-align: center;
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: 1.5rem;
     font-family: 'PreBold';
     letter-spacing: 0.5px;
     margin-bottom: 30px;
@@ -167,16 +168,15 @@ export const ApplyBox2 = styled.div`
 `;
 
 export const newBtn = styled.button`
-    width: 250px;
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 60px;
+    padding: 1.2rem;
     border-radius: 15px;
-    margin: 15px;
-    padding: 18px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    margin: 10px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     background: ${props => props.$bg};
     font-family: 'PreBold';
     color: ${props => props.$c};
@@ -188,11 +188,10 @@ export const ApplyBtn = styled.button`
     align-items: center;
     justify-content: center;
     width: ${props => props.$w};
-    height: 50px;
     border-radius: 10px;
     margin: 15px;
-    padding: 27px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 13px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;
@@ -242,7 +241,7 @@ export const CompletedBox = styled.div`
     align-items: center;
     flex-direction: column;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreMedium';
     gap: 8px;
 `;
