@@ -1,7 +1,8 @@
 import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 const BaseUrl = process.env.REACT_APP_BASE_URL_V2;
 
-export const getAllPortfolio = async id => {
+// 전체 조회
+export const getAllPortfolio = async () => {
     const reqURL = `mypage/portfolio/my`;
 
     try {
@@ -14,6 +15,7 @@ export const getAllPortfolio = async id => {
     }
 };
 
+// 입력 포트폴리오 post
 export const postPortfolio = async portfolioData => {
     const reqURL = `mypage/portfolio`;
 
@@ -25,6 +27,18 @@ export const postPortfolio = async portfolioData => {
     }
 };
 
+// 존재 포트폴리오 post
+export const postExistPortfolio = async formData => {
+    const reqURL = `mypage/portfolio/exist-portfolio`;
+    try {
+        const response = await axiosInstanceV2.post(reqURL, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error posting portfolio:', error);
+    }
+};
+
+// 입력 포트폴리오 상세 get
 export const getPortfolio = async id => {
     const reqURL = `mypage/portfolio/${id}`;
 
@@ -37,7 +51,23 @@ export const getPortfolio = async id => {
         return error.response.data.code;
     }
 };
-export const EditPortfolio = async (id, portfolioData) => {
+
+// 존재 포트폴리오 상세 get
+export const getExistPortfolio = async id => {
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
+
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error.response.data.code;
+    }
+};
+
+// 입력 포트폴리오 수정
+export const editPortfolio = async (id, portfolioData) => {
     const reqURL = `mypage/portfolio/${id}`;
 
     try {
@@ -47,8 +77,32 @@ export const EditPortfolio = async (id, portfolioData) => {
         console.error('Error editing portfolio:', error);
     }
 };
+
+// 존재 포트폴리오 수정
+export const editExistPortfolio = async (id, portfolioData) => {
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
+
+    try {
+        const response = await axiosInstanceV2.patch(reqURL, portfolioData);
+        return response.data;
+    } catch (error) {
+        console.error('Error editing portfolio:', error);
+    }
+};
+
+// 입력 포트폴리오 delete
 export const deletePortfolio = async id => {
     const reqURL = `mypage/portfolio/${id}`;
+    try {
+        await axiosInstanceV2.delete(reqURL);
+    } catch (error) {
+        console.log('Error deleting portfolio:', error);
+    }
+};
+
+// 존재 포트폴리오 delete
+export const deleteExistPortfolio = async id => {
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
     try {
         await axiosInstanceV2.delete(reqURL);
     } catch (error) {
