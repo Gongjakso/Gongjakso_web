@@ -146,6 +146,7 @@ const UsePortfolio = () => {
                     <input
                         type="file"
                         ref={fileInput}
+                        multiple // 여러 파일 선택 가능
                         onChange={handleChange}
                         style={{ display: 'none' }}
                     />
@@ -172,7 +173,6 @@ const UsePortfolio = () => {
                 )}
 
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-
                 <S.TitleSection>
                     <S.SubTitle>노션 포트폴리오 링크 입력하기</S.SubTitle>
                 </S.TitleSection>

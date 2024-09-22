@@ -28,6 +28,7 @@ const TeamBox = ({
     const { isOpen, confirmClick, cancelClick } = useSelector(
         state => state.confirmModal,
     );
+
     useEffect(() => {
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
