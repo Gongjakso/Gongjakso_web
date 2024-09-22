@@ -42,7 +42,6 @@ const ProfileRecruit = () => {
     const { id } = useParams();
     const location = useLocation();
     const contestData = location.state?.postContent;
-    console.log(contestData);
     const [postId, setpostId] = useState(id);
 
     const [recruitTeam, setRecruitTeam] = useState([]);
@@ -66,12 +65,14 @@ const ProfileRecruit = () => {
             */
     };
 
+    const [totalMember, setTotalMember] = useState();
+
     useEffect(() => {
         const id = contestData?.id;
 
         getMyRecruitingTeam(id).then(response => {
             setPosts(response?.data); // 지원자 리스트 설정
-
+            setTotalMember(response?.data.length);
             // 응답 후에 statuses 배열을 상태에 맞게 초기화
             const fetchedStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
@@ -119,7 +120,6 @@ const ProfileRecruit = () => {
                 applyId,
                 newStatuses[index] === 'black' ? 'ACCEPTED' : 'REJECTED',
             );
-            console.log('API 호출 결과:', response);
 
             // 변경된 후 다시 서버에서 상태를 받아와 COMPLETED는 gray로 처리
             const id = contestData?.id;
@@ -137,9 +137,7 @@ const ProfileRecruit = () => {
                 });
                 setStatuses(updatedStatuses);
             });
-        } catch (error) {
-            console.log('API 호출 중 에러:', error);
-        }
+        } catch (error) {}
 
         saveStatusesToLocalStorage(newStatuses); // 로컬 스토리지에 상태 저장
     };
@@ -188,7 +186,6 @@ const ProfileRecruit = () => {
     useEffect(() => {
         setTotalPage(1); // 페이지 총 개수 설정
         setRecruitTeam(contestData); // 모집 팀 정보 설정
-
         const id = contestData?.id;
         getMyRecruitingTeam(id).then(response => {
             setPosts(response?.data); // 지원자 리스트 설정
@@ -201,9 +198,8 @@ const ProfileRecruit = () => {
             });
 
             setStatuses(fetchedStatuses); // 서버에서 가져온 상태로 설정
-            console.log(contestData);
         });
-    }, []);
+    }, [contestData]);
 
     const loadApplyList = page => {
         // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
@@ -297,8 +293,8 @@ const ProfileRecruit = () => {
                                 <S.InsideTitle $title={'false'}>
                                     현재 모집 현황
                                     <S.TagNUM>
-                                        {recruitTeam?.current_person}/
-                                        {recruitTeam?.max_person}
+                                        {totalMember}/
+                                        {contestData?.recruit_part.length}
                                     </S.TagNUM>
                                 </S.InsideTitle>
                             </S.DetailGlobal2>

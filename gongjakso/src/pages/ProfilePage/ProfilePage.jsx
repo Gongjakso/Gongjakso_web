@@ -348,13 +348,13 @@ const ProfilePage = () => {
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
                     {postContent1?.map(post => (
                         <TeamBox
-                            key={post?.postId}
+                            key={post?.id}
                             showMoreDetail={true}
                             showWaitingJoin={false}
                             showSubBox={true}
                             postContent={post}
                             isMyParticipation={false}
-                            postId={post?.postId}
+                            postId={post?.id}
                         />
                     ))}
                 </S.BoxDetail>

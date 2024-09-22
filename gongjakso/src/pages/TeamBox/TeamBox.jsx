@@ -29,6 +29,8 @@ const TeamBox = ({
         state => state.confirmModal,
     );
 
+    console.log(postId);
+
     useEffect(() => {
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
