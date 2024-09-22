@@ -25,6 +25,7 @@ const ContestListPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
 
     const [page, setPage] = useState(1);
+    const [word, setWord] = useState();
     const [contestListTotalPage, setContestListTotalPage] = useState();
 
     const [contestListPosts, setContestListPosts] = useState();
@@ -40,11 +41,11 @@ const ContestListPage = () => {
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
         });
-        getContestList().then(res => {
+        getContestList(page, searchKeyword).then(res => {
             setContestListPosts(res?.data.contestList);
             setContestListTotalPage(res?.data.totalPages);
         });
-    }, []);
+    }, [page, searchKeyword]);
 
     const ClickSearchBtn = () => {};
 
