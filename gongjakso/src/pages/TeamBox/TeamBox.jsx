@@ -72,7 +72,6 @@ const TeamBox = ({
             }
         });
     };
-
     const handleOpenModal = id => {
         dispatch(
             openConfirmModal({
@@ -132,10 +131,10 @@ const TeamBox = ({
         let displayCategory;
 
         switch (recruit_part) {
-            case 'PLAN':
+            case '기획':
                 displayCategory = '기획';
                 break;
-            case 'DESIGN':
+            case '디자인':
                 displayCategory = '디자인';
                 break;
             case 'FE':
@@ -144,7 +143,7 @@ const TeamBox = ({
             case 'BE':
                 displayCategory = '백엔드';
                 break;
-            case 'ETC':
+            case '기타':
                 displayCategory = '기타';
                 break;
             default:
@@ -165,9 +164,9 @@ const TeamBox = ({
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
                             {isMyParticipation === false &&
-                                `| ${postContent?.memberName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === true &&
-                                `| ${postContent?.leaderName} | ${postContent?.startedAt}~${postContent?.recruitFinishedAt} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === null &&
                                 // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                                 `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
@@ -192,16 +191,13 @@ const TeamBox = ({
                             $isleader={isLeader}
                             onClick={
                                 isLeader
-                                    ? postContent?.postStatus === 'ACTIVE'
-                                        ? () =>
-                                              handleOpenModal(
-                                                  postContent?.postId,
-                                              )
+                                    ? postContent?.status === '활동 중'
+                                        ? () => handleOpenModal(postContent?.id)
                                         : null
                                     : null
                             }
                         >
-                            {postContent?.postStatus === 'ACTIVE'
+                            {postContent?.status === '활동 중'
                                 ? '활동 중'
                                 : '활동 종료'}
                         </S.ActivityStatus>
@@ -212,17 +208,17 @@ const TeamBox = ({
                         {isMyParticipation ? (
                             <div></div>
                         ) : isMyParticipation === null ? (
-                            postContent?.categories?.map((category, index) => {
-                                return (
-                                    <S.RoundForm key={index}>
-                                        {getDisplayCategory(
-                                            category.categoryType,
-                                        )}
-                                    </S.RoundForm>
-                                );
-                            })
+                            postContent?.recruit_part?.map(
+                                (category, index) => {
+                                    return (
+                                        <S.RoundForm key={index}>
+                                            {getDisplayCategory(category)}
+                                        </S.RoundForm>
+                                    );
+                                },
+                            )
                         ) : (
-                            postContent?.categoryList?.map(
+                            postContent?.recruit_part?.map(
                                 (categoryList, index) => {
                                     return (
                                         <S.RoundForm key={index}>
@@ -262,7 +258,10 @@ const TeamBox = ({
                         </S.WaitingJoin>
                     )}
                     {showMoreDetail && (
-                        <Link to={`/teamdetail/${postId}`}>
+                        <Link
+                            to={`/teamdetail/${postId}`}
+                            state={{ postContent }}
+                        >
                             <S.MoreDetail />
                         </Link>
                     )}

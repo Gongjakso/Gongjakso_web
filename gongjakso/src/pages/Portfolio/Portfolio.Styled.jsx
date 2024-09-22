@@ -316,6 +316,7 @@ export const FileInfo = styled.div`
     padding: 5px;
     margin-bottom: 7rem;
     background-color: #f7f7f7;
+
     border-radius: 5px;
     border: 1.5px dotted #d2d2d7;
     font-size: ${({ theme }) => theme.fontSize.m};

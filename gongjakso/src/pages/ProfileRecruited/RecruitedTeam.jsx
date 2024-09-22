@@ -9,8 +9,8 @@ const RecruitedTeam = () => {
     const [postContent1, setPostContent1] = useState([]);
 
     useEffect(() => {
-        getMyRecruiting().then(response => {
-            setPostContent1(response?.data);
+        getMyRecruiting(0, 6).then(response => {
+            setPostContent1(response?.data.content);
         });
     }, []);
 
@@ -24,7 +24,7 @@ const RecruitedTeam = () => {
             <S.BoxDetail>
                 {postContent1?.map(postContent1 => (
                     <TeamBox
-                        key={postContent1?.postId}
+                        key={postContent1?.id}
                         showMoreDetail={true}
                         showWaitingJoin={false}
                         showSubBox={true}

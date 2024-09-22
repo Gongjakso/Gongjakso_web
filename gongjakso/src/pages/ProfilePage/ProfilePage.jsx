@@ -38,7 +38,17 @@ const ProfilePage = () => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
+        getMyRecruiting().then(response => {
+            setPostContent1(response?.data?.content.slice(0, 2));
+        });
+        getMyApplied(1, 2).then(response => {
+            setPostContent2(response?.data?.content);
+        });
+        getMyParticipated(1, 2).then(response => {
+            setPostContent3(response?.data?.content);
+        });
     }, []);
+
     useEffect(() => {
         if (selectedPortfolioId) {
             fetchPortfolioDetails(selectedPortfolioId); // 포트폴리오가 선택되면 상세 정보 불러오기
@@ -361,11 +371,6 @@ const ProfilePage = () => {
                             showMoreDetail={false}
                             showWaitingJoin={true}
                             showSubBox={true}
-                            borderColor={
-                                post.postType === true
-                                    ? 'rgba(231, 137, 255, 0.5)'
-                                    : 'rgba(0, 163, 255, 0.5)'
-                            }
                             postContent={post}
                             isMyParticipation={false}
                         />
@@ -385,9 +390,7 @@ const ProfilePage = () => {
                             borderColor={
                                 post?.postStatus !== 'ACTIVE'
                                     ? 'rgba(111, 111, 111, 1)'
-                                    : post.postType === true
-                                      ? 'rgba(231, 137, 255, 0.5)'
-                                      : 'rgba(0, 163, 255, 0.5)'
+                                    : 'rgba(0, 84, 255, 1)'
                             }
                             showWaitingJoin={false}
                             showSubBox={false}

@@ -151,6 +151,7 @@ const UsePortfolio = () => {
                     />
                 </S.FileUploadBox>
 
+
                 {/* 파일이 선택되었거나 기존 파일이 있을 때만 파일 정보 표시 */}
                 {(file || existingFile) && (
                     <S.FileInfo>
@@ -172,7 +173,6 @@ const UsePortfolio = () => {
                 )}
 
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-
                 <S.TitleSection>
                     <S.SubTitle>노션 포트폴리오 링크 입력하기</S.SubTitle>
                 </S.TitleSection>
