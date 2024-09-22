@@ -77,6 +77,7 @@ const UsePortfolio = () => {
         setFile(null);
         setExistingFile(null);
     };
+
     const handleSubmit = async () => {
         if (!file && !existingFile && !snsLink.trim()) {
             setError(
@@ -117,6 +118,15 @@ const UsePortfolio = () => {
             console.error('Error posting portfolio: ', err);
         }
     };
+
+    // 노션 링크나 파일이 사라질 때 UI를 동적으로 업데이트
+    useEffect(() => {
+        if (!snsLink && !existingFile && !file) {
+            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
+        } else {
+            setError('');
+        }
+    }, [snsLink, existingFile, file]);
 
     return (
         <div>
