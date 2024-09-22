@@ -31,7 +31,12 @@ const UsePortfolio = () => {
                     setSnsLink(portfolioData.notionUri || ''); // 노션 링크 설정
                     console.log(portfolioData);
                     if (portfolioData.fileUri) {
-                        const fileName = portfolioData.fileUri.split('/').pop();
+                        const fileName = portfolioData.fileUri
+                            .split('/')
+                            .pop()
+                            .split('_')
+                            .pop();
+
                         setExistingFile({
                             name: fileName,
                             uri: portfolioData.fileUri,

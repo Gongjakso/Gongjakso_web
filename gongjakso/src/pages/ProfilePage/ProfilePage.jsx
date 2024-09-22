@@ -110,14 +110,17 @@ const ProfilePage = () => {
     const fetchPortfolioDetails = async portfolioId => {
         try {
             const details = await getExistPortfolio(portfolioId);
-            setPortfolioDetails(prevState => ({
-                ...prevState,
-                [portfolioId]: details.data, // ID별로 저장
-            }));
+            if (details && details.data) {
+                setPortfolioDetails(prevState => ({
+                    ...prevState,
+                    [portfolioId]: details.data, // ID별로 저장
+                }));
+            }
         } catch (error) {
             console.error('Error fetching portfolio details:', error);
         }
     };
+
     useEffect(() => {
         const fetchPortfolios = async () => {
             try {
@@ -125,17 +128,19 @@ const ProfilePage = () => {
                 const portfolios = response?.data?.data;
 
                 if (portfolios && portfolios.length > 0) {
-                    setPortfolioExists(true);
+                    const isAnyRegistered = portfolios.some(
+                        portfolio => portfolio.isRegistered,
+                    );
+                    setPortfolioExists(isAnyRegistered); // 포트폴리오 등록 상태 업데이트
                     setPortfolioList(portfolios); // 전체 포트폴리오 목록 저장
-                } else {
-                    setPortfolioExists(false);
-                }
 
-                portfolios.forEach(portfolio => {
-                    if (portfolio.isExistedPortfolio) {
+                    // 각각의 포트폴리오에 대해 세부 정보를 가져옴
+                    portfolios.forEach(portfolio => {
                         fetchPortfolioDetails(portfolio.PortfolioId);
-                    }
-                });
+                    });
+                } else {
+                    setPortfolioExists(false); // 등록된 포트폴리오 없음
+                }
             } catch (error) {
                 console.error('Error fetching portfolios:', error);
             }
@@ -154,10 +159,13 @@ const ProfilePage = () => {
     };
     const extractFileName = fileUri => {
         if (fileUri) {
-            return fileUri.split('/').pop(); // '/'로 분리한 배열의 마지막 요소를 가져옴
+            const fileName = fileUri.split('/').pop(); // '/'로 분리한 마지막 요소 가져오기
+            const nameAfterUnderscore = fileName.split('_').pop(); // '_'로 분리한 마지막 요소 가져오기
+            return nameAfterUnderscore; // '_' 이후의 부분 반환
         }
         return '등록된 파일 없음';
     };
+
     const confirmDelete = async () => {
         try {
             await deletePortfolio(selectedPortfolioId);
