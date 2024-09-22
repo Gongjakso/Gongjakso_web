@@ -43,7 +43,12 @@ const UsePortfolio = () => {
                         }); // 파일 이름과 URI 설정
                     }
                 }
-            } catch (error) {}
+            } catch (error) {
+                console.error(
+                    '포트폴리오 데이터를 가져오는 중 에러 발생:',
+                    error,
+                );
+            }
         };
 
         fetchPortfolio();
@@ -76,6 +81,7 @@ const UsePortfolio = () => {
         setFile(null); // 파일 상태 초기화
         setExistingFile(null); // 기존 파일도 초기화
     };
+
     const handleSubmit = async () => {
         const formData = new FormData();
 
@@ -114,6 +120,15 @@ const UsePortfolio = () => {
             setError('포트폴리오 업로드 중 오류가 발생했습니다.');
         }
     };
+
+    // 노션 링크나 파일이 사라질 때 UI를 동적으로 업데이트
+    useEffect(() => {
+        if (!snsLink && !existingFile && !file) {
+            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
+        } else {
+            setError('');
+        }
+    }, [snsLink, existingFile, file]);
 
     return (
         <div>
