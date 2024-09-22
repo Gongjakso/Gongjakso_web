@@ -57,11 +57,7 @@ export const getPostDetail = async (contest_id, team_id) => {
     const reqURL = `contest/${contest_id}/team/${team_id}`;
 
     try {
-        const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await axiosInstanceV2.get(reqURL);
         console.log(response);
         return response.data;
     } catch (error) {

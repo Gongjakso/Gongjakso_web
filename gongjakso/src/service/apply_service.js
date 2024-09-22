@@ -118,6 +118,7 @@ export const applyCancel = async apply_id => {
 
     try {
         const response = await axiosInstanceV2.delete(reqURL);
+        console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);

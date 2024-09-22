@@ -41,11 +41,7 @@ const ApplyCancel = props => {
                             $w="230px"
                             onClick={() => {
                                 ClickCancelBtn(props.applyId);
-                                if (props.type) {
-                                    navigate('/project');
-                                } else {
-                                    navigate('/contest');
-                                }
+                                navigate('/contest');
                             }}
                         >
                             취소하기

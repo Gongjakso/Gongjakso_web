@@ -212,6 +212,12 @@ export const ApplyButton = styled(ScrapButton)`
     border: 2.5px solid ${({ theme }) => theme.box1};
 `;
 
+export const CancelButton = styled(ScrapButton)`
+    background: ${({ theme }) => theme.LightGrey};
+    color: white;
+    // border: 2.5px solid ${({ theme }) => theme.box1};
+`;
+
 export const ApplicationBg = styled.div`
     width: 100%;
     padding: 5rem 1rem 1.5rem 1rem;
