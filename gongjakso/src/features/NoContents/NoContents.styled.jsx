@@ -28,7 +28,7 @@ export const Btn = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 70%;
     height: 51px;
     border: 1px solid black;
     border-radius: 16px;
@@ -38,7 +38,7 @@ export const Btn = styled.button`
 export const BtnLabel = styled.p`
     color: ${theme.mainFont2};
     font-family: Pretendard sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     line-height: 28.64px;
 `;

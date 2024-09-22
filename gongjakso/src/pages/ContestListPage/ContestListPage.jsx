@@ -15,7 +15,7 @@ const ContestListPage = () => {
     const [banners, setBanners] = useState([]);
     const [links, setLinks] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
-    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortBy, setSortBy] = useState('VIEW');
 
     const options = ['전체', '최신순', '조회순'];
 
@@ -25,6 +25,7 @@ const ContestListPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
 
     const [page, setPage] = useState(1);
+    const [word, setWord] = useState();
     const [contestListTotalPage, setContestListTotalPage] = useState();
 
     const [contestListPosts, setContestListPosts] = useState();
@@ -40,13 +41,18 @@ const ContestListPage = () => {
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
         });
-        getContestList().then(res => {
+        getContestList(page, '', sortBy).then(res => {
             setContestListPosts(res?.data.contestList);
             setContestListTotalPage(res?.data.totalPages);
         });
-    }, []);
+    }, [page, sortBy]);
 
-    const ClickSearchBtn = () => {};
+    const ClickSearchBtn = () => {
+        getContestList(page, searchKeyword, sortBy).then(res => {
+            setContestListPosts(res?.data.contestList);
+            setContestListTotalPage(res?.data.totalPages);
+        });
+    };
 
     const handleKeyDown = event => {
         if (event.key === 'Enter') {
@@ -78,12 +84,12 @@ const ContestListPage = () => {
     });
 
     const handleSelectChange = selectedValue => {
-        if (selectedValue === '인기순') {
-            setSortBy('scrapCount');
+        if (selectedValue === '조회순') {
+            setSortBy('VIEW');
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
-            setSortBy(null);
+            setSortBy('VIEW');
         }
     };
 
@@ -163,6 +169,9 @@ const ContestListPage = () => {
                             <NoContents
                                 mainTxt={'찾으시는 내용을 발견하지 못했어요!'}
                                 subTxt={'다른 내용을 검색해보세요'}
+                                link={
+                                    'https://docs.google.com/forms/d/e/1FAIpQLScZnXxk-CobT5vltnuzdqM7-SWiqsrx7ILB5yW-4kE1D3xrfQ/viewform'
+                                }
                                 btnLabel={'찾고 있는 공모전 문의하기'}
                             />
                         </S.PostContent>

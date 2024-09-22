@@ -30,7 +30,6 @@ const PostMainPage = () => {
     const [banners, setBanners] = useState([]);
     const [links, setLinks] = useState([]);
     const [contestTotalPage, setContestTotalPage] = useState();
-    const [ProjectTotalPage, setProjectTotalPage] = useState();
     const [sortBy, setSortBy] = useState('createdAt');
 
     const [selectedLocalData, setSelectedLocalData] = useState('');
@@ -42,7 +41,7 @@ const PostMainPage = () => {
     const [modal1Open, setModal1Open] = useState(false);
 
     const encodeSpaces = searchKeyword => {
-        return searchKeyword.replace(/ /g, '%20');
+        return searchKeyword?.replace(/ /g, '%20');
     };
     // 띄어쓰기 인코딩 하는 부분
 
@@ -89,22 +88,13 @@ const PostMainPage = () => {
     ];
 
     const ClickSearchBtn = () => {
-        isProject
-            ? loadProjectPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  selectedStack,
-                  searchKeyword,
-              )
-            : loadContestPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  searchKeyword,
-              );
+        loadContestPosts(
+            page,
+            sortBy,
+            selectedCityData,
+            selectedTownData,
+            searchKeyword,
+        );
     };
 
     const handleKeyDown = event => {
@@ -120,22 +110,13 @@ const PostMainPage = () => {
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
         });
-        isProject
-            ? loadProjectPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  selectedStack,
-                  searchKeyword,
-              )
-            : loadContestPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  searchKeyword,
-              );
+        loadContestPosts(
+            page,
+            sortBy,
+            selectedCityData,
+            selectedTownData,
+            searchKeyword,
+        );
     }, [
         page,
         sortBy,
@@ -161,27 +142,6 @@ const PostMainPage = () => {
         ).then(res => {
             setContestPosts(res?.data?.content);
             setContestTotalPage(res?.data?.totalPages);
-        });
-    };
-
-    const loadProjectPosts = (
-        page,
-        sort,
-        selectedCityData,
-        selectedTownData,
-        selectedStack,
-        searchKeyword,
-    ) => {
-        getProjectPosts(
-            page,
-            sort,
-            selectedCityData,
-            selectedTownData,
-            selectedStack,
-            encodeSpaces(searchKeyword),
-        ).then(res => {
-            setProjectPosts(res?.data?.content);
-            setProjectTotalPage(res?.data?.totalPages);
         });
     };
 
@@ -266,20 +226,6 @@ const PostMainPage = () => {
                             case={true}
                         />
                     </S.Fillter1>
-                    {isProject && (
-                        <S.Fillter1>
-                            <SelectInput
-                                id={'local'}
-                                error={errors.local}
-                                selectOptions={stackOptions}
-                                placeholder={'사용 언어'}
-                                register={register}
-                                case={true}
-                                scroll={true}
-                                onChange={handleSelectStack}
-                            />
-                        </S.Fillter1>
-                    )}
                 </S.Fillterbox>
                 {isProject ? ( //여기는 프로젝트
                     <S.PostContent>
@@ -329,11 +275,11 @@ const PostMainPage = () => {
                     <S.PostContent>
                         {contestPosts && contestPosts.length > 0 ? (
                             contestPosts.map(contest => (
-                                <React.Fragment key={contest?.postId}>
+                                <React.Fragment key={contest?.id}>
                                     {isLoggedIn ? (
                                         <Link
-                                            key={contest?.postId}
-                                            to={`/contest/${contest?.postId}`}
+                                            key={contest?.id}
+                                            to={`/contest/${contest?.contest_id}/team/${contest?.id}`}
                                         >
                                             <TeamBox
                                                 showWaitingJoin={false}
@@ -370,21 +316,12 @@ const PostMainPage = () => {
                         )}
                     </S.PostContent>
                 )}
-                {isProject ? (
-                    <Pagination
-                        total={ProjectTotalPage}
-                        page={page}
-                        setPage={setPage}
-                        loadPosts={loadContestPosts}
-                    />
-                ) : (
-                    <Pagination
-                        total={contestTotalPage}
-                        page={page}
-                        setPage={setPage}
-                        loadPosts={loadProjectPosts}
-                    />
-                )}
+                <Pagination
+                    total={contestTotalPage}
+                    page={page}
+                    setPage={setPage}
+                    loadPosts={loadContestPosts}
+                />
             </S.MainContent>
             {modal1Open && <Modal1 closeModal1={closeModal1} />}
         </>

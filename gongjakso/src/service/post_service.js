@@ -24,7 +24,7 @@ export const getContestTeamList = async (
     page,
     sortBy,
 ) => {
-    const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sort=${sortBy}`;
+    const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sortAt=${sortBy}`;
     // const reqURL = `contest/${id}/team/list?province=서울&district=강남구&page=0&size=6&sort=`;
 
     try {
@@ -54,7 +54,6 @@ export const getPostDetail = async (contest_id, team_id) => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-
         return response.data;
     } catch (error) {
         console.log(error);
@@ -133,27 +132,6 @@ export const postApply = async (team_id, postContent) => {
     }
 };
 
-export const getProjectPosts = async (
-    pageNum,
-    sort,
-    selectedCityData,
-    selectedTownData,
-    selectedStack,
-    searchKeyword,
-) => {
-    const reqURL = `post/project?meetingCity=${selectedCityData}&meetingTown=${selectedTownData}&stackName=${selectedStack}&searchWord=${searchKeyword}&page=${pageNum}&sort=${sort}`;
-
-    try {
-        const response = await axios.get(`${BaseUrl}${reqURL}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
 export const getContestPosts = async (
     pageNum,
     sort,
@@ -161,9 +139,9 @@ export const getContestPosts = async (
     selectedTownData,
     searchKeyword,
 ) => {
-    const reqURL = `post/contest?meetingCity=${selectedCityData}&meetingTown=${selectedTownData}&category=&searchWord=${searchKeyword}&page=${pageNum}&sort=${sort}`;
+    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sortAt=scrapCount`;
     try {
-        const response = await axios.get(`${BaseUrl}${reqURL}`, {
+        const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -185,8 +163,8 @@ export const patchCompletedPost = async post_id => {
     }
 };
 
-export const getContestList = async () => {
-    const reqURL = `contest/search?word=&size=12&page=1`;
+export const getContestList = async (page, searchKeyword, sortBy) => {
+    const reqURL = `contest/search?word=${searchKeyword}&size=12&page=${page}&sortAt=${sortBy}`;
 
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
