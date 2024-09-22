@@ -1,4 +1,4 @@
-import { axiosInstance } from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 
 export const getRecruitTeam = async post_id => {
     const reqURL = `apply/${post_id}`;
@@ -114,10 +114,10 @@ export const getMyApplication = async postid => {
 };
 
 export const applyCancel = async apply_id => {
-    const reqURL = `apply/cancel/${apply_id}`;
+    const reqURL = `apply/${apply_id}`;
 
     try {
-        const response = await axiosInstance.patch(reqURL);
+        const response = await axiosInstanceV2.delete(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);

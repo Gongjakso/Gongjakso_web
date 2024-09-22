@@ -24,24 +24,13 @@ const Completed = props => {
     // 지원하기 POST
     const submitContestApply = () => {
         const newData = {
-            application: props.inputValue,
-            recruit_part: props.clickedFields,
-            recruit_role: '',
-            type: 'CONTEST',
+            portfolioId: props.isclosed ? '' : props.clickedPortId,
+            body: props.inputValue,
+            part: props.clickedFields,
+            status: 'COMPLETED',
+            isPrivate: props.isclosed,
         };
         postApply(props.id, newData).then(res => {});
-    };
-    const submitProjectApply = () => {
-        const newData = {
-            application: props.inputValue,
-            recruit_part: props.clickedFields,
-            recruit_role: '',
-            stack: props.clickedSkill,
-            type: 'PROJECT',
-        };
-        postApply(props.id, newData).then(res => {
-            console.log(res);
-        });
     };
 
     return (
@@ -53,7 +42,7 @@ const Completed = props => {
                         $h="450px"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.MainTitle>공모전 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
@@ -75,9 +64,7 @@ const Completed = props => {
                                 onClick={() => {
                                     props.setApplyCheck(false);
                                     props.setCompleted(true);
-                                    props.title === '공모전'
-                                        ? submitContestApply()
-                                        : submitProjectApply();
+                                    submitContestApply();
                                 }}
                             >
                                 제출하기
@@ -100,7 +87,7 @@ const Completed = props => {
                         >
                             <img src={Close} alt="close-btn" />
                         </S.Backbtn>
-                        <S.MainTitle>공모전 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원이 완료되었습니다!</p>
                             <p>
