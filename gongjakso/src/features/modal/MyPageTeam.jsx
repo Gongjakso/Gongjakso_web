@@ -17,7 +17,7 @@ const MyPageTeam = props => {
     const [checkedCase] = useState(props.teamCase.id);
     const [dates, setDates] = useState();
     const dispatch = useDispatch();
-
+    console.log(props.id.id);
     const handleApply = date => {
         const year = date.getFullYear();
         const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
@@ -46,7 +46,7 @@ const MyPageTeam = props => {
     };
 
     const ClickCancelBtn = () => {
-        patchCancel(props.id);
+        patchCancel(props.id.contest_id, props.id.id);
     };
 
     // 스크롤 방지
