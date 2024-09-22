@@ -86,3 +86,12 @@ export const getMyProjectScrap = async () => {
         console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
     }
 };
+export const getMyTeamScrap = async (page, size) => {
+    const reqURL = `team/scrap/list?page=${page - 1}&size=${size}`;
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
+        return response.data;
+    } catch (error) {
+        console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
+    }
+};

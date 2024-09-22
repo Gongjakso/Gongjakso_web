@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
+const BaseUrlV2 = process.env.REACT_APP_BASE_URL_V2;
 
 export const getRecruitTeam = async post_id => {
     const reqURL = `apply/${post_id}`;
@@ -120,6 +122,18 @@ export const applyCancel = async apply_id => {
         const response = await axiosInstanceV2.delete(reqURL);
         console.log(response);
         return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getMyRecruitingTeam = async team_id => {
+    const reqURL = `team/${11}`;
+
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
+        console.log(response);
+        return response?.data;
     } catch (error) {
         console.log(error);
     }

@@ -7,10 +7,11 @@ import ClickApply from '../../features/modal/ClickApply';
 import Pagination from '../../components/Pagination/Pagination';
 import {
     getApplyList,
+    getMyRecruitingTeam,
     getRecruitTeam,
     patchOpen,
 } from '../../service/apply_service';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useCustomNavigate from '../../hooks/useNavigate';
 
 const ProfileRecruit = () => {
@@ -38,6 +39,8 @@ const ProfileRecruit = () => {
     const [totalPage, setTotalPage] = useState();
 
     const { id } = useParams();
+    const location = useLocation();
+    const contestData = location.state?.postContent;
 
     const [postId, setpostId] = useState(id);
 
@@ -120,9 +123,11 @@ const ProfileRecruit = () => {
 
     useEffect(() => {
         setTotalPage(1); // 페이지 총 개수 설정
-        setPosts(mockApplyList); // 지원자 리스트 설정
-        setRecruitTeam(mockRecruitTeam); // 모집 팀 정보 설정
-
+        setRecruitTeam(contestData); // 모집 팀 정보 설정
+        getMyRecruitingTeam().then(response => {
+            setPosts(response?.data); // 지원자 리스트 설정
+            console.log(contestData);
+        });
         // statuses를 posts 배열에 맞게 설정
         setStatuses(mockApplyList.map(() => 'gray')); // 여기서 statuses 상태 초기화
     }, []);
@@ -203,11 +208,11 @@ const ProfileRecruit = () => {
                         </S.DetailGlobal>
                         <S.DetailGlobal>
                             <S.InsideDetail>
-                                활동기간 | {formatDate(recruitTeam?.startDate)}{' '}
-                                ~{formatDate(recruitTeam?.endDate)}
+                                활동기간 | {recruitTeam?.started_at} ~
+                                {formatDate(recruitTeam?.finished_at)}
                             </S.InsideDetail>
                             <S.InsideDetail>
-                                모집인원 | {recruitTeam?.max_person}
+                                모집인원 | {recruitTeam?.recruit_part?.length}
                             </S.InsideDetail>
                         </S.DetailGlobal>
                     </S.Border>
@@ -274,7 +279,7 @@ const ProfileRecruit = () => {
                         </S.StyledThead>
                         <tbody>
                             {posts?.map((item, i, array) => (
-                                <tr key={item.apply_id}>
+                                <tr key={item.applyId}>
                                     <S.StyledTd
                                         $state={item.is_canceled}
                                         style={{
@@ -286,7 +291,7 @@ const ProfileRecruit = () => {
                                     >
                                         <S.User>
                                             <img src={User} alt="UserImage" />
-                                            {item.name}
+                                            {item.memberName}
                                         </S.User>
                                         {item.is_canceled ? (
                                             <S.CancelBox>
@@ -299,10 +304,12 @@ const ProfileRecruit = () => {
                                                         setItem(i);
                                                         handleClick(i, item.id);
                                                         setShowApply(true);
-                                                        setidNum(item.apply_id);
-                                                        setidName(item.name);
+                                                        setidNum(item.applyId);
+                                                        setidName(
+                                                            item.memberName,
+                                                        );
                                                         ClickOpen(
-                                                            item.apply_id,
+                                                            item.applyId,
                                                             item.state,
                                                         );
                                                     }}

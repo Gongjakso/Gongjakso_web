@@ -24,7 +24,7 @@ const RecruitedTeam = () => {
             <S.BoxDetail>
                 {postContent1?.map(postContent1 => (
                     <TeamBox
-                        key={postContent1?.postId}
+                        key={postContent1?.id}
                         showMoreDetail={true}
                         showWaitingJoin={false}
                         showSubBox={true}

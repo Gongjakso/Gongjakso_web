@@ -28,7 +28,7 @@ const TeamBox = ({
     const { isOpen, confirmClick, cancelClick } = useSelector(
         state => state.confirmModal,
     );
-
+    const [teamContent, setTeamContent] = useState(postContent);
     useEffect(() => {
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
@@ -72,7 +72,6 @@ const TeamBox = ({
             }
         });
     };
-
     const handleOpenModal = id => {
         dispatch(
             openConfirmModal({
@@ -259,7 +258,10 @@ const TeamBox = ({
                         </S.WaitingJoin>
                     )}
                     {showMoreDetail && (
-                        <Link to={`/teamdetail/${postId}`}>
+                        <Link
+                            to={`/teamdetail/${postId}`}
+                            state={{ postContent }}
+                        >
                             <S.MoreDetail />
                         </Link>
                     )}
