@@ -12,6 +12,7 @@ export const Container = styled.div`
     justify-content: center;
     /* align-items: center; */
     margin-top: 160px;
+    margin-bottom: 90px;
 `;
 
 export const TitleContent = styled.div`

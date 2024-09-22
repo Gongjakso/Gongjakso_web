@@ -139,6 +139,8 @@ export const ButtonContent = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-top: 90px;
+    margin-bottom: 90px;
 `;
 
 export const Button = styled.button`
