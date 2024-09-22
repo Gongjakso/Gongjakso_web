@@ -202,7 +202,7 @@ export const DeletePortfolioButton = styled.button`
 
 export const PortfolioContainer = styled.div`
     width: 1000px;
-    height: 6rem;
+    min-height: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -210,7 +210,7 @@ export const PortfolioContainer = styled.div`
     border-radius: 24px;
     border: 2px solid #c3e9ff;
     background: #e5f5ff;
-    padding: 3rem 3.5rem;
+    padding: 1.5rem 3rem;
     box-sizing: border-box;
 `;
 
@@ -235,4 +235,22 @@ export const Plus = styled.div`
     background-size: contain;
     cursor: pointer;
     margin-bottom: 25px;
+`;
+
+export const LinkInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-family: 'Pretendard';
+    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-weight: 600;
+    text-align: left;
+    gap: 5px;
+`;
+
+export const LinkDetail = styled.div`
+    color: #8e8e93;
+    font-family: 'Pretendard';
+    font-size: ${({ theme }) => theme.fontSize.base};
+    font-weight: 500;
+    text-align: left;
 `;
