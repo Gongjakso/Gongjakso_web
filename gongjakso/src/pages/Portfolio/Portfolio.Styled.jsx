@@ -316,12 +316,13 @@ export const FileInfo = styled.div`
     padding: 5px;
     margin-bottom: 7rem;
     background-color: #f7f7f7;
-    border-radius: 5px; // 모서리를 둥글게
+
+    border-radius: 5px;
     border: 1.5px dotted #d2d2d7;
     font-size: ${({ theme }) => theme.fontSize.m};
-    color: #333; // 텍스트 색상
-    max-width: 1000px; // 최대 너비 설정
-    word-wrap: break-word; // 긴 텍스트 줄바꿈
+    color: #333;
+    max-width: 1000px;
+    word-wrap: break-word;
 `;
 
 export const FileName = styled.div`
@@ -346,7 +347,7 @@ export const FileList = styled.div`
 
 export const FileItem = styled.div`
     display: flex;
-    align-items: center; /* 세로 가운데 정렬 */
-    justify-content: space-between; /* 좌우 여백 */
+    align-items: center;
+    justify-content: space-between;
     padding: 5px;
 `;

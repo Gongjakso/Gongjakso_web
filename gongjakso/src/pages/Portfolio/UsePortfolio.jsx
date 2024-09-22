@@ -151,6 +151,7 @@ const UsePortfolio = () => {
                     />
                 </S.FileUploadBox>
 
+
                 {/* 파일이 선택되었거나 기존 파일이 있을 때만 파일 정보 표시 */}
                 {(file || existingFile) && (
                     <S.FileInfo>
