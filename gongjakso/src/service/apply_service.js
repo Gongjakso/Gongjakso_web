@@ -127,11 +127,25 @@ export const applyCancel = async apply_id => {
     }
 };
 
-export const getMyRecruitingTeam = async team_id => {
-    const reqURL = `team/${11}`;
+// 특정 팀의 지원자 리스트 조회
+export const getMyRecruitingTeam = async id => {
+    const reqURL = `team/${id}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
+        console.log(response);
+        return response?.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// 지원자 합류하기, 미선발
+export const patchApply = async (applyId, status) => {
+    const reqURL = `apply/select/${applyId}`;
+
+    try {
+        const response = await axiosInstanceV2.patch(reqURL, { status });
         console.log(response);
         return response?.data;
     } catch (error) {
