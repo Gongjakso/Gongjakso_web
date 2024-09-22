@@ -10,72 +10,76 @@ const UsePortfolio = () => {
     const fileInput = useRef(null);
     const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
     const [error, setError] = useState(''); // State for error messages
-    const [file, setFile] = useState(null); // 파일 상태 추가
+    const [files, setFiles] = useState([]); // 여러 파일을 저장하는 배열
 
     const handleButtonClick = () => {
         fileInput.current.click();
     };
+
     const addSNSLink = () => {
         setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
     };
-    const fileToBase64 = file => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    };
     const handleChange = e => {
-        const selectedFile = e.target.files[0];
-        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+        const selectedFiles = Array.from(e.target.files); // 선택된 파일들을 배열로 변환
+        const maxSize = 10 * 1024 * 1024; // 10MB 제한
 
-        if (selectedFile) {
-            if (selectedFile.size > maxSize) {
-                setError(
-                    '파일 크기가 10MB를 초과합니다. 다른 파일을 선택해 주세요.',
-                );
-                return;
-            }
-            console.log(selectedFile);
+        // 파일 크기 제한 확인
+        let totalSize = 0;
+        selectedFiles.forEach(file => {
+            totalSize += file.size;
+        });
+
+        if (totalSize > maxSize) {
+            setError(
+                '전체 파일 크기가 10MB를 초과했습니다. 파일을 다시 선택해 주세요.',
+            );
+        } else {
             setError('');
-            setFile(selectedFile); // 파일 상태 저장
+
+            // 기존 파일과 새로 선택한 파일들을 합쳐서 업데이트
+            const updatedFiles = [...files, ...selectedFiles];
+
+            // 중복 파일 제거 (파일 이름 기준)
+            const uniqueFiles = updatedFiles.filter(
+                (file, index, self) =>
+                    index === self.findIndex(f => f.name === file.name),
+            );
+
+            setFiles(uniqueFiles); // 중복 제거 후 파일 상태 업데이트
         }
+    };
+
+    // 파일 삭제
+    const handleFileDelete = index => {
+        const updatedFiles = files.filter((_, i) => i !== index); // 선택된 파일 삭제
+        setFiles(updatedFiles); // 파일 상태 업데이트
     };
     const handleSubmit = async () => {
         const formData = new FormData();
 
-        // 파일이 있을 경우에만 FormData에 파일 추가
-        if (file) {
-            formData.append('file', file); // 파일 객체 그대로 추가
-        }
+        // 파일 배열을 순회하여 FormData에 각 파일을 추가
+        files.forEach(file => {
+            formData.append('files', file);
+        });
 
         // notionUri를 FormData에 추가
         const notionUri = snsLinks[0]?.link;
         if (notionUri) {
-            formData.append('notionUri', notionUri); // JSON.stringify 필요 없음
-        } else {
-            formData.append('notionUri', ''); // notionUri가 null일 경우 빈 문자열로 전송
+            formData.append('notionUri', notionUri); // 노션 링크가 있을 경우만 추가
         }
 
-        if (!file && !notionUri) {
+        if (files.length === 0 && !notionUri) {
             setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
             return;
         }
 
         try {
-            // FormData를 사용하여 multipart/form-data 요청 전송
-            await postExistPortfolio(formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            await postExistPortfolio(formData); // Content-Type 자동 처리됨
             navigate('/profile');
         } catch (err) {
             setError('포트폴리오 업로드 중 오류가 발생했습니다.');
         }
     };
-
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
@@ -107,12 +111,30 @@ const UsePortfolio = () => {
                     <input
                         type="file"
                         ref={fileInput}
+                        multiple // 여러 파일 선택 가능
                         onChange={handleChange}
                         style={{ display: 'none' }}
                     />
                 </S.FileUploadBox>
+                {files.length > 0 && (
+                    <S.FileInfo>
+                        <S.FileList>
+                            {files.map((file, index) => (
+                                <S.FileItem key={index}>
+                                    <S.FileName>{file.name}</S.FileName>
+                                    <S.FileSize>
+                                        {(file.size / (1024 * 1024)).toFixed(2)}{' '}
+                                        MB
+                                    </S.FileSize>
+                                    <S.DeleteBtn
+                                        onClick={() => handleFileDelete(index)}
+                                    />
+                                </S.FileItem>
+                            ))}
+                        </S.FileList>
+                    </S.FileInfo>
+                )}
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-
                 <S.TitleSection>
                     <S.SubTitle>노션 포트폴리오 공유하기</S.SubTitle>{' '}
                     <S.PlusBtn onClick={addSNSLink} />
