@@ -11,6 +11,10 @@ const TeamSupport = () => {
     const [totalPage, setTotalPage] = useState();
 
     useEffect(() => {
+        setPage(1);
+    }, []);
+
+    useEffect(() => {
         getMyApplied(page, 6).then(response => {
             setTotalPage(response?.data.totalPages);
             setPostContent2(response?.data.content);

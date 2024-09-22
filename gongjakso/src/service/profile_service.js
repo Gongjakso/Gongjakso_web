@@ -31,7 +31,7 @@ export const getMyInfo = async () => {
 
 //팀박스->내가 모집 중
 export const getMyRecruiting = async (page, size) => {
-    const reqURL = `team/my-recruit?page=${page}&size=${size}`;
+    const reqURL = `team/my-recruit?page=${page - 1}&size=${size}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
@@ -44,11 +44,10 @@ export const getMyRecruiting = async (page, size) => {
 
 //팀박스->내가 지원
 export const getMyApplied = async (page, size) => {
-    const reqURL = `team/my-apply?page=${page}&size=${size}`;
+    const reqURL = `team/my-apply?page=${page - 1}&size=${size}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log('내가 지원한 게시글을 가져올 수 없습니다.');
@@ -62,8 +61,6 @@ export const getMyParticipated = async (page, size) => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response.data);
-        console.log(page);
         return response.data;
     } catch (error) {
         console.log(error);
