@@ -146,7 +146,6 @@ const UsePortfolio = () => {
                     <input
                         type="file"
                         ref={fileInput}
-                        multiple // 여러 파일 선택 가능
                         onChange={handleChange}
                         style={{ display: 'none' }}
                     />

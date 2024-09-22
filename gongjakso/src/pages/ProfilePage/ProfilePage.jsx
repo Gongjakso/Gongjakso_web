@@ -38,21 +38,6 @@ const ProfilePage = () => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
-
-        // 서버에서 받아온 데이터를 모방하여 설정
-        // setPostContent1(mockRecruitingTeams);
-        // setPostContent2(mockAppliedTeams);
-        // setPostContent3(mockParticipatedTeams);
-
-        getMyRecruiting(0, 2).then(response => {
-            setPostContent1(response?.data.content);
-        });
-        getMyApplied(0, 2).then(response => {
-            setPostContent2(response?.data.content);
-        });
-        getMyParticipated(0, 2).then(response => {
-            setPostContent3(response?.data.content);
-        });
     }, []);
     useEffect(() => {
         if (selectedPortfolioId) {
@@ -353,13 +338,13 @@ const ProfilePage = () => {
                     <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
                     {postContent1?.map(post => (
                         <TeamBox
-                            key={post?.id}
+                            key={post?.postId}
                             showMoreDetail={true}
                             showWaitingJoin={false}
                             showSubBox={true}
                             postContent={post}
                             isMyParticipation={false}
-                            postId={post?.id}
+                            postId={post?.postId}
                         />
                     ))}
                 </S.BoxDetail>
@@ -372,15 +357,10 @@ const ProfilePage = () => {
                     </S.SubTitle>
                     {postContent2?.map(post => (
                         <TeamBox
-                            key={post?.id}
+                            key={post?.postId}
                             showMoreDetail={false}
                             showWaitingJoin={true}
                             showSubBox={true}
-                            borderColor={
-                                post.postType === true
-                                    ? 'rgba(231, 137, 255, 0.5)'
-                                    : 'rgba(0, 163, 255, 0.5)'
-                            }
                             postContent={post}
                             isMyParticipation={false}
                         />
@@ -395,14 +375,12 @@ const ProfilePage = () => {
                     </S.SubTitle>
                     {postContent3?.map(post => (
                         <TeamBox
-                            key={post?.id}
+                            key={post?.postId}
                             showMoreDetail={false}
                             borderColor={
                                 post?.postStatus !== 'ACTIVE'
                                     ? 'rgba(111, 111, 111, 1)'
-                                    : post.postType === true
-                                      ? 'rgba(231, 137, 255, 0.5)'
-                                      : 'rgba(0, 163, 255, 0.5)'
+                                    : 'rgba(0, 84, 255, 1)'
                             }
                             showWaitingJoin={false}
                             showSubBox={false}
