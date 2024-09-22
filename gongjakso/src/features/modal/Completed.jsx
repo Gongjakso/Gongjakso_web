@@ -24,7 +24,7 @@ const Completed = props => {
     // 지원하기 POST
     const submitContestApply = () => {
         const newData = {
-            portfolioId: props.clickedPortId,
+            portfolioId: props.isclosed ? '' : props.clickedPortId,
             body: props.inputValue,
             part: props.clickedFields,
             status: 'COMPLETED',

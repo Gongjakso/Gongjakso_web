@@ -62,6 +62,7 @@ export const getPostDetail = async (contest_id, team_id) => {
                 'Content-Type': 'application/json',
             },
         });
+        console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -91,7 +92,7 @@ export const postScrap = async id => {
     }
 };
 
-// [DELETE] 공고 상세페이지 팀 스크랩 API
+// [DELETE] 공고 상세페이지 팀 스크랩 취소 API
 export const deleteScrap = async id => {
     const reqURL = `team/${id}/scrap`;
 
@@ -103,7 +104,7 @@ export const deleteScrap = async id => {
     }
 };
 
-// [GET] 공고 상세페이지 팀 스크랩 조회 API
+// [GET] 공고 상세페이지 팀 스크랩 여부 조회 API
 export const getScrap = async id => {
     const reqURL = `team/${id}/scrap/check`;
 
@@ -115,6 +116,7 @@ export const getScrap = async id => {
     }
 };
 
+// [GET] 내 포트폴리오 리스트 조회 API
 export const getMyPortfolio = async () => {
     const reqURL = `mypage/portfolio/my`;
 

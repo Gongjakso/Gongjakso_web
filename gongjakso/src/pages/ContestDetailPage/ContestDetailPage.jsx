@@ -196,7 +196,9 @@ const ContestDetailPage = () => {
                             <S.ContestContent>
                                 {contestPosts?.map(contest => (
                                     <React.Fragment key={contest?.id}>
-                                        <Link to={`/contest/${contest?.id}`}>
+                                        <Link
+                                            to={`/contest/${contestData?.id}/team/${contest?.id}`}
+                                        >
                                             <TeamBox
                                                 showWaitingJoin={false}
                                                 showSubBox={true}

@@ -33,7 +33,7 @@ const DetailPageContest = () => {
     const navigate = useCustomNavigate();
     const { contest_id, team_id } = useParams();
 
-    // 지원서 모달창 띄우는 경우
+    // [APPLIER] 지원서 모달창 띄우는 경우
     const [showApply, setShowApply] = useState(false);
     const [idNum, setidNum] = useState('');
     const [idName, setidName] = useState('');
@@ -65,9 +65,10 @@ const DetailPageContest = () => {
     const [inputCount, setInputCount] = useState(0); // 글자 수
     const [inputValue, setInputValue] = useState(''); // 지원 이유
 
-    const [clickedFields, setClickedFields] = useState(null); // 지원 분야 배열
+    // 선택한 지원 분야 배열
+    const [clickedFields, setClickedFields] = useState(null);
 
-    // [TODO] 나의 포트폴리오 존재 유무!!!!!!
+    // 나의 포트폴리오 존재 유무
     const [havePortfolio, setHavePortfolio] = useState(true);
 
     // 포트폴리오 만들러가기 버튼
@@ -85,16 +86,20 @@ const DetailPageContest = () => {
     // ** API 관련 변수 **
     const [postData, setpostData] = useState([]);
 
-    // TODO: category mockdata 설정 (api 구현 후 수정 예정)
+    // 모집하는 지원 분야
     const [category, setCategory] = useState([]);
 
+    // 포트폴리오 데이터
     const [portfolioData, setportfolioData] = useState([]);
     const [portfolioId, setportfolioId] = useState('');
 
+    // 스크랩
     const [scrapNum, setscrapNum] = useState();
     const [scrapStatus, setscrapStatus] = useState('');
-    const [checkStatus, setcheckStatus] = useState('');
-    const [applyType, setapplyType] = useState('');
+
+    // 사용자 상태
+    const [checkStatus, setcheckStatus] = useState(''); // GENERAL/LEADER/APPLIER
+    const [applyType, setapplyType] = useState(''); // 현재 지원자 선발 여부 (타이틀 옆 상태 표기)
 
     const [postId] = useState(team_id);
 
@@ -102,6 +107,7 @@ const DetailPageContest = () => {
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
 
     useEffect(() => {
+        // [GET] 공고 상세페이지 팀 조회 API
         getPostDetail(contest_id, team_id).then(res => {
             setpostData(res?.data);
             setcheckStatus(res?.data.team_role);
@@ -110,16 +116,18 @@ const DetailPageContest = () => {
             setapplyTitle(res?.data.title);
         });
 
+        // [GET] 공고 상세페이지 팀 스크랩 여부 조회 API
         getScrap(team_id).then(res => {
             setscrapStatus(res?.data.is_scrap);
-            console.log(res);
         });
     }, [contest_id, team_id]);
 
     useEffect(() => {
         if (apply) {
+            // [GET] 내 포트폴리오 리스트 조회 API
             getMyPortfolio().then(res => {
                 setportfolioData(res?.data);
+                setHavePortfolio(res?.data[0]?.isRegistered);
             });
         }
     }, [apply]);
@@ -146,6 +154,7 @@ const DetailPageContest = () => {
     // 스크랩 POST
     const ClickScrapBtn = () => {
         if (scrapStatus) {
+            // [DELETE] 공고 상세페이지 팀 스크랩 취소 API
             deleteScrap(team_id).then(res => {
                 setscrapNum(scrapNum - 1);
                 ReactGA.event({
@@ -155,6 +164,7 @@ const DetailPageContest = () => {
                 console.log(res);
             });
         } else {
+            // [POST] 공고 상세페이지 팀 스크랩 API
             postScrap(team_id).then(res => {
                 setscrapNum(res?.data?.scrap_count);
                 ReactGA.event({
@@ -184,11 +194,6 @@ const DetailPageContest = () => {
             setClickedPort(item);
             setIsClosed(item === 'none');
         }
-    };
-
-    // 포트폴리오 비공개 버튼
-    const isClosedClick = () => {
-        setIsClosed(!isclosed);
     };
 
     // 지원서 폼 자동 스크롤 관련
@@ -228,6 +233,7 @@ const DetailPageContest = () => {
                 <ClickmyApply id={postId} setOpen={setmyAppOpen} type={false} />
             ) : null}
 
+            {/* 지원하기 모달 */}
             {applyCheck && (
                 <Completed
                     case={1}
@@ -242,10 +248,12 @@ const DetailPageContest = () => {
                 />
             )}
 
-            {/* 지원완료 모달 (확인사살 모달 아님!) */}
+            {/* 지원이 완료되었습니다 모달 */}
             {completed === true ? <Completed case={2} /> : null}
 
+            {/* 포트폴리오 만들러가기 모달 */}
             {goToMy && <Completed case={3} setgoToMy={setgoToMy} />}
+
             {showApply && (
                 <ClickApply
                     setShowApply={setShowApply}
@@ -256,6 +264,8 @@ const DetailPageContest = () => {
                     id={postId}
                 />
             )}
+
+            {/* 지원 취소 모달 */}
             {showCancel ? (
                 <ApplyCancel
                     CloseModal={setshowCancel}
@@ -561,10 +571,7 @@ const DetailPageContest = () => {
                                                     setgoToMy(true);
                                                 }}
                                             />
-                                            <T.RoundForm
-                                                $isselected={isclosed}
-                                                onClick={isClosedClick}
-                                            >
+                                            <T.RoundForm $isselected={isclosed}>
                                                 비공개
                                             </T.RoundForm>
                                         </T.FormBox>
