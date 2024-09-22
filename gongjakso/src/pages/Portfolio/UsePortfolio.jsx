@@ -1,101 +1,114 @@
 import * as S from './Portfolio.Styled';
 import { useRef, useState, useEffect } from 'react';
 import { getMyInfo } from '../../service/profile_service';
-import { postExistPortfolio } from '../../service/portfolio_service';
-import { useNavigate } from 'react-router-dom';
+import {
+    getExistPortfolio,
+    postExistPortfolio,
+    editExistPortfolio,
+} from '../../service/portfolio_service';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UsePortfolio = () => {
     const [data, setProfileData] = useState();
     const navigate = useNavigate();
+    const { id } = useParams(); // 포트폴리오 ID 가져오기
     const fileInput = useRef(null);
-    const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
+    const [isEdit, setIsEdit] = useState(false);
+    const [snsLink, setSnsLink] = useState(''); // 단일 노션 링크
     const [error, setError] = useState(''); // State for error messages
-    const [files, setFiles] = useState([]); // 여러 파일을 저장하는 배열
+    const [file, setFile] = useState(null); // 단일 파일
+    const [existingFile, setExistingFile] = useState(null); // 기존 파일 URI 상태
+
+    useEffect(() => {
+        // 기존 포트폴리오 데이터를 가져와서 snsLink와 file 상태를 설정
+        const fetchPortfolio = async () => {
+            try {
+                const response = await getExistPortfolio(id); // 포트폴리오 상세 데이터 가져오기
+                const portfolioData = response?.data.data;
+
+                // 기존 노션 링크 및 파일이 있으면 상태에 설정
+                if (portfolioData) {
+                    setSnsLink(portfolioData.notionUri || ''); // 노션 링크 설정
+                    console.log(portfolioData);
+                    if (portfolioData.fileUri) {
+                        const fileName = portfolioData.fileUri.split('/').pop();
+                        setExistingFile({
+                            name: fileName,
+                            uri: portfolioData.fileUri,
+                        }); // 파일 이름과 URI 설정
+                    }
+                }
+            } catch (error) {}
+        };
+
+        fetchPortfolio();
+        getMyInfo().then(response => {
+            setProfileData(response?.data);
+        });
+    }, [id]);
 
     const handleButtonClick = () => {
         fileInput.current.click();
     };
 
-    const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: new Date(), link: '' }]);
-    };
     const handleChange = e => {
-        const selectedFiles = Array.from(e.target.files); // 선택된 파일들을 배열로 변환
+        const selectedFile = e.target.files[0]; // 첫 번째 파일만 선택
         const maxSize = 10 * 1024 * 1024; // 10MB 제한
 
-        let totalSize = 0;
-        selectedFiles.forEach(file => {
-            totalSize += file.size;
-        });
-
-        if (totalSize > maxSize) {
+        if (selectedFile.size > maxSize) {
             setError(
-                '전체 파일 크기가 10MB를 초과했습니다. 파일을 다시 선택해 주세요.',
+                '파일 크기가 10MB를 초과했습니다. 다른 파일을 선택해 주세요.',
             );
         } else {
             setError('');
-
-            // 기존 파일과 새로 선택한 파일들을 합쳐서 업데이트
-            const updatedFiles = [...files, ...selectedFiles];
-
-            // 중복 파일 제거 (파일 이름 기준)
-            const uniqueFiles = updatedFiles.filter(
-                (file, index, self) =>
-                    index === self.findIndex(f => f.name === file.name),
-            );
-
-            setFiles(uniqueFiles); // 중복 제거 후 파일 상태 업데이트
+            setFile(selectedFile); // 선택된 파일 설정
+            setExistingFile(null); // 새 파일을 선택한 경우 기존 파일 초기화
         }
     };
 
     // 파일 삭제
-    const handleFileDelete = index => {
-        const updatedFiles = files.filter((_, i) => i !== index); // 선택된 파일 삭제
-        setFiles(updatedFiles); // 파일 상태 업데이트
+    const handleFileDelete = () => {
+        setFile(null); // 파일 상태 초기화
+        setExistingFile(null); // 기존 파일도 초기화
     };
-
-    // 노션 링크 삭제
-    const handleSNSDelete = id => {
-        setSnsLinks(snsLinks.filter(link => link.id !== id)); // 링크 삭제
-    };
-
     const handleSubmit = async () => {
         const formData = new FormData();
 
-        // 파일 배열을 순회하여 각 파일을 'file' 필드로 추가 (단일 파일씩 추가)
-        files.forEach(file => {
+        // 파일이 새로 선택되었으면 FormData에 추가
+        if (file) {
             formData.append('file', file);
-            console.log('파일 추가됨:', file);
-        });
-
-        // notionUri 배열을 JSON 문자열로 FormData에 추가
-        if (snsLinks.length > 0) {
-            const notionUris = snsLinks.map(link => link.link).filter(Boolean); // 빈 링크 필터링
-            if (notionUris.length > 0) {
-                formData.append('notionUri', JSON.stringify(notionUris)); // 노션 링크 배열을 JSON으로 추가
-            }
+            console.log('새 파일 추가됨:', file);
+        } else if (existingFile) {
+            // 새 파일이 없고 기존 파일이 있으면 서버에 기존 파일을 유지하게 알림
+            formData.append('existingFileUri', existingFile.uri);
+            console.log('기존 파일 유지됨:', existingFile.name);
         }
 
-        if (files.length === 0 && snsLinks.every(link => !link.link)) {
+        // 노션 링크가 빈 문자열이 아니면 추가
+        if (snsLink && snsLink.trim() !== '') {
+            formData.append('notionUri', snsLink); // 노션 링크가 있을 때만 추가
+        }
+
+        // 파일이나 노션 링크가 없으면 에러 메시지 표시 (기존 파일도 포함)
+        if (!file && !existingFile && !snsLink) {
             setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
             return;
         }
-        for (let pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-        }
+
         try {
-            await postExistPortfolio(formData);
+            // 새 포트폴리오를 올리는 경우: file이 있으면 무조건 새 포트폴리오라고 가정
+            if (!id) {
+                // ID가 없을 경우에만 포스트 API 호출
+                await postExistPortfolio(formData);
+            } else {
+                // 기존 포트폴리오 수정하는 경우 편집 API 호출
+                await editExistPortfolio(id, formData);
+            }
             navigate('/profile');
         } catch (err) {
             setError('포트폴리오 업로드 중 오류가 발생했습니다.');
         }
     };
-
-    useEffect(() => {
-        getMyInfo().then(response => {
-            setProfileData(response?.data);
-        });
-    }, []);
 
     return (
         <div>
@@ -108,7 +121,9 @@ const UsePortfolio = () => {
                 </S.PortfolioInfo>
             </S.TopBox>
             <S.GlobalBox>
-                <S.SubTitle>포트폴리오 파일 업로드하기</S.SubTitle>
+                <S.SubTitle>
+                    포트폴리오 파일 {isEdit ? '수정' : '업로드'}하기
+                </S.SubTitle>
                 <S.UploadInfo>
                     PDF 형식으로 업로드 해주세요.
                     <br />
@@ -123,28 +138,27 @@ const UsePortfolio = () => {
                     <input
                         type="file"
                         ref={fileInput}
-                        multiple
                         onChange={handleChange}
                         style={{ display: 'none' }}
                     />
                 </S.FileUploadBox>
 
-                {/* 파일 리스트 표시 */}
-                {files.length > 0 && (
+                {/* 파일이 선택되었거나 기존 파일이 있을 때만 파일 정보 표시 */}
+                {(file || existingFile) && (
                     <S.FileInfo>
                         <S.FileList>
-                            {files.map((file, index) => (
-                                <S.FileItem key={index}>
-                                    <S.FileName>{file.name}</S.FileName>
+                            <S.FileItem>
+                                <S.FileName>
+                                    {file ? file.name : existingFile?.name}
+                                </S.FileName>
+                                {file && file.size && (
                                     <S.FileSize>
                                         {(file.size / (1024 * 1024)).toFixed(2)}{' '}
                                         MB
                                     </S.FileSize>
-                                    <S.DeleteBtn
-                                        onClick={() => handleFileDelete(index)}
-                                    />
-                                </S.FileItem>
-                            ))}
+                                )}
+                                <S.DeleteBtn onClick={handleFileDelete} />
+                            </S.FileItem>
                         </S.FileList>
                     </S.FileInfo>
                 )}
@@ -152,36 +166,24 @@ const UsePortfolio = () => {
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
 
                 <S.TitleSection>
-                    <S.SubTitle>노션 포트폴리오 공유하기</S.SubTitle>
-                    <S.PlusBtn onClick={addSNSLink} />
+                    <S.SubTitle>노션 포트폴리오 링크 입력하기</S.SubTitle>
                 </S.TitleSection>
                 <S.UploadInfo>
                     노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요! 게시가
                     허용되지 않았을 경우 링크 확인이 불가능해요.
                 </S.UploadInfo>
 
-                {/* 노션 링크 리스트 */}
-                {snsLinks.map((section, index) => (
-                    <S.BoxDetail key={section.id}>
-                        <S.LinkContainer>
-                            <S.LinkIcon />
-                            <S.SNSInput
-                                placeholder="링크를 입력해주세요."
-                                value={section.link}
-                                onChange={e => {
-                                    const updatedLinks = [...snsLinks];
-                                    updatedLinks[index].link = e.target.value;
-                                    setSnsLinks(updatedLinks);
-                                }}
-                            />
-                            {snsLinks.length > 1 && (
-                                <S.DeleteBtn
-                                    onClick={() => handleSNSDelete(section.id)}
-                                />
-                            )}
-                        </S.LinkContainer>
-                    </S.BoxDetail>
-                ))}
+                {/* 단일 노션 링크 입력 필드 */}
+                <S.BoxDetail>
+                    <S.LinkContainer>
+                        <S.LinkIcon />
+                        <S.SNSInput
+                            placeholder="노션 링크를 입력해주세요."
+                            value={snsLink} // 디폴트 값으로 상태에서 가져온 snsLink 사용
+                            onChange={e => setSnsLink(e.target.value)}
+                        />
+                    </S.LinkContainer>
+                </S.BoxDetail>
 
                 <S.BtnContainer>
                     <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>

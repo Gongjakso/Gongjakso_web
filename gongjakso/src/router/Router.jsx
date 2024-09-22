@@ -115,6 +115,11 @@ const Router = () => {
                                 path="/profile/makeportfolio/:id"
                                 element={<MakePortfolio />}
                             />
+
+                            <Route
+                                path="/profile/useportfolio/:id"
+                                element={<UsePortfolio />}
+                            />
                         </Route>
                     </Routes>
                 </ScrollToTop>

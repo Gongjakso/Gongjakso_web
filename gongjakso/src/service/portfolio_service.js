@@ -26,18 +26,22 @@ export const postPortfolio = async portfolioData => {
         console.error('Error posting portfolio:', error);
     }
 };
-
 // 존재 포트폴리오 post
-export const postExistPortfolio = async formData => {
-    const reqURL = `mypage/portfolio/exist-portfolio`;
+export const postExistPortfolio = async (formData, accessToken) => {
+    const reqURL = 'mypage/portfolio/exist-portfolio';
     try {
-        const response = await axiosInstanceV2.post(reqURL, formData);
+        const response = await axiosInstanceV2.post(reqURL, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error posting portfolio:', error);
+        throw error; // 오류 발생 시 호출자에게 전달
     }
 };
-
 // 입력 포트폴리오 상세 get
 export const getPortfolio = async id => {
     const reqURL = `mypage/portfolio/${id}`;
@@ -83,7 +87,11 @@ export const editExistPortfolio = async (id, portfolioData) => {
     const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
 
     try {
-        const response = await axiosInstanceV2.patch(reqURL, portfolioData);
+        const response = await axiosInstanceV2.patch(reqURL, portfolioData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     } catch (error) {
         console.error('Error editing portfolio:', error);
