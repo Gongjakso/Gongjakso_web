@@ -7,7 +7,6 @@ export const getAllPortfolio = async () => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response;
     } catch (error) {
         console.log(error);
@@ -48,7 +47,6 @@ export const getPortfolio = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response;
     } catch (error) {
         console.log(error);
@@ -62,7 +60,6 @@ export const getExistPortfolio = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response;
     } catch (error) {
         console.log(error);
