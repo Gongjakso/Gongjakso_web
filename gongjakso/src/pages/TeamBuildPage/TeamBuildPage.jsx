@@ -14,12 +14,10 @@ const TeamBuildPage = () => {
     const contestDetail = location.state?.contestDetail;
     const contestData = location.state?.contestData;
 
-    console.log(contestDetail);
-
     return (
         <>
             <S.Container>
-                <S.Text>‘공모전 제목’의 팀 만들기</S.Text>
+                <S.Text>{contestData?.title}의 팀 만들기</S.Text>
                 {/* <S.TitleContent>*/}
                 {/*
                     <S.ButtonSet>

@@ -209,7 +209,6 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
             channel_link: data.complainLink,
             // postType: false,
         };
-        console.log(newData);
         postContestTeam(contestData?.id, newData).then(res => {
             if (res === 5000) {
                 dispatch(
@@ -239,7 +238,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                     openAlertModal({
                         titleContent: '공모전 팀빌딩',
                         modalContent: '공고가 생성되었습니다!',
-                        redirectUrl: '/contest',
+                        redirectUrl: '/contestList',
                     }),
                 );
             }
