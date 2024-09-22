@@ -27,13 +27,14 @@ const ApplyCancel = props => {
     return (
         <div>
             <S.Background>
-                <S.Modal $w="750px" $h="400px" $bc={({ theme }) => theme.box1}>
+                <S.Modal $w="600px" $h="400px" $bc={({ theme }) => theme.box1}>
                     <S.Backbtn onClick={() => props.CloseModal(false)}>
                         <img src={Close} alt="close-btn" />
                     </S.Backbtn>
                     <S.MainTitle>지원 취소하기</S.MainTitle>
                     <S.CompletedBox>
-                        <p>'{props.title}' 의 지원을 취소하시겠습니까?</p>
+                        <p>'{props.title}' 의</p>
+                        <p>지원을 취소하시겠습니까?</p>
                     </S.CompletedBox>
 
                     <S.ApplyBox>
@@ -41,7 +42,7 @@ const ApplyCancel = props => {
                             $w="230px"
                             onClick={() => {
                                 ClickCancelBtn(props.applyId);
-                                navigate('/contest');
+                                navigate('/contestList');
                             }}
                         >
                             취소하기
