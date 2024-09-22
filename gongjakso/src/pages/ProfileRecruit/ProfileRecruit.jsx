@@ -42,7 +42,7 @@ const ProfileRecruit = () => {
     const { id } = useParams();
     const location = useLocation();
     const contestData = location.state?.postContent;
-
+    console.log(contestData);
     const [postId, setpostId] = useState(id);
 
     const [recruitTeam, setRecruitTeam] = useState([]);
@@ -59,9 +59,11 @@ const ProfileRecruit = () => {
     // 로컬 스토리지에서 상태를 불러오는 함수
     const loadStatusesFromLocalStorage = () => {
         const savedStatuses = localStorage.getItem('statuses');
+        /*
         return savedStatuses
             ? JSON.parse(savedStatuses)
             : posts.map(() => 'gray');
+            */
     };
 
     useEffect(() => {
@@ -255,7 +257,7 @@ const ProfileRecruit = () => {
                 <MyPageTeam
                     teamCase={teamCase[2]}
                     CloseModal={setCancel}
-                    id={postId}
+                    id={contestData}
                 />
             ) : showApply ? (
                 <ClickApply

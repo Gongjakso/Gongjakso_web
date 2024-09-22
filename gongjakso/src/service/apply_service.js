@@ -37,11 +37,14 @@ export const patchFinish = async post_id => {
     }
 };
 
-export const patchCancel = async post_id => {
-    const reqURL = `apply/${post_id}/cancel`;
+// 모집 취소
+export const patchCancel = async (contest_id, team_id) => {
+    const reqURL = `contest/${contest_id}/team/${team_id}/cancel-recruit`;
 
     try {
-        const response = await axiosInstance.patch(reqURL);
+        const response = await axiosInstanceV2.patch(reqURL);
+        console.log(response);
+        console.log(contest_id, team_id);
         return response.data;
     } catch (error) {
         console.log(error);
