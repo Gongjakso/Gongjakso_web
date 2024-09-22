@@ -43,8 +43,6 @@ export const patchCancel = async (contest_id, team_id) => {
 
     try {
         const response = await axiosInstanceV2.patch(reqURL);
-        console.log(response);
-        console.log(contest_id, team_id);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -123,7 +121,6 @@ export const applyCancel = async apply_id => {
 
     try {
         const response = await axiosInstanceV2.delete(reqURL);
-        console.log(response);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -136,7 +133,6 @@ export const getMyRecruitingTeam = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response?.data;
     } catch (error) {
         console.log(error);
@@ -149,7 +145,6 @@ export const patchApply = async (applyId, status) => {
 
     try {
         const response = await axiosInstanceV2.patch(reqURL, { status });
-        console.log(response);
         return response?.data;
     } catch (error) {
         console.log(error);

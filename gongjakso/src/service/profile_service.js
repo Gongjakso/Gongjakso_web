@@ -35,7 +35,6 @@ export const getMyRecruiting = async (page, size) => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log('내가 모집 중인 게시글을 가져올 수 없습니다.', error);
