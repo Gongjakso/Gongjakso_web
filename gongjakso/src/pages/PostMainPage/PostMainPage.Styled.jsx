@@ -108,7 +108,7 @@ export const ContestContent = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 27px;
+    gap: 25px;
 `;
 
 export const TeamBoxContent = styled.div``;

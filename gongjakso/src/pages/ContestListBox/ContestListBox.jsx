@@ -14,9 +14,13 @@ const ContestListBox = ({
                 <S.FireImage />
                 {remainDate}
             </S.RemainDate>
-            <S.ContestImg src={image} alt="" />
-            <S.ContestTitle>{contestTitle}</S.ContestTitle>
-            <S.ContestCompany>{company}</S.ContestCompany>
+            <S.InfoWrapper>
+                <S.ContestImg src={image} alt="" />
+                <S.TitleWrapper>
+                    <S.ContestTitle>{contestTitle}</S.ContestTitle>
+                    <S.ContestCompany>{company}</S.ContestCompany>
+                </S.TitleWrapper>
+            </S.InfoWrapper>
         </S.ContestContainer>
     );
 };

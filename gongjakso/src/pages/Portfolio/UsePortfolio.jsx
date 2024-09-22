@@ -17,13 +17,12 @@ const UsePortfolio = () => {
     };
 
     const addSNSLink = () => {
-        setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
+        setSnsLinks([...snsLinks, { id: new Date(), link: '' }]);
     };
     const handleChange = e => {
         const selectedFiles = Array.from(e.target.files); // 선택된 파일들을 배열로 변환
         const maxSize = 10 * 1024 * 1024; // 10MB 제한
 
-        // 파일 크기 제한 확인
         let totalSize = 0;
         selectedFiles.forEach(file => {
             totalSize += file.size;
@@ -54,32 +53,44 @@ const UsePortfolio = () => {
         const updatedFiles = files.filter((_, i) => i !== index); // 선택된 파일 삭제
         setFiles(updatedFiles); // 파일 상태 업데이트
     };
+
+    // 노션 링크 삭제
+    const handleSNSDelete = id => {
+        setSnsLinks(snsLinks.filter(link => link.id !== id)); // 링크 삭제
+    };
+
     const handleSubmit = async () => {
         const formData = new FormData();
 
-        // 파일 배열을 순회하여 FormData에 각 파일을 추가
+        // 파일 배열을 순회하여 각 파일을 'file' 필드로 추가 (단일 파일씩 추가)
         files.forEach(file => {
-            formData.append('files', file);
+            formData.append('file', file);
+            console.log('파일 추가됨:', file);
         });
 
-        // notionUri를 FormData에 추가
-        const notionUri = snsLinks[0]?.link;
-        if (notionUri) {
-            formData.append('notionUri', notionUri); // 노션 링크가 있을 경우만 추가
+        // notionUri 배열을 JSON 문자열로 FormData에 추가
+        if (snsLinks.length > 0) {
+            const notionUris = snsLinks.map(link => link.link).filter(Boolean); // 빈 링크 필터링
+            if (notionUris.length > 0) {
+                formData.append('notionUri', JSON.stringify(notionUris)); // 노션 링크 배열을 JSON으로 추가
+            }
         }
 
-        if (files.length === 0 && !notionUri) {
+        if (files.length === 0 && snsLinks.every(link => !link.link)) {
             setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
             return;
         }
-
+        for (let pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
         try {
-            await postExistPortfolio(formData); // Content-Type 자동 처리됨
+            await postExistPortfolio(formData);
             navigate('/profile');
         } catch (err) {
             setError('포트폴리오 업로드 중 오류가 발생했습니다.');
         }
     };
+
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
@@ -103,6 +114,7 @@ const UsePortfolio = () => {
                     <br />
                     최대 10MB 까지 업로드할 수 있어요.
                 </S.UploadInfo>
+
                 <S.FileUploadBox>
                     <S.pdfImg />
                     <S.UploadBtn onClick={handleButtonClick}>
@@ -111,11 +123,13 @@ const UsePortfolio = () => {
                     <input
                         type="file"
                         ref={fileInput}
-                        multiple // 여러 파일 선택 가능
+                        multiple
                         onChange={handleChange}
                         style={{ display: 'none' }}
                     />
                 </S.FileUploadBox>
+
+                {/* 파일 리스트 표시 */}
                 {files.length > 0 && (
                     <S.FileInfo>
                         <S.FileList>
@@ -134,15 +148,19 @@ const UsePortfolio = () => {
                         </S.FileList>
                     </S.FileInfo>
                 )}
+
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+
                 <S.TitleSection>
-                    <S.SubTitle>노션 포트폴리오 공유하기</S.SubTitle>{' '}
+                    <S.SubTitle>노션 포트폴리오 공유하기</S.SubTitle>
                     <S.PlusBtn onClick={addSNSLink} />
                 </S.TitleSection>
                 <S.UploadInfo>
                     노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요! 게시가
                     허용되지 않았을 경우 링크 확인이 불가능해요.
                 </S.UploadInfo>
+
+                {/* 노션 링크 리스트 */}
                 {snsLinks.map((section, index) => (
                     <S.BoxDetail key={section.id}>
                         <S.LinkContainer>
@@ -158,21 +176,13 @@ const UsePortfolio = () => {
                             />
                             {snsLinks.length > 1 && (
                                 <S.DeleteBtn
-                                    onClick={() => {
-                                        if (snsLinks.length > 1) {
-                                            setSnsLinks(
-                                                snsLinks.filter(
-                                                    link =>
-                                                        link.id !== section.id,
-                                                ),
-                                            );
-                                        }
-                                    }}
+                                    onClick={() => handleSNSDelete(section.id)}
                                 />
                             )}
                         </S.LinkContainer>
                     </S.BoxDetail>
                 ))}
+
                 <S.BtnContainer>
                     <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>
                     <S.SaveBtn onClick={handleSubmit}>저장하기</S.SaveBtn>
@@ -181,4 +191,5 @@ const UsePortfolio = () => {
         </div>
     );
 };
+
 export default UsePortfolio;
