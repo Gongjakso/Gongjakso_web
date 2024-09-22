@@ -361,7 +361,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             <S.TextTitle>모집 분야</S.TextTitle>
                             <S.TextDetail>
-                                {category.map((item, i) => (
+                                {category?.map((item, i) => (
                                     <S.RoundForm key={i}>
                                         {`${item.position} ${item.recruit_count - item.pass_count}`}
                                     </S.RoundForm>
