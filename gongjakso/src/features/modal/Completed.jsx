@@ -24,24 +24,13 @@ const Completed = props => {
     // 지원하기 POST
     const submitContestApply = () => {
         const newData = {
-            application: props.inputValue,
-            recruit_part: props.clickedFields,
-            recruit_role: '',
-            type: 'CONTEST',
+            portfolioId: props.isclosed ? '' : props.clickedPortId,
+            body: props.inputValue,
+            part: props.clickedFields,
+            status: 'COMPLETED',
+            isPrivate: props.isclosed,
         };
         postApply(props.id, newData).then(res => {});
-    };
-    const submitProjectApply = () => {
-        const newData = {
-            application: props.inputValue,
-            recruit_part: props.clickedFields,
-            recruit_role: '',
-            stack: props.clickedSkill,
-            type: 'PROJECT',
-        };
-        postApply(props.id, newData).then(res => {
-            console.log(res);
-        });
     };
 
     return (
@@ -49,18 +38,11 @@ const Completed = props => {
             {props.case === 1 && (
                 <S.Background2>
                     <S.Modal
-                        $w="850px"
-                        $h="450px"
+                        $w="700px"
+                        $h="460px"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.Backbtn
-                            onClick={() => {
-                                props.setApplyCheck(false);
-                            }}
-                        >
-                            <img src={Close} alt="close-btn" />
-                        </S.Backbtn>
-                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
@@ -72,7 +54,6 @@ const Completed = props => {
                                 $c="black"
                                 onClick={() => {
                                     props.setApplyCheck(false);
-                                    props.setApply(true);
                                 }}
                             >
                                 돌아가기
@@ -83,12 +64,10 @@ const Completed = props => {
                                 onClick={() => {
                                     props.setApplyCheck(false);
                                     props.setCompleted(true);
-                                    props.title === '공모전'
-                                        ? submitContestApply()
-                                        : submitProjectApply();
+                                    submitContestApply();
                                 }}
                             >
-                                지원하기
+                                제출하기
                             </S.newBtn>
                         </S.ApplyBox2>
                     </S.Modal>
@@ -97,18 +76,18 @@ const Completed = props => {
             {props.case === 2 && (
                 <S.Background>
                     <S.Modal
-                        $w="850px"
+                        $w="700px"
                         $h="400px"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.Backbtn
                             onClick={() => {
-                                navigate('/' + props.title[1]);
+                                navigate('/contest');
                             }}
                         >
                             <img src={Close} alt="close-btn" />
                         </S.Backbtn>
-                        <S.MainTitle>{props.title[0]} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원이 완료되었습니다!</p>
                             <p>
@@ -126,6 +105,45 @@ const Completed = props => {
                                 마이페이지로 이동하기
                             </S.ApplyBtn>
                         </S.ApplyBox>
+                    </S.Modal>
+                </S.Background>
+            )}
+            {props.case === 3 && (
+                <S.Background>
+                    <S.Modal
+                        $w="650px"
+                        $h="420px"
+                        $bc={({ theme }) => theme.box1}
+                    >
+                        <S.MainTitle>포트폴리오 만들러 가기</S.MainTitle>
+                        <S.CompletedBox>
+                            <p>
+                                포트폴리오 페이지로 이동 시 지원 내용이 저장되지
+                                않습니다.
+                            </p>
+                            <p>이동하시겠습니까?</p>
+                        </S.CompletedBox>
+
+                        <S.ApplyBox2>
+                            <S.newBtn
+                                $bg={({ theme }) => theme.Grey}
+                                $c="black"
+                                onClick={() => {
+                                    props.setgoToMy(false);
+                                }}
+                            >
+                                돌아가기
+                            </S.newBtn>
+                            <S.newBtn
+                                $bg={({ theme }) => theme.box1}
+                                $c="white"
+                                onClick={() => {
+                                    navigate('/profile');
+                                }}
+                            >
+                                만들러 가기
+                            </S.newBtn>
+                        </S.ApplyBox2>
                     </S.Modal>
                 </S.Background>
             )}

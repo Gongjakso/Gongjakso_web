@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { ReactComponent as GraySelectBox } from '../../assets/images/GraySelectBox.svg';
+import { ReactComponent as BlackSelectBox } from '../../assets/images/BlackSelectBox.svg';
 
 export const TopBox = styled.div`
     height: 250px;
@@ -144,6 +146,38 @@ export const MainTable = styled.table`
     text-align: center;
 `;
 
+export const ButtonContainer = styled.div`
+    display: flex;
+    gap: 20px;
+    width: 45%;
+    justify-content: center;
+    margin-top: 50px;
+`;
+
+export const NotSelectedBtn = styled.div`
+    width: 50%;
+    background: ${({ theme }) => theme.LightGrey};
+    text-align: center;
+    padding: 15px 15px;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    color: white;
+    cursor: pointer;
+`;
+
+export const SelectedBtn = styled.div`
+    width: 50%;
+    background: ${({ theme }) => theme.box1};
+    text-align: center;
+    padding: 15px 15px;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    color: white;
+    cursor: pointer;
+`;
+
 export const Tagth = styled.th`
     width: 30%;
     height: 60px;
@@ -211,19 +245,43 @@ export const User = styled(TableBox)`
     }
 `;
 
+export const BtnContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+`;
+
 export const ShowBtn = styled.button`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     width: 35%;
-    color: ${props => props.theme.subFont};
+    color: ${props => props.theme.mainFont};
     background: transparent;
-    text-align: right;
+    text-align: center;
     font-size: ${({ theme }) => theme.fontSize.md};
+    margin-bottom: 10px;
+    img {
+        width: 17px;
+        margin-left: 10px;
+    }
+`;
+
+export const ShowPortBtn = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
+    color: ${props => props.theme.LightGrey};
+    background: transparent;
+    text-align: center;
+    font-size: ${({ theme }) => theme.fontSize.base};
 `;
 
 export const StateBtn = styled.div`
-    width: 40%;
+    width: 33%;
     padding: 10px;
     color: white;
     font-size: ${({ theme }) => theme.fontSize.base};
@@ -247,5 +305,19 @@ export const Postcheck = styled.div`
         margin-top: 2px;
         margin-left: 10px;
     }
+    cursor: pointer;
+`;
+
+export const GrayBox = styled(GraySelectBox)`
+    width: 60px;
+    display: flex;
+    height: 25px;
+    cursor: pointer;
+`;
+
+export const BlackBox = styled(BlackSelectBox)`
+    width: 60px;
+    display: flex;
+    height: 25px;
     cursor: pointer;
 `;

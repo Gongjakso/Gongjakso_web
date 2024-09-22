@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
 export const getToken = async (code, REDIRECT_URI) => {
@@ -30,7 +30,6 @@ export const logout = async accessToken => {
             },
         });
         localStorage.removeItem('accessToken');
-        console.log(localStorage.getItem(accessToken));
     } catch (error) {
         console.error('Error logging out:', error);
     }

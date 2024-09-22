@@ -1,6 +1,10 @@
 import { React, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteChangeTracker from '../utils/RouteChangeTracker';
+import ContestDetailPage from '../pages/ContestDetailPage/ContestDetailPage';
+const ContestListPage = lazy(
+    () => import('../pages/ContestListPage/ContestListPage'),
+);
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const DefaultLayout = lazy(() => import('../Layout/DefaultLayout'));
 const ProfilePage = lazy(() => import('../pages/ProfilePage/ProfilePage'));
@@ -45,6 +49,14 @@ const Router = () => {
                     <Routes>
                         <Route element={<DefaultLayout />}>
                             <Route path="/" element={<HomePage />} />
+                            <Route
+                                path="/contestList"
+                                element={<ContestListPage />}
+                            />
+                            <Route
+                                path="/contestList/:id"
+                                element={<ContestDetailPage />}
+                            />
                             <Route path="/contest" element={<PostMainPage />} />
                             <Route path="/project" element={<PostMainPage />} />
                             <Route path="/calendar" element={<Calendar />} />
@@ -72,7 +84,7 @@ const Router = () => {
                             />
 
                             <Route
-                                path="/contest/:id"
+                                path="/contest/:contest_id/team/:team_id"
                                 element={<DetailPageContest />}
                             />
                             <Route
@@ -96,6 +108,16 @@ const Router = () => {
                             />
                             <Route
                                 path="/profile/useportfolio"
+                                element={<UsePortfolio />}
+                            />
+
+                            <Route
+                                path="/profile/makeportfolio/:id"
+                                element={<MakePortfolio />}
+                            />
+
+                            <Route
+                                path="/profile/useportfolio/:id"
                                 element={<UsePortfolio />}
                             />
                         </Route>

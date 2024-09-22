@@ -16,4 +16,17 @@ axiosInstance.interceptors.request.use(config => {
     return config;
 });
 
-export default axiosInstance;
+const axiosInstanceV2 = axios.create({
+    baseURL: process.env.REACT_APP_BASE_URL_V2,
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+    },
+});
+
+axiosInstanceV2.interceptors.request.use(config => {
+    accessToken && (config.headers.Authorization = `Bearer ${accessToken}`);
+
+    return config;
+});
+export { axiosInstance, axiosInstanceV2 };

@@ -41,12 +41,12 @@ const TeamBox = ({
     useEffect(() => {
         // 특정 경로에서만 getCheckStatus 함수 호출
         if (location.pathname === '/participatedTeam') {
-            getCheckStatus(postContent?.postId).then(response => {
+            getCheckStatus(postContent?.id).then(response => {
                 const imLeader = response?.data?.role === 'LEADER';
                 setIsLeader(imLeader);
             });
         }
-    }, [location.pathname, postContent?.postId]);
+    }, [location.pathname, postContent?.id]);
 
     const hideOverlay = () => {
         setIsOverlayVisible(false);
@@ -72,7 +72,6 @@ const TeamBox = ({
             }
         });
     };
-
     const handleOpenModal = id => {
         dispatch(
             openConfirmModal({
@@ -132,10 +131,10 @@ const TeamBox = ({
         let displayCategory;
 
         switch (recruit_part) {
-            case 'PLAN':
+            case '기획':
                 displayCategory = '기획';
                 break;
-            case 'DESIGN':
+            case '디자인':
                 displayCategory = '디자인';
                 break;
             case 'FE':
@@ -144,7 +143,7 @@ const TeamBox = ({
             case 'BE':
                 displayCategory = '백엔드';
                 break;
-            case 'ETC':
+            case '기타':
                 displayCategory = '기타';
                 break;
             default:
@@ -165,24 +164,25 @@ const TeamBox = ({
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
                             {isMyParticipation === false &&
-                                `| ${postContent?.memberName} | ${startDate}~${endDate} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === true &&
-                                `| ${postContent?.leaderName} | ${startDate}~${finishDate} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === null &&
-                                `| ${postContent?.name} | ${startDate}~${endDate} |`}
+                                // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.daysRemaining < 0
+                                {postContent?.d_day < 0
                                     ? '마감된 공고'
-                                    : `마감 D-${postContent?.daysRemaining}`}
+                                    : `마감 D-${postContent?.d_day}`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
-                                {postContent?.scrapCount}회
+                                {postContent?.scrap_count}회
                             </S.ScrapNum>
                         </S.SubBox>
                     ) : (
@@ -191,16 +191,13 @@ const TeamBox = ({
                             $isleader={isLeader}
                             onClick={
                                 isLeader
-                                    ? postContent?.postStatus === 'ACTIVE'
-                                        ? () =>
-                                              handleOpenModal(
-                                                  postContent?.postId,
-                                              )
+                                    ? postContent?.status === '활동 중'
+                                        ? () => handleOpenModal(postContent?.id)
                                         : null
                                     : null
                             }
                         >
-                            {postContent?.postStatus === 'ACTIVE'
+                            {postContent?.status === '활동 중'
                                 ? '활동 중'
                                 : '활동 종료'}
                         </S.ActivityStatus>
@@ -211,17 +208,17 @@ const TeamBox = ({
                         {isMyParticipation ? (
                             <div></div>
                         ) : isMyParticipation === null ? (
-                            postContent?.categories?.map((category, index) => {
-                                return (
-                                    <S.RoundForm key={index}>
-                                        {getDisplayCategory(
-                                            category.categoryType,
-                                        )}
-                                    </S.RoundForm>
-                                );
-                            })
+                            postContent?.recruit_part?.map(
+                                (category, index) => {
+                                    return (
+                                        <S.RoundForm key={index}>
+                                            {getDisplayCategory(category)}
+                                        </S.RoundForm>
+                                    );
+                                },
+                            )
                         ) : (
-                            postContent?.categoryList?.map(
+                            postContent?.recruit_part?.map(
                                 (categoryList, index) => {
                                     return (
                                         <S.RoundForm key={index}>
@@ -261,7 +258,10 @@ const TeamBox = ({
                         </S.WaitingJoin>
                     )}
                     {showMoreDetail && (
-                        <Link to={`/teamdetail/${postId}`}>
+                        <Link
+                            to={`/teamdetail/${postId}`}
+                            state={{ postContent }}
+                        >
                             <S.MoreDetail />
                         </Link>
                     )}

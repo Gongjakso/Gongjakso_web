@@ -4,10 +4,10 @@ import * as S from './CountGuest.Styled';
 const CountGuest = ({ isProject, maxGuests, onApply }) => {
     const [isToggleBox, setIsToggleBox] = useState(false);
     const [roles, setRoles] = useState({
-        PLAN: 0,
-        DESIGN: 0,
+        기획: 0,
+        디자인: 0,
         ...(isProject && { FE: 0, BE: 0 }),
-        ETC: 0,
+        기타: 0,
     });
 
     const [totalSelectedGuests, setTotalSelectedGuests] = useState(0);
@@ -63,18 +63,18 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
     };
 
     const category = {
-        categories: Object.entries(roles)
+        recruit_part: Object.entries(roles)
             .filter(([_, size]) => size !== 0) // Filter out categories with size 0
-            .map(([categoryType, size]) => ({ categoryType, size })),
+            .map(([position, recruit_count]) => ({ position, recruit_count })),
     };
 
     const getRoleText = role => {
         switch (role) {
-            case 'PLAN':
+            case '기획':
                 return '기획/아이디어';
-            case 'DESIGN':
+            case '디자인':
                 return '디자이너';
-            case 'ETC':
+            case '기타':
                 return '기타';
             case 'FE':
                 return '프론트엔드';

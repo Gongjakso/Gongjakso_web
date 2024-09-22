@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { ReactComponent as My_page_big } from '../../assets/images/My_page_big.svg';
 import { ReactComponent as Edit } from '../../assets/images/Edit.svg';
 import { ReactComponent as Arrow } from '../../assets/images/Arrow.svg';
+import deleteBtn from '../../assets/images/deleteIcon.svg';
+import editBtn from '../../assets/images/editIcon.svg';
+import plus from '../../assets/images/PlusIcon.svg';
 
 export const TopBox = styled.div`
     height: 250px;
@@ -21,7 +24,7 @@ export const DetailBox = styled.div`
 `;
 
 export const InfoBox = styled.div`
-    position: relative;
+    position: absolute;
     transform: translateY(150%);
     padding-right: 50px;
     line-height: 25px;
@@ -29,6 +32,7 @@ export const InfoBox = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    margin-left: -28rem;
 `;
 
 //이름
@@ -55,7 +59,7 @@ export const SubTitle = styled.p`
     width: 1000px;
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: 900;
-    margin-bottom: 25px;
+    padding-bottom: 25px;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -64,9 +68,12 @@ export const SubTitle = styled.p`
 //프로필 이미지
 export const ProfileImage = styled(My_page_big)`
     width: 200px;
-    transform: translateY(50%);
+    transform: translate(50%, 50%);
+    right: 50%;
+    position: absolute;
     display: flex;
     justify-content: center;
+    align-items: center;
 `;
 
 export const EditImage = styled(Edit)`
@@ -96,7 +103,7 @@ export const PortfolioBox = styled.button`
 `;
 
 export const GlobalBox = styled.div`
-    width: 1200px; // 원하는 너비로 설정
+    width: 100%;
     margin: 180px auto 0 auto; // 가운데 정렬
 `;
 
@@ -119,10 +126,10 @@ export const NoPortfolio = styled.div`
     height: 25.688rem;
     background-color: #f7f7f7;
     border: 1.5px dotted var(--system-grey4, #d2d2d7);
-    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-size: ${({ theme }) => theme.fontSize.mdd};
     padding: 3.813rem 22.25rem;
     border-radius: 1rem;
-    gap: 4.5rem;
+    gap: 4rem;
     line-height: 2.088rem;
     font-family: 'PreRegular';
 `;
@@ -140,4 +147,118 @@ export const MakePortfolioBtn = styled.button`
     border-radius: 1rem;
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-family: 'PreMedium';
+`;
+
+export const PortfolioContent = styled.div`
+    font-size: 1rem;
+    font-weight: bold;
+`;
+
+export const ViewPortfolioBtn = styled.button`
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+`;
+
+export const PortfolioTitle = styled.span`
+    font-family: 'PreMedium';
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 700px;
+    font-size: ${({ theme }) => theme.fontSize.md};
+`;
+
+export const PortfolioButtons = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-direction: row;
+`;
+
+export const EditPortfolioButton = styled.button`
+    background: url(${editBtn});
+    border: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 3.5rem;
+    height: 3.5rem;
+    transform: scale(0.8);
+`;
+
+export const DeletePortfolioButton = styled.button`
+    background: url(${deleteBtn});
+    border: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    width: 3.6rem;
+    height: 3.6rem;
+    transform: scale(0.8);
+`;
+
+export const PortfolioContainer = styled.div`
+    width: 1000px;
+    min-height: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 24px;
+    border: 2px solid #c3e9ff;
+    background: #e5f5ff;
+    padding: 1.5rem 3rem;
+    box-sizing: border-box;
+`;
+
+export const PortfolioList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+`;
+
+export const Plus = styled.div`
+    width: 1.688rem;
+    height: 1.688rem;
+    background: url(${plus});
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    margin-bottom: 25px;
+`;
+
+export const LinkInfo = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-family: 'Pretendard';
+    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-weight: 600;
+    text-align: left;
+    gap: 0.5rem;
+`;
+
+export const LinkDetail = styled.div`
+    color: #8e8e93;
+    font-family: 'Pretendard';
+    font-size: ${({ theme }) => theme.fontSize.base};
+    font-weight: 500;
+    text-align: left;
+    margin-top: 0.5rem;
+`;
+
+export const PortfolioInfo = styled.div`
+    display: flex;
+    width: 1000px;
+    gap: 0.5rem;
+    flex-direction: column;
 `;

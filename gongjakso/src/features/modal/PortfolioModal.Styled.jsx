@@ -22,8 +22,8 @@ export const ModalContent = styled.div`
     padding: 20px;
     border-radius: 2.189rem;
     border: 0.206rem solid ${({ theme }) => theme.box1};
-    max-width: 56.688rem;
-    max-height: 27.688rem;
+    max-width: 53rem;
+    max-height: 26rem;
     height: 100%;
     width: 100%;
     gap: 1.2rem;
@@ -71,4 +71,31 @@ export const BtnContainer = styled.div`
     flex-direction: column;
     align-items: baseline;
     gap: 0.5rem;
+`;
+
+export const DeleteButton = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: 3.5rem;
+    padding: 1.5rem 2rem;
+    gap: 7px;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    font-family: 'PreMedium';
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 12px;
+    color: white;
+    background-color: ${({ theme }) => theme.box1};
+`;
+
+export const ModalDesc = styled.span`
+    font-size: ${({ theme }) => theme.fontSize.m};
+    font-family: 'PreMedium';
+    text-align: center;
+    font-weight: 700;
+    line-height: 21.48px;
+    width: 70%;
+    margin: 2.5rem 0;
 `;

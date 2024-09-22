@@ -6,12 +6,12 @@ export const SelectContainer = styled.div`
 
 export const SelectValue = styled.div`
     display: block;
-    width: ${props => (props.$case === 'true' ? '220px' : '430px')};
+    width: ${props => (props.$case === 'true' ? '190px' : '400px')};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: ${props => (props.$case === 'true' ? '0px 15px' : '13px')};
-    font-size: ${({ theme }) => theme.fontSize.md};
+    /* padding: ${props => (props.$case === 'true' ? '0px 15px' : '13px')}; */
+    font-size: ${({ theme }) => theme.fontSize.m};
     text-align: center;
     align-items: center;
     cursor: pointer;
@@ -25,10 +25,10 @@ export const SelectValue = styled.div`
 export const OptionList = styled.div`
     position: absolute;
     font-family: 'PreMedium';
-    left: 0;
+    right: -10px;
     width: ${props => (props.$case === 'true' ? '220px' : '430px')};
-    font-size: ${({ theme }) => theme.fontSize.md};
-    margin: ${props => (props.$case === 'true' ? '20px 0px' : '10px 0px')};
+    font-size: ${({ theme }) => theme.fontSize.m};
+    margin: ${props => (props.$case === 'true' ? '20px 0px' : '20px 0px')};
     list-style: none;
     border-radius: 4px;
     background-color: #fff;

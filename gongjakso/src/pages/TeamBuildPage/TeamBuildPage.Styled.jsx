@@ -10,8 +10,9 @@ export const Container = styled.div`
     flex-direction: column;
     padding: 0 25px;
     justify-content: center;
-    align-items: center;
-    margin-top: 90px;
+    /* align-items: center; */
+    margin-top: 160px;
+    margin-bottom: 90px;
 `;
 
 export const TitleContent = styled.div`
@@ -110,8 +111,12 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.p`
-    color: ${props => (props.$isMain === 'main' ? 'black' : '#ffffff')};
+    color: ${props => (props.$isMain === 'main' ? 'black' : 'black')};
     font-family: 'PreBold';
     letter-spacing: 1px;
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: ${({ theme }) => theme.fontSize.xlg};
+    font-weight: 500;
+    line-height: 52.8px;
+    text-align: left;
+    margin-left: 90px;
 `;

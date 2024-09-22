@@ -56,14 +56,23 @@ export const BtnLayout = styled.div`
 // 타이틀
 export const Title = styled.div`
     display: flex;
+    align-items: center;
     font-family: 'TheJamsilRegular';
     font-size: ${({ theme }) => theme.fontSize.xl};
+
     img {
         width: 45px;
     }
+
     p {
-        margin: 15px;
+        margin: 0 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: ${({ checkStatus }) =>
+            checkStatus === 'APPLIER' ? '530px' : '800px'};
     }
+
     margin-left: 80px;
     margin-bottom: 35px;
 `;
@@ -109,6 +118,7 @@ export const BlueBox = styled.div`
     border: 2px solid ${props => props.$bg};
     border-radius: 40px;
     margin-top: 15px;
+    margin-bottom: 55px;
     padding: 55px;
 `;
 
@@ -179,6 +189,8 @@ export const MainText = styled.p`
     line-height: 2;
     height: ${props => props.$h};
     padding-bottom: 180px;
+    word-wrap: break-word;
+    white-space: normal;
 `;
 
 // 스크랩하기 & 지원하기 버튼
@@ -207,6 +219,51 @@ export const ScrapButton = styled.button`
 `;
 
 export const ApplyButton = styled(ScrapButton)`
-    background: ${props => props.$bg};
+    background: ${props => (!props.$apply ? 'none' : '#3477FF')};
+    color: ${props => (!props.$apply ? ({ theme }) => theme.box1 : 'white')};
+    border: 2.5px solid ${({ theme }) => theme.box1};
+`;
+
+export const CancelButton = styled(ScrapButton)`
+    background: ${({ theme }) => theme.LightGrey};
     color: white;
+    // border: 2.5px solid ${({ theme }) => theme.box1};
+`;
+
+export const ApplicationBg = styled.div`
+    width: 100%;
+    padding: 5rem 1rem 1.5rem 1rem;
+    margin-top: 4rem;
+`;
+
+export const ApplicationTitle = styled.div`
+    font-family: 'PreBold';
+    font-size: ${({ theme }) => theme.fontSize.xl};
+`;
+
+export const ApplicationBtn = styled.button`
+    position: absolute;
+    bottom: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${props => props.$w};
+    height: 50px;
+    border-radius: 16px;
+    margin: 15px;
+    padding: 30px;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    background: ${({ theme }) => theme.box1};
+    font-family: 'PreBold';
+    color: white;
+`;
+
+export const TitleFormBox = styled.div`
+    display: flex;
+    img {
+        margin-left: 1.5rem;
+        margin-top: -0.3rem;
+        width: 15rem;
+        cursor: pointer;
+    }
 `;

@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 
 //나의 정보
 export const putMyInfo = async (name, major, job, status, phone) => {
@@ -30,11 +30,12 @@ export const getMyInfo = async () => {
 };
 
 //팀박스->내가 모집 중
-export const getMyRecruiting = async () => {
-    const reqURL = `post/my`;
+export const getMyRecruiting = async (page, size) => {
+    const reqURL = `team/my-recruit?page=${page - 1}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log('내가 모집 중인 게시글을 가져올 수 없습니다.', error);
@@ -43,24 +44,23 @@ export const getMyRecruiting = async () => {
 
 //팀박스->내가 지원
 export const getMyApplied = async (page, size) => {
-    const reqURL = `apply/my?page=${page}&size=${size}&sort=`;
+    const reqURL = `team/my-apply?page=${page - 1}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
         console.log('내가 지원한 게시글을 가져올 수 없습니다.');
     }
 };
 
-//팀박스->내가 참여
-
 //내가 참여 상세페이지
+//팀박스->내가 참여
 export const getMyParticipated = async (page, size) => {
-    const reqURL = `apply/my-participation-post?page=${page}&size=${size}`;
+    const reqURL = `team/my-participate?page=${page - 1}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -81,6 +81,15 @@ export const getMyProjectScrap = async () => {
     const reqURL = `post/project/myScrap`;
     try {
         const response = await axiosInstance.get(reqURL);
+        return response.data;
+    } catch (error) {
+        console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
+    }
+};
+export const getMyTeamScrap = async (page, size) => {
+    const reqURL = `team/scrap/list?page=${page - 1}&size=${size}`;
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
         console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');

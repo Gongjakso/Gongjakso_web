@@ -51,7 +51,7 @@ export const TextArea = styled.textarea.attrs(props => ({
     /* font-family: 'PreMedium'; */
     overflow: auto;
     resize: vertical;
-    padding: 10px 0;
+    /* padding: 10px 0; */
     border-style: none;
     resize: none;
     border-bottom: 1px solid ${({ theme }) => theme.border};
@@ -139,6 +139,8 @@ export const ButtonContent = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-top: 90px;
+    margin-bottom: 90px;
 `;
 
 export const Button = styled.button`
@@ -151,4 +153,11 @@ export const Button = styled.button`
     color: ${props => (props.$isDelete ? 'black' : 'white')};
     font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreMedium';
+`;
+
+export const DateSet = styled.div`
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 `;

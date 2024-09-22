@@ -7,10 +7,12 @@ import ClickApply from '../../features/modal/ClickApply';
 import Pagination from '../../components/Pagination/Pagination';
 import {
     getApplyList,
+    getMyRecruitingTeam,
     getRecruitTeam,
     patchOpen,
+    patchApply,
 } from '../../service/apply_service';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useCustomNavigate from '../../hooks/useNavigate';
 
 const ProfileRecruit = () => {
@@ -38,29 +40,174 @@ const ProfileRecruit = () => {
     const [totalPage, setTotalPage] = useState();
 
     const { id } = useParams();
-
+    const location = useLocation();
+    const contestData = location.state?.postContent;
+    console.log(contestData);
     const [postId, setpostId] = useState(id);
 
+    const [recruitTeam, setRecruitTeam] = useState([]);
+
+    const [statuses, setStatuses] = useState(
+        posts?.map(() => 'gray'), // 초기 상태는 모두 'gray'로 설정
+    );
+
+    // 상태를 로컬 스토리지에 저장하는 함수
+    const saveStatusesToLocalStorage = newStatuses => {
+        localStorage.setItem('statuses', JSON.stringify(newStatuses));
+    };
+
+    // 로컬 스토리지에서 상태를 불러오는 함수
+    const loadStatusesFromLocalStorage = () => {
+        const savedStatuses = localStorage.getItem('statuses');
+        /*
+        return savedStatuses
+            ? JSON.parse(savedStatuses)
+            : posts.map(() => 'gray');
+            */
+    };
+
     useEffect(() => {
-        if (id !== undefined) {
-            // number가 undefined가 아닌 경우에만 실행
-            getApplyList(id, page).then(res => {
-                setTotalPage(res?.data.totalPages);
-                setPosts(res?.data.applyLists);
+        const id = contestData?.id;
+
+        getMyRecruitingTeam(id).then(response => {
+            setPosts(response?.data); // 지원자 리스트 설정
+
+            // 응답 후에 statuses 배열을 상태에 맞게 초기화
+            const fetchedStatuses = response?.data.map(applicant => {
+                if (applicant.status === 'COMPLETED') {
+                    return 'gray'; // COMPLETED는 gray로 설정
+                } else if (applicant.status === 'ACCEPTED') {
+                    return 'selected'; // 합류 완료 상태
+                } else if (applicant.status === 'REJECTED') {
+                    return 'notSelected'; // 미선발 상태
+                } else {
+                    return 'gray'; // 기본 상태는 gray
+                }
             });
-            getRecruitTeam(id).then(res => {
-                setRecruitTeam(res?.data);
-                setPart(res?.data.category);
-                setRole(res?.data.stackName);
-            });
+
+            const savedStatuses = loadStatusesFromLocalStorage();
+
+            // 로컬 스토리지와 서버 응답의 길이가 다르면 서버의 상태로 초기화
+            if (
+                savedStatuses &&
+                savedStatuses.length === response?.data.length
+            ) {
+                setStatuses(savedStatuses);
+            } else {
+                setStatuses(fetchedStatuses);
+                saveStatusesToLocalStorage(fetchedStatuses); // 초기 상태 저장
+            }
+        });
+    }, [contestData]);
+
+    const handleBoxClick = async index => {
+        const newStatuses = [...statuses];
+        const applyId = posts[index]?.applyId;
+
+        if (!applyId) {
+            console.error('applyId가 유효하지 않습니다.');
+            return;
         }
-    }, [id, page]); // number가 변경될 때마다 실행
+
+        // 상태 변경: 'gray'에서 'black' 또는 'black'에서 'gray'
+        newStatuses[index] = newStatuses[index] === 'gray' ? 'black' : 'gray';
+        setStatuses(newStatuses);
+
+        try {
+            // 서버로 상태 변경 요청을 전송 (ACCEPTED 또는 REJECTED로 전환)
+            const response = await patchApply(
+                applyId,
+                newStatuses[index] === 'black' ? 'ACCEPTED' : 'REJECTED',
+            );
+            console.log('API 호출 결과:', response);
+
+            // 변경된 후 다시 서버에서 상태를 받아와 COMPLETED는 gray로 처리
+            const id = contestData?.id;
+            getMyRecruitingTeam(id).then(response => {
+                const updatedStatuses = response?.data.map(applicant => {
+                    if (applicant.status === 'COMPLETED') {
+                        return 'gray'; // COMPLETED는 gray로 설정
+                    } else if (applicant.status === 'ACCEPTED') {
+                        return 'selected'; // 합류 완료 상태
+                    } else if (applicant.status === 'REJECTED') {
+                        return 'notSelected'; // 미선발 상태
+                    } else {
+                        return 'gray'; // 기본 상태는 gray
+                    }
+                });
+                setStatuses(updatedStatuses);
+            });
+        } catch (error) {
+            console.log('API 호출 중 에러:', error);
+        }
+
+        saveStatusesToLocalStorage(newStatuses); // 로컬 스토리지에 상태 저장
+    };
+
+    const handleNotSelectedClick = async () => {
+        const newStatuses = statuses.map(status =>
+            status === 'black' ? 'notSelected' : status,
+        );
+        setStatuses(newStatuses);
+        saveStatusesToLocalStorage(newStatuses); // 상태 저장
+
+        // 선택된 지원자들을 'REJECTED' 상태로 업데이트
+        const selectedApplicants = posts.filter(
+            (_, i) => statuses[i] === 'black',
+        );
+        for (const applicant of selectedApplicants) {
+            try {
+                await patchApply(applicant.applyId, 'REJECTED');
+            } catch (error) {
+                console.log('미선발 상태 업데이트 중 에러:', error);
+            }
+        }
+    };
+
+    const handleSelectedClick = async () => {
+        const newStatuses = statuses.map(status =>
+            status === 'black' ? 'selected' : status,
+        );
+        setStatuses(newStatuses);
+        saveStatusesToLocalStorage(newStatuses); // 상태 저장
+
+        // 선택된 지원자들을 'ACCEPTED' 상태로 업데이트
+        const selectedApplicants = posts.filter(
+            (_, i) => statuses[i] === 'black',
+        );
+        for (const applicant of selectedApplicants) {
+            try {
+                await patchApply(applicant.applyId, 'ACCEPTED');
+                alert(`${applicant.memberName}님이 합류되었습니다.`);
+            } catch (error) {
+                console.log('합류 상태 업데이트 중 에러:', error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        setTotalPage(1); // 페이지 총 개수 설정
+        setRecruitTeam(contestData); // 모집 팀 정보 설정
+
+        const id = contestData?.id;
+        getMyRecruitingTeam(id).then(response => {
+            setPosts(response?.data); // 지원자 리스트 설정
+
+            // 서버에서 상태 정보를 받아서 statuses 배열 초기화
+            const fetchedStatuses = response?.data.map(applicant => {
+                return applicant.status === 'ACCEPTED'
+                    ? 'selected'
+                    : 'notSelected';
+            });
+
+            setStatuses(fetchedStatuses); // 서버에서 가져온 상태로 설정
+            console.log(contestData);
+        });
+    }, []);
 
     const loadApplyList = page => {
-        getApplyList(page).then(response => {
-            setTotalPage(response?.totalPages);
-            setPosts(response?.data.applyLists);
-        });
+        // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
+        setPage(page);
     };
 
     const ClickOpen = (id, state) => {
@@ -69,22 +216,19 @@ const ProfileRecruit = () => {
         }
     };
 
-    // 현재상태 버튼
-
-    const handleClick = (index, id) => {
+    // 현재상태 버튼 -> 체크박스 추가(수정 전)
+    const handleClick = (index, applyId) => {
         const newData = [...posts]; // 데이터 복사
-        const dataIndex = newData.findIndex(item => item.id === id);
+        const dataIndex = newData.findIndex(item => item.applyId === applyId);
         if (dataIndex !== -1) {
-            // id에 해당하는 데이터가 있을 경우
             newData[dataIndex].open = true; // 해당 데이터의 open 값을 true로 변경
-            // 여기서 API 호출 또는 상태 업데이트 등의 작업 수행
             setPosts(newData); // 상태 업데이트
         } else {
-            console.error(`ID ${id}에 해당하는 데이터를 찾을 수 없습니다.`);
+            console.error(
+                `ID ${applyId}에 해당하는 데이터를 찾을 수 없습니다.`,
+            );
         }
     };
-
-    const [recruitTeam, setRecruitTeam] = useState([]);
 
     // 활동기간 수정 함수
     const formatDate = dateString => {
@@ -113,7 +257,7 @@ const ProfileRecruit = () => {
                 <MyPageTeam
                     teamCase={teamCase[2]}
                     CloseModal={setCancel}
-                    id={postId}
+                    id={contestData}
                 />
             ) : showApply ? (
                 <ClickApply
@@ -139,11 +283,11 @@ const ProfileRecruit = () => {
                         </S.DetailGlobal>
                         <S.DetailGlobal>
                             <S.InsideDetail>
-                                활동기간 | {formatDate(recruitTeam?.startDate)}{' '}
-                                ~{formatDate(recruitTeam?.endDate)}
+                                활동기간 | {recruitTeam?.started_at} ~
+                                {formatDate(recruitTeam?.finished_at)}
                             </S.InsideDetail>
                             <S.InsideDetail>
-                                모집인원 | {recruitTeam?.max_person}
+                                모집인원 | {recruitTeam?.recruit_part?.length}
                             </S.InsideDetail>
                         </S.DetailGlobal>
                     </S.Border>
@@ -170,7 +314,7 @@ const ProfileRecruit = () => {
                                 }}
                             >
                                 공고 보기
-                                <img src={arrow} />
+                                <img src={arrow} alt="arrow" />
                             </S.Postcheck>
                         </S.GlobalBox2>
                         <S.ButtonSet>
@@ -205,14 +349,14 @@ const ProfileRecruit = () => {
                         <S.StyledThead>
                             <S.StyledTr>
                                 <S.Tagth $isleft={'true'}>지원자명</S.Tagth>
-                                <S.Tagth $isleft={'false'}>현재상태</S.Tagth>
+                                <S.Tagth $isleft={'false'}></S.Tagth>
                             </S.StyledTr>
                         </S.StyledThead>
                         <tbody>
                             {posts?.map((item, i, array) => (
-                                <tr key={item.apply_id}>
+                                <tr key={item.applyId}>
                                     <S.StyledTd
-                                        $state={posts[i].is_canceled}
+                                        $state={item.is_canceled}
                                         style={{
                                             borderRadius:
                                                 i !== array.length - 1
@@ -222,63 +366,97 @@ const ProfileRecruit = () => {
                                     >
                                         <S.User>
                                             <img src={User} alt="UserImage" />
-                                            {item.name}
+                                            {item.memberName}
                                         </S.User>
-                                        {posts[i].is_canceled ? (
+                                        {item.is_canceled ? (
                                             <S.CancelBox>
                                                 지원이 취소되었습니다.
                                             </S.CancelBox>
                                         ) : (
-                                            <S.ShowBtn
-                                                onClick={() => {
-                                                    setItem(i);
-                                                    handleClick(i, item.id);
-                                                    setShowApply(true);
-                                                    setidNum(item.apply_id);
-                                                    setidName(item.name);
-                                                    ClickOpen(
-                                                        item.apply_id,
-                                                        item.state,
-                                                    );
-                                                }}
-                                            >
-                                                지원서 보기
-                                            </S.ShowBtn>
+                                            <S.BtnContainer>
+                                                <S.ShowBtn
+                                                    onClick={() => {
+                                                        setItem(i);
+                                                        handleClick(i, item.id);
+                                                        setShowApply(true);
+                                                        setidNum(item.applyId);
+                                                        setidName(
+                                                            item.memberName,
+                                                        );
+                                                        ClickOpen(
+                                                            item.applyId,
+                                                            item.state,
+                                                        );
+                                                    }}
+                                                >
+                                                    지원서 보기
+                                                    <img
+                                                        src={arrow}
+                                                        alt="arrow"
+                                                    />
+                                                </S.ShowBtn>
+
+                                                <S.ShowPortBtn
+                                                    onClick={() => {
+                                                        //api 연결 예정
+                                                    }}
+                                                >
+                                                    포트폴리오 보기
+                                                </S.ShowPortBtn>
+                                            </S.BtnContainer>
                                         )}
                                         <S.TableBox>
-                                            {item?.state === '열람 완료' && (
-                                                <S.StateBtn
-                                                    $bg={({ theme }) =>
-                                                        theme.LimeGreen
-                                                    }
-                                                >
-                                                    열람 완료
-                                                </S.StateBtn>
-                                            )}
-                                            {item?.state === '미선발' && (
-                                                <S.StateBtn
-                                                    $bg={({ theme }) =>
-                                                        theme.LightGrey
-                                                    }
-                                                >
-                                                    미선발
-                                                </S.StateBtn>
-                                            )}
-                                            {item?.state === '합류 완료' && (
-                                                <S.StateBtn
-                                                    $bg={({ theme }) =>
-                                                        theme.box1
-                                                    }
-                                                >
-                                                    합류 완료
-                                                </S.StateBtn>
-                                            )}
+                                            {!item.is_canceled &&
+                                                statuses[i] === 'gray' && (
+                                                    <S.GrayBox
+                                                        onClick={() =>
+                                                            handleBoxClick(i)
+                                                        }
+                                                    />
+                                                )}
+                                            {!item.is_canceled &&
+                                                statuses[i] === 'black' && (
+                                                    <S.BlackBox
+                                                        onClick={() =>
+                                                            handleBoxClick(i)
+                                                        }
+                                                    />
+                                                )}
+                                            {!item.is_canceled &&
+                                                statuses[i] ===
+                                                    'notSelected' && (
+                                                    <S.StateBtn
+                                                        $bg={({ theme }) =>
+                                                            theme.LightGrey
+                                                        }
+                                                    >
+                                                        미선발
+                                                    </S.StateBtn>
+                                                )}
+                                            {!item.is_canceled &&
+                                                statuses[i] === 'selected' && (
+                                                    <S.StateBtn
+                                                        $bg={({ theme }) =>
+                                                            theme.box1
+                                                        }
+                                                    >
+                                                        합류 완료
+                                                    </S.StateBtn>
+                                                )}
                                         </S.TableBox>
                                     </S.StyledTd>
                                 </tr>
                             ))}
                         </tbody>
                     </S.MainTable>
+                    <S.ButtonContainer>
+                        <S.NotSelectedBtn onClick={handleNotSelectedClick}>
+                            미선발
+                        </S.NotSelectedBtn>
+                        <S.SelectedBtn onClick={handleSelectedClick}>
+                            합류하기
+                        </S.SelectedBtn>
+                    </S.ButtonContainer>
                 </S.Content>
                 <Pagination
                     total={totalPage}

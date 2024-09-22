@@ -9,8 +9,8 @@ const RecruitedTeam = () => {
     const [postContent1, setPostContent1] = useState([]);
 
     useEffect(() => {
-        getMyRecruiting().then(response => {
-            setPostContent1(response?.data);
+        getMyRecruiting(0, 6).then(response => {
+            setPostContent1(response?.data.content);
         });
     }, []);
 
@@ -24,15 +24,10 @@ const RecruitedTeam = () => {
             <S.BoxDetail>
                 {postContent1?.map(postContent1 => (
                     <TeamBox
-                        key={postContent1?.postId}
+                        key={postContent1?.id}
                         showMoreDetail={true}
                         showWaitingJoin={false}
                         showSubBox={true}
-                        borderColor={
-                            postContent1.postType === false
-                                ? 'rgba(0, 163, 255, 0.5)'
-                                : 'rgba(231, 137, 255, 0.5)'
-                        }
                         postContent={postContent1}
                         isMyParticipation={false}
                         postId={postContent1?.postId}
