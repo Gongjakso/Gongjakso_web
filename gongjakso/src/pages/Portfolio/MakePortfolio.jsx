@@ -6,7 +6,7 @@ import { getMyInfo } from '../../service/profile_service';
 import { v4 as uuidv4 } from 'uuid'; // UUID import
 
 import {
-    EditPortfolio,
+    editPortfolio,
     getPortfolio,
     postPortfolio,
 } from '../../service/portfolio_service';
@@ -302,7 +302,7 @@ const MakePortfolio = ({ portfolioId }) => {
             setLoading(true);
             let response;
             if (id) {
-                response = await EditPortfolio(id, portfolioData);
+                response = await editPortfolio(id, portfolioData);
             } else {
                 response = await postPortfolio(portfolioData);
             }

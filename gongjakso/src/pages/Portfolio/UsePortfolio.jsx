@@ -1,6 +1,7 @@
 import * as S from './Portfolio.Styled';
 import { useRef, useState, useEffect } from 'react';
 import { getMyInfo } from '../../service/profile_service';
+import { postExistPortfolio } from '../../service/portfolio_service';
 import { useNavigate } from 'react-router-dom';
 
 const UsePortfolio = () => {
@@ -9,6 +10,7 @@ const UsePortfolio = () => {
     const fileInput = useRef(null);
     const [snsLinks, setSnsLinks] = useState([{ id: 1, link: '' }]);
     const [error, setError] = useState(''); // State for error messages
+    const [file, setFile] = useState(null); // 파일 상태 추가
 
     const handleButtonClick = () => {
         fileInput.current.click();
@@ -16,21 +18,61 @@ const UsePortfolio = () => {
     const addSNSLink = () => {
         setSnsLinks([...snsLinks, { id: Date.now(), link: '' }]);
     };
-
+    const fileToBase64 = file => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    };
     const handleChange = e => {
-        const file = e.target.files[0];
+        const selectedFile = e.target.files[0];
         const maxSize = 10 * 1024 * 1024; // 10MB in bytes
 
-        if (file) {
-            if (file.size > maxSize) {
+        if (selectedFile) {
+            if (selectedFile.size > maxSize) {
                 setError(
                     '파일 크기가 10MB를 초과합니다. 다른 파일을 선택해 주세요.',
                 );
                 return;
             }
-
+            console.log(selectedFile);
             setError('');
-            console.log(file);
+            setFile(selectedFile); // 파일 상태 저장
+        }
+    };
+    const handleSubmit = async () => {
+        const formData = new FormData();
+
+        // 파일이 있을 경우에만 FormData에 파일 추가
+        if (file) {
+            formData.append('file', file); // 파일 객체 그대로 추가
+        }
+
+        // notionUri를 FormData에 추가
+        const notionUri = snsLinks[0]?.link;
+        if (notionUri) {
+            formData.append('notionUri', notionUri); // JSON.stringify 필요 없음
+        } else {
+            formData.append('notionUri', ''); // notionUri가 null일 경우 빈 문자열로 전송
+        }
+
+        if (!file && !notionUri) {
+            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
+            return;
+        }
+
+        try {
+            // FormData를 사용하여 multipart/form-data 요청 전송
+            await postExistPortfolio(formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            navigate('/profile');
+        } catch (err) {
+            setError('포트폴리오 업로드 중 오류가 발생했습니다.');
         }
     };
 
@@ -111,7 +153,7 @@ const UsePortfolio = () => {
                 ))}
                 <S.BtnContainer>
                     <S.BackBtn onClick={() => navigate(-1)}>돌아가기</S.BackBtn>
-                    <S.SaveBtn>저장하기</S.SaveBtn>
+                    <S.SaveBtn onClick={handleSubmit}>저장하기</S.SaveBtn>
                 </S.BtnContainer>
             </S.GlobalBox>
         </div>
