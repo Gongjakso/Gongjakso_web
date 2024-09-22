@@ -38,7 +38,17 @@ const ProfilePage = () => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
+        getMyRecruiting().then(response => {
+            setPostContent1(response?.data?.content.slice(0, 2));
+        });
+        getMyApplied(1, 2).then(response => {
+            setPostContent2(response?.data?.content);
+        });
+        getMyParticipated(1, 2).then(response => {
+            setPostContent3(response?.data?.content);
+        });
     }, []);
+
     useEffect(() => {
         if (selectedPortfolioId) {
             fetchPortfolioDetails(selectedPortfolioId); // 포트폴리오가 선택되면 상세 정보 불러오기
