@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
     const authenticated = localStorage.getItem('accessToken');
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
+    const [modal2Open, setModal2Open] = useState(false);
     const [SignUpModalOpen, setSignUpModalOpen] = useState(false);
     const navigate = useNavigate();
     const [myName, setMyName] = useState();
@@ -21,7 +22,7 @@ const HomePage = () => {
         if (isLoggedIn) {
             getMyInfo().then(res => {
                 setMyName(res?.data?.name);
-                if (res?.data?.job === undefined || '') {
+                if (!res.data.job) {
                     setSignUpModalOpen(true);
                 } else {
                     setSignUpModalOpen(false);
@@ -36,6 +37,18 @@ const HomePage = () => {
         } else {
             navigate('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
         }
+    };
+
+    const showModal2 = () => {
+        setModal2Open(true);
+    };
+
+    const closeModal2 = () => {
+        setModal2Open(false);
+    };
+
+    const closeSignUpModal = () => {
+        setSignUpModalOpen(false);
     };
 
     return (
@@ -126,6 +139,15 @@ const HomePage = () => {
                     <S.PortfolioDetail />
                 </S.Section3>
             </S.HomeContent>
+            {modal2Open && (
+                <Modal2 goPath={'/home'} closeModal2={closeModal2} />
+            )}
+            {SignUpModalOpen && (
+                <SignUpModal
+                    closeSignUpModal={closeSignUpModal}
+                    name={myName}
+                />
+            )}
         </>
     );
 };

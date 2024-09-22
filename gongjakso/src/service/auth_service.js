@@ -30,7 +30,6 @@ export const logout = async accessToken => {
             },
         });
         localStorage.removeItem('accessToken');
-        console.log(localStorage.getItem(accessToken));
     } catch (error) {
         console.error('Error logging out:', error);
     }
@@ -53,7 +52,6 @@ export const getMyInfo = async () => {
 
     try {
         const response = await axiosInstance.get(reqURL);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         return error.response;
