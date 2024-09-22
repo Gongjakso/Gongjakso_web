@@ -45,7 +45,6 @@ const ContestDetailPage = () => {
             page,
             sortBy,
         ).then(res => {
-            console.log(res?.data);
             setContestPosts(res?.data.content);
             setContestTeamTotalPage(res?.data.totalPages);
         });
@@ -53,7 +52,6 @@ const ContestDetailPage = () => {
 
     useEffect(() => {
         getContestDetail(contestId).then(res => {
-            console.log(res);
             setContestDetail(res?.data);
             // const formattedContent = res?.data.body.replace(/\n/g, '<br>');
             setContentHtml(res?.data.body);
@@ -102,11 +100,11 @@ const ContestDetailPage = () => {
     const handleSelectChange = selectedValue => {
         //선택한 정렬 방식으로 반환
         if (selectedValue === '인기순') {
-            setSortBy('scrapCount');
+            setSortBy('scrap_count');
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
-            setSortBy(null);
+            setSortBy('createdAt');
         }
     };
     const handleTeamBuildClick = () => {
