@@ -29,6 +29,7 @@ const TeamBox = ({
         state => state.confirmModal,
     );
 
+    console.log(postContent);
     useEffect(() => {
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
@@ -170,20 +171,20 @@ const TeamBox = ({
                                 `| ${postContent?.leaderName} | ${postContent?.startedAt}~${postContent?.recruitFinishedAt} |`}
                             {isMyParticipation === null &&
                                 // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
-                                `| ${postContent?.memberName} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
+                                `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.dDay < 0
+                                {postContent?.d_day < 0
                                     ? '마감된 공고'
-                                    : `마감 D-${postContent?.dDay}`}
+                                    : `마감 D-${postContent?.d_day}`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
-                                {postContent?.viewCount}회
+                                {postContent?.scrap_count}회
                             </S.ScrapNum>
                         </S.SubBox>
                     ) : (
