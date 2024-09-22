@@ -185,8 +185,8 @@ export const patchCompletedPost = async post_id => {
     }
 };
 
-export const getContestList = async () => {
-    const reqURL = `contest/search?word=&size=12&page=1`;
+export const getContestList = async (page, searchKeyword) => {
+    const reqURL = `contest/search?word${searchKeyword}=&size=12&page=${page}`;
 
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
