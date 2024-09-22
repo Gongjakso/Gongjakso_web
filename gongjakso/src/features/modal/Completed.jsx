@@ -38,11 +38,11 @@ const Completed = props => {
             {props.case === 1 && (
                 <S.Background2>
                     <S.Modal
-                        $w="850px"
-                        $h="450px"
+                        $w="700px"
+                        $h="460px"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
@@ -76,7 +76,7 @@ const Completed = props => {
             {props.case === 2 && (
                 <S.Background>
                     <S.Modal
-                        $w="850px"
+                        $w="700px"
                         $h="400px"
                         $bc={({ theme }) => theme.box1}
                     >
@@ -87,7 +87,7 @@ const Completed = props => {
                         >
                             <img src={Close} alt="close-btn" />
                         </S.Backbtn>
-                        <S.MainTitle>{props.title} 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
                         <S.CompletedBox>
                             <p>지원이 완료되었습니다!</p>
                             <p>
@@ -111,7 +111,7 @@ const Completed = props => {
             {props.case === 3 && (
                 <S.Background>
                     <S.Modal
-                        $w="850px"
+                        $w="650px"
                         $h="420px"
                         $bc={({ theme }) => theme.box1}
                     >

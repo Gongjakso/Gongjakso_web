@@ -156,7 +156,6 @@ const DetailPageContest = () => {
                     category: 'Scrap button',
                     action: '게시물 스크랩 취소',
                 });
-                console.log(res);
             });
         } else {
             // [POST] 공고 상세페이지 팀 스크랩 API
@@ -166,7 +165,6 @@ const DetailPageContest = () => {
                     category: 'Scrap button',
                     action: '게시물 스크랩',
                 });
-                console.log(res);
             });
         }
 
@@ -244,7 +242,9 @@ const DetailPageContest = () => {
             )}
 
             {/* 지원이 완료되었습니다 모달 */}
-            {completed === true ? <Completed case={2} /> : null}
+            {completed === true ? (
+                <Completed case={2} title={applyTitle} />
+            ) : null}
 
             {/* 포트폴리오 만들러가기 모달 */}
             {goToMy && <Completed case={3} setgoToMy={setgoToMy} />}
@@ -282,7 +282,7 @@ const DetailPageContest = () => {
 
                     {checkStatus === 'APPLIER' ? (
                         <div>
-                            <S.Title>
+                            <S.Title checkStatus={checkStatus}>
                                 <img src={Logo} alt="title-logo" />
                                 <p>{postData?.title}</p>
                                 <img src={Logo} alt="title-logo" />
@@ -315,7 +315,7 @@ const DetailPageContest = () => {
                             </S.BtnLayout>
                         </div>
                     ) : (
-                        <S.Title>
+                        <S.Title checkStatus={checkStatus}>
                             <img src={Logo} alt="title-logo" />
                             <p>{postData?.title}</p>
                             <img src={Logo} alt="title-logo" />
@@ -336,7 +336,7 @@ const DetailPageContest = () => {
                 <S.Background $s="1100px">
                     <S.BlueBox
                         $bg={({ theme }) => theme.Light1}
-                        $boxSize={apply ? '2500px' : '1400px'}
+                        $boxSize={apply ? '2350px' : '1300px'}
                     >
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
@@ -410,7 +410,7 @@ const DetailPageContest = () => {
                                         alt="kakao-link"
                                         onClick={() => {
                                             openNewWindow(
-                                                postData?.contest_link,
+                                                postData?.channel_link,
                                             );
                                         }}
                                     />
@@ -420,7 +420,7 @@ const DetailPageContest = () => {
                                         alt="googleForm-link"
                                         onClick={() => {
                                             openNewWindow(
-                                                postData?.contest_link,
+                                                postData?.channel_link,
                                             );
                                         }}
                                     />
@@ -431,7 +431,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             <S.TextTitle>설명글</S.TextTitle>
                         </S.TextBox>
-                        <S.MainText $h="400px">{postData?.body}</S.MainText>
+                        <S.MainText $h="300px">{postData?.body}</S.MainText>
 
                         {checkStatus === 'LEADER' ? (
                             <div></div>

@@ -10,7 +10,6 @@ export const postPosting = async postContent => {
         const response = await axiosInstance.post(reqURL, {
             ...postContent,
         });
-        console.log(response);
         return response;
     } catch (error) {
         console.log(error);
@@ -30,7 +29,6 @@ export const getContestTeamList = async (
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response?.data);
         return response?.data;
     } catch (error) {
         console.log(error);
@@ -43,8 +41,6 @@ export const postContestTeam = async (contest_id, contestContent) => {
         const response = await axiosInstanceV2.post(reqURL, {
             ...contestContent,
         });
-        console.log(response);
-        console.log({ ...contestContent });
         return response;
     } catch (error) {
         console.log(error);
@@ -58,7 +54,7 @@ export const getPostDetail = async (contest_id, team_id) => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
+
         return response.data;
     } catch (error) {
         console.log(error);

@@ -56,14 +56,23 @@ export const BtnLayout = styled.div`
 // 타이틀
 export const Title = styled.div`
     display: flex;
+    align-items: center;
     font-family: 'TheJamsilRegular';
     font-size: ${({ theme }) => theme.fontSize.xl};
+
     img {
         width: 45px;
     }
+
     p {
-        margin: 15px;
+        margin: 0 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: ${({ checkStatus }) =>
+            checkStatus === 'APPLIER' ? '530px' : '800px'};
     }
+
     margin-left: 80px;
     margin-bottom: 35px;
 `;
@@ -109,6 +118,7 @@ export const BlueBox = styled.div`
     border: 2px solid ${props => props.$bg};
     border-radius: 40px;
     margin-top: 15px;
+    margin-bottom: 55px;
     padding: 55px;
 `;
 
@@ -179,6 +189,8 @@ export const MainText = styled.p`
     line-height: 2;
     height: ${props => props.$h};
     padding-bottom: 180px;
+    word-wrap: break-word;
+    white-space: normal;
 `;
 
 // 스크랩하기 & 지원하기 버튼
@@ -231,7 +243,7 @@ export const ApplicationTitle = styled.div`
 
 export const ApplicationBtn = styled.button`
     position: absolute;
-    bottom: 12rem;
+    bottom: 15rem;
     display: flex;
     align-items: center;
     justify-content: center;
