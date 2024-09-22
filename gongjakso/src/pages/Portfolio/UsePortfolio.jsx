@@ -81,54 +81,51 @@ const UsePortfolio = () => {
         setFile(null); // 파일 상태 초기화
         setExistingFile(null); // 기존 파일도 초기화
     };
-
     const handleSubmit = async () => {
-        const formData = new FormData();
-
-        // 파일이 새로 선택되었으면 FormData에 추가
-        if (file) {
-            formData.append('file', file);
-            console.log('새 파일 추가됨:', file);
-        } else if (existingFile) {
-            // 새 파일이 없고 기존 파일이 있으면 서버에 기존 파일을 유지하게 알림
-            formData.append('existingFileUri', existingFile.uri);
-            console.log('기존 파일 유지됨:', existingFile.name);
-        }
-
-        // 노션 링크가 빈 문자열이 아니면 추가
-        if (snsLink && snsLink.trim() !== '') {
-            formData.append('notionUri', snsLink); // 노션 링크가 있을 때만 추가
-        }
-
-        // 파일이나 노션 링크가 없으면 에러 메시지 표시 (기존 파일도 포함)
-        if (!file && !existingFile && !snsLink) {
-            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
+        // 파일과 URL이 모두 없으면 에러 메시지 출력
+        if (!file && !existingFile && !snsLink.trim()) {
+            setError(
+                'PDF 파일 또는 노션 URL 중 하나는 필수로 입력해야 합니다.',
+            );
             return;
         }
 
+        const formData = new FormData();
+
+        // PDF 파일이 새로 선택되었으면 FormData에 추가
+        if (file) {
+            formData.append('file', file);
+        } else if (!file && !existingFile) {
+            // 파일을 삭제한 경우 이를 명시적으로 서버에 전달
+            formData.append('file', ''); // 서버에 파일 삭제 요청
+        }
+
+        // 노션 URL 처리
+        if (snsLink && snsLink.trim() !== '') {
+            formData.append('notionUri', snsLink); // URL을 추가하거나 수정
+        } else {
+            formData.append('notionUri', ''); // 서버에 URL 삭제 요청
+        }
+
         try {
-            // 새 포트폴리오를 올리는 경우: file이 있으면 무조건 새 포트폴리오라고 가정
+            // 새 포트폴리오를 올리는 경우 (file이 있으면 새 포트폴리오라고 가정)
             if (!id) {
-                // ID가 없을 경우에만 포스트 API 호출
-                await postExistPortfolio(formData);
+                await postExistPortfolio(formData); // 새로운 포트폴리오 생성
             } else {
-                // 기존 포트폴리오 수정하는 경우 편집 API 호출
-                await editExistPortfolio(id, formData);
+                await editExistPortfolio(id, formData); // 기존 포트폴리오 수정
             }
-            navigate('/profile');
+            navigate('/profile'); // 수정 또는 생성 후 프로필 페이지로 이동
         } catch (err) {
-            setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+            if (err.response?.data?.message === '이미 존재하는 리소스입니다.') {
+                setError(
+                    'PDF와 노션 링크가 이미 등록되어 있습니다. 더 이상 추가할 수 없습니다.',
+                );
+            } else {
+                setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+            }
+            console.error('Error posting portfolio: ', err);
         }
     };
-
-    // 노션 링크나 파일이 사라질 때 UI를 동적으로 업데이트
-    useEffect(() => {
-        if (!snsLink && !existingFile && !file) {
-            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
-        } else {
-            setError('');
-        }
-    }, [snsLink, existingFile, file]);
 
     return (
         <div>
