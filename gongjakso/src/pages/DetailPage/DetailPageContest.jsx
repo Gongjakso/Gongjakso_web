@@ -156,7 +156,6 @@ const DetailPageContest = () => {
                     category: 'Scrap button',
                     action: '게시물 스크랩 취소',
                 });
-                console.log(res);
             });
         } else {
             // [POST] 공고 상세페이지 팀 스크랩 API
@@ -166,7 +165,6 @@ const DetailPageContest = () => {
                     category: 'Scrap button',
                     action: '게시물 스크랩',
                 });
-                console.log(res);
             });
         }
 

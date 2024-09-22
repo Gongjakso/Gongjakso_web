@@ -54,7 +54,7 @@ export const getPostDetail = async (contest_id, team_id) => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
+
         return response.data;
     } catch (error) {
         console.log(error);
