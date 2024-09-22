@@ -96,6 +96,11 @@ export const RoundForm = styled.button`
 
 export const PortForm = styled(RoundForm)`
     min-width: 250px;
+    display: inline-block;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 // textarea 감싸는 틀

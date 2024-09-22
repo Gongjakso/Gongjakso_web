@@ -52,11 +52,16 @@ export const postContestTeam = async (contest_id, contestContent) => {
     }
 };
 
-export const getPostDetail = async (id, role) => {
-    const reqURL = `post/${id}`;
+// [GET] 공고 상세페이지 팀 조회 API
+export const getPostDetail = async (contest_id, team_id) => {
+    const reqURL = `contest/${contest_id}/team/${team_id}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         return response.data;
     } catch (error) {
         console.log(error);
@@ -74,33 +79,58 @@ export const getCheckStatus = async id => {
     }
 };
 
+// [POST] 공고 상세페이지 팀 스크랩 API
 export const postScrap = async id => {
-    const reqURL = `post/${id}`;
+    const reqURL = `team/${id}/scrap`;
 
     try {
-        const response = await axiosInstance.post(reqURL);
+        const response = await axiosInstanceV2.post(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);
     }
 };
 
+// [DELETE] 공고 상세페이지 팀 스크랩 API
+export const deleteScrap = async id => {
+    const reqURL = `team/${id}/scrap`;
+
+    try {
+        const response = await axiosInstanceV2.delete(reqURL);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// [GET] 공고 상세페이지 팀 스크랩 조회 API
 export const getScrap = async id => {
-    const reqURL = `post/scrap/${id}`;
+    const reqURL = `team/${id}/scrap/check`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);
     }
 };
 
-export const postApply = async (apply_id, postContent) => {
-    const reqURL = `apply/${apply_id}`;
+export const getMyPortfolio = async () => {
+    const reqURL = `mypage/portfolio/my`;
 
     try {
-        const response = await axiosInstance.post(reqURL, {
+        const response = await axiosInstanceV2.get(reqURL);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const postApply = async (team_id, postContent) => {
+    const reqURL = `apply/${team_id}`;
+
+    try {
+        const response = await axiosInstanceV2.post(reqURL, {
             ...postContent,
         });
         return response.data;
