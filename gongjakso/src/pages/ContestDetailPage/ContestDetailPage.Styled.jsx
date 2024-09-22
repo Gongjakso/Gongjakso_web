@@ -10,6 +10,7 @@ export const MainContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 200px;
 `;
 
 export const ContestDetail = styled.div`
