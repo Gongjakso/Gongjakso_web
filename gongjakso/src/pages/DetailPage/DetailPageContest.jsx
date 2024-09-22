@@ -114,6 +114,11 @@ const DetailPageContest = () => {
             setCategory(res?.data.recruit_part);
             setscrapNum(res?.data.scrap_count);
             setapplyTitle(res?.data.title);
+
+            if (res?.data.team_role === 'APPLIER') {
+                setapplyType(res?.data.apply_status);
+                setuserId(res?.data.apply_id);
+            }
         });
 
         // [GET] 공고 상세페이지 팀 스크랩 여부 조회 API
@@ -131,16 +136,6 @@ const DetailPageContest = () => {
             });
         }
     }, [apply]);
-
-    // useEffect(() => {
-    //     checkStatus가 'APPLICANT'이고, id가 변경될 때마다 실행
-    //     if (checkStatus === 'APPLICANT') {
-    //         getMyApplication(id).then(res => {
-    //             setapplyType(res?.data.applyType);
-    //             setuserId(res?.data.applyId);
-    //         });
-    //     }
-    // }, [checkStatus, id]);
 
     // 활동기간 수정 함수
     const formatDate = dateString => {
@@ -269,7 +264,6 @@ const DetailPageContest = () => {
             {showCancel ? (
                 <ApplyCancel
                     CloseModal={setshowCancel}
-                    type={postData?.postType}
                     id={postId}
                     applyId={userId}
                     title={applyTitle}
@@ -294,11 +288,11 @@ const DetailPageContest = () => {
                                 <img src={Logo} alt="title-logo" />
                             </S.Title>
                             <S.BtnLayout>
-                                {applyType === 'PASS' ? (
+                                {applyType === '합류 완료' ? (
                                     <S.Status $bg={({ theme }) => theme.box1}>
                                         합류 완료
                                     </S.Status>
-                                ) : applyType === 'NOT_PASS' ? (
+                                ) : applyType === '미선발' ? (
                                     <S.Status
                                         $bg={({ theme }) => theme.LightGrey}
                                     >
@@ -312,7 +306,7 @@ const DetailPageContest = () => {
 
                                 <S.ApplyBtn
                                     onClick={() => {
-                                        setmyAppOpen(true);
+                                        // setmyAppOpen(true);
                                     }}
                                 >
                                     지원서 보기
@@ -455,7 +449,7 @@ const DetailPageContest = () => {
                                     <span>스크랩하기</span>
                                 </S.ScrapButton>
                                 {checkStatus === 'APPLIER' ? (
-                                    <S.ApplyButton
+                                    <S.CancelButton
                                         $bc="none"
                                         $bg={({ theme }) => theme.LightGrey}
                                         onClick={() => {
@@ -463,7 +457,7 @@ const DetailPageContest = () => {
                                         }}
                                     >
                                         지원 취소
-                                    </S.ApplyButton>
+                                    </S.CancelButton>
                                 ) : (
                                     <S.ApplyButton
                                         $apply={apply}
