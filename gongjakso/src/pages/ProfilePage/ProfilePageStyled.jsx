@@ -165,10 +165,10 @@ export const ViewPortfolioBtn = styled.button`
 `;
 
 export const PortfolioTitle = styled.span`
-    font-family: 'PreRegular';
-    white-space: nowrap; /* 텍스트를 한 줄로 표시 */
-    overflow: hidden; /* 넘치는 텍스트 숨김 */
-    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 '...'으로 표시 */
+    font-family: 'PreMedium';
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 700px;
     font-size: ${({ theme }) => theme.fontSize.md};
 `;
@@ -244,7 +244,7 @@ export const LinkInfo = styled.div`
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 600;
     text-align: left;
-    gap: 5px;
+    gap: 0.5rem;
 `;
 
 export const LinkDetail = styled.div`
@@ -253,4 +253,12 @@ export const LinkDetail = styled.div`
     font-size: ${({ theme }) => theme.fontSize.base};
     font-weight: 500;
     text-align: left;
+    margin-top: 0.5rem;
+`;
+
+export const PortfolioInfo = styled.div`
+    display: flex;
+    width: 1000px;
+    gap: 0.5rem;
+    flex-direction: column;
 `;

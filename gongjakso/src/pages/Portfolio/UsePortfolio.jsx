@@ -11,34 +11,41 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UsePortfolio = () => {
     const [data, setProfileData] = useState();
     const navigate = useNavigate();
-    const { id } = useParams(); // 포트폴리오 ID 가져오기
+    const { id } = useParams();
     const fileInput = useRef(null);
     const [isEdit, setIsEdit] = useState(false);
-    const [snsLink, setSnsLink] = useState(''); // 단일 노션 링크
-    const [error, setError] = useState(''); // State for error messages
-    const [file, setFile] = useState(null); // 단일 파일
-    const [existingFile, setExistingFile] = useState(null); // 기존 파일 URI 상태
+    const [snsLink, setSnsLink] = useState('');
+    const [error, setError] = useState('');
+    const [file, setFile] = useState(null);
+    const [existingFile, setExistingFile] = useState(null);
 
     useEffect(() => {
-        // 기존 포트폴리오 데이터를 가져와서 snsLink와 file 상태를 설정
         const fetchPortfolio = async () => {
             try {
-                const response = await getExistPortfolio(id); // 포트폴리오 상세 데이터 가져오기
+                const response = await getExistPortfolio(id);
                 const portfolioData = response?.data.data;
 
-                // 기존 노션 링크 및 파일이 있으면 상태에 설정
                 if (portfolioData) {
-                    setSnsLink(portfolioData.notionUri || ''); // 노션 링크 설정
-                    console.log(portfolioData);
+                    setSnsLink(portfolioData.notionUri || '');
                     if (portfolioData.fileUri) {
-                        const fileName = portfolioData.fileUri.split('/').pop();
+                        const fileName = portfolioData.fileUri
+                            .split('/')
+                            .pop()
+                            .split('_')
+                            .pop();
+
                         setExistingFile({
                             name: fileName,
                             uri: portfolioData.fileUri,
-                        }); // 파일 이름과 URI 설정
+                        });
                     }
                 }
-            } catch (error) {}
+            } catch (error) {
+                console.error(
+                    '포트폴리오 데이터를 가져오는 중 에러 발생:',
+                    error,
+                );
+            }
         };
 
         fetchPortfolio();
@@ -52,8 +59,8 @@ const UsePortfolio = () => {
     };
 
     const handleChange = e => {
-        const selectedFile = e.target.files[0]; // 첫 번째 파일만 선택
-        const maxSize = 10 * 1024 * 1024; // 10MB 제한
+        const selectedFile = e.target.files[0];
+        const maxSize = 10 * 1024 * 1024;
 
         if (selectedFile.size > maxSize) {
             setError(
@@ -61,52 +68,53 @@ const UsePortfolio = () => {
             );
         } else {
             setError('');
-            setFile(selectedFile); // 선택된 파일 설정
-            setExistingFile(null); // 새 파일을 선택한 경우 기존 파일 초기화
+            setFile(selectedFile);
+            setExistingFile(null);
         }
     };
 
-    // 파일 삭제
     const handleFileDelete = () => {
-        setFile(null); // 파일 상태 초기화
-        setExistingFile(null); // 기존 파일도 초기화
+        setFile(null);
+        setExistingFile(null);
     };
     const handleSubmit = async () => {
-        const formData = new FormData();
-
-        // 파일이 새로 선택되었으면 FormData에 추가
-        if (file) {
-            formData.append('file', file);
-            console.log('새 파일 추가됨:', file);
-        } else if (existingFile) {
-            // 새 파일이 없고 기존 파일이 있으면 서버에 기존 파일을 유지하게 알림
-            formData.append('existingFileUri', existingFile.uri);
-            console.log('기존 파일 유지됨:', existingFile.name);
-        }
-
-        // 노션 링크가 빈 문자열이 아니면 추가
-        if (snsLink && snsLink.trim() !== '') {
-            formData.append('notionUri', snsLink); // 노션 링크가 있을 때만 추가
-        }
-
-        // 파일이나 노션 링크가 없으면 에러 메시지 표시 (기존 파일도 포함)
-        if (!file && !existingFile && !snsLink) {
-            setError('파일 또는 노션 링크 중 하나는 필수로 입력해야 합니다.');
+        if (!file && !existingFile && !snsLink.trim()) {
+            setError(
+                'PDF 파일 또는 노션 URL 중 하나는 필수로 입력해야 합니다.',
+            );
             return;
         }
 
+        const formData = new FormData();
+
+        if (file) {
+            formData.append('file', file);
+        } else if (!file && !existingFile) {
+            formData.append('file', '');
+        }
+
+        if (snsLink && snsLink.trim() !== '') {
+            formData.append('notionUri', snsLink);
+        } else {
+            formData.append('notionUri', '');
+        }
+
         try {
-            // 새 포트폴리오를 올리는 경우: file이 있으면 무조건 새 포트폴리오라고 가정
             if (!id) {
-                // ID가 없을 경우에만 포스트 API 호출
                 await postExistPortfolio(formData);
             } else {
-                // 기존 포트폴리오 수정하는 경우 편집 API 호출
                 await editExistPortfolio(id, formData);
             }
             navigate('/profile');
         } catch (err) {
-            setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+            if (err.response?.data?.message === '이미 존재하는 리소스입니다.') {
+                setError(
+                    'PDF와 노션 링크가 이미 등록되어 있습니다. 더 이상 추가할 수 없습니다.',
+                );
+            } else {
+                setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+            }
+            console.error('Error posting portfolio: ', err);
         }
     };
 
