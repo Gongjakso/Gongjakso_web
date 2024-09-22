@@ -27,8 +27,8 @@ export const ContestInfo = styled.div`
 `;
 
 export const ContestTitle = styled.p`
-    font-family: The Jamsil OTF;
-    font-size: 38px;
+    font-family: 'The Jamsil OTF';
+    font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: 700;
     line-height: 52.8px;
     text-align: left;
@@ -74,7 +74,7 @@ export const FireImage = styled(Fire)`
 
 export const Organization = styled.h2`
     font-family: 'Pretendard';
-    font-size: 19px;
+    font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 700;
     line-height: 28.64px;
     text-align: left;
@@ -84,7 +84,7 @@ export const Organization = styled.h2`
 export const InfoContent = styled.h3`
     display: flex;
     flex-direction: row;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-weight: 700;
     line-height: 23.87px;
@@ -92,8 +92,8 @@ export const InfoContent = styled.h3`
     gap: 10px;
 `;
 export const InfoSpan = styled.p`
-    font-family: Pretendard;
-    font-size: 16px;
+    font-family: 'Pretendard';
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     line-height: 23.87px;
     text-align: left;

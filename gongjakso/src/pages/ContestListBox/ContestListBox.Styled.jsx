@@ -11,8 +11,8 @@ export const ContestContainer = styled.div`
 `;
 
 export const ContestImg = styled.img`
-    width: 305px;
-    height: 344px;
+    width: 295px;
+    height: 340px;
 `;
 
 export const RemainDate = styled.div`
@@ -54,4 +54,16 @@ export const ContestCompany = styled.h2`
     font-weight: 700;
     line-height: 15.51px;
     text-align: left;
+`;
+
+export const InfoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`;
+
+export const TitleWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 `;

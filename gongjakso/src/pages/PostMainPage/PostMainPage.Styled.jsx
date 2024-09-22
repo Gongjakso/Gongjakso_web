@@ -75,6 +75,7 @@ export const Fillter1 = styled.div`
     padding: 12px 18px;
     display: flex;
     align-items: center;
+    margin-right: 30px;
 `;
 export const Fillter2 = styled.div`
     width: 100%;
@@ -108,7 +109,7 @@ export const ContestContent = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 27px;
+    gap: 23px;
 `;
 
 export const TeamBoxContent = styled.div``;

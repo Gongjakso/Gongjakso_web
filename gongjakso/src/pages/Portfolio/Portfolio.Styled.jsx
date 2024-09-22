@@ -229,7 +229,6 @@ export const FileUploadBox = styled.div`
     line-height: 2.088rem;
     font-family: 'PreRegular';
     margin: 1rem 0;
-    margin-bottom: 7rem;
 `;
 
 export const pdfImg = styled.div`
@@ -309,4 +308,45 @@ export const CheckImg = styled.div`
 export const CalendarSection = styled.div`
     display: flex;
     gap: 0.625rem;
+`;
+export const FileInfo = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 7rem;
+    background-color: #f7f7f7;
+    border-radius: 5px; // 모서리를 둥글게
+    border: 1.5px dotted #d2d2d7;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    color: #333; // 텍스트 색상
+    max-width: 1000px; // 최대 너비 설정
+    word-wrap: break-word; // 긴 텍스트 줄바꿈
+`;
+
+export const FileName = styled.div`
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+`;
+export const FileSize = styled.div`
+    flex: 0.5;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    margin-right: 10px;
+`;
+
+export const FileList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+`;
+
+export const FileItem = styled.div`
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: space-between; /* 좌우 여백 */
+    padding: 5px;
 `;
