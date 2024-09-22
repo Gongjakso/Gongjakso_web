@@ -34,52 +34,6 @@ const ProfilePage = () => {
     const [portfolioExists, setPortfolioExists] = useState(false);
     const [portfolioList, setPortfolioList] = useState([]);
 
-    const mockRecruitingTeams = [
-        {
-            postId: 1,
-            postType: true,
-            title: '프로젝트 팀 모집',
-            max_person: 5,
-            current_person: 3,
-            startDate: '2024-01-01',
-            endDate: '2024-12-31',
-        },
-        {
-            postId: 2,
-            postType: false,
-            title: '공모전 팀 모집',
-            max_person: 10,
-            current_person: 8,
-            startDate: '2024-02-01',
-            endDate: '2024-11-30',
-        },
-    ];
-
-    const mockAppliedTeams = [
-        {
-            postId: 3,
-            postType: true,
-            title: '지원한 프로젝트',
-            max_person: 7,
-            current_person: 5,
-            startDate: '2024-03-01',
-            endDate: '2024-10-31',
-        },
-    ];
-
-    const mockParticipatedTeams = [
-        {
-            postId: 4,
-            postType: false,
-            postStatus: 'ACTIVE',
-            title: '참여한 공모전',
-            max_person: 4,
-            current_person: 4,
-            startDate: '2024-01-01',
-            endDate: '2024-12-31',
-        },
-    ];
-
     useEffect(() => {
         getMyInfo().then(response => {
             setProfileData(response?.data);
@@ -133,15 +87,14 @@ const ProfilePage = () => {
                     const isAnyRegistered = portfolios.some(
                         portfolio => portfolio.isRegistered,
                     );
-                    setPortfolioExists(isAnyRegistered); // 포트폴리오 등록 상태 업데이트
-                    setPortfolioList(portfolios); // 전체 포트폴리오 목록 저장
+                    setPortfolioExists(isAnyRegistered);
+                    setPortfolioList(portfolios);
 
-                    // 각각의 포트폴리오에 대해 세부 정보를 가져옴
                     portfolios.forEach(portfolio => {
                         fetchPortfolioDetails(portfolio.PortfolioId);
                     });
                 } else {
-                    setPortfolioExists(false); // 등록된 포트폴리오 없음
+                    setPortfolioExists(false);
                 }
             } catch (error) {
                 console.error('Error fetching portfolios:', error);
@@ -151,19 +104,19 @@ const ProfilePage = () => {
         fetchPortfolios();
     }, []);
 
-    const openPortfolioModal = () => setShowModal(true); // 모달 열기
-    const closePortfolioModal = () => setShowModal(false); // 모달 닫기
+    const openPortfolioModal = () => setShowModal(true);
+    const closePortfolioModal = () => setShowModal(false);
 
     const handleDeletePortfolio = (portfolioId, portfolioName) => {
-        setSelectedPortfolioId(portfolioId); // 삭제할 포트폴리오 ID 저장
-        setSelectedPortfolioName(portfolioName); // 포트폴리오 이름 저장
-        setShowDeleteModal(true); // 삭제 모달 열기
+        setSelectedPortfolioId(portfolioId);
+        setSelectedPortfolioName(portfolioName);
+        setShowDeleteModal(true);
     };
     const extractFileName = fileUri => {
         if (fileUri) {
-            const fileName = fileUri.split('/').pop(); // '/'로 분리한 마지막 요소 가져오기
-            const nameAfterUnderscore = fileName.split('_').pop(); // '_'로 분리한 마지막 요소 가져오기
-            return nameAfterUnderscore; // '_' 이후의 부분 반환
+            const fileName = fileUri.split('/').pop();
+            const nameAfterUnderscore = fileName.split('_').pop();
+            return nameAfterUnderscore;
         }
         return '등록된 파일 없음';
     };
@@ -182,7 +135,7 @@ const ProfilePage = () => {
         } catch (error) {
             console.error('Error deleting portfolio:', error);
         } finally {
-            setShowDeleteModal(false); // 삭제 후 모달 닫기
+            setShowDeleteModal(false);
         }
     };
     const handleEditPortfolio = async portfolioId => {
@@ -192,16 +145,15 @@ const ProfilePage = () => {
         if (portfolioToEdit) {
             const isExistedPortfolio = portfolioToEdit.isExistedPortfolio;
             const editUrl = isExistedPortfolio
-                ? `/profile/useportfolio/${portfolioId}` // 다른 포트폴리오 형식의 편집 경로
-                : `/profile/makeportfolio/${portfolioId}`; // 기본 편집 경로
+                ? `/profile/useportfolio/${portfolioId}`
+                : `/profile/makeportfolio/${portfolioId}`;
 
             navigate(editUrl);
 
-            // 포트폴리오 수정 후 최신 정보 가져오기
             const updatedPortfolio = await getExistPortfolio(portfolioId);
             setPortfolioDetails(prevDetails => ({
                 ...prevDetails,
-                [portfolioId]: updatedPortfolio.data, // 최신 포트폴리오 정보로 업데이트
+                [portfolioId]: updatedPortfolio.data,
             }));
         }
     };
@@ -253,28 +205,16 @@ const ProfilePage = () => {
                             const fileUri =
                                 portfolioDetails[portfolio.PortfolioId]?.data
                                     .fileUri;
-                            const isBasicPortfolio = !notionUri && !fileUri; // 링크가 없는 기본 포트폴리오
+                            const isBasicPortfolio = !notionUri && !fileUri;
 
                             const components = [];
 
                             if (isBasicPortfolio) {
-                                // 노션이나 PDF 링크가 없으면 기본 포트폴리오로 1개 처리
                                 components.push('basic');
                             } else {
-                                // 노션과 PDF가 있을 경우 각각을 개별 포트폴리오로 처리
                                 if (notionUri) components.push('notion');
                                 if (fileUri) components.push('pdf');
                             }
-
-                            console.log(
-                                `Portfolio ID: ${portfolio.PortfolioId}`,
-                            );
-                            console.log(
-                                `Notion: ${notionUri ? 'Yes' : 'No'}, PDF: ${fileUri ? 'Yes' : 'No'}`,
-                            );
-                            console.log(
-                                `Total components for this portfolio: ${components.length}`,
-                            );
 
                             return components;
                         }).length < MAX_PORTFOLIOS && (

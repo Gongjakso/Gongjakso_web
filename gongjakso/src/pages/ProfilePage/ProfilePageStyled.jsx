@@ -166,9 +166,9 @@ export const ViewPortfolioBtn = styled.button`
 
 export const PortfolioTitle = styled.span`
     font-family: 'PreMedium';
-    white-space: nowrap; /* 텍스트를 한 줄로 표시 */
-    overflow: hidden; /* 넘치는 텍스트 숨김 */
-    text-overflow: ellipsis; /* 텍스트가 넘칠 경우 '...'으로 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 700px;
     font-size: ${({ theme }) => theme.fontSize.md};
 `;

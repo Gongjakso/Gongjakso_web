@@ -254,12 +254,12 @@ const MakePortfolio = ({ portfolioId }) => {
         const validDate = date instanceof Date ? date : new Date(date);
 
         if (!validDate || isNaN(validDate.getTime())) {
-            return null; // 유효하지 않은 날짜일 경우 null 반환
+            return null;
         }
         const year = validDate.getFullYear();
-        const month = String(validDate.getMonth() + 1).padStart(2, '0'); // 월을 2자리로 포맷
-        const day = String(validDate.getDate()).padStart(2, '0'); // 일을 2자리로 포맷
-        return `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 반환
+        const month = String(validDate.getMonth() + 1).padStart(2, '0');
+        const day = String(validDate.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
     const handleSavePortfolio = async () => {
@@ -372,8 +372,8 @@ const MakePortfolio = ({ portfolioId }) => {
                                     placeholder={
                                         section.gradeStatus ||
                                         gradeStatus_options[0]
-                                    } // 기본 placeholder 처리
-                                    value={section.gradeStatus || ''} // value가 없을 때만 placeholder를 사용
+                                    }
+                                    value={section.gradeStatus || ''}
                                     onChange={value => {
                                         const updatedSections = [
                                             ...educationSections,
