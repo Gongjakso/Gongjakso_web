@@ -9,8 +9,8 @@ const RecruitedTeam = () => {
     const [postContent1, setPostContent1] = useState([]);
 
     useEffect(() => {
-        getMyRecruiting().then(response => {
-            setPostContent1(response?.data);
+        getMyRecruiting(0, 6).then(response => {
+            setPostContent1(response?.data.content);
         });
     }, []);
 
