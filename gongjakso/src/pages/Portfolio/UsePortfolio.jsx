@@ -22,23 +22,28 @@ const UsePortfolio = () => {
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
-                const response = await getExistPortfolio(id);
-                const portfolioData = response?.data.data;
+                // 파일과 노션 링크를 각각 조회
+                const fileResponse = await getExistPortfolio(id, 'file');
+                const notionResponse = await getExistPortfolio(id, 'notion');
 
-                if (portfolioData) {
-                    setSnsLink(portfolioData.notionUri || '');
-                    if (portfolioData.fileUri) {
-                        const fileName = portfolioData.fileUri
-                            .split('/')
-                            .pop()
-                            .split('_')
-                            .pop();
+                const fileData = fileResponse?.data?.data;
+                const notionData = notionResponse?.data?.data;
 
-                        setExistingFile({
-                            name: fileName,
-                            uri: portfolioData.fileUri,
-                        });
-                    }
+                // 파일과 노션 데이터 상태에 저장
+                if (fileData) {
+                    const fileName = fileData.fileUri
+                        .split('/')
+                        .pop()
+                        .split('_')
+                        .pop();
+                    setExistingFile({
+                        name: fileName,
+                        uri: fileData.fileUri,
+                    });
+                }
+
+                if (notionData) {
+                    setSnsLink(notionData.notionUri || '');
                 }
             } catch (error) {
                 console.error(
@@ -150,7 +155,6 @@ const UsePortfolio = () => {
                         style={{ display: 'none' }}
                     />
                 </S.FileUploadBox>
-
 
                 {/* 파일이 선택되었거나 기존 파일이 있을 때만 파일 정보 표시 */}
                 {(file || existingFile) && (

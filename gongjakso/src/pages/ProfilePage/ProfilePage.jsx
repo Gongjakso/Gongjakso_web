@@ -62,28 +62,46 @@ const ProfilePage = () => {
         try {
             const details = await getExistPortfolio(portfolioId, type);
             if (details && details.data) {
-                const dataType =
-                    type === 'file'
-                        ? details.data.data.fileUri
-                        : details.data.data.notionUri;
-
-                setPortfolioDetails(prevState => ({
-                    ...prevState,
-                    [portfolioId]: {
-                        ...prevState[portfolioId],
-                        [type]: dataType,
-                    },
-                }));
+                const fileUri = details.data.data.fileUri || null;
+                const notionUri = details.data.data.notionUri || null;
+                if (type === 'file') {
+                    setPortfolioDetails(prevState => ({
+                        ...prevState,
+                        [portfolioId]: {
+                            ...prevState[portfolioId],
+                            file: fileUri,
+                        },
+                    }));
+                } else if (type === 'notion') {
+                    setPortfolioDetails(prevState => ({
+                        ...prevState,
+                        [portfolioId]: {
+                            ...prevState[portfolioId],
+                            notion: notionUri,
+                        },
+                    }));
+                } else if (type === 'hybrid') {
+                    setPortfolioDetails(prevState => ({
+                        ...prevState,
+                        [portfolioId]: {
+                            ...prevState[portfolioId],
+                            file: fileUri,
+                            notion: notionUri,
+                        },
+                    }));
+                }
             }
         } catch (error) {
             console.error('Error fetching portfolio details by type:', error);
         }
     };
+
     const fetchPortfolioDetails = async portfolioId => {
         // 'hybrid' 대신 각각 file과 notion으로 따로 조회
         await fetchPortfolioDetailsByType(portfolioId, 'file');
         await fetchPortfolioDetailsByType(portfolioId, 'notion');
     };
+
     useEffect(() => {
         const fetchPortfolios = async () => {
             setIsLoading(true);
@@ -201,45 +219,22 @@ const ProfilePage = () => {
             setShowDeleteModal(false);
         }
     };
-    const handleEditPortfolio = async portfolioId => {
+    const handleEditPortfolio = async PortfolioId => {
         const portfolioToEdit = portfolioList.find(
-            portfolio => portfolio.PortfolioId === portfolioId,
+            portfolio => portfolio.PortfolioId === PortfolioId,
         );
         if (portfolioToEdit) {
             const isExistedPortfolio = portfolioToEdit.isExistedPortfolio;
             const editUrl = isExistedPortfolio
-                ? `/profile/useportfolio/${portfolioId}`
-                : `/profile/makeportfolio/${portfolioId}`;
+                ? `/profile/useportfolio/${PortfolioId}`
+                : `/profile/makeportfolio/${PortfolioId}`;
 
             navigate(editUrl);
-
-            if (isExistedPortfolio) {
-                let portfolioType = '';
-
-                if (portfolioToEdit.fileUri && portfolioToEdit.notionUri) {
-                    portfolioType = 'hybrid';
-                } else if (portfolioToEdit.fileUri) {
-                    portfolioType = 'file';
-                } else if (portfolioToEdit.notionUri) {
-                    portfolioType = 'notion';
-                }
-
-                if (portfolioType) {
-                    const updatedPortfolio = await getExistPortfolio(
-                        portfolioId,
-                        portfolioType,
-                    );
-
-                    setPortfolioDetails(prevDetails => ({
-                        ...prevDetails,
-                        [portfolioId]: updatedPortfolio.data,
-                    }));
-                } else {
-                    console.error(
-                        'Portfolio type is undefined, skipping API call.',
-                    );
-                }
-            }
+            const updatedPortfolio = await fetchPortfolioDetails(PortfolioId);
+            setPortfolioDetails(prevDetails => ({
+                ...prevDetails,
+                [PortfolioId]: updatedPortfolio.data,
+            }));
         }
     };
     useEffect(() => {
