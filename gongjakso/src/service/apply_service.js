@@ -132,6 +132,7 @@ export const getMyRecruitingTeam = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
+        console.log(response);
         return response?.data;
     } catch (error) {
         console.log(error);
