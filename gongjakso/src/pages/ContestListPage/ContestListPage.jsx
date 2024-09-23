@@ -15,7 +15,7 @@ const ContestListPage = () => {
     const [banners, setBanners] = useState([]);
     const [links, setLinks] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
-    const [sortBy, setSortBy] = useState('VIEW');
+    const [sortBy, setSortBy] = useState('createdAt');
 
     const options = ['전체', '최신순', '조회순'];
 
@@ -85,11 +85,11 @@ const ContestListPage = () => {
 
     const handleSelectChange = selectedValue => {
         if (selectedValue === '조회순') {
-            setSortBy('VIEW');
+            setSortBy('scrap');
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
-            setSortBy('VIEW');
+            setSortBy('scrap');
         }
     };
 

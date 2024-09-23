@@ -25,7 +25,6 @@ export const getContestTeamList = async (
     sortBy,
 ) => {
     const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sortAt=${sortBy}`;
-    // const reqURL = `contest/${id}/team/list?province=서울&district=강남구&page=0&size=6&sort=`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
@@ -139,7 +138,7 @@ export const getContestPosts = async (
     selectedTownData,
     searchKeyword,
 ) => {
-    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sortAt=scrapCount`;
+    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sortAt=${sort}`;
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
             headers: {
