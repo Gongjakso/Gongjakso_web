@@ -32,28 +32,28 @@ export const TitleWrapper = styled.div`
 `;
 
 export const TitleWrapper1 = styled(TitleWrapper)`
-    gap: 3px;
+    gap: 7px;
 `;
 
 export const Title = styled.span`
     font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${({ theme }) => theme.fontSize.xxlg};
     font-weight: 900;
-    line-height: 30px;
+    line-height: 35px;
     text-align: center;
     color: #212121;
 `;
 
 export const SubTitle = styled.span`
     font-family: 'PreRegular';
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 600;
     text-align: center;
     color: #7b7b7b;
 `;
 
 export const Title1 = styled(Title)`
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: ${({ theme }) => theme.fontSize.xl};
 `;
 export const LoginBtn = styled.div`
     margin-top: 5rem;
@@ -63,13 +63,15 @@ export const LoginBtn = styled.div`
     text-align: center;
     align-items: center;
     justify-content: center;
-    width: 22rem;
-    height: 4rem;
+    width: 25rem;
+    position: absolute;
+    top: 0;
+    height: 4.5rem;
     border-radius: 15px;
     background: ${({ theme }) => theme.box1};
     font-family: 'PreMedium';
     color: white;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 700;
     line-height: 21.48px;
     text-align: center;
@@ -90,8 +92,8 @@ export const PageImg = styled.div`
     width: 82.8rem;
     height: 59.7rem;
     position: absolute;
-    margin-top: 4rem;
-    transform: scale(0.7);
+    margin-top: 5rem;
+    transform: scale(0.9);
     background-repeat: no-repeat;
 `;
 
@@ -100,16 +102,18 @@ export const ContestImg = styled.div`
     width: 38rem;
     height: 25rem;
     position: absolute;
+    margin-top: 1rem;
     right: 0;
     background-repeat: no-repeat;
-    transform: scale(0.9);
 `;
 
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    height: 58rem;
+    height: 80rem;
+    width: 100%;
     padding: 0;
     position: relative;
 `;
@@ -117,9 +121,9 @@ export const Section = styled.div`
 export const Section1 = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 66rem;
-    height: 35rem;
-    padding: 2rem 0;
+    width: 77rem;
+    height: 40rem;
+    padding: 4rem 0;
     flex-direction: row;
     position: relative;
 `;
@@ -131,23 +135,24 @@ export const Bubble = styled.div`
     text-align: center;
     width: 31rem;
     height: 5.8rem;
-    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-size: ${({ theme }) => theme.fontSize.lg};
     padding-top: 15px;
-    transform: scale(0.8);
     background-repeat: no-repeat;
     background: url(${leftBubble});
+    font-weight: 600;
 `;
 
 export const Text = styled.div`
     display: flex;
-    top: 8rem;
-    left: 14rem;
+    top: 9.5rem;
+    left: 19rem;
     font-family: 'PreMedium';
-    line-height: 25.06px;
+    line-height: 35.06px;
     text-align: right;
-    width: 14rem;
+    font-weight: 600;
+    width: 18rem;
     position: absolute;
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme }) => theme.fontSize.lg};
 `;
 
 export const TextContainer = styled.div`
@@ -160,13 +165,13 @@ export const TeamImg = styled.div`
     display: flex;
     background: url(${teambuilding1});
     position: absolute;
-    top: 12.5rem;
+    top: 14rem;
     background-repeat: no-repeat;
-    left: 18.5rem;
+    left: 24.5rem;
     z-index: 1;
-    width: 16rem;
+    width: 18rem;
     background-size: cover;
-    height: 15rem;
+    height: 16rem;
 `;
 
 export const RightBubble = styled(Bubble)`
@@ -177,18 +182,18 @@ export const RightBubble = styled(Bubble)`
 
 export const RightBubble1 = styled(RightBubble)`
     position: absolute;
-    left: 4.5rem;
-    top: 5.5rem;
+    left: 7.5rem;
+    top: 6.5rem;
 `;
 
 export const Section2 = styled(Section1)`
-    width: 70rem;
-    height: 35rem;
+    width: 80rem;
+    height: 50rem;
     position: relative;
 `;
 
 export const Section3 = styled(Section1)`
-    width: 72rem;
+    width: 80rem;
     height: 40rem;
     margin-bottom: 30rem;
     position: relative;
@@ -212,8 +217,8 @@ export const TextContainer2 = styled(TextContainer)`
 
 export const Bubble1 = styled(Bubble)`
     position: absolute;
-    right: 4.5rem;
-    top: 5.5rem;
+    right: 8.5rem;
+    top: 6.5rem;
 `;
 
 export const Bubble2 = styled(Bubble)`
@@ -224,21 +229,22 @@ export const Bubble2 = styled(Bubble)`
 
 export const Text1 = styled(Text)`
     text-align: left;
+    position: absolute;
     top: 20rem;
-    left: -20px;
-    width: 23rem;
+    left: -110px;
+    width: 30rem;
 `;
 
 export const Text2 = styled(Text)`
     text-align: right;
-    top: 27rem;
-    left: 11rem;
-    width: 30rem;
+    top: 29.5rem;
+    left: 8.5rem;
+    width: 32rem;
 `;
 export const TeamImg2 = styled(TeamImg)`
     background: url(${teambuilding2});
-    width: 16rem;
-    height: 15rem;
+    width: 19rem;
+    height: 17rem;
     background-size: cover;
     left: 17.5rem;
     top: 14.5rem;
@@ -249,16 +255,15 @@ export const PortfolioImg = styled(TeamImg)`
     width: 16rem;
     height: 15rem;
     background-size: cover;
-    left: 21rem;
-    top: 12rem;
-    transform: scale(0.9);
+    left: 26rem;
+    top: 13rem;
 `;
 
 export const PortfolioDetail = styled(ContestImg)`
     background: url(${portfolioPage});
     position: absolute;
     right: 0;
-    top: 6.5rem;
+    top: 9.5rem;
     width: 37.7rem;
     height: 28rem;
 `;

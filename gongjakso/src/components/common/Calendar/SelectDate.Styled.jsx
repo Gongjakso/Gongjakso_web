@@ -25,7 +25,7 @@ export const DropdownButton = styled.button`
 `;
 
 export const CalendarWrapper = styled.div`
-    z-index: 11;
+    z-index: 15;
     position: absolute;
     top: 100%;
     left: 0;

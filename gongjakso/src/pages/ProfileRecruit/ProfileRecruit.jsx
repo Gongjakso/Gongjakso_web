@@ -14,6 +14,7 @@ import {
 } from '../../service/apply_service';
 import { useLocation, useParams } from 'react-router-dom';
 import useCustomNavigate from '../../hooks/useNavigate';
+import { getPostDetail } from '../../service/post_service';
 
 const ProfileRecruit = () => {
     const navigate = useCustomNavigate();
@@ -46,26 +47,12 @@ const ProfileRecruit = () => {
 
     const [recruitTeam, setRecruitTeam] = useState([]);
 
-    const [statuses, setStatuses] = useState(
-        posts?.map(() => 'gray'), // 초기 상태는 모두 'gray'로 설정
-    );
-
-    // 상태를 로컬 스토리지에 저장하는 함수
-    const saveStatusesToLocalStorage = newStatuses => {
-        localStorage.setItem('statuses', JSON.stringify(newStatuses));
-    };
-
-    // 로컬 스토리지에서 상태를 불러오는 함수
-    const loadStatusesFromLocalStorage = () => {
-        const savedStatuses = localStorage.getItem('statuses');
-        /*
-        return savedStatuses
-            ? JSON.parse(savedStatuses)
-            : posts.map(() => 'gray');
-            */
-    };
-
     const [totalMember, setTotalMember] = useState();
+
+    // statuses 상태: 'gray', 'black', 'notSelected', 'selected'
+    const [statuses, setStatuses] = useState([]);
+
+    const [recruitTotalMember, setRecruitTotalMember] = useState();
 
     useEffect(() => {
         const id = contestData?.id;
@@ -73,146 +60,64 @@ const ProfileRecruit = () => {
         getMyRecruitingTeam(id).then(response => {
             setPosts(response?.data); // 지원자 리스트 설정
             setTotalMember(response?.data.length);
-            // 응답 후에 statuses 배열을 상태에 맞게 초기화
-            const fetchedStatuses = response?.data.map(applicant => {
+
+            // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
+            const initialStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
-                    return 'gray'; // COMPLETED는 gray로 설정
+                    return 'gray'; // 초기 상태
                 } else if (applicant.status === 'ACCEPTED') {
-                    return 'selected'; // 합류 완료 상태
+                    return 'selected'; // 합류 완료
                 } else if (applicant.status === 'REJECTED') {
-                    return 'notSelected'; // 미선발 상태
+                    return 'notSelected'; // 미선발
                 } else {
-                    return 'gray'; // 기본 상태는 gray
+                    return 'gray';
                 }
             });
-
-            const savedStatuses = loadStatusesFromLocalStorage();
-
-            // 로컬 스토리지와 서버 응답의 길이가 다르면 서버의 상태로 초기화
-            if (
-                savedStatuses &&
-                savedStatuses.length === response?.data.length
-            ) {
-                setStatuses(savedStatuses);
-            } else {
-                setStatuses(fetchedStatuses);
-                saveStatusesToLocalStorage(fetchedStatuses); // 초기 상태 저장
-            }
+            setStatuses(initialStatuses);
         });
     }, [contestData]);
 
-    const handleBoxClick = async index => {
+    const handleBoxClick = index => {
         const newStatuses = [...statuses];
-        const applyId = posts[index]?.applyId;
-
-        if (!applyId) {
-            console.error('applyId가 유효하지 않습니다.');
-            return;
-        }
-
-        // 상태 변경: 'gray'에서 'black' 또는 'black'에서 'gray'
+        // 'gray'와 'black' 상태 토글
         newStatuses[index] = newStatuses[index] === 'gray' ? 'black' : 'gray';
         setStatuses(newStatuses);
-
-        try {
-            // 서버로 상태 변경 요청을 전송 (ACCEPTED 또는 REJECTED로 전환)
-            const response = await patchApply(
-                applyId,
-                newStatuses[index] === 'black' ? 'ACCEPTED' : 'REJECTED',
-            );
-
-            // 변경된 후 다시 서버에서 상태를 받아와 COMPLETED는 gray로 처리
-            const id = contestData?.id;
-            getMyRecruitingTeam(id).then(response => {
-                const updatedStatuses = response?.data.map(applicant => {
-                    if (applicant.status === 'COMPLETED') {
-                        return 'gray'; // COMPLETED는 gray로 설정
-                    } else if (applicant.status === 'ACCEPTED') {
-                        return 'selected'; // 합류 완료 상태
-                    } else if (applicant.status === 'REJECTED') {
-                        return 'notSelected'; // 미선발 상태
-                    } else {
-                        return 'gray'; // 기본 상태는 gray
-                    }
-                });
-                setStatuses(updatedStatuses);
-            });
-        } catch (error) {}
-
-        saveStatusesToLocalStorage(newStatuses); // 로컬 스토리지에 상태 저장
     };
 
     const handleNotSelectedClick = async () => {
-        const newStatuses = statuses.map(status =>
-            status === 'black' ? 'notSelected' : status,
-        );
-        setStatuses(newStatuses);
-        saveStatusesToLocalStorage(newStatuses); // 상태 저장
-
-        // 선택된 지원자들을 'REJECTED' 상태로 업데이트
-        const selectedApplicants = posts.filter(
-            (_, i) => statuses[i] === 'black',
-        );
-        for (const applicant of selectedApplicants) {
-            try {
-                await patchApply(applicant.applyId, 'REJECTED');
-            } catch (error) {
-                console.log('미선발 상태 업데이트 중 에러:', error);
+        // 선택된 지원자들에 대해 서버에 상태 업데이트 요청
+        const updatedStatuses = [...statuses];
+        for (let i = 0; i < statuses.length; i++) {
+            if (statuses[i] === 'black') {
+                try {
+                    const applyId = posts[i].applyId;
+                    await patchApply(applyId, 'REJECTED');
+                    updatedStatuses[i] = 'notSelected';
+                } catch (error) {
+                    console.error('미선발 상태 업데이트 중 에러:', error);
+                }
             }
         }
+        setStatuses(updatedStatuses);
     };
 
     const handleSelectedClick = async () => {
-        const newStatuses = statuses.map(status =>
-            status === 'black' ? 'selected' : status,
-        );
-        setStatuses(newStatuses);
-        saveStatusesToLocalStorage(newStatuses); // 상태 저장
-
-        // 선택된 지원자들을 'ACCEPTED' 상태로 업데이트
-        const selectedApplicants = posts.filter(
-            (_, i) => statuses[i] === 'black',
-        );
-        for (const applicant of selectedApplicants) {
-            try {
-                await patchApply(applicant.applyId, 'ACCEPTED');
-                alert(`${applicant.memberName}님이 합류되었습니다.`);
-            } catch (error) {
-                console.log('합류 상태 업데이트 중 에러:', error);
+        // 선택된 지원자들에 대해 서버에 상태 업데이트 요청
+        const updatedStatuses = [...statuses];
+        for (let i = 0; i < statuses.length; i++) {
+            if (statuses[i] === 'black') {
+                try {
+                    const applyId = posts[i].applyId;
+                    await patchApply(applyId, 'ACCEPTED');
+                    updatedStatuses[i] = 'selected';
+                } catch (error) {
+                    console.error('합류 상태 업데이트 중 에러:', error);
+                }
             }
         }
+        setStatuses(updatedStatuses);
     };
 
-    useEffect(() => {
-        setTotalPage(1); // 페이지 총 개수 설정
-        setRecruitTeam(contestData); // 모집 팀 정보 설정
-        const id = contestData?.id;
-        getMyRecruitingTeam(id).then(response => {
-            setPosts(response?.data); // 지원자 리스트 설정
-
-            // 서버에서 상태 정보를 받아서 statuses 배열 초기화
-            const fetchedStatuses = response?.data.map(applicant => {
-                return applicant.status === 'ACCEPTED'
-                    ? 'selected'
-                    : 'notSelected';
-            });
-
-            setStatuses(fetchedStatuses); // 서버에서 가져온 상태로 설정
-        });
-    }, [contestData]);
-
-    const loadApplyList = page => {
-        // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
-        setPage(page);
-    };
-
-    const ClickOpen = (id, state) => {
-        if (state === '미열람') {
-            patchOpen(id);
-        }
-    };
-
-    // 현재상태 버튼 -> 체크박스 추가(수정 전)
     const handleClick = (index, applyId) => {
         const newData = [...posts]; // 데이터 복사
         const dataIndex = newData.findIndex(item => item.applyId === applyId);
@@ -235,19 +140,55 @@ const ProfileRecruit = () => {
         return `${year}.${month}.${day}`;
     };
 
+    useEffect(() => {
+        setTotalPage(1); // 페이지 총 개수 설정
+        setRecruitTeam(contestData); // 모집 팀 정보 설정
+        const id = contestData?.id;
+        getMyRecruitingTeam(id).then(response => {
+            setPosts(response?.data); // 지원자 리스트 설정
+            // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
+            const initialStatuses = response?.data.map(applicant => {
+                if (applicant.status === 'COMPLETED') {
+                    return 'gray'; // 초기 상태
+                } else if (applicant.status === 'ACCEPTED') {
+                    return 'selected'; // 합류 완료
+                } else if (applicant.status === 'REJECTED') {
+                    return 'notSelected'; // 미선발
+                } else {
+                    return 'gray';
+                }
+            });
+            setStatuses(initialStatuses);
+        });
+        getPostDetail(contestData?.contest_id, contestData?.id).then(res => {
+            setRecruitTotalMember(res?.data.total_count);
+        });
+    }, [contestData]);
+
+    const loadApplyList = page => {
+        // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
+        setPage(page);
+    };
+
+    const ClickOpen = (id, state) => {
+        if (state === '미열람') {
+            patchOpen(id);
+        }
+    };
+
     return (
         <div>
             {finish ? (
                 <MyPageTeam
                     teamCase={teamCase[0]}
                     CloseModal={setFinish}
-                    id={postId}
+                    id={contestData}
                 />
             ) : extend ? (
                 <MyPageTeam
                     teamCase={teamCase[1]}
                     CloseModal={setExtend}
-                    id={postId}
+                    id={contestData}
                 />
             ) : cancel ? (
                 <MyPageTeam
@@ -283,7 +224,7 @@ const ProfileRecruit = () => {
                                 {formatDate(recruitTeam?.finished_at)}
                             </S.InsideDetail>
                             <S.InsideDetail>
-                                모집인원 | {recruitTeam?.recruit_part?.length}
+                                모집인원 | {recruitTotalMember}
                             </S.InsideDetail>
                         </S.DetailGlobal>
                     </S.Border>
@@ -293,8 +234,7 @@ const ProfileRecruit = () => {
                                 <S.InsideTitle $title={'false'}>
                                     현재 모집 현황
                                     <S.TagNUM>
-                                        {totalMember}/
-                                        {contestData?.recruit_part.length}
+                                        {totalMember}/{recruitTotalMember}
                                     </S.TagNUM>
                                 </S.InsideTitle>
                             </S.DetailGlobal2>
@@ -302,11 +242,9 @@ const ProfileRecruit = () => {
                             {/* true: 프로젝트 / false: 공모전 */}
                             <S.Postcheck
                                 onClick={() => {
-                                    if (recruitTeam?.postType) {
-                                        navigate(`/project/${id}`);
-                                    } else {
-                                        navigate(`/contest/${id}`);
-                                    }
+                                    navigate(
+                                        `/contest/${recruitTeam?.contest_id}/team/${recruitTeam?.id}`,
+                                    );
                                 }}
                             >
                                 공고 보기
