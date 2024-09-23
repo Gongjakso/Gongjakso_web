@@ -11,8 +11,8 @@ const SelectDate = ({ onChange, value, text }) => {
 
     useEffect(() => {
         const today = moment().format('YYYY-MM-DD');
-        // setNowDate(today);
-    }, []);
+        console.log(isOpen);
+    }, [isOpen]);
 
     const handleToggleCalendar = () => {
         setIsOpen(!isOpen);

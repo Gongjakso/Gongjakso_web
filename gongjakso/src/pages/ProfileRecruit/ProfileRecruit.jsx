@@ -14,6 +14,7 @@ import {
 } from '../../service/apply_service';
 import { useLocation, useParams } from 'react-router-dom';
 import useCustomNavigate from '../../hooks/useNavigate';
+import { getPostDetail } from '../../service/post_service';
 
 const ProfileRecruit = () => {
     const navigate = useCustomNavigate();
@@ -46,6 +47,7 @@ const ProfileRecruit = () => {
 
     const [recruitTeam, setRecruitTeam] = useState([]);
 
+    const [totalMember, setTotalMember] = useState();
     const [statuses, setStatuses] = useState(
         posts?.map(() => 'gray'), // 초기 상태는 모두 'gray'로 설정
     );
@@ -65,7 +67,7 @@ const ProfileRecruit = () => {
             */
     };
 
-    const [totalMember, setTotalMember] = useState();
+    const [recruitTotalMember, setRecruitTotalMember] = useState();
 
     useEffect(() => {
         const id = contestData?.id;
@@ -189,7 +191,6 @@ const ProfileRecruit = () => {
         const id = contestData?.id;
         getMyRecruitingTeam(id).then(response => {
             setPosts(response?.data); // 지원자 리스트 설정
-
             // 서버에서 상태 정보를 받아서 statuses 배열 초기화
             const fetchedStatuses = response?.data.map(applicant => {
                 return applicant.status === 'ACCEPTED'
@@ -198,6 +199,9 @@ const ProfileRecruit = () => {
             });
 
             setStatuses(fetchedStatuses); // 서버에서 가져온 상태로 설정
+        });
+        getPostDetail(contestData?.contest_id, contestData?.id).then(res => {
+            setRecruitTotalMember(res?.data.total_count);
         });
     }, [contestData]);
 
@@ -212,6 +216,7 @@ const ProfileRecruit = () => {
         }
     };
 
+    // console.log(recruitTeam);
     // 현재상태 버튼 -> 체크박스 추가(수정 전)
     const handleClick = (index, applyId) => {
         const newData = [...posts]; // 데이터 복사
@@ -241,13 +246,13 @@ const ProfileRecruit = () => {
                 <MyPageTeam
                     teamCase={teamCase[0]}
                     CloseModal={setFinish}
-                    id={postId}
+                    id={contestData}
                 />
             ) : extend ? (
                 <MyPageTeam
                     teamCase={teamCase[1]}
                     CloseModal={setExtend}
-                    id={postId}
+                    id={contestData}
                 />
             ) : cancel ? (
                 <MyPageTeam
@@ -283,7 +288,7 @@ const ProfileRecruit = () => {
                                 {formatDate(recruitTeam?.finished_at)}
                             </S.InsideDetail>
                             <S.InsideDetail>
-                                모집인원 | {recruitTeam?.recruit_part?.length}
+                                모집인원 | {recruitTotalMember}
                             </S.InsideDetail>
                         </S.DetailGlobal>
                     </S.Border>
@@ -293,8 +298,7 @@ const ProfileRecruit = () => {
                                 <S.InsideTitle $title={'false'}>
                                     현재 모집 현황
                                     <S.TagNUM>
-                                        {totalMember}/
-                                        {contestData?.recruit_part.length}
+                                        {totalMember}/{recruitTotalMember}
                                     </S.TagNUM>
                                 </S.InsideTitle>
                             </S.DetailGlobal2>
@@ -302,11 +306,9 @@ const ProfileRecruit = () => {
                             {/* true: 프로젝트 / false: 공모전 */}
                             <S.Postcheck
                                 onClick={() => {
-                                    if (recruitTeam?.postType) {
-                                        navigate(`/project/${id}`);
-                                    } else {
-                                        navigate(`/contest/${id}`);
-                                    }
+                                    navigate(
+                                        `/contest/${recruitTeam?.contest_id}/team/${recruitTeam?.id}`,
+                                    );
                                 }}
                             >
                                 공고 보기

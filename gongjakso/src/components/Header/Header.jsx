@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logoImage from '../../assets/images/logo.svg';
+import logoImage from '../../assets/images/logo2.svg';
 import * as S from './Header.Styled';
 import Bubble from './Bubble';
 
