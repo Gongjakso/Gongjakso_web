@@ -20,17 +20,17 @@ import {
 const MAX_PORTFOLIOS = 3;
 
 const ProfilePage = () => {
-    const [data, setProfileData] = useState(); // 프로필 내용
+    const [data, setProfileData] = useState();
     const [postContent1, setPostContent1] = useState();
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
-    const [showModal, setShowModal] = useState(false); // 모달 상태
-    const [portfolioDetails, setPortfolioDetails] = useState({}); // 상세정보 저장
+    const [showModal, setShowModal] = useState(false);
+    const [portfolioDetails, setPortfolioDetails] = useState({});
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
     const [selectedPortfolioName, setSelectedPortfolioName] = useState('');
-    const [selectedPortfolioType, setSelectedPortfolioType] = useState(''); // 타입 저장
-    const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+    const [selectedPortfolioType, setSelectedPortfolioType] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [portfolioExists, setPortfolioExists] = useState(false);
     const [portfolioList, setPortfolioList] = useState([]);
@@ -54,7 +54,7 @@ const ProfilePage = () => {
             fetchPortfolioDetailsByType(
                 selectedPortfolioId,
                 selectedPortfolioType,
-            ); // 타입에 맞게 상세 정보 불러오기
+            );
         }
     }, [selectedPortfolioId, selectedPortfolioType]);
 
@@ -70,12 +70,11 @@ const ProfilePage = () => {
                 setPortfolioDetails(prevState => ({
                     ...prevState,
                     [portfolioId]: {
-                        ...prevState[portfolioId], // 기존 데이터 유지
-                        [type]: dataType, // 현재 타입(file 또는 notion)의 데이터 추가
+                        ...prevState[portfolioId],
+                        [type]: dataType,
                     },
                 }));
             }
-            console.log('Portfolio Details Updated:', portfolioDetails);
         } catch (error) {
             console.error('Error fetching portfolio details by type:', error);
         }
@@ -101,7 +100,6 @@ const ProfilePage = () => {
                     portfolios.forEach(async portfolio => {
                         if (portfolio.isExistedPortfolio) {
                             try {
-                                // 포트폴리오 ID로 상세 정보를 먼저 조회
                                 const details = fetchPortfolioDetails(
                                     portfolio.PortfolioId,
                                 );
@@ -109,7 +107,6 @@ const ProfilePage = () => {
                                 if (details && details.data) {
                                     const { fileUri, notionUri } = details.data;
 
-                                    // 데이터에서 notionUri와 fileUri 존재 여부에 따라 조건 분기
                                     if (fileUri && notionUri) {
                                         setPortfolioDetails(prevState => ({
                                             ...prevState,
@@ -169,7 +166,7 @@ const ProfilePage = () => {
     const handleDeletePortfolio = (portfolioId, portfolioName, type) => {
         setSelectedPortfolioId(portfolioId);
         setSelectedPortfolioName(portfolioName);
-        setSelectedPortfolioType(type); // 타입 설정
+        setSelectedPortfolioType(type);
         setShowDeleteModal(true);
     };
 
@@ -185,17 +182,14 @@ const ProfilePage = () => {
     const confirmDeleteByType = async () => {
         try {
             if (!selectedPortfolioType) {
-                // isExisted가 false인 경우 deletePortfolio 사용
                 await deletePortfolio(selectedPortfolioId);
             } else {
-                // isExisted가 true인 경우 deleteExistPortfolio 사용
                 await deleteExistPortfolio(
                     selectedPortfolioId,
                     selectedPortfolioType,
                 );
             }
 
-            // 삭제 후 리스트에서 해당 포트폴리오 제거
             setPortfolioList(prevPortfolios =>
                 prevPortfolios.filter(
                     portfolio => portfolio.PortfolioId !== selectedPortfolioId,
@@ -204,7 +198,7 @@ const ProfilePage = () => {
         } catch (error) {
             console.error('Error deleting portfolio:', error);
         } finally {
-            setShowDeleteModal(false); // 모달 닫기
+            setShowDeleteModal(false);
         }
     };
     const handleEditPortfolio = async portfolioId => {
@@ -217,27 +211,19 @@ const ProfilePage = () => {
                 ? `/profile/useportfolio/${portfolioId}`
                 : `/profile/makeportfolio/${portfolioId}`;
 
-            // 수정 페이지로 이동
             navigate(editUrl);
 
-            // isExisted가 true인 경우에만 데이터를 불러옵니다.
             if (isExistedPortfolio) {
                 let portfolioType = '';
 
-                // fileUri와 notionUri가 둘 다 존재하면 hybrid로 설정
                 if (portfolioToEdit.fileUri && portfolioToEdit.notionUri) {
                     portfolioType = 'hybrid';
-                }
-                // fileUri만 존재하면 file로 설정
-                else if (portfolioToEdit.fileUri) {
+                } else if (portfolioToEdit.fileUri) {
                     portfolioType = 'file';
-                }
-                // notionUri만 존재하면 notion으로 설정
-                else if (portfolioToEdit.notionUri) {
+                } else if (portfolioToEdit.notionUri) {
                     portfolioType = 'notion';
                 }
 
-                // portfolioType이 설정되지 않았다면 요청을 보내지 않음
                 if (portfolioType) {
                     const updatedPortfolio = await getExistPortfolio(
                         portfolioId,
@@ -294,8 +280,6 @@ const ProfilePage = () => {
                         <S.SubTitle>나의 포트폴리오</S.SubTitle>
 
                         {portfolioList.flatMap(portfolio => {
-                            console.log('Portfolio List Item:', portfolio);
-                            console.log('Portfolio Details:', portfolioDetails);
                             const notionUri =
                                 portfolioDetails[portfolio.PortfolioId]?.notion;
                             const fileUri =
