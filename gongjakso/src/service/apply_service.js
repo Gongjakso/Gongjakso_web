@@ -13,24 +13,23 @@ export const getRecruitTeam = async post_id => {
     }
 };
 
-export const patchExtension = async (post_id, newdate) => {
-    const reqURL = `apply/${post_id}/extension`;
+export const patchExtension = async (contest_id, team_id, newdate) => {
+    const reqURL = `contest/${contest_id}/team/${team_id}/extend-recruit?extend-date=${newdate}`;
 
     try {
-        const response = await axiosInstance.patch(reqURL, {
-            finishDate: newdate,
-        });
+        const response = await axiosInstanceV2.patch(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);
     }
 };
 
-export const patchFinish = async post_id => {
-    const reqURL = `apply/${post_id}/close`;
+//모집 마감
+export const patchFinish = async (contest_id, team_id) => {
+    const reqURL = `contest/${contest_id}/team/${team_id}/close-recruit`;
 
     try {
-        const response = await axiosInstance.patch(reqURL);
+        const response = await axiosInstanceV2.patch(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);

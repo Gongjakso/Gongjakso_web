@@ -23,6 +23,7 @@ export const ItemList = styled.ul`
     align-items: center;
 `;
 export const logo = styled.div`
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
