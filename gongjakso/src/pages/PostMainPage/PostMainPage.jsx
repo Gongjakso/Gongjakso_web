@@ -148,7 +148,7 @@ const PostMainPage = () => {
     const handleSelectChange = selectedValue => {
         //선택한 정렬 방식으로 반환
         if (selectedValue === '인기순') {
-            setSortBy('scrapCount');
+            setSortBy('scrap');
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
