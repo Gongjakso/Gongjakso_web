@@ -122,7 +122,7 @@ export const Section1 = styled.div`
     display: flex;
     justify-content: space-between;
     width: 77rem;
-    height: 40rem;
+    height: 45rem;
     padding: 4rem 0;
     flex-direction: row;
     position: relative;
@@ -188,7 +188,7 @@ export const RightBubble1 = styled(RightBubble)`
 
 export const Section2 = styled(Section1)`
     width: 80rem;
-    height: 50rem;
+    height: 45rem;
     position: relative;
 `;
 
