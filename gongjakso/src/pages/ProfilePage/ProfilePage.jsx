@@ -12,7 +12,7 @@ import {
 import SelectPortfolio from '../../features/modal/SelectPortfolio';
 import {
     getAllPortfolio,
-    deletePortfolio, // Assuming you have a service for deleting portfolios
+    deletePortfolio,
     getExistPortfolio,
     deleteExistPortfolio,
 } from '../../service/portfolio_service';
@@ -29,6 +29,7 @@ const ProfilePage = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
     const [selectedPortfolioName, setSelectedPortfolioName] = useState('');
+    const [selectedPortfolioType, setSelectedPortfolioType] = useState(''); // 타입 저장
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
     const navigate = useNavigate();
     const [portfolioExists, setPortfolioExists] = useState(false);
@@ -48,51 +49,114 @@ const ProfilePage = () => {
             setPostContent3(response?.data?.content);
         });
     }, []);
-
     useEffect(() => {
-        if (selectedPortfolioId) {
-            fetchPortfolioDetails(selectedPortfolioId); // 포트폴리오가 선택되면 상세 정보 불러오기
+        if (selectedPortfolioId && selectedPortfolioType) {
+            fetchPortfolioDetailsByType(
+                selectedPortfolioId,
+                selectedPortfolioType,
+            ); // 타입에 맞게 상세 정보 불러오기
         }
-    }, [selectedPortfolioId]);
+    }, [selectedPortfolioId, selectedPortfolioType]);
 
-    const fetchPortfolioDetails = async portfolioId => {
+    const fetchPortfolioDetailsByType = async (portfolioId, type) => {
         try {
-            const details = await getExistPortfolio(portfolioId);
+            const details = await getExistPortfolio(portfolioId, type);
             if (details && details.data) {
+                const dataType =
+                    type === 'file'
+                        ? details.data.data.fileUri
+                        : details.data.data.notionUri;
+
                 setPortfolioDetails(prevState => ({
                     ...prevState,
-                    [portfolioId]: details.data, // ID별로 저장
+                    [portfolioId]: {
+                        ...prevState[portfolioId], // 기존 데이터 유지
+                        [type]: dataType, // 현재 타입(file 또는 notion)의 데이터 추가
+                    },
                 }));
             }
+            console.log('Portfolio Details Updated:', portfolioDetails);
         } catch (error) {
-            console.error('Error fetching portfolio details:', error);
-        } finally {
-            setIsLoading(false); // 데이터 로드 완료
+            console.error('Error fetching portfolio details by type:', error);
         }
     };
-
+    const fetchPortfolioDetails = async portfolioId => {
+        // 'hybrid' 대신 각각 file과 notion으로 따로 조회
+        await fetchPortfolioDetailsByType(portfolioId, 'file');
+        await fetchPortfolioDetailsByType(portfolioId, 'notion');
+    };
     useEffect(() => {
         const fetchPortfolios = async () => {
-            setIsLoading(true); // 로딩 시작
+            setIsLoading(true);
             try {
                 const response = await getAllPortfolio();
                 const portfolios = response?.data?.data;
-
                 if (portfolios && portfolios.length > 0) {
                     const isAnyRegistered = portfolios.some(
                         portfolio => portfolio.isRegistered,
                     );
                     setPortfolioExists(isAnyRegistered);
                     setPortfolioList(portfolios);
+                    console.log(portfolios);
+                    portfolios.forEach(async portfolio => {
+                        if (portfolio.isExistedPortfolio) {
+                            try {
+                                // 포트폴리오 ID로 상세 정보를 먼저 조회
+                                const details = fetchPortfolioDetails(
+                                    portfolio.PortfolioId,
+                                );
 
-                    portfolios.forEach(portfolio => {
-                        fetchPortfolioDetails(portfolio.PortfolioId);
+                                if (details && details.data) {
+                                    const { fileUri, notionUri } = details.data;
+
+                                    // 데이터에서 notionUri와 fileUri 존재 여부에 따라 조건 분기
+                                    if (fileUri && notionUri) {
+                                        setPortfolioDetails(prevState => ({
+                                            ...prevState,
+                                            [portfolio.PortfolioId]: {
+                                                ...prevState[
+                                                    portfolio.PortfolioId
+                                                ],
+                                                hybrid: details.data,
+                                            },
+                                        }));
+                                    } else if (fileUri) {
+                                        setPortfolioDetails(prevState => ({
+                                            ...prevState,
+                                            [portfolio.PortfolioId]: {
+                                                ...prevState[
+                                                    portfolio.PortfolioId
+                                                ],
+                                                file: fileUri,
+                                            },
+                                        }));
+                                    } else if (notionUri) {
+                                        setPortfolioDetails(prevState => ({
+                                            ...prevState,
+                                            [portfolio.PortfolioId]: {
+                                                ...prevState[
+                                                    portfolio.PortfolioId
+                                                ],
+                                                notion: notionUri,
+                                            },
+                                        }));
+                                    }
+                                }
+                            } catch (error) {
+                                console.error(
+                                    'Error fetching portfolio details:',
+                                    error,
+                                );
+                            }
+                        }
                     });
                 } else {
                     setPortfolioExists(false);
                 }
             } catch (error) {
                 console.error('Error fetching portfolios:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -102,11 +166,13 @@ const ProfilePage = () => {
     const openPortfolioModal = () => setShowModal(true);
     const closePortfolioModal = () => setShowModal(false);
 
-    const handleDeletePortfolio = (portfolioId, portfolioName) => {
+    const handleDeletePortfolio = (portfolioId, portfolioName, type) => {
         setSelectedPortfolioId(portfolioId);
         setSelectedPortfolioName(portfolioName);
+        setSelectedPortfolioType(type); // 타입 설정
         setShowDeleteModal(true);
     };
+
     const extractFileName = fileUri => {
         if (fileUri) {
             const fileName = fileUri.split('/').pop();
@@ -116,21 +182,29 @@ const ProfilePage = () => {
         return '등록된 파일 없음';
     };
 
-    const confirmDelete = async () => {
+    const confirmDeleteByType = async () => {
         try {
-            await deletePortfolio(selectedPortfolioId);
+            if (!selectedPortfolioType) {
+                // isExisted가 false인 경우 deletePortfolio 사용
+                await deletePortfolio(selectedPortfolioId);
+            } else {
+                // isExisted가 true인 경우 deleteExistPortfolio 사용
+                await deleteExistPortfolio(
+                    selectedPortfolioId,
+                    selectedPortfolioType,
+                );
+            }
+
+            // 삭제 후 리스트에서 해당 포트폴리오 제거
             setPortfolioList(prevPortfolios =>
                 prevPortfolios.filter(
                     portfolio => portfolio.PortfolioId !== selectedPortfolioId,
                 ),
             );
-            if (portfolioList.length === 1) {
-                setPortfolioExists(false);
-            }
         } catch (error) {
             console.error('Error deleting portfolio:', error);
         } finally {
-            setShowDeleteModal(false);
+            setShowDeleteModal(false); // 모달 닫기
         }
     };
     const handleEditPortfolio = async portfolioId => {
@@ -143,16 +217,45 @@ const ProfilePage = () => {
                 ? `/profile/useportfolio/${portfolioId}`
                 : `/profile/makeportfolio/${portfolioId}`;
 
+            // 수정 페이지로 이동
             navigate(editUrl);
 
-            const updatedPortfolio = await getExistPortfolio(portfolioId);
-            setPortfolioDetails(prevDetails => ({
-                ...prevDetails,
-                [portfolioId]: updatedPortfolio.data,
-            }));
+            // isExisted가 true인 경우에만 데이터를 불러옵니다.
+            if (isExistedPortfolio) {
+                let portfolioType = '';
+
+                // fileUri와 notionUri가 둘 다 존재하면 hybrid로 설정
+                if (portfolioToEdit.fileUri && portfolioToEdit.notionUri) {
+                    portfolioType = 'hybrid';
+                }
+                // fileUri만 존재하면 file로 설정
+                else if (portfolioToEdit.fileUri) {
+                    portfolioType = 'file';
+                }
+                // notionUri만 존재하면 notion으로 설정
+                else if (portfolioToEdit.notionUri) {
+                    portfolioType = 'notion';
+                }
+
+                // portfolioType이 설정되지 않았다면 요청을 보내지 않음
+                if (portfolioType) {
+                    const updatedPortfolio = await getExistPortfolio(
+                        portfolioId,
+                        portfolioType,
+                    );
+
+                    setPortfolioDetails(prevDetails => ({
+                        ...prevDetails,
+                        [portfolioId]: updatedPortfolio.data,
+                    }));
+                } else {
+                    console.error(
+                        'Portfolio type is undefined, skipping API call.',
+                    );
+                }
+            }
         }
     };
-
     useEffect(() => {
         if (showModal) {
             document.body.style.cssText = `
@@ -184,31 +287,117 @@ const ProfilePage = () => {
                     <S.MajorTitle>{data?.major}</S.MajorTitle>
                 </S.InfoBox>
                 <S.ProfileImage />
-                {/* <Link to="/teamPortfolio">
-                    <S.PortfolioBox>나의 포트폴리오</S.PortfolioBox>
-                </Link> */}
             </S.TopBox>
             <S.GlobalBox>
                 <S.BoxDetail>
                     <S.SubTitleContainer>
                         <S.SubTitle>나의 포트폴리오</S.SubTitle>
+
                         {portfolioList.flatMap(portfolio => {
+                            console.log('Portfolio List Item:', portfolio);
+                            console.log('Portfolio Details:', portfolioDetails);
                             const notionUri =
-                                portfolioDetails[
-                                    portfolio.PortfolioId
-                                ]?.data.notionUri?.trim();
+                                portfolioDetails[portfolio.PortfolioId]?.notion;
                             const fileUri =
-                                portfolioDetails[portfolio.PortfolioId]?.data
-                                    .fileUri;
-                            const isBasicPortfolio = !notionUri && !fileUri;
+                                portfolioDetails[portfolio.PortfolioId]?.file;
 
                             const components = [];
 
-                            if (isBasicPortfolio) {
-                                components.push('basic');
+                            // isExisted가 true인 경우 데이터 타입별 처리
+                            if (portfolio.isExistedPortfolio) {
+                                if (notionUri) {
+                                    components.push(
+                                        <S.PortfolioContainer
+                                            key={`notion-${portfolio.PortfolioId}`}
+                                        >
+                                            <S.PortfolioTitle>
+                                                노션 링크 등록 중&nbsp;
+                                                <S.LinkDetail>
+                                                    {notionUri}
+                                                </S.LinkDetail>
+                                            </S.PortfolioTitle>
+                                            <S.PortfolioButtons>
+                                                <S.EditPortfolioButton
+                                                    onClick={() =>
+                                                        handleEditPortfolio(
+                                                            portfolio.PortfolioId,
+                                                        )
+                                                    }
+                                                />
+                                                <S.DeletePortfolioButton
+                                                    onClick={() =>
+                                                        handleDeletePortfolio(
+                                                            portfolio.PortfolioId,
+                                                            portfolio.PortfolioName,
+                                                            'notion',
+                                                        )
+                                                    }
+                                                />
+                                            </S.PortfolioButtons>
+                                        </S.PortfolioContainer>,
+                                    );
+                                }
+
+                                if (fileUri) {
+                                    components.push(
+                                        <S.PortfolioContainer
+                                            key={`pdf-${portfolio.PortfolioId}`}
+                                        >
+                                            <S.PortfolioTitle>
+                                                PDF 파일 등록 중&nbsp;
+                                                <S.LinkDetail>
+                                                    {extractFileName(fileUri)}
+                                                </S.LinkDetail>
+                                            </S.PortfolioTitle>
+                                            <S.PortfolioButtons>
+                                                <S.EditPortfolioButton
+                                                    onClick={() =>
+                                                        handleEditPortfolio(
+                                                            portfolio.PortfolioId,
+                                                        )
+                                                    }
+                                                />
+                                                <S.DeletePortfolioButton
+                                                    onClick={() =>
+                                                        handleDeletePortfolio(
+                                                            portfolio.PortfolioId,
+                                                            portfolio.PortfolioName,
+                                                            'file',
+                                                        )
+                                                    }
+                                                />
+                                            </S.PortfolioButtons>
+                                        </S.PortfolioContainer>,
+                                    );
+                                }
                             } else {
-                                if (notionUri) components.push('notion');
-                                if (fileUri) components.push('pdf');
+                                components.push(
+                                    <S.PortfolioContainer
+                                        key={`portfolio-${portfolio.PortfolioId}`}
+                                    >
+                                        <S.PortfolioTitle>
+                                            {portfolio.PortfolioName}
+                                        </S.PortfolioTitle>
+                                        <S.PortfolioButtons>
+                                            <S.EditPortfolioButton
+                                                onClick={() =>
+                                                    handleEditPortfolio(
+                                                        portfolio.PortfolioId,
+                                                    )
+                                                }
+                                            />
+                                            <S.DeletePortfolioButton
+                                                onClick={() =>
+                                                    handleDeletePortfolio(
+                                                        portfolio.PortfolioId,
+                                                        portfolio.PortfolioName,
+                                                        'basic',
+                                                    )
+                                                }
+                                            />
+                                        </S.PortfolioButtons>
+                                    </S.PortfolioContainer>,
+                                );
                             }
 
                             return components;
@@ -221,86 +410,84 @@ const ProfilePage = () => {
                         <S.PortfolioInfo>
                             {portfolioList
                                 .flatMap(portfolio => {
-                                    const components = [];
-
                                     const notionUri =
-                                        portfolioDetails[
-                                            portfolio.PortfolioId
-                                        ]?.data.notionUri?.trim();
+                                        portfolioDetails[portfolio.PortfolioId]
+                                            ?.notion;
                                     const fileUri =
                                         portfolioDetails[portfolio.PortfolioId]
-                                            ?.data.fileUri;
+                                            ?.file;
 
-                                    // 노션 링크가 있을 경우
-                                    if (notionUri) {
-                                        components.push(
-                                            <S.PortfolioContainer
-                                                key={`notion-${portfolio.PortfolioId}`}
-                                            >
-                                                <S.PortfolioTitle>
-                                                    노션 링크 등록 중&nbsp;
-                                                    <S.LinkDetail>
-                                                        {notionUri}
-                                                    </S.LinkDetail>
-                                                </S.PortfolioTitle>
-                                                <S.PortfolioButtons>
-                                                    <S.EditPortfolioButton
-                                                        onClick={() =>
-                                                            handleEditPortfolio(
-                                                                portfolio.PortfolioId,
-                                                            )
-                                                        }
-                                                    />
-                                                    <S.DeletePortfolioButton
-                                                        onClick={() =>
-                                                            handleDeletePortfolio(
-                                                                portfolio.PortfolioId,
-                                                                portfolio.PortfolioName,
-                                                            )
-                                                        }
-                                                    />
-                                                </S.PortfolioButtons>
-                                            </S.PortfolioContainer>,
-                                        );
-                                    }
+                                    const components = [];
 
-                                    // PDF 파일이 있을 경우
-                                    if (fileUri) {
-                                        components.push(
-                                            <S.PortfolioContainer
-                                                key={`pdf-${portfolio.PortfolioId}`}
-                                            >
-                                                <S.PortfolioTitle>
-                                                    PDF 파일 등록 중&nbsp;
-                                                    <S.LinkDetail>
-                                                        {extractFileName(
-                                                            fileUri,
-                                                        )}
-                                                    </S.LinkDetail>
-                                                </S.PortfolioTitle>
-                                                <S.PortfolioButtons>
-                                                    <S.EditPortfolioButton
-                                                        onClick={() =>
-                                                            handleEditPortfolio(
-                                                                portfolio.PortfolioId,
-                                                            )
-                                                        }
-                                                    />
-                                                    <S.DeletePortfolioButton
-                                                        onClick={() =>
-                                                            handleDeletePortfolio(
-                                                                portfolio.PortfolioId,
-                                                                portfolio.PortfolioName,
-                                                            )
-                                                        }
-                                                    />
-                                                </S.PortfolioButtons>
-                                            </S.PortfolioContainer>,
-                                        );
-                                    }
+                                    if (portfolio.isExistedPortfolio) {
+                                        if (notionUri) {
+                                            components.push(
+                                                <S.PortfolioContainer
+                                                    key={`notion-${portfolio.PortfolioId}`}
+                                                >
+                                                    <S.PortfolioTitle>
+                                                        노션 링크 등록 중&nbsp;
+                                                        <S.LinkDetail>
+                                                            {notionUri}
+                                                        </S.LinkDetail>
+                                                    </S.PortfolioTitle>
+                                                    <S.PortfolioButtons>
+                                                        <S.EditPortfolioButton
+                                                            onClick={() =>
+                                                                handleEditPortfolio(
+                                                                    portfolio.PortfolioId,
+                                                                )
+                                                            }
+                                                        />
+                                                        <S.DeletePortfolioButton
+                                                            onClick={() =>
+                                                                handleDeletePortfolio(
+                                                                    portfolio.PortfolioId,
+                                                                    portfolio.PortfolioName,
+                                                                    'notion',
+                                                                )
+                                                            }
+                                                        />
+                                                    </S.PortfolioButtons>
+                                                </S.PortfolioContainer>,
+                                            );
+                                        }
 
-                                    // 노션과 PDF 둘 다 없을 경우
-                                    if (!notionUri && !fileUri) {
+                                        if (fileUri) {
+                                            components.push(
+                                                <S.PortfolioContainer
+                                                    key={`pdf-${portfolio.PortfolioId}`}
+                                                >
+                                                    <S.PortfolioTitle>
+                                                        PDF 파일 등록 중&nbsp;
+                                                        <S.LinkDetail>
+                                                            {extractFileName(
+                                                                fileUri,
+                                                            )}
+                                                        </S.LinkDetail>
+                                                    </S.PortfolioTitle>
+                                                    <S.PortfolioButtons>
+                                                        <S.EditPortfolioButton
+                                                            onClick={() =>
+                                                                handleEditPortfolio(
+                                                                    portfolio.PortfolioId,
+                                                                )
+                                                            }
+                                                        />
+                                                        <S.DeletePortfolioButton
+                                                            onClick={() =>
+                                                                handleDeletePortfolio(
+                                                                    portfolio.PortfolioId,
+                                                                    portfolio.PortfolioName,
+                                                                    'file',
+                                                                )
+                                                            }
+                                                        />
+                                                    </S.PortfolioButtons>
+                                                </S.PortfolioContainer>,
+                                            );
+                                        }
+                                    } else {
                                         components.push(
                                             <S.PortfolioContainer
                                                 key={`portfolio-${portfolio.PortfolioId}`}
@@ -332,7 +519,6 @@ const ProfilePage = () => {
                                     return components;
                                 })
                                 .slice(0, MAX_PORTFOLIOS)}
-                            {/* 최대 3개의 포트폴리오만 표시 */}
                         </S.PortfolioInfo>
                     ) : (
                         <S.NoPortfolio>
@@ -407,7 +593,7 @@ const ProfilePage = () => {
             <DeleteModal
                 showModal={showDeleteModal}
                 closeModal={() => setShowDeleteModal(false)}
-                confirmDelete={confirmDelete}
+                confirmDelete={confirmDeleteByType}
                 title={selectedPortfolioName}
             />
         </div>
