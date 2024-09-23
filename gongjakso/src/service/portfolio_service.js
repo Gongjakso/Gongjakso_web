@@ -107,13 +107,9 @@ export const deletePortfolio = async id => {
 
 // 존재 포트폴리오 delete
 export const deleteExistPortfolio = async (id, type) => {
-    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}?dataType=${type}`;
     try {
-        await axiosInstanceV2.delete(reqURL, {
-            data: {
-                type,
-            },
-        });
+        await axiosInstanceV2.delete(reqURL);
     } catch (error) {
         console.log('Error deleting portfolio:', error);
     }

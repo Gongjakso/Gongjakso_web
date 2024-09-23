@@ -2,8 +2,22 @@ import React from 'react';
 import * as S from './PortfolioModal.Styled';
 import Close from '../../assets/images/Close.svg';
 
-const DeleteModal = ({ showModal, closeModal, confirmDelete, title }) => {
+const DeleteModal = ({ showModal, closeModal, confirmDelete, title, type }) => {
     if (!showModal) return null;
+    console.log('Type received in modal:', type);
+
+    const getDeleteMessage = () => {
+        switch (type) {
+            case 'file':
+                return `선택한 포트폴리오를 삭제하시겠습니까?`;
+            case 'notion':
+                return `선택한 포트폴리오를 삭제하시겠습니까?`;
+            case 'hybrid':
+                return `선택한 포트폴리오를 삭제하시겠습니까?`;
+            default:
+                return `[${title}]를 삭제하시겠습니까?`;
+        }
+    };
 
     return (
         <S.ModalOverlay>
@@ -11,7 +25,7 @@ const DeleteModal = ({ showModal, closeModal, confirmDelete, title }) => {
                 <S.ModalTitle>포트폴리오 삭제</S.ModalTitle>
                 <S.ModalDesc>
                     삭제한 포트폴리오는 복구할 수 없습니다.
-                    <br /> [{title}]을 삭제하시겠습니까?
+                    <br /> {getDeleteMessage()}
                 </S.ModalDesc>
                 <S.DeleteButton onClick={confirmDelete}>
                     삭제하기

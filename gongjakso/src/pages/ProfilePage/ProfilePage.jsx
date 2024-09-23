@@ -114,7 +114,6 @@ const ProfilePage = () => {
                     );
                     setPortfolioExists(isAnyRegistered);
                     setPortfolioList(portfolios);
-                    console.log(portfolios);
                     portfolios.forEach(async portfolio => {
                         if (portfolio.isExistedPortfolio) {
                             try {
@@ -180,12 +179,38 @@ const ProfilePage = () => {
 
     const openPortfolioModal = () => setShowModal(true);
     const closePortfolioModal = () => setShowModal(false);
+    const handleDeletePortfolio = async (portfolioId, portfolioName) => {
+        try {
+            // 포트폴리오의 파일과 노션 데이터를 가져옴
+            const portfolioDetails = await getExistPortfolio(
+                portfolioId,
+                'hybrid',
+            );
+            let type = '';
 
-    const handleDeletePortfolio = (portfolioId, portfolioName, type) => {
-        setSelectedPortfolioId(portfolioId);
-        setSelectedPortfolioName(portfolioName);
-        setSelectedPortfolioType(type);
-        setShowDeleteModal(true);
+            const { fileUri, notionUri } = portfolioDetails.data.data;
+
+            if (fileUri && notionUri) {
+                type = 'hybrid';
+            } else if (fileUri) {
+                type = 'file';
+            } else if (notionUri) {
+                type = 'notion';
+            } else {
+                type = 'basic'; // 파일이나 노션 링크가 없는 경우
+            }
+
+            // 타입 설정
+            console.log('Selected Type:', type);
+            setSelectedPortfolioId(portfolioId);
+            setSelectedPortfolioName(portfolioName);
+            setSelectedPortfolioType(type); // 타입이 정확하게 설정됨
+
+            // 모달 열기
+            setShowDeleteModal(true);
+        } catch (error) {
+            console.error('Error fetching portfolio details:', error);
+        }
     };
 
     const extractFileName = fileUri => {
@@ -199,26 +224,79 @@ const ProfilePage = () => {
 
     const confirmDeleteByType = async () => {
         try {
-            if (!selectedPortfolioType) {
-                await deletePortfolio(selectedPortfolioId);
-            } else {
+            if (
+                selectedPortfolioType === 'file' ||
+                selectedPortfolioType === 'notion'
+            ) {
+                // 파일 또는 노션만 삭제
                 await deleteExistPortfolio(
                     selectedPortfolioId,
                     selectedPortfolioType,
                 );
-            }
 
-            setPortfolioList(prevPortfolios =>
-                prevPortfolios.filter(
-                    portfolio => portfolio.PortfolioId !== selectedPortfolioId,
-                ),
-            );
+                setPortfolioDetails(prevDetails => {
+                    const updatedDetails = { ...prevDetails };
+
+                    if (selectedPortfolioType === 'file') {
+                        // 파일만 삭제
+                        updatedDetails[selectedPortfolioId].file = null;
+                    } else if (selectedPortfolioType === 'notion') {
+                        // 노션만 삭제
+                        updatedDetails[selectedPortfolioId].notion = null;
+                    }
+
+                    // 파일과 노션이 모두 null이면 전체 포트폴리오 삭제
+                    if (
+                        !updatedDetails[selectedPortfolioId].file &&
+                        !updatedDetails[selectedPortfolioId].notion
+                    ) {
+                        delete updatedDetails[selectedPortfolioId];
+                    }
+
+                    return updatedDetails;
+                });
+            } else if (selectedPortfolioType === 'hybrid') {
+                // 하이브리드 타입일 경우, file과 notion을 개별적으로 삭제
+                const { file, notion } = portfolioDetails[selectedPortfolioId];
+
+                if (file) {
+                    await deleteExistPortfolio(selectedPortfolioId, 'file');
+                    setPortfolioDetails(prevDetails => ({
+                        ...prevDetails,
+                        [selectedPortfolioId]: {
+                            ...prevDetails[selectedPortfolioId],
+                            file: null,
+                        },
+                    }));
+                } else if (notion) {
+                    await deleteExistPortfolio(selectedPortfolioId, 'notion');
+                    setPortfolioDetails(prevDetails => ({
+                        ...prevDetails,
+                        [selectedPortfolioId]: {
+                            ...prevDetails[selectedPortfolioId],
+                            notion: null,
+                        },
+                    }));
+                }
+            } else if (selectedPortfolioType === 'basic') {
+                // 기본 포트폴리오 삭제 처리
+                await deletePortfolio(selectedPortfolioId);
+
+                // 포트폴리오 전체 삭제
+                setPortfolioList(prevPortfolios =>
+                    prevPortfolios.filter(
+                        portfolio =>
+                            portfolio.PortfolioId !== selectedPortfolioId,
+                    ),
+                );
+            }
         } catch (error) {
             console.error('Error deleting portfolio:', error);
         } finally {
             setShowDeleteModal(false);
         }
     };
+
     const handleEditPortfolio = async PortfolioId => {
         const portfolioToEdit = portfolioList.find(
             portfolio => portfolio.PortfolioId === PortfolioId,
@@ -574,6 +652,7 @@ const ProfilePage = () => {
                 closeModal={() => setShowDeleteModal(false)}
                 confirmDelete={confirmDeleteByType}
                 title={selectedPortfolioName}
+                type={selectedPortfolioType}
             />
         </div>
     );

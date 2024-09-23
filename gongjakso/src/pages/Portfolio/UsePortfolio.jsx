@@ -117,7 +117,7 @@ const UsePortfolio = () => {
                     'PDF와 노션 링크가 이미 등록되어 있습니다. 더 이상 추가할 수 없습니다.',
                 );
             } else {
-                setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+                // setError('포트폴리오 업로드 중 오류가 발생했습니다.');
             }
             console.error('Error posting portfolio: ', err);
         }
