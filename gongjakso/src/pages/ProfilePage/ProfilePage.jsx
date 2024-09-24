@@ -60,36 +60,39 @@ const ProfilePage = () => {
 
     const fetchPortfolioDetailsByType = async (portfolioId, type) => {
         try {
-            const details = await getExistPortfolio(portfolioId, type);
-            if (details && details.data) {
-                const fileUri = details.data.data.fileUri || null;
-                const notionUri = details.data.data.notionUri || null;
-                if (type === 'file') {
-                    setPortfolioDetails(prevState => ({
-                        ...prevState,
-                        [portfolioId]: {
-                            ...prevState[portfolioId],
-                            file: fileUri,
-                        },
-                    }));
-                } else if (type === 'notion') {
-                    setPortfolioDetails(prevState => ({
-                        ...prevState,
-                        [portfolioId]: {
-                            ...prevState[portfolioId],
-                            notion: notionUri,
-                        },
-                    }));
-                } else if (type === 'hybrid') {
-                    setPortfolioDetails(prevState => ({
-                        ...prevState,
-                        [portfolioId]: {
-                            ...prevState[portfolioId],
-                            file: fileUri,
-                            notion: notionUri,
-                        },
-                    }));
-                }
+            // 파일과 노션을 각각 조회하는 방식으로 변경
+            if (type === 'file' || type === 'hybrid') {
+                const fileDetails = await getExistPortfolio(
+                    portfolioId,
+                    'file',
+                );
+                const fileUri = fileDetails?.data?.data?.fileUri || null;
+
+                // 파일 정보를 상태에 저장
+                setPortfolioDetails(prevState => ({
+                    ...prevState,
+                    [portfolioId]: {
+                        ...prevState[portfolioId],
+                        file: fileUri,
+                    },
+                }));
+            }
+
+            if (type === 'notion' || type === 'hybrid') {
+                const notionDetails = await getExistPortfolio(
+                    portfolioId,
+                    'notion',
+                );
+                const notionUri = notionDetails?.data?.data?.notionUri || null;
+
+                // 노션 정보를 상태에 저장
+                setPortfolioDetails(prevState => ({
+                    ...prevState,
+                    [portfolioId]: {
+                        ...prevState[portfolioId],
+                        notion: notionUri,
+                    },
+                }));
             }
         } catch (error) {
             console.error('Error fetching portfolio details by type:', error);
@@ -97,7 +100,6 @@ const ProfilePage = () => {
     };
 
     const fetchPortfolioDetails = async portfolioId => {
-        // 'hybrid' 대신 각각 file과 notion으로 따로 조회
         await fetchPortfolioDetailsByType(portfolioId, 'file');
         await fetchPortfolioDetailsByType(portfolioId, 'notion');
     };
@@ -114,6 +116,7 @@ const ProfilePage = () => {
                     );
                     setPortfolioExists(isAnyRegistered);
                     setPortfolioList(portfolios);
+                    console.log(portfolios);
                     portfolios.forEach(async portfolio => {
                         if (portfolio.isExistedPortfolio) {
                             try {
@@ -179,32 +182,20 @@ const ProfilePage = () => {
 
     const openPortfolioModal = () => setShowModal(true);
     const closePortfolioModal = () => setShowModal(false);
-    const handleDeletePortfolio = async (portfolioId, portfolioName) => {
+
+    const handleDeletePortfolio = async (
+        portfolioId,
+        portfolioName,
+        clickedType,
+    ) => {
         try {
-            // 포트폴리오의 파일과 노션 데이터를 가져옴
-            const portfolioDetails = await getExistPortfolio(
-                portfolioId,
-                'hybrid',
-            );
-            let type = '';
-
-            const { fileUri, notionUri } = portfolioDetails.data.data;
-
-            if (fileUri && notionUri) {
-                type = 'hybrid';
-            } else if (fileUri) {
-                type = 'file';
-            } else if (notionUri) {
-                type = 'notion';
-            } else {
-                type = 'basic'; // 파일이나 노션 링크가 없는 경우
-            }
+            // 클릭된 타입 확인
+            console.log('Clicked Type:', clickedType);
 
             // 타입 설정
-            console.log('Selected Type:', type);
             setSelectedPortfolioId(portfolioId);
             setSelectedPortfolioName(portfolioName);
-            setSelectedPortfolioType(type); // 타입이 정확하게 설정됨
+            setSelectedPortfolioType(clickedType); // 클릭한 타입을 그대로 사용
 
             // 모달 열기
             setShowDeleteModal(true);
@@ -221,14 +212,15 @@ const ProfilePage = () => {
         }
         return '등록된 파일 없음';
     };
-
     const confirmDeleteByType = async () => {
         try {
+            console.log('Selected Type for Deletion:', selectedPortfolioType);
+
+            // 파일 또는 노션만 삭제
             if (
                 selectedPortfolioType === 'file' ||
                 selectedPortfolioType === 'notion'
             ) {
-                // 파일 또는 노션만 삭제
                 await deleteExistPortfolio(
                     selectedPortfolioId,
                     selectedPortfolioType,
@@ -237,15 +229,14 @@ const ProfilePage = () => {
                 setPortfolioDetails(prevDetails => {
                     const updatedDetails = { ...prevDetails };
 
+                    // 선택된 타입만 삭제
                     if (selectedPortfolioType === 'file') {
-                        // 파일만 삭제
                         updatedDetails[selectedPortfolioId].file = null;
                     } else if (selectedPortfolioType === 'notion') {
-                        // 노션만 삭제
                         updatedDetails[selectedPortfolioId].notion = null;
                     }
 
-                    // 파일과 노션이 모두 null이면 전체 포트폴리오 삭제
+                    // 파일과 노션 모두 삭제되었을 때만 전체 포트폴리오 삭제
                     if (
                         !updatedDetails[selectedPortfolioId].file &&
                         !updatedDetails[selectedPortfolioId].notion
@@ -255,34 +246,9 @@ const ProfilePage = () => {
 
                     return updatedDetails;
                 });
-            } else if (selectedPortfolioType === 'hybrid') {
-                // 하이브리드 타입일 경우, file과 notion을 개별적으로 삭제
-                const { file, notion } = portfolioDetails[selectedPortfolioId];
-
-                if (file) {
-                    await deleteExistPortfolio(selectedPortfolioId, 'file');
-                    setPortfolioDetails(prevDetails => ({
-                        ...prevDetails,
-                        [selectedPortfolioId]: {
-                            ...prevDetails[selectedPortfolioId],
-                            file: null,
-                        },
-                    }));
-                } else if (notion) {
-                    await deleteExistPortfolio(selectedPortfolioId, 'notion');
-                    setPortfolioDetails(prevDetails => ({
-                        ...prevDetails,
-                        [selectedPortfolioId]: {
-                            ...prevDetails[selectedPortfolioId],
-                            notion: null,
-                        },
-                    }));
-                }
             } else if (selectedPortfolioType === 'basic') {
                 // 기본 포트폴리오 삭제 처리
                 await deletePortfolio(selectedPortfolioId);
-
-                // 포트폴리오 전체 삭제
                 setPortfolioList(prevPortfolios =>
                     prevPortfolios.filter(
                         portfolio =>
@@ -381,6 +347,7 @@ const ProfilePage = () => {
                                                         )
                                                     }
                                                 />
+
                                                 <S.DeletePortfolioButton
                                                     onClick={() =>
                                                         handleDeletePortfolio(
@@ -565,6 +532,7 @@ const ProfilePage = () => {
                                                             handleDeletePortfolio(
                                                                 portfolio.PortfolioId,
                                                                 portfolio.PortfolioName,
+                                                                'basic',
                                                             )
                                                         }
                                                     />
