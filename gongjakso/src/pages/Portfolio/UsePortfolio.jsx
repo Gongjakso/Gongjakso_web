@@ -22,23 +22,28 @@ const UsePortfolio = () => {
     useEffect(() => {
         const fetchPortfolio = async () => {
             try {
-                const response = await getExistPortfolio(id);
-                const portfolioData = response?.data.data;
+                // 파일과 노션 링크를 각각 조회
+                const fileResponse = await getExistPortfolio(id, 'file');
+                const notionResponse = await getExistPortfolio(id, 'notion');
 
-                if (portfolioData) {
-                    setSnsLink(portfolioData.notionUri || '');
-                    if (portfolioData.fileUri) {
-                        const fileName = portfolioData.fileUri
-                            .split('/')
-                            .pop()
-                            .split('_')
-                            .pop();
+                const fileData = fileResponse?.data?.data;
+                const notionData = notionResponse?.data?.data;
 
-                        setExistingFile({
-                            name: fileName,
-                            uri: portfolioData.fileUri,
-                        });
-                    }
+                // 파일과 노션 데이터 상태에 저장
+                if (fileData) {
+                    const fileName = fileData.fileUri
+                        .split('/')
+                        .pop()
+                        .split('_')
+                        .pop();
+                    setExistingFile({
+                        name: fileName,
+                        uri: fileData.fileUri,
+                    });
+                }
+
+                if (notionData) {
+                    setSnsLink(notionData.notionUri || '');
                 }
             } catch (error) {
                 console.error(
@@ -62,7 +67,7 @@ const UsePortfolio = () => {
         const selectedFile = e.target.files[0];
         const maxSize = 10 * 1024 * 1024;
 
-        if (selectedFile.size > maxSize) {
+        if (selectedFile?.size > maxSize) {
             setError(
                 '파일 크기가 10MB를 초과했습니다. 다른 파일을 선택해 주세요.',
             );
@@ -109,10 +114,10 @@ const UsePortfolio = () => {
         } catch (err) {
             if (err.response?.data?.message === '이미 존재하는 리소스입니다.') {
                 setError(
-                    'PDF와 노션 링크가 이미 등록되어 있습니다. 더 이상 추가할 수 없습니다.',
+                    'PDF 또는 노션 링크가 등록되어 있는 포트폴리오가 존재합니다!',
                 );
             } else {
-                setError('포트폴리오 업로드 중 오류가 발생했습니다.');
+                // setError('포트폴리오 업로드 중 오류가 발생했습니다.');
             }
             console.error('Error posting portfolio: ', err);
         }
@@ -151,7 +156,6 @@ const UsePortfolio = () => {
                     />
                 </S.FileUploadBox>
 
-
                 {/* 파일이 선택되었거나 기존 파일이 있을 때만 파일 정보 표시 */}
                 {(file || existingFile) && (
                     <S.FileInfo>
@@ -160,9 +164,11 @@ const UsePortfolio = () => {
                                 <S.FileName>
                                     {file ? file.name : existingFile?.name}
                                 </S.FileName>
-                                {file && file.size && (
+                                {file && file?.size && (
                                     <S.FileSize>
-                                        {(file.size / (1024 * 1024)).toFixed(2)}{' '}
+                                        {(file?.size / (1024 * 1024)).toFixed(
+                                            2,
+                                        )}{' '}
                                         MB
                                     </S.FileSize>
                                 )}
