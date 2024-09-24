@@ -25,7 +25,8 @@ const ProfilePage = () => {
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
     const [showModal, setShowModal] = useState(false);
-    const [portfolioDetails, setPortfolioDetails] = useState({});
+    const [fileDetails, setFileDetails] = useState({});
+    const [notionDetails, setNotionDetails] = useState({});
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedPortfolioId, setSelectedPortfolioId] = useState(null);
     const [selectedPortfolioName, setSelectedPortfolioName] = useState('');
@@ -60,21 +61,15 @@ const ProfilePage = () => {
 
     const fetchPortfolioDetailsByType = async (portfolioId, type) => {
         try {
-            // 파일과 노션을 각각 조회하는 방식으로 변경
             if (type === 'file' || type === 'hybrid') {
                 const fileDetails = await getExistPortfolio(
                     portfolioId,
                     'file',
                 );
                 const fileUri = fileDetails?.data?.data?.fileUri || null;
-
-                // 파일 정보를 상태에 저장
-                setPortfolioDetails(prevState => ({
+                setFileDetails(prevState => ({
                     ...prevState,
-                    [portfolioId]: {
-                        ...prevState[portfolioId],
-                        file: fileUri,
-                    },
+                    [portfolioId]: fileUri,
                 }));
             }
 
@@ -84,14 +79,9 @@ const ProfilePage = () => {
                     'notion',
                 );
                 const notionUri = notionDetails?.data?.data?.notionUri || null;
-
-                // 노션 정보를 상태에 저장
-                setPortfolioDetails(prevState => ({
+                setNotionDetails(prevState => ({
                     ...prevState,
-                    [portfolioId]: {
-                        ...prevState[portfolioId],
-                        notion: notionUri,
-                    },
+                    [portfolioId]: notionUri,
                 }));
             }
         } catch (error) {
@@ -119,52 +109,7 @@ const ProfilePage = () => {
                     console.log(portfolios);
                     portfolios.forEach(async portfolio => {
                         if (portfolio.isExistedPortfolio) {
-                            try {
-                                const details = fetchPortfolioDetails(
-                                    portfolio.PortfolioId,
-                                );
-
-                                if (details && details.data) {
-                                    const { fileUri, notionUri } = details.data;
-
-                                    if (fileUri && notionUri) {
-                                        setPortfolioDetails(prevState => ({
-                                            ...prevState,
-                                            [portfolio.PortfolioId]: {
-                                                ...prevState[
-                                                    portfolio.PortfolioId
-                                                ],
-                                                hybrid: details.data,
-                                            },
-                                        }));
-                                    } else if (fileUri) {
-                                        setPortfolioDetails(prevState => ({
-                                            ...prevState,
-                                            [portfolio.PortfolioId]: {
-                                                ...prevState[
-                                                    portfolio.PortfolioId
-                                                ],
-                                                file: fileUri,
-                                            },
-                                        }));
-                                    } else if (notionUri) {
-                                        setPortfolioDetails(prevState => ({
-                                            ...prevState,
-                                            [portfolio.PortfolioId]: {
-                                                ...prevState[
-                                                    portfolio.PortfolioId
-                                                ],
-                                                notion: notionUri,
-                                            },
-                                        }));
-                                    }
-                                }
-                            } catch (error) {
-                                console.error(
-                                    'Error fetching portfolio details:',
-                                    error,
-                                );
-                            }
+                            await fetchPortfolioDetails(portfolio.PortfolioId);
                         }
                     });
                 } else {
@@ -214,9 +159,6 @@ const ProfilePage = () => {
     };
     const confirmDeleteByType = async () => {
         try {
-            console.log('Selected Type for Deletion:', selectedPortfolioType);
-
-            // 파일 또는 노션만 삭제
             if (
                 selectedPortfolioType === 'file' ||
                 selectedPortfolioType === 'notion'
@@ -226,35 +168,64 @@ const ProfilePage = () => {
                     selectedPortfolioType,
                 );
 
-                setPortfolioDetails(prevDetails => {
-                    const updatedDetails = { ...prevDetails };
+                // 파일 또는 노션만 삭제
+                if (selectedPortfolioType === 'file') {
+                    setFileDetails(prevDetails => {
+                        const updatedDetails = { ...prevDetails };
+                        updatedDetails[selectedPortfolioId] = null;
+                        return updatedDetails;
+                    });
+                } else if (selectedPortfolioType === 'notion') {
+                    setNotionDetails(prevDetails => {
+                        const updatedDetails = { ...prevDetails };
+                        updatedDetails[selectedPortfolioId] = null;
+                        return updatedDetails;
+                    });
+                }
 
-                    // 선택된 타입만 삭제
-                    if (selectedPortfolioType === 'file') {
-                        updatedDetails[selectedPortfolioId].file = null;
-                    } else if (selectedPortfolioType === 'notion') {
-                        updatedDetails[selectedPortfolioId].notion = null;
+                // 상태 업데이트 후 파일과 노션의 존재 여부를 다시 체크
+                const fileExists = fileDetails[selectedPortfolioId];
+                const notionExists = notionDetails[selectedPortfolioId];
+
+                // 포트폴리오 리스트에서 업데이트된 내용을 반영
+                setPortfolioList(prevList =>
+                    prevList.map(portfolio => {
+                        if (portfolio.PortfolioId === selectedPortfolioId) {
+                            return {
+                                ...portfolio,
+                                file: fileExists || null,
+                                notion: notionExists || null,
+                            };
+                        }
+                        return portfolio;
+                    }),
+                );
+
+                // 남은 정보가 없으면 포트폴리오에서 제거하고 빈 상태 체크
+                if (!fileExists && !notionExists) {
+                    const updatedPortfolioList = portfolioList.filter(
+                        portfolio =>
+                            portfolio.PortfolioId !== selectedPortfolioId,
+                    );
+                    setPortfolioList(updatedPortfolioList);
+
+                    // 빈 리스트일 경우 즉시 포트폴리오가 없다는 상태를 반영
+                    if (updatedPortfolioList.length === 0) {
+                        setPortfolioExists(false);
                     }
-
-                    // 파일과 노션 모두 삭제되었을 때만 전체 포트폴리오 삭제
-                    if (
-                        !updatedDetails[selectedPortfolioId].file &&
-                        !updatedDetails[selectedPortfolioId].notion
-                    ) {
-                        delete updatedDetails[selectedPortfolioId];
-                    }
-
-                    return updatedDetails;
-                });
+                }
             } else if (selectedPortfolioType === 'basic') {
                 // 기본 포트폴리오 삭제 처리
                 await deletePortfolio(selectedPortfolioId);
-                setPortfolioList(prevPortfolios =>
-                    prevPortfolios.filter(
-                        portfolio =>
-                            portfolio.PortfolioId !== selectedPortfolioId,
-                    ),
+                const updatedPortfolioList = portfolioList.filter(
+                    portfolio => portfolio.PortfolioId !== selectedPortfolioId,
                 );
+                setPortfolioList(updatedPortfolioList);
+
+                // 빈 리스트일 경우 즉시 포트폴리오가 없다는 상태를 반영
+                if (updatedPortfolioList.length === 0) {
+                    setPortfolioExists(false);
+                }
             }
         } catch (error) {
             console.error('Error deleting portfolio:', error);
@@ -262,6 +233,26 @@ const ProfilePage = () => {
             setShowDeleteModal(false);
         }
     };
+
+    useEffect(() => {
+        if (selectedPortfolioId) {
+            const fileExists = fileDetails[selectedPortfolioId];
+            const notionExists = notionDetails[selectedPortfolioId];
+
+            setPortfolioList(prevList =>
+                prevList.map(portfolio => {
+                    if (portfolio.PortfolioId === selectedPortfolioId) {
+                        return {
+                            ...portfolio,
+                            file: fileExists,
+                            notion: notionExists,
+                        };
+                    }
+                    return portfolio;
+                }),
+            );
+        }
+    }, [fileDetails, notionDetails, selectedPortfolioId]);
 
     const handleEditPortfolio = async PortfolioId => {
         const portfolioToEdit = portfolioList.find(
@@ -275,7 +266,11 @@ const ProfilePage = () => {
 
             navigate(editUrl);
             const updatedPortfolio = await fetchPortfolioDetails(PortfolioId);
-            setPortfolioDetails(prevDetails => ({
+            setFileDetails(prevDetails => ({
+                ...prevDetails,
+                [PortfolioId]: updatedPortfolio.data,
+            }));
+            setNotionDetails(prevDetails => ({
                 ...prevDetails,
                 [PortfolioId]: updatedPortfolio.data,
             }));
@@ -320,12 +315,10 @@ const ProfilePage = () => {
 
                         {portfolioList.flatMap(portfolio => {
                             const notionUri =
-                                portfolioDetails[portfolio.PortfolioId]?.notion;
-                            const fileUri =
-                                portfolioDetails[portfolio.PortfolioId]?.file;
+                                notionDetails[portfolio.PortfolioId];
+                            const fileUri = fileDetails[portfolio.PortfolioId];
 
                             const components = [];
-
                             // isExisted가 true인 경우 데이터 타입별 처리
                             if (portfolio.isExistedPortfolio) {
                                 if (notionUri) {
@@ -435,11 +428,9 @@ const ProfilePage = () => {
                             {portfolioList
                                 .flatMap(portfolio => {
                                     const notionUri =
-                                        portfolioDetails[portfolio.PortfolioId]
-                                            ?.notion;
+                                        notionDetails[portfolio.PortfolioId];
                                     const fileUri =
-                                        portfolioDetails[portfolio.PortfolioId]
-                                            ?.file;
+                                        fileDetails[portfolio.PortfolioId];
 
                                     const components = [];
 

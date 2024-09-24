@@ -67,7 +67,7 @@ const UsePortfolio = () => {
         const selectedFile = e.target.files[0];
         const maxSize = 10 * 1024 * 1024;
 
-        if (selectedFile.size > maxSize) {
+        if (selectedFile?.size > maxSize) {
             setError(
                 '파일 크기가 10MB를 초과했습니다. 다른 파일을 선택해 주세요.',
             );
@@ -114,7 +114,7 @@ const UsePortfolio = () => {
         } catch (err) {
             if (err.response?.data?.message === '이미 존재하는 리소스입니다.') {
                 setError(
-                    'PDF와 노션 링크가 이미 등록되어 있습니다. 더 이상 추가할 수 없습니다.',
+                    'PDF 또는 노션 링크가 등록되어 있는 포트폴리오가 존재합니다!',
                 );
             } else {
                 // setError('포트폴리오 업로드 중 오류가 발생했습니다.');
@@ -164,9 +164,11 @@ const UsePortfolio = () => {
                                 <S.FileName>
                                     {file ? file.name : existingFile?.name}
                                 </S.FileName>
-                                {file && file.size && (
+                                {file && file?.size && (
                                     <S.FileSize>
-                                        {(file.size / (1024 * 1024)).toFixed(2)}{' '}
+                                        {(file?.size / (1024 * 1024)).toFixed(
+                                            2,
+                                        )}{' '}
                                         MB
                                     </S.FileSize>
                                 )}
