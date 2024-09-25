@@ -42,11 +42,6 @@ const TeamSupport = () => {
                         showMoreDetail={false}
                         showWaitingJoin={true}
                         showSubBox={true}
-                        borderColor={
-                            postContent2.postType === true
-                                ? 'rgba(231, 137, 255, 0.5)'
-                                : 'rgba(0, 163, 255, 0.5)'
-                        }
                         postContent={postContent2}
                         isMyParticipation={false}
                     />

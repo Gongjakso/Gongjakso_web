@@ -43,8 +43,8 @@ const ProfilePage = () => {
         getMyRecruiting().then(response => {
             setPostContent1(response?.data?.content.slice(0, 2));
         });
-        getMyApplied(1, 2).then(response => {
-            setPostContent2(response?.data?.content);
+        getMyApplied(1).then(response => {
+            setPostContent2(response?.data?.content.slice(0, 2));
         });
         getMyParticipated(1, 2).then(response => {
             setPostContent3(response?.data?.content);

@@ -239,12 +239,13 @@ const TeamBox = ({
                             </>
                         )} */}
                     {showWaitingJoin && (
-                        <S.WaitingJoin $applytype={postContent?.applyType}>
-                            {postContent?.applyType === 'PASS'
+                        <S.WaitingJoin $status={postContent?.status}>
+                            {postContent?.status === '합류 완료'
                                 ? '합류 완료'
-                                : postContent?.applyType === 'NOT_PASS'
+                                : postContent?.status === '미선발'
                                   ? '미선발'
                                   : '합류 대기중'}
+                            {/*수정 필요. status X*/}
                             {postContent?.status === 'CLOSE' && (
                                 <S.DeadlineOverlay $status={postContent.status}>
                                     모집이 마감되었습니다.

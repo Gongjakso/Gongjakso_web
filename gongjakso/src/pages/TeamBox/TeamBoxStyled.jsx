@@ -146,10 +146,10 @@ export const WaitingJoin = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${({ theme, $applytype }) =>
-        $applytype === 'PASS'
+    background: ${({ theme, $status }) =>
+        $status === '합류 완료'
             ? theme.box1
-            : $applytype === 'NOT_PASS'
+            : $status === '미선발'
               ? theme.LightGrey
               : theme.Light1};
     border-radius: 50px;
