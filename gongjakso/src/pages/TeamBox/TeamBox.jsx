@@ -100,33 +100,6 @@ const TeamBox = ({
         dispatch(closeConfirmModal());
     };
 
-    const startDate = new Date(postContent?.startDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
-    const finishDate = new Date(postContent?.finishDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
-    const endDate = new Date(postContent?.endDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
     function getDisplayCategory(recruit_part) {
         let displayCategory;
 
@@ -168,7 +141,6 @@ const TeamBox = ({
                             {isMyParticipation === true &&
                                 `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === null &&
-                                // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                                 `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
                         </S.subTitle>
                     </S.MainBox>
@@ -176,8 +148,9 @@ const TeamBox = ({
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.d_day < 0
-                                    ? '마감된 공고'
+                                {/*모집팀의 경우 -- 취소 마감 데이터 추가 필요*/}
+                                {postContent?.d_day <= 0
+                                    ? '마감'
                                     : `마감 D-${postContent?.d_day}`}
                             </S.DeadLine>
                             <S.ScrapNum>

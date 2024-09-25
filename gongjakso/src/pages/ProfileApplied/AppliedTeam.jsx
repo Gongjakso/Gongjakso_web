@@ -3,9 +3,10 @@ import * as S from './AppliedTeamStyled';
 import TeamBox from '../TeamBox/TeamBox';
 import TopButton from '../../pages/HomePage/TopButton';
 import Pagination from '../../components/Pagination/Pagination';
-import { getMyApplied } from '../../service/profile_service';
+import { getMyInfo, getMyApplied } from '../../service/profile_service';
 
 const TeamSupport = () => {
+    const [data, setProfileData] = useState();
     const [page, setPage] = useState(1);
     const [postContent2, setPostContent2] = useState([]);
     const [totalPage, setTotalPage] = useState();
@@ -21,6 +22,12 @@ const TeamSupport = () => {
         });
     }, [page]);
 
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data); // 'response'를 바로 전달
+        });
+    }, []);
+
     const loadParticipatedPosts = page => {
         getMyApplied(page, 6).then(response => {
             setPostContent2(response?.data.content);
@@ -33,7 +40,7 @@ const TeamSupport = () => {
             <TopButton />
             <S.TopBox>
                 <S.Spacer />
-                <S.Title>내가 지원한 팀</S.Title>
+                <S.Title>{data?.name}님의 지원 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
                 {postContent2?.map((postContent2, index) => (

@@ -3,11 +3,12 @@ import * as S from './Scrap.Styled';
 import TeamBox from '../TeamBox/TeamBox';
 import TopButton from '../HomePage/TopButton';
 import Pagination from '../../components/Pagination/Pagination';
-import { getMyTeamScrap } from '../../service/profile_service';
+import { getMyInfo, getMyTeamScrap } from '../../service/profile_service';
 import NoContents from '../../features/NoContents/NoContents';
 
 const Scrap = () => {
     const [page, setPage] = useState(1);
+    const [data, setProfileData] = useState();
     const [postContent4, setPostContent4] = useState(); //스크랩 공모전
     const [totalPage, setTotalPage] = useState(0);
 
@@ -17,6 +18,12 @@ const Scrap = () => {
             setPostContent4(response?.data.content);
         });
     }, [page]);
+
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data); // 'response'를 바로 전달
+        });
+    }, []);
 
     const loadScrapedPosts = page => {
         getMyTeamScrap(page, 6).then(response => {
@@ -30,7 +37,7 @@ const Scrap = () => {
             <TopButton />
             <S.TopBox>
                 <S.Spacer />
-                <S.Title>나의 스크랩</S.Title>
+                <S.Title>{data?.name}님의 스크랩</S.Title>
             </S.TopBox>
             <S.BoxDetail>
                 {!postContent4 ? (
