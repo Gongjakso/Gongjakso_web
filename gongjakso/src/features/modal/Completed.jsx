@@ -39,7 +39,7 @@ const Completed = props => {
                 <S.Background2>
                     <S.Modal
                         $w="700px"
-                        $h="460px"
+                        $h="400px"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
