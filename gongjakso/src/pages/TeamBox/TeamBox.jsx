@@ -110,12 +110,6 @@ const TeamBox = ({
             case '디자인':
                 displayCategory = '디자인';
                 break;
-            case 'FE':
-                displayCategory = '프론트엔드';
-                break;
-            case 'BE':
-                displayCategory = '백엔드';
-                break;
             case '기타':
                 displayCategory = '기타';
                 break;
@@ -124,6 +118,26 @@ const TeamBox = ({
         }
 
         return displayCategory;
+    }
+
+    function getDisplayApplyCategory(apply_part) {
+        let displayApplyCategory;
+
+        switch (apply_part) {
+            case '기획':
+                displayApplyCategory = '기획';
+                break;
+            case '디자인':
+                displayApplyCategory = '디자인';
+                break;
+            case '기타':
+                displayApplyCategory = '기타';
+                break;
+            default:
+                displayApplyCategory = apply_part;
+        }
+
+        return displayApplyCategory;
     }
 
     return (
@@ -190,7 +204,14 @@ const TeamBox = ({
                                     );
                                 },
                             )
+                        ) : postContent?.applicant_id ? (
+                            <S.RoundForm>
+                                {getDisplayApplyCategory(
+                                    postContent?.apply_part,
+                                )}
+                            </S.RoundForm>
                         ) : (
+                            // 내가 모집 중인 팀
                             postContent?.recruit_part?.map(
                                 (categoryList, index) => {
                                     return (
