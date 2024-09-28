@@ -4,6 +4,7 @@ import TeamBox from '../TeamBox/TeamBox';
 import TopButton from '../../pages/HomePage/TopButton';
 import Pagination from '../../components/Pagination/Pagination';
 import { getMyInfo, getMyApplied } from '../../service/profile_service';
+import { Link } from 'react-router-dom';
 
 const TeamSupport = () => {
     const [data, setProfileData] = useState();
@@ -24,7 +25,7 @@ const TeamSupport = () => {
 
     useEffect(() => {
         getMyInfo().then(response => {
-            setProfileData(response?.data); // 'response'를 바로 전달
+            setProfileData(response?.data);
         });
     }, []);
 
@@ -43,15 +44,20 @@ const TeamSupport = () => {
                 <S.Title>{data?.name}님의 지원 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent2?.map((postContent2, index) => (
-                    <TeamBox
-                        key={index}
-                        showMoreDetail={false}
-                        showWaitingJoin={true}
-                        showSubBox={true}
-                        postContent={postContent2}
-                        isMyParticipation={false}
-                    />
+                {postContent2?.map((postContent, index) => (
+                    <React.Fragment key={postContent.id}>
+                        <Link
+                            to={`/contest/${postContent.contest_id}/team/${postContent.team_id}`}
+                        >
+                            <TeamBox
+                                showMoreDetail={false}
+                                showWaitingJoin={true}
+                                showSubBox={true}
+                                postContent={postContent}
+                                isMyParticipation={false}
+                            />
+                        </Link>
+                    </React.Fragment>
                 ))}
                 <Pagination
                     total={totalPage}
