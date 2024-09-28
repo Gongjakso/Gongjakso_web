@@ -90,8 +90,8 @@ const ProfileRecruit = () => {
         for (let i = 0; i < statuses.length; i++) {
             if (statuses[i] === 'black') {
                 try {
-                    const applyId = posts[i].applyId;
-                    await patchApply(applyId, 'REJECTED');
+                    const id = posts[i].id;
+                    await patchApply(id, 'REJECTED');
                     updatedStatuses[i] = 'notSelected';
                 } catch (error) {
                     console.error('미선발 상태 업데이트 중 에러:', error);
@@ -107,8 +107,8 @@ const ProfileRecruit = () => {
         for (let i = 0; i < statuses.length; i++) {
             if (statuses[i] === 'black') {
                 try {
-                    const applyId = posts[i].applyId;
-                    await patchApply(applyId, 'ACCEPTED');
+                    const id = posts[i].id;
+                    await patchApply(id, 'ACCEPTED');
                     updatedStatuses[i] = 'selected';
                 } catch (error) {
                     console.error('합류 상태 업데이트 중 에러:', error);
@@ -118,16 +118,14 @@ const ProfileRecruit = () => {
         setStatuses(updatedStatuses);
     };
 
-    const handleClick = (index, applyId) => {
+    const handleClick = (index, id) => {
         const newData = [...posts]; // 데이터 복사
-        const dataIndex = newData.findIndex(item => item.applyId === applyId);
+        const dataIndex = newData.findIndex(item => item.id === id);
         if (dataIndex !== -1) {
             newData[dataIndex].open = true; // 해당 데이터의 open 값을 true로 변경
             setPosts(newData); // 상태 업데이트
         } else {
-            console.error(
-                `ID ${applyId}에 해당하는 데이터를 찾을 수 없습니다.`,
-            );
+            console.error(`ID ${id}에 해당하는 데이터를 찾을 수 없습니다.`);
         }
     };
 
@@ -288,7 +286,7 @@ const ProfileRecruit = () => {
                         </S.StyledThead>
                         <tbody>
                             {posts?.map((item, i, array) => (
-                                <tr key={item.applyId}>
+                                <tr key={item.id}>
                                     <S.StyledTd
                                         $state={item.is_canceled}
                                         style={{
@@ -300,7 +298,7 @@ const ProfileRecruit = () => {
                                     >
                                         <S.User>
                                             <img src={User} alt="UserImage" />
-                                            {item.memberName}
+                                            {item.applicant_name}
                                         </S.User>
                                         {item.is_canceled ? (
                                             <S.CancelBox>
@@ -313,12 +311,12 @@ const ProfileRecruit = () => {
                                                         setItem(i);
                                                         handleClick(i, item.id);
                                                         setShowApply(true);
-                                                        setidNum(item.applyId);
+                                                        setidNum(item.id);
                                                         setidName(
                                                             item.memberName,
                                                         );
                                                         ClickOpen(
-                                                            item.applyId,
+                                                            item.id,
                                                             item.state,
                                                         );
                                                     }}

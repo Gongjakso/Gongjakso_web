@@ -143,8 +143,8 @@ export const getMyRecruitingTeam = async id => {
 };
 
 // 지원자 합류하기, 미선발
-export const patchApply = async (applyId, status) => {
-    const reqURL = `apply/select/${applyId}`;
+export const patchApply = async (id, status) => {
+    const reqURL = `apply/select/${id}`;
 
     try {
         const response = await axiosInstanceV2.patch(reqURL, { status });
