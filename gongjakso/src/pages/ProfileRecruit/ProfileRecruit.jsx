@@ -310,7 +310,7 @@ const ProfileRecruit = () => {
                                                     onClick={() => {
                                                         setItem(i);
                                                         handleClick(i, item.id);
-                                                        setShowApply(true);
+                                                        // setShowApply(true);
                                                         setidNum(item.id);
                                                         setidName(
                                                             item.memberName,
@@ -318,6 +318,10 @@ const ProfileRecruit = () => {
                                                         ClickOpen(
                                                             item.id,
                                                             item.state,
+                                                        );
+                                                        window.open(
+                                                            `http://localhost:3000/application/${item.id}`,
+                                                            '_blank',
                                                         );
                                                     }}
                                                 >

@@ -2,6 +2,7 @@ import { React, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteChangeTracker from '../utils/RouteChangeTracker';
 import ContestDetailPage from '../pages/ContestDetailPage/ContestDetailPage';
+import PdfUserApplication from '../pages/ProfileRecruit/PdfUserApplication';
 const ContestListPage = lazy(
     () => import('../pages/ContestListPage/ContestListPage'),
 );
@@ -121,6 +122,12 @@ const Router = () => {
                                 element={<UsePortfolio />}
                             />
                         </Route>
+
+                        {/* 지원서 보기 부분은 헤더 제거 */}
+                        <Route
+                            path="/application/:id"
+                            element={<PdfUserApplication />}
+                        />
                     </Routes>
                 </ScrollToTop>
             </BrowserRouter>
