@@ -42,11 +42,12 @@ export const getMyRecruiting = async (page, size) => {
 };
 
 //팀박스->내가 지원
-export const getMyApplied = async (page, size) => {
-    const reqURL = `team/my-apply?page=${page - 1}&size=${size}`;
+export const getMyApplied = async page => {
+    const reqURL = `apply/my?page=${page - 1}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
+        console.log(response?.data);
         return response.data;
     } catch (error) {
         console.log('내가 지원한 게시글을 가져올 수 없습니다.');

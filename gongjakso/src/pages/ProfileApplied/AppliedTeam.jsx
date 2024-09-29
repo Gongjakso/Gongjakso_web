@@ -3,9 +3,11 @@ import * as S from './AppliedTeamStyled';
 import TeamBox from '../TeamBox/TeamBox';
 import TopButton from '../../pages/HomePage/TopButton';
 import Pagination from '../../components/Pagination/Pagination';
-import { getMyApplied } from '../../service/profile_service';
+import { getMyInfo, getMyApplied } from '../../service/profile_service';
+import { Link } from 'react-router-dom';
 
 const TeamSupport = () => {
+    const [data, setProfileData] = useState();
     const [page, setPage] = useState(1);
     const [postContent2, setPostContent2] = useState([]);
     const [totalPage, setTotalPage] = useState();
@@ -21,6 +23,12 @@ const TeamSupport = () => {
         });
     }, [page]);
 
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data);
+        });
+    }, []);
+
     const loadParticipatedPosts = page => {
         getMyApplied(page, 6).then(response => {
             setPostContent2(response?.data.content);
@@ -33,23 +41,23 @@ const TeamSupport = () => {
             <TopButton />
             <S.TopBox>
                 <S.Spacer />
-                <S.Title>내가 지원한 팀</S.Title>
+                <S.Title>{data?.name}님의 지원 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent2?.map((postContent2, index) => (
-                    <TeamBox
-                        key={index}
-                        showMoreDetail={false}
-                        showWaitingJoin={true}
-                        showSubBox={true}
-                        borderColor={
-                            postContent2.postType === true
-                                ? 'rgba(231, 137, 255, 0.5)'
-                                : 'rgba(0, 163, 255, 0.5)'
-                        }
-                        postContent={postContent2}
-                        isMyParticipation={false}
-                    />
+                {postContent2?.map((postContent, index) => (
+                    <React.Fragment key={postContent.id}>
+                        <Link
+                            to={`/contest/${postContent.contest_id}/team/${postContent.team_id}`}
+                        >
+                            <TeamBox
+                                showMoreDetail={false}
+                                showWaitingJoin={true}
+                                showSubBox={true}
+                                postContent={postContent}
+                                isMyParticipation={false}
+                            />
+                        </Link>
+                    </React.Fragment>
                 ))}
                 <Pagination
                     total={totalPage}

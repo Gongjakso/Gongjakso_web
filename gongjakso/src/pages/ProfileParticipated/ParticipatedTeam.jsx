@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import * as S from './ParticipatedTeamStyled';
 import TeamBox from '../TeamBox/TeamBox';
 import Pagination from '../../components/Pagination/Pagination';
-import { getMyParticipated } from '../../service/profile_service';
+import { getMyInfo, getMyParticipated } from '../../service/profile_service';
 
 const TeamPart = () => {
     const [page, setPage] = useState(1);
+    const [data, setProfileData] = useState();
     const [postContent3, setPostContent3] = useState();
     const [totalPage, setTotalPage] = useState();
 
@@ -15,6 +16,12 @@ const TeamPart = () => {
             setPostContent3(response?.data.content);
         });
     }, [page]);
+
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data); // 'response'를 바로 전달
+        });
+    }, []);
 
     const loadParticipatedPosts = page => {
         getMyParticipated(page, 6).then(response => {
@@ -29,7 +36,7 @@ const TeamPart = () => {
         <div>
             <S.TopBox>
                 <S.Spacer />
-                <S.Title>내가 참여한 공모전/프로젝트</S.Title>
+                <S.Title>{data?.name}님의 참여 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
                 {postContent3?.map(postContent3 => (
