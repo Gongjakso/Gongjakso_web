@@ -6,7 +6,9 @@ import MyPageTeam from '../../features/modal/MyPageTeam';
 import ClickRecruitApplicant from '../../features/modal/ClickRecruitApplicant';
 import Pagination from '../../components/Pagination/Pagination';
 import {
+    getApplyList,
     getMyRecruitingTeam,
+    getRecruitTeam,
     patchOpen,
     patchApply,
 } from '../../service/apply_service';
@@ -17,11 +19,22 @@ import { getPostDetail } from '../../service/post_service';
 const ProfileRecruit = () => {
     const navigate = useCustomNavigate();
     const [showApply, setShowApply] = useState(false); // 지원서 모달창 띄우는 경우
-    const [item, setItem] = useState(null); // 선택된 지원자의 정보를 저장
+    const [item, setItem] = useState('');
 
     const [finish, setFinish] = useState(false); // 마감하기
     const [extend, setExtend] = useState(false); // 연장하기
     const [cancel, setCancel] = useState(false); // 취소하기
+
+    const [idNum, setidNum] = useState('');
+    const [idName, setidName] = useState('');
+    const [part, setPart] = useState([]);
+    const [role, setRole] = useState([]);
+
+    const [teamCase] = useState([
+        { case: '마감하기', id: '1' },
+        { case: '연장하기', id: '2' },
+        { case: '취소하기', id: '3' },
+    ]);
 
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(1);
@@ -33,15 +46,13 @@ const ProfileRecruit = () => {
     const [postId, setpostId] = useState(id);
 
     const [recruitTeam, setRecruitTeam] = useState([]);
+
     const [totalMember, setTotalMember] = useState();
 
+    // statuses 상태: 'gray', 'black', 'notSelected', 'selected'
     const [statuses, setStatuses] = useState([]);
-    const [recruitTotalMember, setRecruitTotalMember] = useState();
 
-    const loadApplyList = page => {
-        // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
-        setPage(page);
-    };
+    const [recruitTotalMember, setRecruitTotalMember] = useState();
 
     useEffect(() => {
         const id = contestData?.id;
@@ -50,9 +61,10 @@ const ProfileRecruit = () => {
             const acceptedApplicants = response?.data.filter(
                 applicant => applicant.status === 'ACCEPTED',
             );
-            setPosts(response?.data); // 전체 지원자 리스트 설정
-            setTotalMember(acceptedApplicants.length); // ACCEPTED 상태의 지원자 수 설정
+            setPosts(response?.data); // 지원자 리스트 설정
+            setTotalMember(acceptedApplicants.length);
 
+            // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
             const initialStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
                     return 'gray'; // 초기 상태
@@ -80,6 +92,7 @@ const ProfileRecruit = () => {
     };
 
     const handleNotSelectedClick = async () => {
+        // 선택된 지원자들에 대해 서버에 상태 업데이트 요청
         const updatedStatuses = [...statuses];
         for (let i = 0; i < statuses.length; i++) {
             if (statuses[i] === 'black') {
@@ -96,6 +109,7 @@ const ProfileRecruit = () => {
     };
 
     const handleSelectedClick = async () => {
+        // 선택된 지원자들에 대해 서버에 상태 업데이트 요청
         const updatedStatuses = [...statuses];
         for (let i = 0; i < statuses.length; i++) {
             if (statuses[i] === 'black') {
@@ -111,6 +125,7 @@ const ProfileRecruit = () => {
         setStatuses(updatedStatuses);
     };
 
+    // 활동기간 수정 함수
     const formatDate = dateString => {
         const date = new Date(dateString);
         const year = date.getFullYear();
@@ -125,13 +140,14 @@ const ProfileRecruit = () => {
         const id = contestData?.id;
         getMyRecruitingTeam(id).then(response => {
             setPosts(response?.data); // 지원자 리스트 설정
+            // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
             const initialStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
-                    return 'gray';
+                    return 'gray'; // 초기 상태
                 } else if (applicant.status === 'ACCEPTED') {
-                    return 'selected';
+                    return 'selected'; // 합류 완료
                 } else if (applicant.status === 'REJECTED') {
-                    return 'notSelected';
+                    return 'notSelected'; // 미선발
                 } else {
                     return 'gray';
                 }
@@ -143,23 +159,34 @@ const ProfileRecruit = () => {
         });
     }, [contestData]);
 
+    const loadApplyList = page => {
+        // 페이지네이션에 따라 목데이터를 불러올 수 있지만, 현재는 단일 페이지로 설정
+        setPage(page);
+    };
+
+    const ClickOpen = (id, state) => {
+        if (state === '미열람') {
+            patchOpen(id);
+        }
+    };
+
     return (
         <div>
             {finish ? (
                 <MyPageTeam
-                    teamCase="마감하기"
+                    teamCase={teamCase[0]}
                     CloseModal={setFinish}
                     id={contestData}
                 />
             ) : extend ? (
                 <MyPageTeam
-                    teamCase="연장하기"
+                    teamCase={teamCase[1]}
                     CloseModal={setExtend}
                     id={contestData}
                 />
             ) : cancel ? (
                 <MyPageTeam
-                    teamCase="취소하기"
+                    teamCase={teamCase[2]}
                     CloseModal={setCancel}
                     id={contestData}
                 />
@@ -202,6 +229,7 @@ const ProfileRecruit = () => {
                                 </S.InsideTitle>
                             </S.DetailGlobal2>
 
+                            {/* true: 프로젝트 / false: 공모전 */}
                             <S.Postcheck
                                 onClick={() => {
                                     navigate(
@@ -214,13 +242,25 @@ const ProfileRecruit = () => {
                             </S.Postcheck>
                         </S.GlobalBox2>
                         <S.ButtonSet>
-                            <S.GreyBtn onClick={() => setFinish(true)}>
+                            <S.GreyBtn
+                                onClick={() => {
+                                    setFinish(true);
+                                }}
+                            >
                                 마감하기
                             </S.GreyBtn>
-                            <S.GreyBtn onClick={() => setExtend(true)}>
+                            <S.GreyBtn
+                                onClick={() => {
+                                    setExtend(true);
+                                }}
+                            >
                                 연장하기
                             </S.GreyBtn>
-                            <S.GreyBtn onClick={() => setCancel(true)}>
+                            <S.GreyBtn
+                                onClick={() => {
+                                    setCancel(true);
+                                }}
+                            >
                                 모집취소
                             </S.GreyBtn>
                         </S.ButtonSet>
@@ -237,9 +277,17 @@ const ProfileRecruit = () => {
                             </S.StyledTr>
                         </S.StyledThead>
                         <tbody>
-                            {posts?.map((item, i) => (
+                            {posts?.map((item, i, array) => (
                                 <tr key={item.id}>
-                                    <S.StyledTd $state={item.is_canceled}>
+                                    <S.StyledTd
+                                        $state={item.is_canceled}
+                                        style={{
+                                            borderRadius:
+                                                i !== array.length - 1
+                                                    ? 'none'
+                                                    : '0 0 15px 15px',
+                                        }}
+                                    >
                                         <S.User>
                                             <img src={User} alt="UserImage" />
                                             {item.applicant_name}
@@ -264,7 +312,7 @@ const ProfileRecruit = () => {
 
                                                 <S.ShowPortBtn
                                                     onClick={() => {
-                                                        // 포트폴리오 보기 로직 추가 예정
+                                                        //api 연결 예정
                                                     }}
                                                 >
                                                     포트폴리오 보기
