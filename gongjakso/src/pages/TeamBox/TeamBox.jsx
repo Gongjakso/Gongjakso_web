@@ -162,10 +162,13 @@ const TeamBox = ({
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {/*모집팀의 경우 -- 취소 마감 데이터 추가 필요*/}
-                                {postContent?.d_day <= 0
-                                    ? '마감'
-                                    : `마감 D-${postContent?.d_day}`}
+                                {postContent?.status === '모집 취소'
+                                    ? `취소`
+                                    : postContent?.d_day > 0
+                                      ? `마감 D-${postContent?.d_day}`
+                                      : postContent?.d_day === 0
+                                        ? `마감 D-day`
+                                        : `마감`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />

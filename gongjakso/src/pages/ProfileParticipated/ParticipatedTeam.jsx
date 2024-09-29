@@ -19,7 +19,7 @@ const TeamPart = () => {
 
     useEffect(() => {
         getMyInfo().then(response => {
-            setProfileData(response?.data); // 'response'를 바로 전달
+            setProfileData(response?.data);
         });
     }, []);
 

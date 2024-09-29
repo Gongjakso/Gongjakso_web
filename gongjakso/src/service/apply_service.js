@@ -105,12 +105,13 @@ export const patchOpen = async apply_id => {
 };
 
 // [GET] 나의 지원서 보기 API
-export const getMyApplication = async apply_id => {
-    const reqURL = `apply/${apply_id}`;
+export const getMyApplication = async id => {
+    const reqURL = `apply/${id}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
         console.log(response);
+        console.log('지원자의 ID:', response.data.data.id);
         return response.data;
     } catch (error) {
         console.log(error);

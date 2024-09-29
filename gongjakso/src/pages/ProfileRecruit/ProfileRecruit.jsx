@@ -56,6 +56,8 @@ const ProfileRecruit = () => {
 
     useEffect(() => {
         const id = contestData?.id;
+        console.log(postId);
+        console.log(contestData?.id);
 
         getMyRecruitingTeam(id).then(response => {
             const acceptedApplicants = response?.data.filter(
@@ -299,9 +301,10 @@ const ProfileRecruit = () => {
                                         ) : (
                                             <S.BtnContainer>
                                                 <S.ShowBtn
-                                                    onClick={() =>
-                                                        handleClick(i, item)
-                                                    }
+                                                    onClick={() => {
+                                                        // 지원서 보기 버튼 클릭 시 항상 모달이 뜨도록 설정
+                                                        handleClick(i, item);
+                                                    }}
                                                 >
                                                     지원서 보기
                                                     <img
@@ -309,14 +312,15 @@ const ProfileRecruit = () => {
                                                         alt="arrow"
                                                     />
                                                 </S.ShowBtn>
-
-                                                <S.ShowPortBtn
-                                                    onClick={() => {
-                                                        //api 연결 예정
-                                                    }}
-                                                >
-                                                    포트폴리오 보기
-                                                </S.ShowPortBtn>
+                                                {item.portfolio_id && (
+                                                    <S.ShowPortBtn
+                                                        onClick={() => {
+                                                            // 포트폴리오 보기 로직 추가
+                                                        }}
+                                                    >
+                                                        포트폴리오 보기
+                                                    </S.ShowPortBtn>
+                                                )}
                                             </S.BtnContainer>
                                         )}
                                         <S.TableBox>
