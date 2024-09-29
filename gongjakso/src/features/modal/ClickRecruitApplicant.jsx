@@ -25,13 +25,8 @@ const ClickmyApply = props => {
     // 특정 지원자 지원서 열람하기
     useEffect(() => {
         getMyApplication(props.applyId).then(res => {
-            console.log(res?.data);
+            console.log('지원서 데이터:', res?.data); // API 응답 확인
             setmyApp(res?.data);
-        });
-
-        // [GET] 내 포트폴리오 리스트 조회 API
-        getMyPortfolio().then(res => {
-            setportfolioData(res?.data);
         });
     }, [props.applyId]);
 
@@ -72,8 +67,8 @@ const ClickmyApply = props => {
                     </S.DetailBox>
 
                     <S.DetailBox>
-                        <S.SubTitle>나의 포트폴리오</S.SubTitle>
-                        {/* <S.FormBox>
+                        <S.SubTitle>포트폴리오</S.SubTitle>
+                        <S.FormBox>
                             <S.RoundForm
                                 $isselected={true}
                                 style={{ cursor: 'default' }}
@@ -82,29 +77,6 @@ const ClickmyApply = props => {
                                     ? '비공개'
                                     : myApp?.portfolio_name}
                             </S.RoundForm>
-                        </S.FormBox> */}
-                        <S.FormBox>
-                            {myApp?.is_private ? (
-                                <S.RoundForm
-                                    $isselected={true}
-                                    style={{ cursor: 'default' }}
-                                >
-                                    비공개
-                                </S.RoundForm>
-                            ) : (
-                                portfolioData?.map((item, i) => (
-                                    <S.PortForm
-                                        key={i}
-                                        $isselected={
-                                            item.PortfolioName ===
-                                            myApp?.portfolio_name
-                                        }
-                                        style={{ cursor: 'default' }}
-                                    >
-                                        {item.PortfolioName}
-                                    </S.PortForm>
-                                ))
-                            )}
                         </S.FormBox>
                     </S.DetailBox>
 
