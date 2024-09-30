@@ -47,7 +47,7 @@ const PostMainPage = () => {
 
     useEffect(() => {
         setPage(1);
-    }, [isProject, sortBy, selectedLocalData]);
+    }, [sortBy, selectedLocalData]);
 
     useEffect(() => {
         setSortBy('createdAt');
@@ -152,7 +152,7 @@ const PostMainPage = () => {
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
-            setSortBy(null);
+            setSortBy('createdAt');
         }
     };
 

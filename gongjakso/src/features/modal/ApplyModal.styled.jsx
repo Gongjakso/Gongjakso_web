@@ -48,13 +48,12 @@ export const MainTitle = styled.div`
     font-size: 1.5rem;
     font-family: 'PreBold';
     letter-spacing: 0.5px;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 `;
 
 // 텍스트 전체 틀
 export const DetailBox = styled.div`
     padding: 15px;
-    margin-top: 0.8rem;
     position: relative;
 `;
 
@@ -63,7 +62,7 @@ export const DetailBox2 = styled.div`
 `;
 
 export const SubTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: ${({ theme }) => theme.fontSize.lg};
     font-family: 'PreBold';
 `;
 
@@ -191,7 +190,7 @@ export const ApplyBtn = styled.button`
     border-radius: 10px;
     margin: 15px;
     padding: 13px;
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;

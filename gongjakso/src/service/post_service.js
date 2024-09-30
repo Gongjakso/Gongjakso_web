@@ -24,7 +24,7 @@ export const getContestTeamList = async (
     page,
     sortBy,
 ) => {
-    const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sortAt=${sortBy}`;
+    const reqURL = `contest/${id}/team/list?province=${selectedCityData}&district=${selectedTownData}&page=${page - 1}&size=6&sort=${sortBy}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
@@ -65,9 +65,7 @@ export const getCheckStatus = async id => {
     try {
         const response = await axiosInstance.get(reqURL);
         return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (error) {}
 };
 
 // [POST] 공고 상세페이지 팀 스크랩 API
@@ -138,7 +136,7 @@ export const getContestPosts = async (
     selectedTownData,
     searchKeyword,
 ) => {
-    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sortAt=${sort}`;
+    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sort=${sort}`;
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
             headers: {
@@ -157,9 +155,7 @@ export const patchCompletedPost = async post_id => {
     try {
         const response = await axiosInstance.patch(reqURL);
         return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (error) {}
 };
 
 export const getContestList = async (page, searchKeyword, sortBy) => {

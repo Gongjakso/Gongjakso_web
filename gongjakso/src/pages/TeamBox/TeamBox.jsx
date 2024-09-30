@@ -100,33 +100,6 @@ const TeamBox = ({
         dispatch(closeConfirmModal());
     };
 
-    const startDate = new Date(postContent?.startDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
-    const finishDate = new Date(postContent?.finishDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
-    const endDate = new Date(postContent?.endDate)
-        .toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        })
-        .split('. ')
-        .join('.');
-
     function getDisplayCategory(recruit_part) {
         let displayCategory;
 
@@ -137,12 +110,6 @@ const TeamBox = ({
             case '디자인':
                 displayCategory = '디자인';
                 break;
-            case 'FE':
-                displayCategory = '프론트엔드';
-                break;
-            case 'BE':
-                displayCategory = '백엔드';
-                break;
             case '기타':
                 displayCategory = '기타';
                 break;
@@ -151,6 +118,26 @@ const TeamBox = ({
         }
 
         return displayCategory;
+    }
+
+    function getDisplayApplyCategory(apply_part) {
+        let displayApplyCategory;
+
+        switch (apply_part) {
+            case '기획':
+                displayApplyCategory = '기획';
+                break;
+            case '디자인':
+                displayApplyCategory = '디자인';
+                break;
+            case '기타':
+                displayApplyCategory = '기타';
+                break;
+            default:
+                displayApplyCategory = apply_part;
+        }
+
+        return displayApplyCategory;
     }
 
     return (
@@ -168,7 +155,6 @@ const TeamBox = ({
                             {isMyParticipation === true &&
                                 `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
                             {isMyParticipation === null &&
-                                // `| ${postContent?.name} | ${postContent?.startedAt}~${postContent?.finishedAt} |`}
                                 `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
                         </S.subTitle>
                     </S.MainBox>
@@ -176,9 +162,15 @@ const TeamBox = ({
                         <S.SubBox>
                             <S.DeadLine>
                                 <S.FireImage />
-                                {postContent?.d_day < 0
-                                    ? '마감된 공고'
-                                    : `마감 D-${postContent?.d_day}`}
+                                {postContent?.status === '모집 취소'
+                                    ? `취소`
+                                    : postContent?.status === '모집 마감'
+                                      ? `마감`
+                                      : postContent?.d_day > 0
+                                        ? `마감 D-${postContent?.d_day}`
+                                        : postContent?.d_day === 0
+                                          ? `마감 D-day`
+                                          : `마감`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
@@ -217,7 +209,14 @@ const TeamBox = ({
                                     );
                                 },
                             )
+                        ) : postContent?.applicant_id ? (
+                            <S.RoundForm>
+                                {getDisplayApplyCategory(
+                                    postContent?.apply_part,
+                                )}
+                            </S.RoundForm>
                         ) : (
+                            // 내가 모집 중인 팀
                             postContent?.recruit_part?.map(
                                 (categoryList, index) => {
                                     return (
@@ -239,12 +238,13 @@ const TeamBox = ({
                             </>
                         )} */}
                     {showWaitingJoin && (
-                        <S.WaitingJoin $applytype={postContent?.applyType}>
-                            {postContent?.applyType === 'PASS'
+                        <S.WaitingJoin $status={postContent?.status}>
+                            {postContent?.status === '합류 완료'
                                 ? '합류 완료'
-                                : postContent?.applyType === 'NOT_PASS'
+                                : postContent?.status === '미선발'
                                   ? '미선발'
                                   : '합류 대기중'}
+                            {/*수정 필요. status X*/}
                             {postContent?.status === 'CLOSE' && (
                                 <S.DeadlineOverlay $status={postContent.status}>
                                     모집이 마감되었습니다.

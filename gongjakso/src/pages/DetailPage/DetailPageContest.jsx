@@ -223,7 +223,11 @@ const DetailPageContest = () => {
     return (
         <>
             {myAppOpen ? (
-                <ClickmyApply id={postId} setOpen={setmyAppOpen} type={false} />
+                <ClickmyApply
+                    applyId={userId}
+                    setOpen={setmyAppOpen}
+                    type={false}
+                />
             ) : null}
 
             {/* 지원하기 모달 */}
@@ -306,7 +310,7 @@ const DetailPageContest = () => {
 
                                 <S.ApplyBtn
                                     onClick={() => {
-                                        // setmyAppOpen(true);
+                                        setmyAppOpen(true);
                                     }}
                                 >
                                     지원서 보기

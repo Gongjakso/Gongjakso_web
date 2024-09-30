@@ -24,8 +24,8 @@ const MakePortfolio = ({ portfolioId }) => {
         {
             id: uuidv4(),
             schoolName: '',
-            gradeStatus: '1학년',
-            state: '재학 중',
+            gradeStatus: '',
+            state: '',
         },
     ]);
     const [careerSections, setCareerSections] = useState([
@@ -38,7 +38,7 @@ const MakePortfolio = ({ portfolioId }) => {
         },
     ]);
     const [activitySections, setActivitySections] = useState([
-        { id: uuidv4(), activityName: '', activityStatus: '활동 중' },
+        { id: uuidv4(), activityName: '', activityStatus: '' },
     ]);
     const [awardSections, setAwardSections] = useState([
         { id: uuidv4(), competitionName: '', award: '' },
@@ -138,16 +138,16 @@ const MakePortfolio = ({ portfolioId }) => {
                         portfolioData.educationList.length
                             ? portfolioData.educationList.map(section => ({
                                   schoolName: section.school || '',
-                                  gradeStatus: section.grade || '1학년',
-                                  state: section.state || '재학 중',
+                                  gradeStatus: section.grade || '',
+                                  state: section.state || '',
                                   id: uuidv4(),
                               }))
                             : [
                                   {
                                       id: uuidv4(),
                                       schoolName: '',
-                                      gradeStatus: '1학년',
-                                      state: '재학 중',
+                                      gradeStatus: '',
+                                      state: '',
                                   },
                               ],
                     );
@@ -187,7 +187,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                   {
                                       id: uuidv4(),
                                       activityName: '',
-                                      activityStatus: '활동 중',
+                                      activityStatus: '',
                                   },
                               ],
                     );
@@ -369,10 +369,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                 <SelectInput
                                     id={`Gradestatus-${index}`}
                                     selectOptions={gradeStatus_options}
-                                    placeholder={
-                                        section.gradeStatus ||
-                                        gradeStatus_options[0]
-                                    }
+                                    placeholder={section.gradeStatus || '학년'}
                                     value={section.gradeStatus || ''}
                                     onChange={value => {
                                         const updatedSections = [
@@ -389,9 +386,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                 <SelectInput
                                     id={`Educationstatus-${index}`}
                                     selectOptions={status_options}
-                                    placeholder={
-                                        section.state || status_options[0]
-                                    }
+                                    placeholder={section.state || '상태'}
                                     value={section.state || ''}
                                     onChange={value => {
                                         const updatedSections = [
@@ -569,8 +564,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     id={`Activitystatus-${index}`}
                                     selectOptions={activityStatus_options}
                                     placeholder={
-                                        section.activityStatus ||
-                                        activityStatus_options[0]
+                                        section.activityStatus || '활동 상태'
                                     }
                                     value={section.activityStatus || ''}
                                     onChange={value => {

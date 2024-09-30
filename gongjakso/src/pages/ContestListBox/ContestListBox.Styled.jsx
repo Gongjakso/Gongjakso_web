@@ -8,6 +8,7 @@ export const ContestContainer = styled.div`
     flex-direction: column;
     /* align-items: center; */
     position: relative; /* 부모 컨테이너에 상대적 위치 지정 */
+    margin-bottom: 15px;
 `;
 
 export const ContestImg = styled.img`
@@ -46,6 +47,7 @@ export const ContestTitle = styled.h2`
     font-weight: 700;
     line-height: 19.09px;
     text-align: left;
+    margin-bottom: 5px;
 `;
 
 export const ContestCompany = styled.h2`

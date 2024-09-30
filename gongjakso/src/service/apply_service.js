@@ -104,17 +104,19 @@ export const patchOpen = async apply_id => {
     }
 };
 
-export const getMyApplication = async postid => {
-    const reqURL = `apply/my/${postid}`;
+// [GET] 나의 지원서 보기 API
+export const getMyApplication = async id => {
+    const reqURL = `apply/${id}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
         console.log(error);
     }
 };
 
+// [DELETE] 공고 상세페이지 지원 취소 API
 export const applyCancel = async apply_id => {
     const reqURL = `apply/${apply_id}`;
 
@@ -132,7 +134,6 @@ export const getMyRecruitingTeam = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response?.data;
     } catch (error) {
         console.log(error);
@@ -140,8 +141,8 @@ export const getMyRecruitingTeam = async id => {
 };
 
 // 지원자 합류하기, 미선발
-export const patchApply = async (applyId, status) => {
-    const reqURL = `apply/select/${applyId}`;
+export const patchApply = async (id, status) => {
+    const reqURL = `apply/select/${id}`;
 
     try {
         const response = await axiosInstanceV2.patch(reqURL, { status });

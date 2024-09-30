@@ -2,11 +2,9 @@ import * as S from './ApplyModal.styled';
 import Close from '../../assets/images/Close.svg';
 import { useEffect, useState } from 'react';
 import { getMyApplication } from '../../service/apply_service';
-import { getMyPortfolio } from '../../service/post_service';
 
 const ClickmyApply = props => {
-    const [myApp, setmyApp] = useState([]);
-    const [portfolioData, setportfolioData] = useState([]);
+    const [myApp, setmyApp] = useState(null);
 
     // 스크롤 방지
     useEffect(() => {
@@ -25,17 +23,12 @@ const ClickmyApply = props => {
     // 특정 지원자 지원서 열람하기
     useEffect(() => {
         getMyApplication(props.applyId).then(res => {
-            console.log(res?.data);
+            console.log('지원서 데이터:', res?.data); // API 응답 확인
             setmyApp(res?.data);
-        });
-
-        // [GET] 내 포트폴리오 리스트 조회 API
-        getMyPortfolio().then(res => {
-            setportfolioData(res?.data);
         });
     }, [props.applyId]);
 
-    // console.log(portfolioData);
+    if (!myApp) return null; // 데이터가 로드되기 전에는 아무것도 렌더링하지 않음
 
     return (
         <div>
@@ -54,6 +47,7 @@ const ClickmyApply = props => {
                         <S.Major>{myApp?.applicant_phone}</S.Major>
                         <S.Major>{myApp?.applicant_major}</S.Major>
                     </S.MainTitle>
+
                     <S.DetailBox>
                         <S.SubTitle>지원 분야</S.SubTitle>
                         <S.FormBox>
@@ -72,17 +66,7 @@ const ClickmyApply = props => {
                     </S.DetailBox>
 
                     <S.DetailBox>
-                        <S.SubTitle>나의 포트폴리오</S.SubTitle>
-                        {/* <S.FormBox>
-                            <S.RoundForm
-                                $isselected={true}
-                                style={{ cursor: 'default' }}
-                            >
-                                {myApp?.is_private
-                                    ? '비공개'
-                                    : myApp?.portfolio_name}
-                            </S.RoundForm>
-                        </S.FormBox> */}
+                        <S.SubTitle>포트폴리오</S.SubTitle>
                         <S.FormBox>
                             {myApp?.is_private ? (
                                 <S.RoundForm
@@ -92,18 +76,13 @@ const ClickmyApply = props => {
                                     비공개
                                 </S.RoundForm>
                             ) : (
-                                portfolioData?.map((item, i) => (
-                                    <S.PortForm
-                                        key={i}
-                                        $isselected={
-                                            item.PortfolioName ===
-                                            myApp?.portfolio_name
-                                        }
-                                        style={{ cursor: 'default' }}
-                                    >
-                                        {item.PortfolioName}
-                                    </S.PortForm>
-                                ))
+                                <S.RoundForm
+                                    $isselected={true}
+                                    style={{ cursor: 'default' }}
+                                >
+                                    {myApp?.portfolio_name ||
+                                        '포트폴리오가 없습니다.'}
+                                </S.RoundForm>
                             )}
                         </S.FormBox>
                     </S.DetailBox>

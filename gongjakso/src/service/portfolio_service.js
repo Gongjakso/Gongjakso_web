@@ -50,19 +50,19 @@ export const getPortfolio = async id => {
         return response;
     } catch (error) {
         console.log(error);
-        return error.response.data.code;
+        return error.response?.data.code;
     }
 };
 
 // 존재 포트폴리오 상세 get
-export const getExistPortfolio = async id => {
-    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
+export const getExistPortfolio = async (id, type) => {
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}?dataType=${type}`;
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
         return response;
     } catch (error) {
-        console.log(error);
+        console.log('Error getting portfolio details:', error);
         return error.response.data.code;
     }
 };
@@ -106,8 +106,8 @@ export const deletePortfolio = async id => {
 };
 
 // 존재 포트폴리오 delete
-export const deleteExistPortfolio = async id => {
-    const reqURL = `mypage/portfolio/exist-portfolio/${id}`;
+export const deleteExistPortfolio = async (id, type) => {
+    const reqURL = `mypage/portfolio/exist-portfolio/${id}?dataType=${type}`;
     try {
         await axiosInstanceV2.delete(reqURL);
     } catch (error) {
