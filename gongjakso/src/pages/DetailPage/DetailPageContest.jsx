@@ -521,7 +521,7 @@ const DetailPageContest = () => {
                                                 alt="porfolio-link"
                                                 onClick={() => {
                                                     window.open(
-                                                        'http://localhost:3000/profile/useportfolio',
+                                                        `${window.location.origin}/profile`,
                                                         '_blank',
                                                     );
                                                 }}
