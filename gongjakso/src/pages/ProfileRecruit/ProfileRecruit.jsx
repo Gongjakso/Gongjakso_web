@@ -3,7 +3,7 @@ import * as S from './ProfileRecruit.styled';
 import User from '../../assets/images/My_page_big.svg';
 import arrow from '../../assets/images/Arrow.svg';
 import MyPageTeam from '../../features/modal/MyPageTeam';
-import ClickApply from '../../features/modal/ClickApply';
+import ClickRecruitApplicant from '../../features/modal/ClickRecruitApplicant';
 import Pagination from '../../components/Pagination/Pagination';
 import {
     getApplyList,
@@ -58,9 +58,13 @@ const ProfileRecruit = () => {
         const id = contestData?.id;
 
         getMyRecruitingTeam(id).then(response => {
+            const acceptedApplicants = response?.data.filter(
+                applicant => applicant.status === 'ACCEPTED',
+            );
             setPosts(response?.data); // 지원자 리스트 설정
-            setTotalMember(response?.data.length);
-
+            setTotalMember(
+                acceptedApplicants?.length ? acceptedApplicants?.length : 0,
+            );
             // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
             const initialStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
@@ -79,9 +83,13 @@ const ProfileRecruit = () => {
 
     const handleBoxClick = index => {
         const newStatuses = [...statuses];
-        // 'gray'와 'black' 상태 토글
         newStatuses[index] = newStatuses[index] === 'gray' ? 'black' : 'gray';
         setStatuses(newStatuses);
+    };
+
+    const handleClick = (index, applicant) => {
+        setItem(applicant); // 선택된 지원자 정보를 상태에 저장
+        setShowApply(true); // 모달을 열기 위한 상태 설정
     };
 
     const handleNotSelectedClick = async () => {
@@ -116,17 +124,6 @@ const ProfileRecruit = () => {
             }
         }
         setStatuses(updatedStatuses);
-    };
-
-    const handleClick = (index, id) => {
-        const newData = [...posts]; // 데이터 복사
-        const dataIndex = newData.findIndex(item => item.id === id);
-        if (dataIndex !== -1) {
-            newData[dataIndex].open = true; // 해당 데이터의 open 값을 true로 변경
-            setPosts(newData); // 상태 업데이트
-        } else {
-            console.error(`ID ${id}에 해당하는 데이터를 찾을 수 없습니다.`);
-        }
     };
 
     // 활동기간 수정 함수
@@ -187,6 +184,7 @@ const ProfileRecruit = () => {
                     teamCase={teamCase[1]}
                     CloseModal={setExtend}
                     id={contestData}
+                    recruitFinishedAt={recruitTeam?.recruit_finished_at}
                 />
             ) : cancel ? (
                 <MyPageTeam
@@ -194,14 +192,10 @@ const ProfileRecruit = () => {
                     CloseModal={setCancel}
                     id={contestData}
                 />
-            ) : showApply ? (
-                <ClickApply
-                    setShowApply={setShowApply}
-                    item={item}
-                    type={recruitTeam.postType}
-                    idNum={idNum}
-                    idName={idName}
-                    id={postId}
+            ) : showApply && item ? (
+                <ClickRecruitApplicant
+                    applyId={item.id} // 지원자의 ID를 모달로 전달
+                    setOpen={setShowApply} // 모달 닫기 함수 전달
                 />
             ) : null}
 
@@ -308,17 +302,8 @@ const ProfileRecruit = () => {
                                             <S.BtnContainer>
                                                 <S.ShowBtn
                                                     onClick={() => {
-                                                        setItem(i);
-                                                        handleClick(i, item.id);
-                                                        setShowApply(true);
-                                                        setidNum(item.id);
-                                                        setidName(
-                                                            item.memberName,
-                                                        );
-                                                        ClickOpen(
-                                                            item.id,
-                                                            item.state,
-                                                        );
+                                                        // 지원서 보기 버튼 클릭 시 항상 모달이 뜨도록 설정
+                                                        handleClick(i, item);
                                                     }}
                                                 >
                                                     지원서 보기
@@ -327,14 +312,15 @@ const ProfileRecruit = () => {
                                                         alt="arrow"
                                                     />
                                                 </S.ShowBtn>
-
-                                                <S.ShowPortBtn
-                                                    onClick={() => {
-                                                        //api 연결 예정
-                                                    }}
-                                                >
-                                                    포트폴리오 보기
-                                                </S.ShowPortBtn>
+                                                {item.portfolio_id && (
+                                                    <S.ShowPortBtn
+                                                        onClick={() => {
+                                                            // 포트폴리오 보기 로직 추가
+                                                        }}
+                                                    >
+                                                        포트폴리오 보기
+                                                    </S.ShowPortBtn>
+                                                )}
                                             </S.BtnContainer>
                                         )}
                                         <S.TableBox>

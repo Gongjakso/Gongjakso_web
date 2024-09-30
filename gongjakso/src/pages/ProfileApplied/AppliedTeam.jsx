@@ -29,7 +29,7 @@ const TeamSupport = () => {
         });
     }, []);
 
-    const loadParticipatedPosts = page => {
+    const loadAppliedPosts = page => {
         getMyApplied(page, 6).then(response => {
             setPostContent2(response?.data.content);
             setTotalPage(response?.data.totalPages);
@@ -63,7 +63,7 @@ const TeamSupport = () => {
                     total={totalPage}
                     page={page}
                     setPage={setPage}
-                    loadPosts={loadParticipatedPosts}
+                    loadPosts={loadAppliedPosts}
                 />
             </S.BoxDetail>
         </div>
