@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as downloadImg } from '../../assets/images/download.svg';
 
 export const TopBox = styled.div`
     height: 21rem;
@@ -109,11 +110,21 @@ export const BottomBox = styled.div`
 `;
 
 export const PdfButton = styled.button`
-    width: 100px;
+    width: 150px;
     height: 50px;
-    border-radius: 15px;
-    background-color: ${({ theme }) => theme.Main2};
     position: absolute; /* 절대 위치 설정 */
-    top: 100px; /* 상단 여백 */
-    right: 100px; /* 오른쪽 여백 */
+    top: 230px; /* 상단 여백 */
+    right: 150px; /* 오른쪽 여백 */
+`;
+
+export const Span = styled.span`
+    font-size: 1.3rem;
+    font-family: 'PreBold';
+    border-bottom: 2px solid black;
+`;
+
+export const Downimg = styled(downloadImg)`
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
 `;

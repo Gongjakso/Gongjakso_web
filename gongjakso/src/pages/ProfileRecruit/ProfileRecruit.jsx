@@ -302,17 +302,17 @@ const ProfileRecruit = () => {
                                             <S.BtnContainer>
                                                 <S.ShowBtn
                                                     onClick={() => {
-                                                        setItem(i);
-                                                        handleClick(i, item.id);
-                                                        // setShowApply(true);
-                                                        setidNum(item.id);
-                                                        setidName(
-                                                            item.memberName,
-                                                        );
-                                                        ClickOpen(
-                                                            item.id,
-                                                            item.state,
-                                                        );
+                                                        // setItem(i);
+                                                        // handleClick(i, item.id);
+                                                        // // setShowApply(true);
+                                                        // setidNum(item.id);
+                                                        // setidName(
+                                                        //     item.memberName,
+                                                        // );
+                                                        // ClickOpen(
+                                                        //     item.id,
+                                                        //     item.state,
+                                                        // );
                                                         window.open(
                                                             `http://localhost:3000/application/${item.id}`,
                                                             '_blank',

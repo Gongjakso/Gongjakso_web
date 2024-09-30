@@ -110,8 +110,6 @@ export const getMyApplication = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
-        console.log('지원자의 ID:', response.data.data.id);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -136,7 +134,6 @@ export const getMyRecruitingTeam = async id => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response);
         return response?.data;
     } catch (error) {
         console.log(error);
