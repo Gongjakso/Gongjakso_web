@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as downloadImg } from '../../assets/images/download.svg';
+import {ReactComponent as LinkImg} from '../../assets/images/link.svg';
+
 
 export const TopBox = styled.div`
     height: 21rem;
@@ -46,14 +48,17 @@ export const DetailBox = styled.div`
     padding: 1.5rem;
 `;
 
-export const ContentBox = styled.div`
+export const ContentBox = styled.p`
     margin-top: 1.5rem;
     padding: 1.5rem;
     width: 100%;
-    height: 22rem;
+    height: auto;
+    min-height: 22rem;
     border: 1.5px solid ${({ theme }) => theme.Grey};
     border-radius: 9px;
     font-size: ${({ theme }) => theme.fontSize.m};
+    resize: none;
+    word-wrap:break-word;
 `;
 
 export const BoxDetail = styled.div`
@@ -128,3 +133,18 @@ export const Downimg = styled(downloadImg)`
     height: 25px;
     margin-right: 10px;
 `;
+export const Linklogo = styled(LinkImg)`
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+`;
+
+export const fileLinkBtn = styled.button`
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #E5F5FF;
+`
