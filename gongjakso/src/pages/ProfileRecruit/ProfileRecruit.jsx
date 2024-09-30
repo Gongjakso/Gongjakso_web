@@ -302,8 +302,21 @@ const ProfileRecruit = () => {
                                             <S.BtnContainer>
                                                 <S.ShowBtn
                                                     onClick={() => {
-                                                        // 지원서 보기 버튼 클릭 시 항상 모달이 뜨도록 설정
-                                                        handleClick(i, item);
+                                                        setItem(i);
+                                                        handleClick(i, item.id);
+                                                        // setShowApply(true);
+                                                        setidNum(item.id);
+                                                        setidName(
+                                                            item.memberName,
+                                                        );
+                                                        ClickOpen(
+                                                            item.id,
+                                                            item.state,
+                                                        );
+                                                        window.open(
+                                                            `http://localhost:3000/application/${item.id}`,
+                                                            '_blank',
+                                                        );
                                                     }}
                                                 >
                                                     지원서 보기
