@@ -53,3 +53,47 @@ export const ContentBox = styled.div`
     border-radius: 9px;
     font-size: ${({ theme }) => theme.fontSize.m};
 `;
+
+export const BoxDetail = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: -0.5rem;
+`;
+
+export const InputContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+`;
+
+export const PortBox = styled.div`
+    width: ${props => props.$w};
+    height: 3.438rem;
+    margin-top: 1.5rem;
+    margin-right: 0.5rem;
+    border: 1.5px solid ${({ theme }) => theme.Grey};
+    padding: 0.983rem 1.125rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    border-radius: 9px;
+    color: #828293;
+    display: flex;
+    align-items: center;
+`;
+
+export const FlexPortBox = styled(PortBox)`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const WorkContent = styled.div`
+    width: 100%;
+    display: inline-block;
+    padding: 0.983rem 1.125rem;
+    margin-top: 1.5rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    border: 1.5px solid ${({ theme }) => theme.Grey};
+    border-radius: 9px;
+    color: #828293;
+`;
