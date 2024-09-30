@@ -249,7 +249,8 @@ const PdfUserApplication = () => {
                 </S.BottomBox>
             </section>
             <S.PdfButton variant="outlined" onClick={downloadPDF}>
-                pdf다운
+                <S.Downimg />
+                <S.Span>지원서PDF다운</S.Span>
             </S.PdfButton>
         </>
     );

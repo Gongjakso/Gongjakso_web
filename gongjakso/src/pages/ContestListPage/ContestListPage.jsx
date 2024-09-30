@@ -85,11 +85,11 @@ const ContestListPage = () => {
 
     const handleSelectChange = selectedValue => {
         if (selectedValue === '조회순') {
-            setSortBy('scrap');
+            setSortBy('VIEW');
         } else if (selectedValue === '최신순') {
             setSortBy('createdAt');
         } else {
-            setSortBy('scrap');
+            setSortBy('createdAt');
         }
     };
 
