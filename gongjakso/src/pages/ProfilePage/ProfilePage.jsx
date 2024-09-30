@@ -106,7 +106,6 @@ const ProfilePage = () => {
                     );
                     setPortfolioExists(isAnyRegistered);
                     setPortfolioList(portfolios);
-                    console.log(portfolios);
                     portfolios.forEach(async portfolio => {
                         if (portfolio.isExistedPortfolio) {
                             await fetchPortfolioDetails(portfolio.PortfolioId);

@@ -47,7 +47,6 @@ export const getMyApplied = async page => {
 
     try {
         const response = await axiosInstanceV2.get(reqURL);
-        console.log(response?.data);
         return response.data;
     } catch (error) {
         console.log('내가 지원한 게시글을 가져올 수 없습니다.');
