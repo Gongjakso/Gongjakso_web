@@ -547,7 +547,7 @@ const ProfilePage = () => {
                     )}
                 </S.BoxDetail>
                 <S.BoxDetail>
-                    <S.SubTitle>내가 모집 중인 팀</S.SubTitle>
+                    <S.SubTitle>나의 모집 기록</S.SubTitle>
                     {postContent1?.map(post => (
                         <TeamBox
                             key={post?.id}
@@ -562,7 +562,7 @@ const ProfilePage = () => {
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>
-                        <span>내가 지원한 팀</span>
+                        <span>나의 지원 기록</span>
                         <Link to="/appliedTeam">
                             <S.ArrowImage />
                         </Link>
@@ -580,7 +580,7 @@ const ProfilePage = () => {
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>
-                        <span>내가 참여한 공모전</span>
+                        <span>나의 참여 기록</span>
                         <Link to="/participatedTeam">
                             <S.ArrowImage />
                         </Link>
