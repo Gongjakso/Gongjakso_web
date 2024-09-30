@@ -50,7 +50,7 @@ export const getPortfolio = async id => {
         return response;
     } catch (error) {
         console.log(error);
-        return error.response.data.code;
+        return error.response?.data.code;
     }
 };
 
