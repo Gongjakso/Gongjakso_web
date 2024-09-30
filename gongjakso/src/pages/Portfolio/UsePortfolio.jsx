@@ -28,9 +28,8 @@ const UsePortfolio = () => {
 
                 const fileData = fileResponse?.data?.data;
                 const notionData = notionResponse?.data?.data;
-
                 // 파일과 노션 데이터 상태에 저장
-                if (fileData) {
+                if (fileData && fileData.fileUri) {
                     const fileName = fileData.fileUri
                         .split('/')
                         .pop()
@@ -41,9 +40,10 @@ const UsePortfolio = () => {
                         uri: fileData.fileUri,
                     });
                 }
-
-                if (notionData) {
+                if (notionData && notionData.notionUri) {
                     setSnsLink(notionData.notionUri || '');
+                } else {
+                    console.log('No Notion URI found');
                 }
             } catch (error) {
                 console.error(
@@ -52,8 +52,9 @@ const UsePortfolio = () => {
                 );
             }
         };
-
-        fetchPortfolio();
+        if (id) {
+            fetchPortfolio();
+        }
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
@@ -192,7 +193,9 @@ const UsePortfolio = () => {
                     <S.LinkContainer>
                         <S.LinkIcon />
                         <S.SNSInput
-                            placeholder="노션 링크를 입력해주세요."
+                            placeholder={
+                                !snsLink ? '노션 링크를 입력해주세요.' : ''
+                            }
                             value={snsLink} // 디폴트 값으로 상태에서 가져온 snsLink 사용
                             onChange={e => setSnsLink(e.target.value)}
                         />
