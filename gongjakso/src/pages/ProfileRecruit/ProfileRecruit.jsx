@@ -56,16 +56,15 @@ const ProfileRecruit = () => {
 
     useEffect(() => {
         const id = contestData?.id;
-        console.log(postId);
-        console.log(contestData?.id);
 
         getMyRecruitingTeam(id).then(response => {
             const acceptedApplicants = response?.data.filter(
                 applicant => applicant.status === 'ACCEPTED',
             );
             setPosts(response?.data); // 지원자 리스트 설정
-            setTotalMember(acceptedApplicants.length);
-
+            setTotalMember(
+                acceptedApplicants?.length ? acceptedApplicants?.length : 0,
+            );
             // 서버에서 받아온 지원자의 status를 기반으로 statuses 상태 초기화
             const initialStatuses = response?.data.map(applicant => {
                 if (applicant.status === 'COMPLETED') {
@@ -185,6 +184,7 @@ const ProfileRecruit = () => {
                     teamCase={teamCase[1]}
                     CloseModal={setExtend}
                     id={contestData}
+                    recruitFinishedAt={recruitTeam?.recruit_finished_at}
                 />
             ) : cancel ? (
                 <MyPageTeam

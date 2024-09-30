@@ -164,11 +164,13 @@ const TeamBox = ({
                                 <S.FireImage />
                                 {postContent?.status === '모집 취소'
                                     ? `취소`
-                                    : postContent?.d_day > 0
-                                      ? `마감 D-${postContent?.d_day}`
-                                      : postContent?.d_day === 0
-                                        ? `마감 D-day`
-                                        : `마감`}
+                                    : postContent?.status === '모집 마감'
+                                      ? `마감`
+                                      : postContent?.d_day > 0
+                                        ? `마감 D-${postContent?.d_day}`
+                                        : postContent?.d_day === 0
+                                          ? `마감 D-day`
+                                          : `마감`}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />

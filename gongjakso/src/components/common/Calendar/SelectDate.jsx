@@ -4,15 +4,11 @@ import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import { ko } from 'date-fns/locale';
 
-const SelectDate = ({ onChange, value, text }) => {
+const SelectDate = ({ onChange, value, text, minDate }) => {
     const [nowDate, setNowDate] = useState();
     const [isOpen, setIsOpen] = useState(false);
-    const today = new Date();
 
-    useEffect(() => {
-        const today = moment().format('YYYY-MM-DD');
-        console.log(isOpen);
-    }, [isOpen]);
+    const nextDayMinDate = moment(minDate).add(1, 'days').format('YYYY-MM-DD');
 
     const handleToggleCalendar = () => {
         setIsOpen(!isOpen);
@@ -34,8 +30,8 @@ const SelectDate = ({ onChange, value, text }) => {
                     locale={ko}
                     onChange={handleDateChange}
                     value={value}
-                    minDate={today}
-                ></Calendar>
+                    minDate={new Date(nextDayMinDate)} // 여기서 하루를 더한 날짜를 사용
+                />
             </S.CalendarWrapper>
         </S.CalendarContainer>
     );
