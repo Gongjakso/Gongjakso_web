@@ -33,6 +33,12 @@ const PdfUserApplication = () => {
         }
     }, [portId]);
 
+    const handleLinkClick = (url) => () => {
+        if (url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     const downloadPDF = () => {
         const element = document.getElementById('pdf-download'); // PDF로 변환할 요소 선택
         html2pdf(element, {
@@ -77,10 +83,10 @@ const PdfUserApplication = () => {
                     </S.DetailBox>
                     <S.DetailBox>
                         <S.SubTitle>지원이유</S.SubTitle>
-                        <S.ContentBox>{myApp?.body}</S.ContentBox>
+                        <S.ContentBox readOnly>{myApp?.body}</S.ContentBox>
                     </S.DetailBox>
 
-                    {!myApp?.is_private && (
+                    {portfolio?.data?.activityList ? (
                         <div>
                             <S.DetailBox>
                                 <S.SubTitle>학력</S.SubTitle>
@@ -238,6 +244,23 @@ const PdfUserApplication = () => {
                                 ))}
                             </S.DetailBox>
                         </div>
+                    ) : portfolio?.data?.fileUri ? (
+                        <S.DetailBox>
+                            <S.fileLinkBtn onClick={handleLinkClick(portfolio?.data?.fileUri)}>
+                            <S.Linklogo/>
+
+                                <S.Span>포트폴리오 파일 보기</S.Span>
+                            </S.fileLinkBtn>
+                        </S.DetailBox>
+                    ) : portfolio?.data?.notionUri ? (
+                        <S.DetailBox>
+                            <S.fileLinkBtn onClick={handleLinkClick(portfolio?.data?.notionUri)}>
+                                <S.Linklogo/>
+                                <S.Span>노션포트폴리오 보기</S.Span>
+                            </S.fileLinkBtn>
+                        </S.DetailBox>
+                    ) : (
+                        <></>
                     )}
                 </S.GlobalBox>
                 <S.BottomBox>
