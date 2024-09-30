@@ -8,6 +8,7 @@ export const TopBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative; /* 상대적 위치를 위한 설정 */
 
     img {
         width: 72px;
@@ -59,6 +60,7 @@ export const BoxDetail = styled.div`
     flex-direction: column;
     width: 100%;
     margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
 `;
 
 export const InputContainer = styled.div`
@@ -96,4 +98,22 @@ export const WorkContent = styled.div`
     border: 1.5px solid ${({ theme }) => theme.Grey};
     border-radius: 9px;
     color: #828293;
+`;
+
+export const BottomBox = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 2rem 0;
+`;
+
+export const PdfButton = styled.button`
+    width: 100px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: ${({ theme }) => theme.Main2};
+    position: absolute; /* 절대 위치 설정 */
+    top: 100px; /* 상단 여백 */
+    right: 100px; /* 오른쪽 여백 */
 `;
