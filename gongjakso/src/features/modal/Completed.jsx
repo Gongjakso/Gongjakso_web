@@ -29,6 +29,7 @@ const Completed = props => {
             part: props.clickedFields,
             status: 'COMPLETED',
             isPrivate: props.isclosed,
+            dataType: props.dataType,
         };
         postApply(props.id, newData).then(res => {});
     };

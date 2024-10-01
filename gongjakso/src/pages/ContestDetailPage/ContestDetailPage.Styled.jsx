@@ -28,7 +28,6 @@ export const ContestInfo = styled.div`
 `;
 
 export const ContestTitle = styled.p`
-    font-family: 'The Jamsil OTF';
     font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: 700;
     line-height: 52.8px;
@@ -47,7 +46,6 @@ export const ContestImg = styled.img`
 `;
 export const RemainDate = styled.div`
     width: auto;
-    height: 27px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,8 +56,7 @@ export const RemainDate = styled.div`
     text-align: center;
     color: ${({ theme }) => theme.mainFont2};
     background-color: ${({ theme }) => theme.Purple};
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0.5rem 1rem;
 `;
 
 export const SpanP = styled.p`
@@ -74,18 +71,18 @@ export const FireImage = styled(Fire)`
 `;
 
 export const Organization = styled.h2`
-    font-family: 'Pretendard';
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 700;
     line-height: 28.64px;
     text-align: left;
     margin-bottom: 25px;
+    padding-left: 0.5rem;
 `;
 
 export const InfoContent = styled.h3`
     display: flex;
     flex-direction: row;
-    font-family: 'Pretendard';
+    // font-family: 'Pretendard';
     font-size: 16px;
     font-weight: 700;
     line-height: 23.87px;
@@ -93,7 +90,7 @@ export const InfoContent = styled.h3`
     gap: 10px;
 `;
 export const InfoSpan = styled.p`
-    font-family: 'Pretendard';
+    // font-family: 'Pretendard';
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     line-height: 23.87px;
@@ -111,32 +108,37 @@ export const ContestButtonOption = styled.div`
 
 export const GotohomeBtn = styled.button`
     background-color: ${({ theme }) => theme.border};
-    width: 20%;
+    width: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     height: 50px;
-    border-radius: 15px;
+    border-radius: 12px;
     margin: 15px;
-    padding: 18px;
+    padding: 20px;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: bold;
+
+    img {
+        margin-left: 0.2rem;
+        width: 1.3rem;
+    }
 `;
 export const TeamBuildBtn = styled.button`
     background-color: ${({ theme }) => theme.box1};
-    width: 20%;
+    width: 24%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     height: 50px;
-    border-radius: 15px;
+    border-radius: 12px;
     margin: 15px;
-    padding: 18px;
+    padding: 20px;
     color: ${({ theme }) => theme.mainFont2};
     font-size: ${({ theme }) => theme.fontSize.md};
-    font-weight: bold;
+    font-weight: 500;
 `;
 
 export const Headline = styled.hr`
@@ -156,8 +158,8 @@ export const Fillterbox = styled.div`
     margin-bottom: 30px;
 `;
 export const Fillter1 = styled.div`
-    width: 220px;
-    border-radius: 10px;
+    width: 190px;
+    border-radius: 5px;
     border: 1.5px solid #c4c4c4;
     padding: 12px 18px;
     display: flex;

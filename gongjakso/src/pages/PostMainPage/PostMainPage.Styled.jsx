@@ -69,8 +69,8 @@ export const Fillterbox = styled.div`
     margin-bottom: 30px;
 `;
 export const Fillter1 = styled.div`
-    width: 220px;
-    border-radius: 10px;
+    width: 190px;
+    border-radius: 6px;
     border: 1.5px solid #c4c4c4;
     padding: 12px 18px;
     display: flex;

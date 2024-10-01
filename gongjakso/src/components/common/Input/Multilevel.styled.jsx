@@ -12,22 +12,22 @@ export const Dropdown = styled.div`
         text-align: left;
         padding: ${props =>
             props.$ispost === 'true' ? '10px 19px' : '12px 18px'};
-        width: ${props => (props.$ispost === 'true' ? '200px' : '220px')};
+        width: ${props => (props.$ispost === 'true' ? '200px' : '190px')};
         font-size: ${({ theme, $ispost }) =>
-            $ispost === 'true' ? '1.15rem' : theme.fontSize.md};
+            $ispost === 'true' ? theme.fontSize.base : theme.fontSize.m};
         color: ${props => (props.$ispost === 'true' ? 'gray' : 'black')};
-        border-radius: ${props => (props.$ispost === 'true' ? '25px' : '10px')};
+        border-radius: ${props => (props.$ispost === 'true' ? '25px' : '6px')};
     }
     .rnd__root-menu.rnd__menu {
         width: ${props =>
-            props.$ispost === 'true' ? '200px!important' : '220px!important'};
+            props.$ispost === 'true' ? '200px!important' : '190px!important'};
         z-index: 9999;
         font-family: 'PreRegular';
     }
 
     .rnd .rnd__root-menu.rnd__menu .rnd__option .rnd__option-label {
         font-size: ${({ theme, $ispost }) =>
-            $ispost === 'true' ? '1.15rem' : theme.fontSize.md};
+            $ispost === 'true' ? theme.fontSize.base : theme.fontSize.m};
         padding-left: 20px;
     }
 
@@ -37,7 +37,7 @@ export const Dropdown = styled.div`
         .rnd__menu.rnd__submenu.rnd__submenu--opened {
         max-height: 300px;
         overflow-y: scroll;
-        width: 200px !important;
+        width: 190px !important;
     }
     .rnd__option--with-menu:hover > .rnd__submenu {
         display: block;
@@ -46,7 +46,7 @@ export const Dropdown = styled.div`
     .rnd__option:not(.rnd__option--disabled):hover {
         background-color: black;
         color: white;
-        transition: background-color 0.1s ease;
+        transition: background-color 0.2s ease;
         border-radius: 4px;
     }
 `;
