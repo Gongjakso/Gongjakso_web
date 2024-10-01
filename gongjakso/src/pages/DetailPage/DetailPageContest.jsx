@@ -102,6 +102,7 @@ const DetailPageContest = () => {
     const [applyType, setapplyType] = useState(''); // 현재 지원자 선발 여부 (타이틀 옆 상태 표기)
 
     const [postId] = useState(team_id);
+    const [applyId, setApplyId] = useState();
 
     // GA 이벤트를 위한 설정
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
@@ -114,6 +115,7 @@ const DetailPageContest = () => {
             setCategory(res?.data.recruit_part);
             setscrapNum(res?.data.scrap_count);
             setapplyTitle(res?.data.title);
+            setApplyId(res?.data.apply_id);
 
             if (res?.data.team_role === 'APPLIER') {
                 setapplyType(res?.data.apply_status);
@@ -310,7 +312,10 @@ const DetailPageContest = () => {
 
                                 <S.ApplyBtn
                                     onClick={() => {
-                                        setmyAppOpen(true);
+                                        window.open(
+                                            `${window.location.origin}/application/${applyId}`,
+                                            '_blank',
+                                        );
                                     }}
                                 >
                                     지원서 보기

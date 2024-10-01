@@ -135,7 +135,7 @@
 //     );
 // };
 // export default Router;
-import { React, Suspense, lazy } from 'react';
+import { React, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RouteChangeTracker from '../utils/RouteChangeTracker';
 import ContestDetailPage from '../pages/ContestDetailPage/ContestDetailPage';
@@ -161,7 +161,6 @@ import RecruitedTeam from '../pages/ProfileRecruited/RecruitedTeam';
 import MyInfo from '../pages/ProfileInfo/MyInfo';
 import Scrap from '../pages/ScrapPage/Scrap';
 import ScrollToTop from '../pages/HomePage/ScrollToTop';
-
 
 const Router = () => {
     return (
@@ -210,10 +209,10 @@ const Router = () => {
                                 path="/contest/:contest_id/team/:team_id"
                                 element={<DetailPageContest />}
                             />
-                            <Route
+                            {/* <Route
                                 path="/project/:id"
                                 element={<DetailPageProject />}
-                            />
+                            /> */}
 
                             <Route path="/login" element={<Login />} />
                             <Route
