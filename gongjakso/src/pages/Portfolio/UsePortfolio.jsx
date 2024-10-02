@@ -42,8 +42,8 @@ const UsePortfolio = () => {
                 }
                 if (notionData && notionData.notionUri) {
                     setSnsLink(notionData.notionUri || '');
-                } else {
-                    console.log('No Notion URI found');
+                    // } else {
+                    //     console.log('No Notion URI found');
                 }
             } catch (error) {
                 console.error(
