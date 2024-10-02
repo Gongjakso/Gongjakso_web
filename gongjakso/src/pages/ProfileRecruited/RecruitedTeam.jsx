@@ -26,7 +26,6 @@ const RecruitedTeam = () => {
 
     const loadMyRecruiting = page =>
         getMyRecruiting(page, 6).then(res => {
-            console.log(res);
             setPostContent1(res?.data.content);
         });
 

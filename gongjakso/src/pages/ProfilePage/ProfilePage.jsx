@@ -133,9 +133,6 @@ const ProfilePage = () => {
         clickedType,
     ) => {
         try {
-            // 클릭된 타입 확인
-            console.log('Clicked Type:', clickedType);
-
             // 타입 설정
             setSelectedPortfolioId(portfolioId);
             setSelectedPortfolioName(portfolioName);

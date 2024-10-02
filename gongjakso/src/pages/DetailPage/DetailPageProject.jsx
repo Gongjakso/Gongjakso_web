@@ -12,12 +12,7 @@ import arrow from '../../assets/images/Arrow.svg';
 import googleform from '../../assets/images/GoogleFormLink.svg';
 import ApplyModal from '../../features/modal/ApplyModal';
 import Completed from '../../features/modal/Completed';
-import {
-    getPostDetail,
-    getScrap,
-    postScrap,
-    getCheckStatus,
-} from '../../service/post_service';
+import { getPostDetail, getScrap, postScrap } from '../../service/post_service';
 import ClickmyApply from '../../features/modal/ClickmyApply';
 import { getMyApplication } from '../../service/apply_service';
 import ApplyCancel from '../../features/modal/ApplyCancel';
@@ -73,9 +68,6 @@ const DetailPageProject = () => {
             setapplyTitle(res?.data.title);
         });
 
-        getCheckStatus(id).then(res => {
-            setcheckStatus(res?.data.role);
-        });
         getScrap(id).then(res => {
             setscrapStatus(res?.data.scrapStatus);
         });

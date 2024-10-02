@@ -33,7 +33,6 @@ const SelectOne = ({ value, onApply, placeholder, width }) => {
     };
 
     const handleApply = () => {
-        console.log('Selected Date:', selectedDate);
         if (selectedDate) {
             onApply(selectedDate); // 부모 컴포넌트로 선택된 날짜 전달
         }

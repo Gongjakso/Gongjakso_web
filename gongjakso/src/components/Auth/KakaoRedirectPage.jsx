@@ -8,7 +8,6 @@ const KakaoRedirectPage = () => {
     useEffect(() => {
         getToken(code, REDIRECT_URI)
             .then(result => {
-                console.log(result);
                 localStorage.setItem('accessToken', result?.accessToken);
                 window.location.replace('/');
             })

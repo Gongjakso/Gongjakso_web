@@ -30,8 +30,6 @@ const TeamPart = () => {
         });
     };
 
-    // console.log(isLeader);
-
     return (
         <div>
             <S.TopBox>

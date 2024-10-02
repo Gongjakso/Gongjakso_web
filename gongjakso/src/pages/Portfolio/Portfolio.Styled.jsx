@@ -19,7 +19,6 @@ export const TopBox = styled.div`
 export const BoxDetail = styled.div`
     display: flex;
     gap: 0.5rem;
-    width: 70rem;
     margin-bottom: 1rem;
 `;
 export const PortfolioInfo = styled.div`
@@ -42,12 +41,17 @@ export const Description = styled.span`
 `;
 
 export const GlobalBox = styled.div`
-    width: 64rem;
-    margin: 5rem auto 0 auto; // 가운데 정렬
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto; // 가운데 정렬
 `;
 
 export const SubTitle = styled.p`
     width: 100%;
+    max-width: 1000px;
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: 700;
     margin-bottom: 25px;
@@ -60,12 +64,15 @@ export const SubTitle = styled.p`
 
 export const UploadInfo = styled.p`
     width: 100%;
+    max-width: 1000px;
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     color: #565656;
     margin: 0.625rem 0;
     line-height: 1.343rem;
     margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
 `;
 
 export const LinkIcon = styled.div`
