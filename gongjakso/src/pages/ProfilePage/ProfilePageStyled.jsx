@@ -62,7 +62,6 @@ export const SubTitle = styled.p`
     padding-bottom: 25px;
     display: flex;
     align-items: center;
-    margin: 0 auto;
 `;
 
 //프로필 이미지
@@ -220,9 +219,17 @@ export const PortfolioList = styled.div`
     gap: 1rem;
 `;
 
+export const SubContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1000px;
+`;
+
 export const SubTitleContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     width: 1000px;
 `;

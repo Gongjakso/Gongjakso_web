@@ -29,3 +29,11 @@ export const Title = styled.p`
     text-align: center;
     font-weight: bold;
 `;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+`;

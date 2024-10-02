@@ -306,7 +306,7 @@ const ProfilePage = () => {
             </S.TopBox>
             <S.GlobalBox>
                 <S.BoxDetail>
-                    <S.SubTitleContainer>
+                    <S.SubContainer>
                         <S.SubTitle>나의 포트폴리오</S.SubTitle>
 
                         {portfolioList.flatMap(portfolio => {
@@ -417,7 +417,7 @@ const ProfilePage = () => {
                         }).length < MAX_PORTFOLIOS && (
                             <S.Plus onClick={openPortfolioModal} />
                         )}
-                    </S.SubTitleContainer>
+                    </S.SubContainer>
 
                     {portfolioExists ? (
                         <S.PortfolioInfo>
@@ -544,17 +544,19 @@ const ProfilePage = () => {
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>나의 모집 기록</S.SubTitle>
-                    {postContent1?.map(post => (
-                        <TeamBox
-                            key={post?.id}
-                            showMoreDetail={true}
-                            showWaitingJoin={false}
-                            showSubBox={true}
-                            postContent={post}
-                            isMyParticipation={false}
-                            postId={post?.id}
-                        />
-                    ))}
+                    <S.SubTitleContainer>
+                        {postContent1?.map(post => (
+                            <TeamBox
+                                key={post?.id}
+                                showMoreDetail={true}
+                                showWaitingJoin={false}
+                                showSubBox={true}
+                                postContent={post}
+                                isMyParticipation={false}
+                                postId={post?.id}
+                            />
+                        ))}
+                    </S.SubTitleContainer>
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>
@@ -563,16 +565,18 @@ const ProfilePage = () => {
                             <S.ArrowImage />
                         </Link>
                     </S.SubTitle>
-                    {postContent2?.map(post => (
-                        <TeamBox
-                            key={post?.postId}
-                            showMoreDetail={false}
-                            showWaitingJoin={true}
-                            showSubBox={true}
-                            postContent={post}
-                            isMyParticipation={false}
-                        />
-                    ))}
+                    <S.SubTitleContainer>
+                        {postContent2?.map(post => (
+                            <TeamBox
+                                key={post?.postId}
+                                showMoreDetail={false}
+                                showWaitingJoin={true}
+                                showSubBox={true}
+                                postContent={post}
+                                isMyParticipation={false}
+                            />
+                        ))}
+                    </S.SubTitleContainer>
                 </S.BoxDetail>
                 <S.BoxDetail>
                     <S.SubTitle>
@@ -581,21 +585,23 @@ const ProfilePage = () => {
                             <S.ArrowImage />
                         </Link>
                     </S.SubTitle>
-                    {postContent3?.map(post => (
-                        <TeamBox
-                            key={post?.postId}
-                            showMoreDetail={false}
-                            borderColor={
-                                post?.postStatus !== 'ACTIVE'
-                                    ? 'rgba(111, 111, 111, 1)'
-                                    : 'rgba(0, 84, 255, 1)'
-                            }
-                            showWaitingJoin={false}
-                            showSubBox={false}
-                            postContent={post}
-                            isMyParticipation={true}
-                        />
-                    ))}
+                    <S.SubTitleContainer>
+                        {postContent3?.map(post => (
+                            <TeamBox
+                                key={post?.postId}
+                                showMoreDetail={false}
+                                borderColor={
+                                    post?.postStatus !== 'ACTIVE'
+                                        ? 'rgba(111, 111, 111, 1)'
+                                        : 'rgba(0, 84, 255, 1)'
+                                }
+                                showWaitingJoin={false}
+                                showSubBox={false}
+                                postContent={post}
+                                isMyParticipation={true}
+                            />
+                        ))}
+                    </S.SubTitleContainer>
                 </S.BoxDetail>
             </S.GlobalBox>
             <SelectPortfolio
