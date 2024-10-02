@@ -22,7 +22,7 @@ const HomePage = () => {
         if (isLoggedIn) {
             getMyInfo().then(res => {
                 setMyName(res?.data?.name);
-                if (!res.data.job) {
+                if (!res?.data?.job) {
                     setSignUpModalOpen(true);
                 } else {
                     setSignUpModalOpen(false);

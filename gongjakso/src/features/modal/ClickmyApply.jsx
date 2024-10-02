@@ -25,7 +25,7 @@ const ClickmyApply = props => {
     // 특정 지원자 지원서 열람하기
     useEffect(() => {
         getMyApplication(props.applyId).then(res => {
-            console.log(res?.data);
+            // console.log(res?.data);
             setmyApp(res?.data);
         });
 
