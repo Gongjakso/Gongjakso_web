@@ -4,12 +4,18 @@ export const Globalstyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+
+    @media (max-width: 1270px) {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
 `;
 
 // 전체 감싸는 틀
 export const Layout = styled(Globalstyle)`
     flex-direction: column;
-    margin-bottom: 100px;
+    margin-bottom: 8rem;
 `;
 
 // 틀 세분화
@@ -127,6 +133,7 @@ export const TextBox = styled.div`
     align-items: center;
     padding: 20px 1px 20px 20px;
     display: flex;
+    width:;
 `;
 
 // 텍스트 박스 안 굵은 제목
@@ -164,6 +171,7 @@ export const OpenKakao = styled(TextDetail)`
 // 검은색 둥근 틀
 export const RoundForm = styled(Globalstyle)`
     min-width: 140px;
+    max-width: 8rem;
     padding: 12px 6px;
     background: black;
     display: flex;
