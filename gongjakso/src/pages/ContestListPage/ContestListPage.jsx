@@ -48,7 +48,7 @@ const ContestListPage = () => {
     }, [page, sortBy]);
 
     const ClickSearchBtn = () => {
-        getContestList(page, searchKeyword, sortBy).then(res => {
+        getContestList('', searchKeyword, sortBy).then(res => {
             setContestListPosts(res?.data.contestList);
             setContestListTotalPage(res?.data.totalPages);
         });

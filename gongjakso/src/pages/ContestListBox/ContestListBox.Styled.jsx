@@ -3,7 +3,7 @@ import { ReactComponent as Fire } from '../../assets/images/Fire2.svg';
 
 export const ContestContainer = styled.div`
     width: 315px;
-    height: 385px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
@@ -13,7 +13,7 @@ export const ContestContainer = styled.div`
 
 export const ContestImg = styled.img`
     width: 295px;
-    height: 340px;
+    height: 400px;
 `;
 
 export const RemainDate = styled.div`
