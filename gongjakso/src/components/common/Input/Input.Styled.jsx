@@ -6,7 +6,7 @@ export const SelectContainer = styled.div`
 
 export const SelectValue = styled.div`
     display: block;
-    width: ${props => (props.$case === 'true' ? '190px' : '400px')};
+    width: ${props => (props.$case === 'true' ? '155px' : '400px')};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -26,7 +26,7 @@ export const OptionList = styled.div`
     position: absolute;
     font-family: 'PreMedium';
     right: -10px;
-    width: ${props => (props.$case === 'true' ? '220px' : '430px')};
+    width: ${props => (props.$case === 'true' ? '185px' : '430px')};
     font-size: ${({ theme }) => theme.fontSize.m};
     margin: ${props => (props.$case === 'true' ? '20px 0px' : '20px 0px')};
     list-style: none;

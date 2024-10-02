@@ -77,6 +77,9 @@ const DetailPageContest = () => {
     // 포트폴리오 비공개 여부
     const [isclosed, setIsClosed] = useState(true);
 
+    // 포트폴리오 노션, 파일 여부
+    const [isExisted, setIsExisted] = useState(false);
+
     // 포트폴리오 선택 배열
     const [clickedPort, setClickedPort] = useState(null);
 
@@ -92,6 +95,7 @@ const DetailPageContest = () => {
     // 포트폴리오 데이터
     const [portfolioData, setportfolioData] = useState([]);
     const [portfolioId, setportfolioId] = useState('');
+    const [portDatatype, setportDatatype] = useState('');
 
     // 스크랩
     const [scrapNum, setscrapNum] = useState();
@@ -102,6 +106,7 @@ const DetailPageContest = () => {
     const [applyType, setapplyType] = useState(''); // 현재 지원자 선발 여부 (타이틀 옆 상태 표기)
 
     const [postId] = useState(team_id);
+    const [applyId, setApplyId] = useState();
 
     // GA 이벤트를 위한 설정
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
@@ -114,6 +119,7 @@ const DetailPageContest = () => {
             setCategory(res?.data.recruit_part);
             setscrapNum(res?.data.scrap_count);
             setapplyTitle(res?.data.title);
+            setApplyId(res?.data.apply_id);
 
             if (res?.data.team_role === 'APPLIER') {
                 setapplyType(res?.data.apply_status);
@@ -186,6 +192,17 @@ const DetailPageContest = () => {
         } else if (type === 'Port') {
             setClickedPort(item);
             setIsClosed(item === 'none');
+
+            if (item === '노션') {
+                setIsExisted(true);
+                setportDatatype('NOTION');
+            } else if (item === '파일') {
+                setIsExisted(true);
+                setportDatatype('FILE');
+            } else {
+                setIsExisted(false);
+                setportDatatype('');
+            }
         }
     };
 
@@ -240,6 +257,7 @@ const DetailPageContest = () => {
                     inputValue={inputValue}
                     setCompleted={setCompleted}
                     isclosed={isclosed}
+                    dataType={portDatatype}
                     title={applyTitle}
                     id={team_id}
                 />
@@ -310,7 +328,10 @@ const DetailPageContest = () => {
 
                                 <S.ApplyBtn
                                     onClick={() => {
-                                        setmyAppOpen(true);
+                                        window.open(
+                                            `${window.location.origin}/application/${applyId}`,
+                                            '_blank',
+                                        );
                                     }}
                                 >
                                     지원서 보기
@@ -532,25 +553,138 @@ const DetailPageContest = () => {
                                     {havePortfolio ? (
                                         <T.FormBox>
                                             {portfolioData?.map((item, i) => (
-                                                <T.PortForm
-                                                    key={i}
-                                                    $isselected={
-                                                        clickedPort ===
-                                                        item.PortfolioName
-                                                    }
-                                                    onClick={() => {
-                                                        ClickForm(
-                                                            'Port',
-                                                            item.PortfolioName,
-                                                        );
-                                                        setportfolioId(
-                                                            item.PortfolioId,
-                                                        );
-                                                    }}
-                                                >
-                                                    {item.PortfolioName}
-                                                </T.PortForm>
+                                                <>
+                                                    {/* isExistedPortfolio가 true일 때 NOTION, FILE, HYBRID을 구분 */}
+                                                    {item.isExistedPortfolio ? (
+                                                        item.dataType ===
+                                                        'NOTION' ? (
+                                                            // dataType이 NOTION일 때
+                                                            <T.PortForm
+                                                                key={`notion-${i}`}
+                                                                $isselected={
+                                                                    clickedPort ===
+                                                                    '노션'
+                                                                }
+                                                                onClick={() => {
+                                                                    ClickForm(
+                                                                        'Port',
+                                                                        '노션',
+                                                                    );
+                                                                    setportfolioId(
+                                                                        item.PortfolioId,
+                                                                    );
+                                                                }}
+                                                            >
+                                                                노션 포트폴리오
+                                                            </T.PortForm>
+                                                        ) : item.dataType ===
+                                                          'FILE' ? (
+                                                            // dataType이 FILE일 때
+                                                            <T.PortForm
+                                                                key={`file-${i}`}
+                                                                $isselected={
+                                                                    clickedPort ===
+                                                                    '파일'
+                                                                }
+                                                                onClick={() => {
+                                                                    ClickForm(
+                                                                        'Port',
+                                                                        '파일',
+                                                                    );
+                                                                    setportfolioId(
+                                                                        item.PortfolioId,
+                                                                    );
+                                                                }}
+                                                            >
+                                                                PDF 포트폴리오
+                                                            </T.PortForm>
+                                                        ) : item.dataType ===
+                                                          'HYBRID' ? (
+                                                            // dataType이 HYBRID일 때
+                                                            <>
+                                                                <T.PortForm
+                                                                    key={`hybrid-notion-${i}`}
+                                                                    $isselected={
+                                                                        clickedPort ===
+                                                                        '노션'
+                                                                    }
+                                                                    onClick={() => {
+                                                                        ClickForm(
+                                                                            'Port',
+                                                                            '노션',
+                                                                        );
+                                                                        setportfolioId(
+                                                                            item.PortfolioId,
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    노션
+                                                                    포트폴리오
+                                                                </T.PortForm>
+                                                                <T.PortForm
+                                                                    key={`hybrid-file-${i}`}
+                                                                    $isselected={
+                                                                        clickedPort ===
+                                                                        '파일'
+                                                                    }
+                                                                    onClick={() => {
+                                                                        ClickForm(
+                                                                            'Port',
+                                                                            '파일',
+                                                                        );
+                                                                        setportfolioId(
+                                                                            item.PortfolioId,
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    PDF
+                                                                    포트폴리오
+                                                                </T.PortForm>
+                                                            </>
+                                                        ) : (
+                                                            <T.PortForm
+                                                                key={`other-${i}`}
+                                                                $isselected={
+                                                                    clickedPort ===
+                                                                    item.PortfolioName
+                                                                }
+                                                                onClick={() => {
+                                                                    ClickForm(
+                                                                        'Port',
+                                                                        item.PortfolioName,
+                                                                    );
+                                                                    setportfolioId(
+                                                                        item.PortfolioId,
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {item.dataType}
+                                                            </T.PortForm>
+                                                        )
+                                                    ) : (
+                                                        // isExistedPortfolio가 false일 때
+                                                        <T.PortForm
+                                                            key={`portfolio-${i}`}
+                                                            $isselected={
+                                                                clickedPort ===
+                                                                item.PortfolioName
+                                                            }
+                                                            onClick={() => {
+                                                                ClickForm(
+                                                                    'Port',
+                                                                    item.PortfolioName,
+                                                                );
+                                                                setportfolioId(
+                                                                    item.PortfolioId,
+                                                                );
+                                                            }}
+                                                        >
+                                                            {item.PortfolioName}
+                                                        </T.PortForm>
+                                                    )}
+                                                </>
                                             ))}
+
                                             <T.RoundForm
                                                 $isselected={isclosed}
                                                 onClick={() =>

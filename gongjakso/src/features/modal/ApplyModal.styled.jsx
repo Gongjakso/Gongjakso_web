@@ -95,7 +95,7 @@ export const RoundForm = styled.button`
 `;
 
 export const PortForm = styled(RoundForm)`
-    min-width: 250px;
+    min-width: 230px;
     display: inline-block;
     max-width: 250px;
     white-space: nowrap;

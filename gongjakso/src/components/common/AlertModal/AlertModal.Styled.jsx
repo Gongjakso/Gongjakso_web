@@ -30,9 +30,9 @@ export const AlertModalInnerContainer = styled.div`
     background: #fff;
     text-align: center;
     border-radius: 40px;
-    padding: 20px;
+    padding: 30px;
     position: relative;
-    width: 45%;
+    width: 40%;
     height: 40%;
 `;
 export const MainTitle = styled.p`
@@ -52,7 +52,7 @@ export const AlertText = styled.h3`
     align-items: center;
     flex-direction: column;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-family: 'PreMedium';
 `;
 
@@ -71,9 +71,8 @@ export const AlertBtn = styled.button`
     justify-content: center;
     width: ${props => props.$w};
     border-radius: 10px;
-    padding: 15px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 10px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     background: ${({ theme }) => theme.Main1};
-    font-family: 'PreBold';
     color: white;
 `;

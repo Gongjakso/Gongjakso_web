@@ -314,7 +314,7 @@ const ProfileRecruit = () => {
                                                         //     item.state,
                                                         // );
                                                         window.open(
-                                                            `http://localhost:3000/application/${item.id}`,
+                                                            `${window.location.origin}/application/${item.id}`,
                                                             '_blank',
                                                         );
                                                     }}

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import * as S from './ContestDetailPage.Styled';
 import Multilevel from '../../components/common/Input/Multilevel';
 import { SelectInput } from '../../components/common/Input/Input';
+import HomeLink from '../../assets/images/blackLink.svg';
 import { useForm } from 'react-hook-form';
 import TeamBox from '../TeamBox/TeamBox';
 import NoContents from '../../features/NoContents/NoContents';
@@ -156,7 +157,8 @@ const ContestDetailPage = () => {
                 </S.ContestDetail>
                 <S.ContestButtonOption>
                     <S.GotohomeBtn onClick={handlegotoHomePage}>
-                        홈페이지로 바로가기
+                        홈페이지 바로가기
+                        <img src={HomeLink} alt="homepage-link" />
                     </S.GotohomeBtn>
                     <S.TeamBuildBtn onClick={handleTeamBuildClick}>
                         팀빌딩하기
@@ -164,7 +166,7 @@ const ContestDetailPage = () => {
                 </S.ContestButtonOption>
                 <S.ContestInfo>
                     <S.ContestTitle>
-                        '{contestDetail?.title}'의 팀 찾기
+                        '{contestDetail?.title}' 의 팀 찾기
                     </S.ContestTitle>
                     <S.Organization>
                         현재 {contestPosts?.length}명이 팀을 모집하고 있어요
