@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as S from '../TeamBox/TeamBoxStyled';
 import { Link, useLocation } from 'react-router-dom';
-import { getCheckStatus, patchCompletedPost } from '../../service/post_service';
+import { patchCompletedPost } from '../../service/post_service';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     openConfirmModal,
@@ -37,16 +37,6 @@ const TeamBox = ({
             setIsOverlayVisible(false);
         }
     }, [postId]);
-
-    useEffect(() => {
-        // 특정 경로에서만 getCheckStatus 함수 호출
-        if (location.pathname === '/participatedTeam') {
-            getCheckStatus(postContent?.id).then(response => {
-                const imLeader = response?.data?.role === 'LEADER';
-                setIsLeader(imLeader);
-            });
-        }
-    }, [location.pathname, postContent?.id]);
 
     const hideOverlay = () => {
         setIsOverlayVisible(false);

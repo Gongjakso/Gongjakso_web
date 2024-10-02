@@ -59,15 +59,6 @@ export const getPostDetail = async (contest_id, team_id) => {
     }
 };
 
-export const getCheckStatus = async id => {
-    const reqURL = `post/check/${id}`;
-
-    try {
-        const response = await axiosInstance.get(reqURL);
-        return response.data;
-    } catch (error) {}
-};
-
 // [POST] 공고 상세페이지 팀 스크랩 API
 export const postScrap = async id => {
     const reqURL = `team/${id}/scrap`;

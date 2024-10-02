@@ -4,7 +4,6 @@ import Close from '../../assets/images/Close.svg';
 
 const DeleteModal = ({ showModal, closeModal, confirmDelete, title, type }) => {
     if (!showModal) return null;
-    console.log('Type received in modal:', type);
 
     const getDeleteMessage = () => {
         switch (type) {

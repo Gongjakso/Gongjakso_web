@@ -44,7 +44,6 @@ const MyInfo = () => {
 
     useEffect(() => {
         const formattedNum = `${firstNum}-${secondNum}-${thirdNum}`;
-        // console.log(formattedNum);
         setPhoneNum(formattedNum);
     }, [firstNum, secondNum, thirdNum]);
 
