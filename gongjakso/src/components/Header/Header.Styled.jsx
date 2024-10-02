@@ -6,7 +6,7 @@ export const Header = styled.div`
     width: 100%;
     justify-content: center;
     padding: 15px;
-    padding-left: 80px;
+    align-items: center;
     position: absolute;
     top: 0;
 `;

@@ -4,7 +4,7 @@ export const Footer = styled.div`
     display: flex;
     margin: auto;
     width: 100%;
-    max-width: 1200px;
+    max-width: 75rem;
     height: 92px;
     align-items: center;
     justify-content: center;
@@ -19,7 +19,7 @@ export const Footer = styled.div`
 export const FooterContainer = styled.ul`
     display: flex;
     width: 100%;
-    max-width: 1100px;
+    max-width: 68.75rem;
     justify-content: space-between;
     position: static;
 `;

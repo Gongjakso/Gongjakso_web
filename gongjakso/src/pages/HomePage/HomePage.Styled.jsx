@@ -93,8 +93,10 @@ export const PageImg = styled.div`
     height: 59.7rem;
     position: absolute;
     margin-top: 5rem;
-    transform: scale(0.9);
     background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+    }
 `;
 
 export const ContestImg = styled.div`
@@ -105,6 +107,10 @@ export const ContestImg = styled.div`
     margin-top: 1rem;
     right: 0;
     background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+        margin-top: 0;
+    }
 `;
 
 export const Section = styled.div`
@@ -121,11 +127,16 @@ export const Section = styled.div`
 export const Section1 = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 77rem;
+    width: 100%;
+    max-width: 77rem;
     height: 45rem;
     padding: 4rem 0;
     flex-direction: row;
     position: relative;
+
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
 `;
 
 export const Bubble = styled.div`
@@ -140,6 +151,9 @@ export const Bubble = styled.div`
     background-repeat: no-repeat;
     background: url(${leftBubble});
     font-weight: 600;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+    }
 `;
 
 export const Text = styled.div`
@@ -153,6 +167,11 @@ export const Text = styled.div`
     width: 18rem;
     position: absolute;
     font-size: ${({ theme }) => theme.fontSize.lg};
+    @media (max-width: 1270px) {
+        left: 12rem;
+        top: 8rem;
+        font-size: ${({ theme }) => theme.fontSize.md};
+    }
 `;
 
 export const TextContainer = styled.div`
@@ -172,31 +191,54 @@ export const TeamImg = styled.div`
     width: 18rem;
     background-size: cover;
     height: 16rem;
+    @media (max-width: 1270px) {
+        left: 16rem;
+        top: 12rem;
+        transform: scale(0.9);
+    }
 `;
 
 export const RightBubble = styled(Bubble)`
     background: url(${rightBubble});
     right: 0;
     background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+        margin-top: 1rem;
+    }
 `;
 
 export const RightBubble1 = styled(RightBubble)`
     position: absolute;
     left: 7.5rem;
     top: 6.5rem;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+        left: 1.5rem;
+        top: 5.5rem;
+        margin-top: 0;
+    }
 `;
 
 export const Section2 = styled(Section1)`
-    width: 80rem;
+    max-width: 80rem;
+    width: 100%;
     height: 45rem;
     position: relative;
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
 `;
 
 export const Section3 = styled(Section1)`
-    width: 80rem;
+    max-width: 80rem;
+    width: 100%;
     height: 40rem;
     margin-bottom: 30rem;
     position: relative;
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
 `;
 
 export const ContestDetail = styled(ContestImg)`
@@ -205,6 +247,9 @@ export const ContestDetail = styled(ContestImg)`
     left: 0;
     height: 30rem;
     background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+    }
 `;
 
 export const TextContainer1 = styled(TextContainer)`
@@ -219,6 +264,9 @@ export const Bubble1 = styled(Bubble)`
     position: absolute;
     right: 8.5rem;
     top: 6.5rem;
+    @media (max-width: 1270px) {
+        right: 0.8rem;
+    }
 `;
 
 export const Bubble2 = styled(Bubble)`
@@ -233,6 +281,10 @@ export const Text1 = styled(Text)`
     top: 20rem;
     left: -110px;
     width: 30rem;
+    @media (max-width: 1270px) {
+        left: 40px;
+        top: 18rem;
+    }
 `;
 
 export const Text2 = styled(Text)`
@@ -240,7 +292,12 @@ export const Text2 = styled(Text)`
     top: 29.5rem;
     left: 8.5rem;
     width: 32rem;
+    @media (max-width: 1270px) {
+        left: 2rem;
+        top: 24rem;
+    }
 `;
+
 export const TeamImg2 = styled(TeamImg)`
     background: url(${teambuilding2});
     width: 19rem;
@@ -248,6 +305,11 @@ export const TeamImg2 = styled(TeamImg)`
     background-size: cover;
     left: 17.5rem;
     top: 14.5rem;
+    @media (max-width: 1270px) {
+        left: 19.5rem;
+        top: 15rem;
+        transform: scale(0.7);
+    }
 `;
 
 export const PortfolioImg = styled(TeamImg)`
@@ -257,6 +319,11 @@ export const PortfolioImg = styled(TeamImg)`
     background-size: cover;
     left: 26rem;
     top: 13rem;
+    @media (max-width: 1270px) {
+        left: 17rem;
+        transform: scale(0.8);
+        top: 10rem;
+    }
 `;
 
 export const PortfolioDetail = styled(ContestImg)`
@@ -266,4 +333,8 @@ export const PortfolioDetail = styled(ContestImg)`
     top: 9.5rem;
     width: 37.7rem;
     height: 28rem;
+    @media (max-width: 1270px) {
+        top: 7.2rem;
+        transform: scale(0.8);
+    }
 `;
