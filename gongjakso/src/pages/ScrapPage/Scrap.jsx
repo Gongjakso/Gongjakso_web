@@ -40,27 +40,29 @@ const Scrap = () => {
                 <S.Title>{data?.name}님의 스크랩</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {!postContent4 ? (
-                    <NoContents
-                        mainTxt={'스크랩한 공고를 발견하지 못했어요!'}
-                        subTxt={''}
-                    />
-                ) : (
-                    <>
-                        {postContent4?.map(postContent4 => (
-                            <TeamBox
-                                key={postContent4?.id}
-                                showMoreDetail={false}
-                                showWaitingJoin={false}
-                                showSubBox={true}
-                                borderColor={'rgba(0, 163, 255, 0.5)'}
-                                postContent={postContent4}
-                                isMyParticipation={null}
-                                postId={postContent4?.id}
-                            />
-                        ))}
-                    </>
-                )}
+                <S.SubTitleContainer>
+                    {!postContent4 ? (
+                        <NoContents
+                            mainTxt={'스크랩한 공고를 발견하지 못했어요!'}
+                            subTxt={''}
+                        />
+                    ) : (
+                        <>
+                            {postContent4?.map(postContent4 => (
+                                <TeamBox
+                                    key={postContent4?.id}
+                                    showMoreDetail={false}
+                                    showWaitingJoin={false}
+                                    showSubBox={true}
+                                    borderColor={'rgba(0, 84, 255, 1)'}
+                                    postContent={postContent4}
+                                    isMyParticipation={null}
+                                    postId={postContent4?.id}
+                                />
+                            ))}
+                        </>
+                    )}
+                </S.SubTitleContainer>
                 <Pagination
                     total={totalPage}
                     page={page}

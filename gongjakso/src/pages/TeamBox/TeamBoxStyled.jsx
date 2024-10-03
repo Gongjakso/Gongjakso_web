@@ -12,31 +12,28 @@ export const Container = styled.div`
 export const Box = styled.div`
     position: relative;
     width: 1000px;
-    height: 160px;
+    height: 10rem;
     background-color: transparent;
     border: 1.5px solid ${props => props.$bordercolor || '#0054FF'};
     display: flex;
     flex-direction: column;
     color: ${({ theme }) => theme.mainFont};
     border-radius: 15px;
-    padding: 20px 50px 20px 50px;
-    margin: 10px 0px;
-    //마감일수가 0일 때 상태 변환
+    padding: 1.25rem 3.125rem;
+    margin: 0.625rem 0rem;
 `;
 
 export const Title = styled.p`
     font-size: ${({ theme }) => theme.fontSize.l};
     color: ${({ theme }) => theme.mainFont};
-    //display: flex;
     width: 250px;
-
     align-items: center;
     justify-content: flex;
     font-family: 'TheJamsilRegular';
     margin-right: 30px;
-    white-space: nowrap; // 내용이 줄바꿈되지 않고 한 줄에 표시되도록 설정
-    overflow: hidden; // 내용이 너비를 초과할 경우 숨김 처리
-    text-overflow: ellipsis; // 내용이 너비를 초과할 경우 ...으로 표시
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const subTitle = styled.p`

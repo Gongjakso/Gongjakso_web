@@ -37,17 +37,19 @@ const RecruitedTeam = () => {
                 <S.Title>{data?.name}님의 모집 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent1?.map(postContent1 => (
-                    <TeamBox
-                        key={postContent1?.id}
-                        showMoreDetail={true}
-                        showWaitingJoin={false}
-                        showSubBox={true}
-                        postContent={postContent1}
-                        isMyParticipation={false}
-                        postId={postContent1?.id}
-                    />
-                ))}
+                <S.SubTitleContainer>
+                    {postContent1?.map(postContent1 => (
+                        <TeamBox
+                            key={postContent1?.id}
+                            showMoreDetail={true}
+                            showWaitingJoin={false}
+                            showSubBox={true}
+                            postContent={postContent1}
+                            isMyParticipation={false}
+                            postId={postContent1?.id}
+                        />
+                    ))}
+                </S.SubTitleContainer>
                 <Pagination
                     total={totalpage}
                     page={page}
