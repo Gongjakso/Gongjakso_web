@@ -16,17 +16,13 @@ import postLink from '../../assets/images/postLink.svg';
 import MypageLink from '../../assets/images/MypageLink.svg';
 import goPortfolio from '../../assets/images/goPortfolio.svg';
 import Completed from '../../features/modal/Completed';
-import ClickApply from '../../features/modal/ClickApply';
 import {
     getPostDetail,
     postScrap,
     getScrap,
-    getCheckStatus,
     getMyPortfolio,
     deleteScrap,
 } from '../../service/post_service';
-import ClickmyApply from '../../features/modal/ClickmyApply';
-import { getMyApplication } from '../../service/apply_service';
 import ApplyCancel from '../../features/modal/ApplyCancel';
 
 const DetailPageContest = () => {
@@ -46,9 +42,6 @@ const DetailPageContest = () => {
 
     // 지원완료 버튼
     const [completed, setCompleted] = useState(false);
-
-    // 지원자 지원서 열람
-    const [myAppOpen, setmyAppOpen] = useState(false);
 
     // 지원자 지원취소 모달
     const [showCancel, setshowCancel] = useState(false);
@@ -239,14 +232,6 @@ const DetailPageContest = () => {
 
     return (
         <>
-            {myAppOpen ? (
-                <ClickmyApply
-                    applyId={userId}
-                    setOpen={setmyAppOpen}
-                    type={false}
-                />
-            ) : null}
-
             {/* 지원하기 모달 */}
             {applyCheck && (
                 <Completed
@@ -271,7 +256,7 @@ const DetailPageContest = () => {
             {/* 포트폴리오 만들러가기 모달 */}
             {goToMy && <Completed case={3} setgoToMy={setgoToMy} />}
 
-            {showApply && (
+            {/* {showApply && (
                 <ClickApply
                     setShowApply={setShowApply}
                     type={false}
@@ -280,7 +265,7 @@ const DetailPageContest = () => {
                     recruitPart={category}
                     id={postId}
                 />
-            )}
+            )} */}
 
             {/* 지원 취소 모달 */}
             {showCancel ? (
