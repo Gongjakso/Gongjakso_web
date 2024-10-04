@@ -37,7 +37,7 @@ export const Title = styled.p`
 `;
 
 export const subTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.m};
     color: #616161;
     display: flex;
     align-items: center;

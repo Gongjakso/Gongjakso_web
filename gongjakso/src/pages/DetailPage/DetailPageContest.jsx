@@ -346,7 +346,7 @@ const DetailPageContest = () => {
                 <S.Background $s="1100px">
                     <S.BlueBox
                         $bg={({ theme }) => theme.Light1}
-                        $boxSize={apply ? '2350px' : '1300px'}
+                        $boxSize={apply ? '2750px' : ''}
                     >
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
@@ -441,7 +441,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             <S.TextTitle>설명글</S.TextTitle>
                         </S.TextBox>
-                        <S.MainText $h="300px">{postData?.body}</S.MainText>
+                        <S.MainText>{postData?.body}</S.MainText>
 
                         {checkStatus === 'LEADER' ? (
                             <div></div>
@@ -699,7 +699,7 @@ const DetailPageContest = () => {
                                     <T.SubTitle>지원 이유</T.SubTitle>
                                     <T.TextBox>
                                         <T.InputArea
-                                            $maxHeight="27rem"
+                                            $maxHeight="35rem"
                                             ref={textarea}
                                             onChange={onInputHandler}
                                             onInput={handleResizeHeight}
