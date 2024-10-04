@@ -568,7 +568,7 @@ const ProfilePage = () => {
                     <S.SubTitleContainer>
                         {postContent2?.map(post => (
                             <TeamBox
-                                key={post?.postId}
+                                key={post?.id}
                                 showMoreDetail={false}
                                 showWaitingJoin={true}
                                 showSubBox={true}
@@ -588,7 +588,7 @@ const ProfilePage = () => {
                     <S.SubTitleContainer>
                         {postContent3?.map(post => (
                             <TeamBox
-                                key={post?.postId}
+                                key={post?.id}
                                 showMoreDetail={false}
                                 borderColor={
                                     post?.postStatus !== 'ACTIVE'

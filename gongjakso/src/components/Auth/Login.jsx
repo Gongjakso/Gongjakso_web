@@ -15,7 +15,7 @@ const Login = () => {
     return (
         <S.LoginContent>
             <S.LoginInfo>
-                3초만에 로그인하고 <br /> 공모전과 프로젝트를 시작해보세요!
+                3초만에 로그인하고 <br /> 공모전을 시작해보세요!
                 <S.Button onClick={handleLogin} />
             </S.LoginInfo>
             <S.Image />
