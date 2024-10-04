@@ -56,7 +56,7 @@ export const SearchUsernameInput = styled.input`
     width: 100%;
     font-size: ${props => props.theme.fontSize.md};
     font-family: 'PreMedium';
-    color: #c4c4c4;
+    color: ${props => props.theme.mainFont};
     border: none;
     outline: none;
 `;
