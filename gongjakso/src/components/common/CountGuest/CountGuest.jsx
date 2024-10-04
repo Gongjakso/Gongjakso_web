@@ -11,7 +11,6 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
     });
 
     const [totalSelectedGuests, setTotalSelectedGuests] = useState(0);
-
     useEffect(() => {
         // roles 객체가 변경될 때마다 totalSelectedGuests를 업데이트
         const total = Object.values(roles).reduce(
@@ -88,18 +87,46 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
     return (
         <S.Container>
             <S.SearchBox>
-                <S.Span onClick={handleToggleBoxOpen}>
-                    {Object.entries(roles).some(
-                        ([role, quantity]) => quantity > 0,
-                    )
-                        ? Object.entries(roles)
-                              .filter(([_, quantity]) => quantity > 0)
-                              .map(([role, quantity]) => `${role}: ${quantity}`)
-                              .join(', ')
-                        : isProject
-                          ? '프로젝트에 필요한 역할을 선택해주세요!'
-                          : '공모전에 필요한 역할을 선택해주세요!'}
-                </S.Span>
+                {Number(maxGuests) === 0 ? (
+                    <>
+                        <S.Span>
+                            {Object.entries(roles).some(
+                                ([role, quantity]) => quantity > 0,
+                            )
+                                ? Object.entries(roles)
+                                      .filter(([_, quantity]) => quantity > 0)
+                                      .map(
+                                          ([role, quantity]) =>
+                                              `${role}: ${quantity}`,
+                                      )
+                                      .join(', ')
+                                : isProject
+                                  ? '프로젝트에 필요한 역할을 선택해주세요!'
+                                  : '공모전에 필요한 역할을 선택해주세요!'}
+                        </S.Span>
+                        <S.P>
+                            <span className="arrow_box">
+                                인원을 먼저 입력해주세요
+                            </span>
+                        </S.P>
+                    </>
+                ) : (
+                    <S.Span onClick={handleToggleBoxOpen}>
+                        {Object.entries(roles).some(
+                            ([role, quantity]) => quantity > 0,
+                        )
+                            ? Object.entries(roles)
+                                  .filter(([_, quantity]) => quantity > 0)
+                                  .map(
+                                      ([role, quantity]) =>
+                                          `${role}: ${quantity}`,
+                                  )
+                                  .join(', ')
+                            : isProject
+                              ? '프로젝트에 필요한 역할을 선택해주세요!'
+                              : '공모전에 필요한 역할을 선택해주세요!'}
+                    </S.Span>
+                )}
             </S.SearchBox>
 
             <S.SelectQty $isDisplay={isToggleBox}>

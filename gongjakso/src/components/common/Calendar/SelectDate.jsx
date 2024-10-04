@@ -4,7 +4,7 @@ import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import { ko } from 'date-fns/locale';
 
-const SelectDate = ({ onChange, value, text, minDate }) => {
+const SelectDate = ({ onChange, value, isOpend, text, minDate }) => {
     const [nowDate, setNowDate] = useState();
     const [isOpen, setIsOpen] = useState(false);
 
