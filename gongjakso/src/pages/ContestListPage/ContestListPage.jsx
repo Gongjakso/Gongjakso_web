@@ -41,20 +41,32 @@ const ContestListPage = () => {
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
         });
-        getContestList(page, '', sortBy).then(res => {
-            setContestListPosts(res?.data.contestList);
-            setContestListTotalPage(res?.data.totalPages);
-        });
+        loadContestList(page, searchKeyword, sortBy);
     }, [page, sortBy]);
 
+    const loadContestList = (page, searchKeyword, sort) => {
+        if (searchKeyword) {
+            getContestList(page, searchKeyword, sort).then(res => {
+                setContestListPosts(res?.data.contestList);
+                setContestListTotalPage(res?.data.totalPages);
+            });
+        } else {
+            getContestList(page, '', sortBy).then(res => {
+                setContestListPosts(res?.data.contestList);
+                setContestListTotalPage(res?.data.totalPages);
+            });
+        }
+    };
+
     const ClickSearchBtn = () => {
-        getContestList('', searchKeyword, sortBy).then(res => {
+        getContestList(page, searchKeyword, sortBy).then(res => {
             setContestListPosts(res?.data.contestList);
             setContestListTotalPage(res?.data.totalPages);
         });
     };
 
     const handleKeyDown = event => {
+        setPage(1);
         if (event.key === 'Enter') {
             ClickSearchBtn();
         }
@@ -70,14 +82,7 @@ const ContestListPage = () => {
 
     const {
         register,
-        handleSubmit,
-        setFocus,
-        setValue,
-        setError,
-        clearErrors,
-        control,
-        trigger,
-        formState: { errors, isSubmitted },
+        formState: { errors },
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {},
@@ -93,12 +98,6 @@ const ContestListPage = () => {
         }
     };
 
-    const loadContestList = (page, sort) => {
-        getContestList(page, sort).then(res => {
-            setContestListPosts(res?.data.contestList);
-            setContestListTotalPage(res?.data.totalPages);
-        });
-    };
     return (
         <>
             <TopButton />
@@ -113,7 +112,9 @@ const ContestListPage = () => {
                         </S.Searchmark>
                         <S.SearchUsernameInput
                             type="text"
-                            placeholder={'찾고 있는 공모전이 있나요?'}
+                            placeholder={
+                                '찾고 있는 공모전이 있나요? 입력 후 Enter/돋보기를 클릭!'
+                            }
                             value={searchKeyword}
                             onChange={e => setSearchKeyword(e.target.value)}
                             onKeyDown={handleKeyDown}
