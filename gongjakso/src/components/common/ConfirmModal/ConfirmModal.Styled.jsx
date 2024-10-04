@@ -35,8 +35,9 @@ export const ConfirmModalInnerContainer = styled.div`
     padding: 15px;
     position: relative;
 
-    width: 45%;
-    height: 50%;
+    width: 40%;
+    height: 35%;
+    gap: 10px;
 `;
 
 export const ConfirmModalQustion = styled.h3`
@@ -52,7 +53,7 @@ export const ConfirmModalExplain = styled.div`
 `;
 
 export const ConfirmModalButtonBox = styled.div`
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     gap: 20%;
@@ -72,10 +73,10 @@ export const ConfirmBtn = styled.button`
     align-items: center;
     justify-content: center;
     width: ${props => props.$width};
-    height: 50px;
+    height: 40px;
     border-radius: 10px;
     padding: 27px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.base};
     background: ${({ theme }) => theme.Main1};
     font-family: 'PreBold';
     color: white;
@@ -86,10 +87,10 @@ export const NotComfirmBtn = styled.button`
     align-items: center;
     justify-content: center;
     width: ${props => props.$width};
-    height: 50px;
+    height: 40px;
     border-radius: 10px;
     padding: 27px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.base};
     background: ${({ theme }) => theme.borderline};
     font-family: 'PreBold';
     color: white;

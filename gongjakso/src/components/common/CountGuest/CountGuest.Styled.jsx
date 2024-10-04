@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import theme from '../../../styles/theme';
 
 export const Container = styled.div``;
+
 export const SearchBox = styled.div`
     display: flex;
     flex-direction: column;
@@ -17,12 +18,14 @@ export const SearchBox = styled.div`
     color: ${({ theme }) => theme.subFont};
     padding-left: 15px;
     z-index: 9999;
+    position: relative; /* Add relative position */
 
     .rightDown {
         margin-left: 70px;
         color: ${({ theme }) => theme.mainFont};
         font-size: 25px;
     }
+
     span {
         display: inline-block;
         width: 200px;
@@ -32,8 +35,45 @@ export const SearchBox = styled.div`
         font-weight: 100;
         color: ${({ theme }) => theme.borderline};
     }
+
     &:hover {
         border: 1.5px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover .arrow_box {
+        display: block;
+    }
+`;
+
+export const P = styled.p`
+    .arrow_box {
+        display: none;
+        position: absolute;
+        width: 180px; /* Adjust width as needed */
+        padding: 8px;
+        top: 65px; /* Adjust top as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 8px;
+        background: #333;
+        color: #fff;
+        font-size: 14px;
+        text-align: center; /* Center text */
+    }
+
+    .arrow_box:after {
+        position: absolute;
+        top: -10px; /* Adjust top as needed */
+        left: 50%;
+        width: 0;
+        height: 0;
+        margin-left: -10px;
+        border: solid transparent;
+        border-color: rgba(51, 51, 51, 0);
+        border-bottom-color: #333;
+        border-width: 10px;
+        pointer-events: none;
+        content: ' ';
     }
 `;
 
