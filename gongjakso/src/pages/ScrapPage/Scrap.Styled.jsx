@@ -47,3 +47,11 @@ export const Option = styled.div`
     font-size: ${({ theme }) => theme.fontSize.lg};
     cursor: pointer;
 `;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+`;

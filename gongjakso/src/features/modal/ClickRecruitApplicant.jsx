@@ -23,7 +23,6 @@ const ClickmyApply = props => {
     // 특정 지원자 지원서 열람하기
     useEffect(() => {
         getMyApplication(props.applyId).then(res => {
-            console.log('지원서 데이터:', res?.data); // API 응답 확인
             setmyApp(res?.data);
         });
     }, [props.applyId]);

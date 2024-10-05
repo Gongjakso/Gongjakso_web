@@ -16,17 +16,13 @@ import postLink from '../../assets/images/postLink.svg';
 import MypageLink from '../../assets/images/MypageLink.svg';
 import goPortfolio from '../../assets/images/goPortfolio.svg';
 import Completed from '../../features/modal/Completed';
-import ClickApply from '../../features/modal/ClickApply';
 import {
     getPostDetail,
     postScrap,
     getScrap,
-    getCheckStatus,
     getMyPortfolio,
     deleteScrap,
 } from '../../service/post_service';
-import ClickmyApply from '../../features/modal/ClickmyApply';
-import { getMyApplication } from '../../service/apply_service';
 import ApplyCancel from '../../features/modal/ApplyCancel';
 
 const DetailPageContest = () => {
@@ -46,9 +42,6 @@ const DetailPageContest = () => {
 
     // 지원완료 버튼
     const [completed, setCompleted] = useState(false);
-
-    // 지원자 지원서 열람
-    const [myAppOpen, setmyAppOpen] = useState(false);
 
     // 지원자 지원취소 모달
     const [showCancel, setshowCancel] = useState(false);
@@ -239,14 +232,6 @@ const DetailPageContest = () => {
 
     return (
         <>
-            {myAppOpen ? (
-                <ClickmyApply
-                    applyId={userId}
-                    setOpen={setmyAppOpen}
-                    type={false}
-                />
-            ) : null}
-
             {/* 지원하기 모달 */}
             {applyCheck && (
                 <Completed
@@ -271,7 +256,7 @@ const DetailPageContest = () => {
             {/* 포트폴리오 만들러가기 모달 */}
             {goToMy && <Completed case={3} setgoToMy={setgoToMy} />}
 
-            {showApply && (
+            {/* {showApply && (
                 <ClickApply
                     setShowApply={setShowApply}
                     type={false}
@@ -280,7 +265,7 @@ const DetailPageContest = () => {
                     recruitPart={category}
                     id={postId}
                 />
-            )}
+            )} */}
 
             {/* 지원 취소 모달 */}
             {showCancel ? (
@@ -359,10 +344,7 @@ const DetailPageContest = () => {
                 </S.Background>
 
                 <S.Background $s="1100px">
-                    <S.BlueBox
-                        $bg={({ theme }) => theme.Light1}
-                        $boxSize={apply ? '2350px' : '1300px'}
-                    >
+                    <S.BlueBox $bg={({ theme }) => theme.Light1}>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
                             <S.TextDetail>
@@ -456,7 +438,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             <S.TextTitle>설명글</S.TextTitle>
                         </S.TextBox>
-                        <S.MainText $h="300px">{postData?.body}</S.MainText>
+                        <S.MainText>{postData?.body}</S.MainText>
 
                         {checkStatus === 'LEADER' ? (
                             <div></div>
@@ -714,7 +696,7 @@ const DetailPageContest = () => {
                                     <T.SubTitle>지원 이유</T.SubTitle>
                                     <T.TextBox>
                                         <T.InputArea
-                                            $maxHeight="27rem"
+                                            $maxHeight="35rem"
                                             ref={textarea}
                                             onChange={onInputHandler}
                                             onInput={handleResizeHeight}

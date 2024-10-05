@@ -30,3 +30,11 @@ export const BoxDetail = styled.div`
     flex-direction: column;
     margin: 100px;
 `;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+`;

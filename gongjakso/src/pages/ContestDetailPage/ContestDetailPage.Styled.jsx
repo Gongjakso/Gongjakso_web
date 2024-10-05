@@ -36,7 +36,6 @@ export const ContestTitle = styled.p`
 
 export const ContestInfoTop = styled.h1`
     display: flex;
-    align-items: center;
     justify-content: space-between;
 `;
 
@@ -46,6 +45,9 @@ export const ContestImg = styled.img`
 `;
 export const RemainDate = styled.div`
     width: auto;
+    height: 35px;
+    margin-top: 10px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

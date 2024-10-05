@@ -30,8 +30,6 @@ const TeamPart = () => {
         });
     };
 
-    // console.log(isLeader);
-
     return (
         <div>
             <S.TopBox>
@@ -39,24 +37,23 @@ const TeamPart = () => {
                 <S.Title>{data?.name}님의 참여 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent3?.map(postContent3 => (
-                    <TeamBox
-                        key={postContent3?.id}
-                        showMoreDetail={false}
-                        borderColor={
-                            postContent3?.postStatus !== 'ACTIVE' //활동 완료인 경우 테두리 검정색
-                                ? 'rgba(111, 111, 111, 1)'
-                                : postContent3.postType === true
-                                  ? 'rgba(231, 137, 255, 0.5)'
-                                  : 'rgba(0, 163, 255, 0.5)'
-                        }
-                        showWaitingJoin={false}
-                        showSubBox={false}
-                        postContent={postContent3}
-                        isMyParticipation={true}
-                    />
-                ))}
-
+                <S.SubTitleContainer>
+                    {postContent3?.map(postContent3 => (
+                        <TeamBox
+                            key={postContent3?.id}
+                            showMoreDetail={false}
+                            borderColor={
+                                postContent3?.postStatus !== 'ACTIVE'
+                                    ? 'rgba(111, 111, 111, 1)' //활동 완료인 경우 테두리 검정색
+                                    : `rgba(0, 84, 255, 1)` //활동 중인 경우 테두리 파란색
+                            }
+                            showWaitingJoin={false}
+                            showSubBox={false}
+                            postContent={postContent3}
+                            isMyParticipation={true}
+                        />
+                    ))}
+                </S.SubTitleContainer>
                 <Pagination
                     total={totalPage}
                     page={page}

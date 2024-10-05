@@ -189,7 +189,7 @@ export const ApplyBtn = styled.button`
     width: ${props => props.$w};
     border-radius: 10px;
     margin: 15px;
-    padding: 13px;
+    padding: 1.2rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';

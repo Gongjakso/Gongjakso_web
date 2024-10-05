@@ -30,4 +30,9 @@ export const CalendarWrapper = styled.div`
     top: 100%;
     left: 0;
     display: ${props => (props.$isopen === 'true' ? 'block' : 'none')};
+
+    .rdrCalendarWrapper {
+        border: 1px solid #000; /* 원하는 border 스타일로 변경 가능 */
+        border-radius: 15px;
+    }
 `;

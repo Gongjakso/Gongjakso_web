@@ -42,8 +42,8 @@ const UsePortfolio = () => {
                 }
                 if (notionData && notionData.notionUri) {
                     setSnsLink(notionData.notionUri || '');
-                } else {
-                    console.log('No Notion URI found');
+                    // } else {
+                    //     console.log('No Notion URI found');
                 }
             } catch (error) {
                 console.error(
@@ -135,14 +135,16 @@ const UsePortfolio = () => {
                 </S.PortfolioInfo>
             </S.TopBox>
             <S.GlobalBox>
-                <S.SubTitle>
-                    포트폴리오 파일 {isEdit ? '수정' : '업로드'}하기
-                </S.SubTitle>
-                <S.UploadInfo>
-                    PDF 형식으로 업로드 해주세요.
-                    <br />
-                    최대 10MB 까지 업로드할 수 있어요.
-                </S.UploadInfo>
+                <S.TitleSection style={{ flexDirection: 'column' }}>
+                    <S.SubTitle>
+                        포트폴리오 파일 {isEdit ? '수정' : '업로드'}하기
+                    </S.SubTitle>
+                    <S.UploadInfo>
+                        PDF 형식으로 업로드 해주세요.
+                        <br />
+                        최대 10MB 까지 업로드할 수 있어요.
+                    </S.UploadInfo>
+                </S.TitleSection>
 
                 <S.FileUploadBox>
                     <S.pdfImg />
@@ -180,13 +182,13 @@ const UsePortfolio = () => {
                 )}
 
                 {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
-                <S.TitleSection>
+                <S.TitleSection style={{ flexDirection: 'column' }}>
                     <S.SubTitle>노션 포트폴리오 링크 입력하기</S.SubTitle>
+                    <S.UploadInfo>
+                        노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요! 게시가
+                        허용되지 않았을 경우 링크 확인이 불가능해요.
+                    </S.UploadInfo>
                 </S.TitleSection>
-                <S.UploadInfo>
-                    노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요! 게시가
-                    허용되지 않았을 경우 링크 확인이 불가능해요.
-                </S.UploadInfo>
 
                 {/* 단일 노션 링크 입력 필드 */}
                 <S.BoxDetail>
