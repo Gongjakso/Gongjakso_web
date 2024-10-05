@@ -127,7 +127,7 @@ export const getContestPosts = async (
     selectedTownData,
     searchKeyword,
 ) => {
-    const reqURL = `team/list?province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum}&size=6&sort=${sort}`;
+    const reqURL = `team/list?sort=${sort}&province=${selectedCityData}&district=${selectedTownData}&keyword=${searchKeyword}&page=${pageNum - 1}&size=6`;
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {
             headers: {
@@ -150,7 +150,7 @@ export const patchCompletedPost = async post_id => {
 };
 
 export const getContestList = async (page, searchKeyword, sortBy) => {
-    const reqURL = `contest/search?word=${searchKeyword}&size=12&page=${page}&sortAt=${sortBy}`;
+    const reqURL = `contest/search?word=${searchKeyword}&size=12&page=${page - 1}&sortAt=${sortBy}`;
 
     try {
         const response = await axios.get(`${BaseUrlV2}${reqURL}`, {

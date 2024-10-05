@@ -30,7 +30,7 @@ const PostMainPage = () => {
     const [banners, setBanners] = useState([]);
     const [links, setLinks] = useState([]);
     const [contestTotalPage, setContestTotalPage] = useState();
-    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortBy, setSortBy] = useState('createdAt,desc');
 
     const [selectedLocalData, setSelectedLocalData] = useState('');
     const [selectedCityData, setSelectedCityData] = useState('');
@@ -50,7 +50,7 @@ const PostMainPage = () => {
     }, [sortBy, selectedLocalData]);
 
     useEffect(() => {
-        setSortBy('createdAt');
+        setSortBy('createdAt,desc');
         setSelectedTownData('');
         setSelectedCityData('');
         setSearchKeyword('');
@@ -150,9 +150,9 @@ const PostMainPage = () => {
         if (selectedValue === '인기순') {
             setSortBy('scrap,desc');
         } else if (selectedValue === '최신순') {
-            setSortBy('createdAt');
+            setSortBy('createdAt,desc');
         } else {
-            setSortBy('createdAt');
+            setSortBy('createdAt,desc');
         }
     };
 

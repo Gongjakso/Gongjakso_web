@@ -14,12 +14,14 @@ const Input = props => {
         step,
         register,
         registerOptions,
+        isimportant,
     } = props;
     const isLabel = !!label;
     return (
         <>
             <S.InputLabel $islabel={isLabel?.toString()} htmlFor={id}>
                 {label}
+                {isimportant ? <S.Important>*</S.Important> : ''}
             </S.InputLabel>
             <S.Div>
                 <S.InputText

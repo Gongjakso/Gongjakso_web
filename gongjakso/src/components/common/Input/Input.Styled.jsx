@@ -106,3 +106,6 @@ export const Div = styled.div`
     display: flex;
     flex-direction: column;
 `;
+export const Important = styled.div`
+    color: red;
+`;

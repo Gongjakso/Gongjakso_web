@@ -11,7 +11,7 @@ export const Dialog = styled.dialog`
     left: 50%; /* 화면 왼쪽에서 절반 위치에 설정 */
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.2);
-    z-index: 999;
+    z-index: 9999;
 `;
 
 export const ConfirmModalContainer = styled.section`
@@ -32,24 +32,31 @@ export const ConfirmModalInnerContainer = styled.div`
     background: #fff;
     text-align: center;
     border-radius: 40px;
-    padding: 15px;
+    padding: 30px;
     position: relative;
-
     width: 40%;
     height: 35%;
-    gap: 10px;
 `;
 
 export const ConfirmModalQustion = styled.h3`
     text-align: center;
-    font-size: ${({ theme }) => theme.fontSize.ll};
+    font-size: ${({ theme }) => theme.fontSize.l};
     font-family: 'PreBold';
     letter-spacing: 0.5px;
     margin-bottom: 30px;
 `;
 
 export const ConfirmModalExplain = styled.div`
-    color: ${props => props.theme.subFont};
+    width: 100%;
+    height: 55%;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.1rem;
+    font-family: 'PreMedium';
 `;
 
 export const ConfirmModalButtonBox = styled.div`

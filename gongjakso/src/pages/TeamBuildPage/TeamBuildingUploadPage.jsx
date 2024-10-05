@@ -245,7 +245,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             type={'number'}
                             id={'people'}
                             placeholder={
-                                '모집 총 인원을 입력해주세요. *최대 10명 입니다.'
+                                '모집 총 인원을 입력해주세요. *최대 8명 입니다.'
                             }
                             error={errors?.people}
                             register={register}
@@ -263,10 +263,13 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             min={1}
                             max={8}
                             step={1}
+                            isimportant={true}
                         />
                     </S.Label>
                     <S.Label>
-                        <S.TapP>모집 분야</S.TapP>
+                        <S.TapP>
+                            모집 분야<S.Important>*</S.Important>
+                        </S.TapP>
                         <CountGuest
                             isProject={false}
                             maxGuests={watch('people')} // 입력한 숫자를 최대치로 설정
@@ -274,7 +277,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         />
                     </S.Label>
                     <S.Label>
-                        <S.TapP>회의 방식</S.TapP>
+                        <S.TapP>
+                            회의 방식<S.Important>*</S.Important>
+                        </S.TapP>
                         <S.ClickBtn
                             $isselected={
                                 meeting === 'OFFLINE' || meeting === 'BOTH'
@@ -301,7 +306,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         />
                     </S.Label>
                     <S.Label>
-                        <S.TapP>예상 기간</S.TapP>
+                        <S.TapP>
+                            예상 기간<S.Important>*</S.Important>
+                        </S.TapP>
                         <S.DateSet>
                             <SelectDate
                                 value={startDates}
@@ -322,7 +329,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.DateSet>
                     </S.Label>
                     <S.Label>
-                        <S.TapP>공고 마감일자</S.TapP>
+                        <S.TapP>
+                            공고 마감일자<S.Important>*</S.Important>
+                        </S.TapP>
                         <S.DateSet>
                             <SelectDate
                                 value={recruitFinish}
@@ -335,7 +344,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.DateSet>
                     </S.Label>
                     <S.Label>
-                        <S.TapP>문의사항</S.TapP>
+                        <S.TapP>
+                            문의사항<S.Important>*</S.Important>
+                        </S.TapP>
                         <S.Complain>
                             <div>
                                 <S.ClickBtn
