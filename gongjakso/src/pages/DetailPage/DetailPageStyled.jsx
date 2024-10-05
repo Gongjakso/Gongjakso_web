@@ -120,7 +120,6 @@ export const TitleBottom = styled.div`
 `;
 
 export const BlueBox = styled.div`
-    height: ${props => props.$boxSize};
     border: 2px solid ${props => props.$bg};
     border-radius: 40px;
     margin-top: 15px;
@@ -195,10 +194,9 @@ export const MainText = styled.p`
     font-size: 1.25rem;
     padding-left: 20px;
     line-height: 2;
-    height: ${props => props.$h};
-    padding-bottom: 180px;
+    padding-bottom: 10rem;
     word-wrap: break-word;
-    white-space: normal;
+    white-space: pre-wrap;
 `;
 
 // 스크랩하기 & 지원하기 버튼
@@ -211,6 +209,7 @@ export const ScrapButton = styled.button`
     height: 60px;
     border-radius: 15px;
     margin: 15px;
+    margin-bottom: 10rem;
     padding: 18px;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: bold;
@@ -250,15 +249,14 @@ export const ApplicationTitle = styled.div`
 `;
 
 export const ApplicationBtn = styled.button`
-    position: absolute;
-    bottom: 15rem;
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${props => props.$w};
     height: 50px;
     border-radius: 16px;
-    margin: 15px;
+    margin-top: 15rem;
+    margin-bottom: 10rem;
     padding: 30px;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
