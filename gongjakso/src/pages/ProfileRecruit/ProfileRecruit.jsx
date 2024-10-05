@@ -6,9 +6,7 @@ import MyPageTeam from '../../features/modal/MyPageTeam';
 import ClickRecruitApplicant from '../../features/modal/ClickRecruitApplicant';
 import Pagination from '../../components/Pagination/Pagination';
 import {
-    getApplyList,
     getMyRecruitingTeam,
-    getRecruitTeam,
     patchOpen,
     patchApply,
 } from '../../service/apply_service';

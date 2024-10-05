@@ -7,7 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import NoMobilePage from './pages/NoMobilePage/NoMobilePage';
 
 function App() {
-    const isMobile = useMediaQuery({ query: '(max-width: 460px)' });
+    const isMobile = useMediaQuery({ query: '(max-width: 1023px)' });
 
     return (
         <div className="container">

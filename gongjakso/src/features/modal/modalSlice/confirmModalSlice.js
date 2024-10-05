@@ -12,8 +12,8 @@ const confirmModalSlice = createSlice({
     reducers: {
         openConfirmModal: (state, action) => {
             state.isOpen = true;
-            state.confirmClick = action.payload.confirmClick;
-            state.cancelClick = action.payload.cancelClick;
+            state.confirmClick = action.payload?.confirmClick;
+            state.cancelClick = action.payload?.cancelClick;
         },
         closeConfirmModal: state => {
             state.isOpen = false;

@@ -38,10 +38,14 @@ export const OptionList = styled.div`
     overflow-y: ${props => (props.$scroll === 'true' ? 'scroll' : 'hidden')};
     box-shadow: 0 4px 17px rgba(0, 0, 0, 0.05);
     .option {
+        font-family: PreRegular;
         padding: 15px;
         cursor: pointer;
         border-radius: 4px;
         transition: background-color 0.1s ease;
+        font-weight: 600;
+        font-size: 1.125rem;
+        padding-left: 20px;
 
         &:hover {
             background-color: black;
@@ -78,6 +82,15 @@ export const InputText = styled.input.attrs(props => ({
         gap: 10px;
         border-bottom: 1px solid ${({ theme }) => theme.repo.open};
     }
+    /* Hide the spinners in Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Hide the spinners in Firefox */
+    -moz-appearance: textfield;
 `;
 
 export const Arrow = styled.img`
@@ -92,4 +105,7 @@ export const Div = styled.div`
 
     display: flex;
     flex-direction: column;
+`;
+export const Important = styled.div`
+    color: red;
 `;

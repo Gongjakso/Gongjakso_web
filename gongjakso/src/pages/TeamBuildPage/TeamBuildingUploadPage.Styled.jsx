@@ -99,7 +99,7 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const TapP = styled.p`
+export const TapP = styled.span`
     display: flex;
     align-items: center;
     width: 190px;
@@ -160,4 +160,8 @@ export const DateSet = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+`;
+
+export const Important = styled.div`
+    color: red;
 `;
