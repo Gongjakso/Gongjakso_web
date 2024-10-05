@@ -120,7 +120,6 @@ export const TitleBottom = styled.div`
 `;
 
 export const BlueBox = styled.div`
-    height: ${props => props.$boxSize};
     border: 2px solid ${props => props.$bg};
     border-radius: 40px;
     margin-top: 15px;
@@ -250,15 +249,14 @@ export const ApplicationTitle = styled.div`
 `;
 
 export const ApplicationBtn = styled.button`
-    position: absolute;
-    bottom: 15rem;
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${props => props.$w};
     height: 50px;
     border-radius: 16px;
-    margin: 15px;
+    margin-top: 15rem;
+    margin-bottom: 10rem;
     padding: 30px;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};

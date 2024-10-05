@@ -344,10 +344,7 @@ const DetailPageContest = () => {
                 </S.Background>
 
                 <S.Background $s="1100px">
-                    <S.BlueBox
-                        $bg={({ theme }) => theme.Light1}
-                        $boxSize={apply ? '2750px' : ''}
-                    >
+                    <S.BlueBox $bg={({ theme }) => theme.Light1}>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
                             <S.TextDetail>
