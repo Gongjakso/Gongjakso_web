@@ -29,6 +29,10 @@ const TeamBox = ({
         state => state.confirmModal,
     );
 
+    const dynamicBorderColor =
+        // 나의 참여 기록 -> 활동 중: 파란색 / 활동 종료: 검정색
+        postContent?.status === '활동 중' ? '#0054FF' : borderColor;
+
     useEffect(() => {
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
@@ -133,19 +137,16 @@ const TeamBox = ({
     return (
         <S.Container>
             <S.Box
-                $bordercolor={borderColor}
+                $bordercolor={dynamicBorderColor}
                 $showmoredetail={showMoreDetail.toString()}
             >
                 <S.BoxTopDetail>
                     <S.MainBox>
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
-                            {isMyParticipation === false &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
-                            {isMyParticipation === true &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
-                            {isMyParticipation === null &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
+                            | {postContent?.leader_name} |{' '}
+                            {postContent?.started_at} ~{' '}
+                            {postContent?.finished_at} |
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
@@ -169,7 +170,7 @@ const TeamBox = ({
                         </S.SubBox>
                     ) : (
                         <S.ActivityStatus
-                            $poststatus={postContent?.postStatus}
+                            $status={postContent?.status}
                             $isleader={isLeader}
                             onClick={
                                 isLeader
@@ -188,8 +189,18 @@ const TeamBox = ({
                 <S.BoxBottomDetail>
                     <S.MainBox>
                         {isMyParticipation ? (
-                            <div></div>
-                        ) : isMyParticipation === null ? (
+                            <S.RoundForm>
+                                {getDisplayApplyCategory(
+                                    postContent?.apply_part,
+                                )}
+                            </S.RoundForm>
+                        ) : postContent?.applicant_id ? (
+                            <S.RoundForm>
+                                {getDisplayApplyCategory(
+                                    postContent?.apply_part,
+                                )}
+                            </S.RoundForm>
+                        ) : (
                             postContent?.recruit_part?.map(
                                 (category, index) => {
                                     return (
@@ -199,26 +210,9 @@ const TeamBox = ({
                                     );
                                 },
                             )
-                        ) : postContent?.applicant_id ? (
-                            <S.RoundForm>
-                                {getDisplayApplyCategory(
-                                    postContent?.apply_part,
-                                )}
-                            </S.RoundForm>
-                        ) : (
-                            // 내가 모집 중인 팀
-                            postContent?.recruit_part?.map(
-                                (categoryList, index) => {
-                                    return (
-                                        <S.RoundForm key={index}>
-                                            {getDisplayCategory(categoryList)}
-                                        </S.RoundForm>
-                                    );
-                                },
-                            )
                         )}
                     </S.MainBox>
-                    {/* {postContent?.status === 'EXTENSION' &&
+                    {postContent?.status === '모집 연장' &&
                         isOverlayVisible && (
                             <>
                                 <S.DeadlineOverlay $status={postContent.status}>
@@ -226,7 +220,7 @@ const TeamBox = ({
                                 </S.DeadlineOverlay>
                                 <S.CloseImage onClick={hideOverlay} />
                             </>
-                        )} */}
+                        )}
                     {showWaitingJoin && (
                         <S.WaitingJoin $status={postContent?.status}>
                             {postContent?.status === '합류 완료'
@@ -234,13 +228,12 @@ const TeamBox = ({
                                 : postContent?.status === '미선발'
                                   ? '미선발'
                                   : '합류 대기중'}
-                            {/*수정 필요. status X*/}
-                            {postContent?.status === 'CLOSE' && (
+                            {postContent?.status === '모집 마감' && (
                                 <S.DeadlineOverlay $status={postContent.status}>
                                     모집이 마감되었습니다.
                                 </S.DeadlineOverlay>
                             )}
-                            {postContent?.status === 'CANCEL' && (
+                            {postContent?.status === '모집 취소' && (
                                 <S.DeadlineOverlay $status={postContent.status}>
                                     모집이 취소되었습니다.
                                 </S.DeadlineOverlay>
