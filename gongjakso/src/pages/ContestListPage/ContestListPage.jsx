@@ -10,6 +10,7 @@ import { SelectInput } from '../../components/common/Input/Input';
 import ContestListBox from '../ContestListBox/ContestListBox';
 import Pagination from '../../components/Pagination/Pagination';
 import { getContestList } from '../../service/post_service';
+import Modal1 from '../../features/modal/LoginModal1';
 
 const ContestListPage = () => {
     const [banners, setBanners] = useState([]);
@@ -155,10 +156,10 @@ const ContestListPage = () => {
                                 ) : (
                                     <button onClick={() => showModal1()}>
                                         <ContestListBox
-                                            contestTitle={contest.contestTitle}
-                                            image={contest.image}
-                                            contestId={contest.contestId}
-                                            remainDate={contest.remainDate}
+                                            contestTitle={contest.title}
+                                            image={contest.imgUrl}
+                                            contestId={contest.id}
+                                            remainDate={contest.dayState}
                                             company={contest.institution}
                                         />
                                     </button>
@@ -185,6 +186,7 @@ const ContestListPage = () => {
                     loadPosts={loadContestList}
                 />
             </S.MainContent>
+            {modal1Open && <Modal1 closeModal1={closeModal1} />}
         </>
     );
 };

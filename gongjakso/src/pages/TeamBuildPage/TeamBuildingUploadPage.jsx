@@ -72,19 +72,48 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
         },
     });
 
+    // const handleOptionChange = option => {
+    //     if (option === 'ONLINE') {
+    //         if (meeting === 'ONLINE') {
+    //             alert('온라인 모임은 이미 선택되어 있습니다.');
+    //         } else {
+    //             setMeeting('ONLINE');
+    //         }
+    //     } else if (option === 'OFFLINE') {
+    //         if (meeting === 'OFFLINE') {
+    //             alert('오프라인 모임은 이미 선택되어 있습니다.');
+    //         } else {
+    //             setMeeting('OFFLINE');
+    //         }
+    //     }
+    //     setBtn(true);
+    // };
+
     const handleOptionChange = option => {
         if (option === 'ONLINE') {
             if (meeting === 'ONLINE') {
-                alert('온라인 모임은 이미 선택되어 있습니다.');
+                alert('둘 중 하나를 꼭 선택해주세요');
+            } else if (meeting === 'OFFLINE') {
+                setMeeting('HYBRID');
+            } else if (meeting === 'HYBRID') {
+                setMeeting('OFFLINE');
             } else {
                 setMeeting('ONLINE');
             }
         } else if (option === 'OFFLINE') {
             if (meeting === 'OFFLINE') {
-                alert('오프라인 모임은 이미 선택되어 있습니다.');
+                alert('둘 중 하나를 꼭 선택해주세요');
+            } else if (meeting === 'ONLINE') {
+                setMeeting('HYBRID');
+            } else if (meeting === 'HYBRID') {
+                setMeeting('ONLINE');
             } else {
                 setMeeting('OFFLINE');
             }
+        } else {
+            setMeeting(prevMeeting =>
+                prevMeeting === 'HYBRID' ? null : 'HYBRID',
+            );
         }
         setBtn(true);
     };
@@ -282,7 +311,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.TapP>
                         <S.ClickBtn
                             $isselected={
-                                meeting === 'OFFLINE' || meeting === 'BOTH'
+                                meeting === 'OFFLINE' || meeting === 'HYBRID'
                             }
                             onClick={() => handleOptionChange('OFFLINE')}
                         >
@@ -290,7 +319,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.ClickBtn>
                         <S.ClickBtn
                             $isselected={
-                                meeting === 'ONLINE' || meeting === 'BOTH'
+                                meeting === 'ONLINE' || meeting === 'HYBRID'
                             }
                             onClick={() => handleOptionChange('ONLINE')}
                         >
