@@ -365,7 +365,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setEducationSections(updatedSections);
                                 }}
                             />
-                            <S.Fillter1>
+                            <S.Filter1>
                                 <SelectInput
                                     id={`Gradestatus-${index}`}
                                     selectOptions={gradeStatus_options}
@@ -381,8 +381,8 @@ const MakePortfolio = ({ portfolioId }) => {
                                     }}
                                     case={true}
                                 />
-                            </S.Fillter1>
-                            <S.Fillter1>
+                            </S.Filter1>
+                            <S.Filter1>
                                 <SelectInput
                                     id={`Educationstatus-${index}`}
                                     selectOptions={status_options}
@@ -397,7 +397,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     }}
                                     case={true}
                                 />
-                            </S.Fillter1>
+                            </S.Filter1>
                         </S.InputContainer>
                         {educationSections.length > 1 && (
                             <S.DeleteBtn
@@ -559,7 +559,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setActivitySections(updatedSections);
                                 }}
                             />
-                            <S.Fillter1>
+                            <S.Filter1>
                                 <SelectInput
                                     id={`Activitystatus-${index}`}
                                     selectOptions={activityStatus_options}
@@ -577,7 +577,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     }}
                                     case={true}
                                 />
-                            </S.Fillter1>
+                            </S.Filter1>
                         </S.InputContainer>
                         {activitySections.length > 1 && (
                             <S.DeleteBtn
