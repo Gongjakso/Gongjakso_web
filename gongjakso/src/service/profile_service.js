@@ -14,6 +14,7 @@ export const putMyInfo = async (name, major, job, status, phone) => {
         });
         return response.data;
     } catch (error) {
+        console.log(error);
         throw new Error('나의 정보를 가져올 수 없습니다.');
     }
 };
@@ -25,7 +26,9 @@ export const getMyInfo = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 지원한 게시글을 가져올 수 없습니다.');
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
@@ -37,7 +40,9 @@ export const getMyRecruiting = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 모집 중인 게시글을 가져올 수 없습니다.', error);
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
@@ -49,7 +54,9 @@ export const getMyApplied = async page => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 지원한 게시글을 가져올 수 없습니다.');
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
@@ -62,7 +69,9 @@ export const getMyParticipated = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log(error);
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
@@ -72,7 +81,9 @@ export const getMyContestScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 스크랩한 공모전 정보를 가져올 수 없습니다.');
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
@@ -82,7 +93,9 @@ export const getMyProjectScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 export const getMyTeamScrap = async (page, size) => {
@@ -91,6 +104,8 @@ export const getMyTeamScrap = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
