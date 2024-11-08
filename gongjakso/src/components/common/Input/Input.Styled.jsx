@@ -6,7 +6,7 @@ export const SelectContainer = styled.div`
 
 export const SelectValue = styled.div`
     display: block;
-    width: ${props => (props.$case === 'true' ? '155px' : '400px')};
+    width: ${props => (props.$case === 'true' ? '11rem' : '25rem')};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -25,27 +25,28 @@ export const SelectValue = styled.div`
 export const OptionList = styled.div`
     position: absolute;
     font-family: 'PreMedium';
-    right: -10px;
-    width: ${props => (props.$case === 'true' ? '185px' : '430px')};
+    right: -1.15rem;
+    width: ${props => (props.$case === 'true' ? '13.6rem' : '26.875rem')};
     font-size: ${({ theme }) => theme.fontSize.m};
-    margin: ${props => (props.$case === 'true' ? '20px 0px' : '20px 0px')};
+    margin: ${props =>
+        props.$case === 'true' ? '1.25rem 0rem' : '1.25rem 0rem'};
     list-style: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     background-color: #fff;
     z-index: 1;
-    border: 1px solid hsl(0, 0%, 90%);
-    max-height: 300px;
+    border: 0.063rem solid hsl(0, 0%, 90%);
+    max-height: 18.75rem;
     overflow-y: ${props => (props.$scroll === 'true' ? 'scroll' : 'hidden')};
-    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.25rem 1.063rem rgba(0, 0, 0, 0.05);
     .option {
-        font-family: PreRegular;
-        padding: 15px;
+        font-family: 'PreRegular';
+        padding: 0.938rem;
         cursor: pointer;
-        border-radius: 4px;
+        border-radius: 0.25rem;
         transition: background-color 0.1s ease;
         font-weight: 600;
         font-size: 1.125rem;
-        padding-left: 20px;
+        padding-left: 1.25rem;
 
         &:hover {
             background-color: black;
@@ -69,18 +70,18 @@ export const InputText = styled.input.attrs(props => ({
 }))`
     font-size: ${({ theme }) => theme.fontSize.base};
 
-    padding: 10px 0;
+    padding: 0.625rem 0;
     border-style: none;
-    border-bottom: 1px solid ${({ theme }) => theme.border};
+    border-bottom: 0.063rem solid ${({ theme }) => theme.border};
 
     &:focus {
         outline: none;
-        border-bottom: 1px solid ${({ theme }) => theme.mainFont};
+        border-bottom: 0.063rem solid ${({ theme }) => theme.mainFont};
     }
 
     &.warning {
-        gap: 10px;
-        border-bottom: 1px solid ${({ theme }) => theme.repo.open};
+        gap: 0.625rem;
+        border-bottom: 0.063rem solid ${({ theme }) => theme.repo.open};
     }
     /* Hide the spinners in Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
@@ -96,7 +97,7 @@ export const InputText = styled.input.attrs(props => ({
 export const Arrow = styled.img`
     display: flex;
     align-items: center;
-    padding-right: 5px;
+
     justify-content: center;
 `;
 

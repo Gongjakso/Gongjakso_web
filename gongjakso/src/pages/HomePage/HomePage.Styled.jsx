@@ -27,19 +27,19 @@ export const TitleWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem;
     margin-top: 10rem;
 `;
 
 export const TitleWrapper1 = styled(TitleWrapper)`
-    gap: 7px;
+    gap: 0.438rem;
 `;
 
 export const Title = styled.span`
     font-family: 'PreMedium';
     font-size: ${({ theme }) => theme.fontSize.xxlg};
     font-weight: 900;
-    line-height: 35px;
+    line-height: 2.188rem;
     text-align: center;
     color: #212121;
 `;
@@ -59,7 +59,7 @@ export const LoginBtn = styled.div`
     margin-top: 5rem;
     cursor: pointer;
     display: flex;
-    padding-left: 15px;
+    padding-left: 0.938rem;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -67,13 +67,13 @@ export const LoginBtn = styled.div`
     position: absolute;
     top: 0;
     height: 4.5rem;
-    border-radius: 15px;
+    border-radius: 0.938rem;
     background: ${({ theme }) => theme.box1};
     font-family: 'PreMedium';
     color: white;
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-weight: 700;
-    line-height: 21.48px;
+    line-height: 1.343rem;
     text-align: center;
 `;
 
@@ -81,7 +81,7 @@ export const Arrow = styled.div`
     background: url(${arrow});
     width: 1.5rem;
     height: 1.17rem;
-    margin-left: 15px;
+    margin-left: 0.938rem;
     background-repeat: no-repeat;
     background-size: contain;
 `;
@@ -147,7 +147,7 @@ export const Bubble = styled.div`
     width: 31rem;
     height: 5.8rem;
     font-size: ${({ theme }) => theme.fontSize.lg};
-    padding-top: 15px;
+    padding-top: 0.938rem;
     background-repeat: no-repeat;
     background: url(${leftBubble});
     font-weight: 600;
@@ -161,7 +161,7 @@ export const Text = styled.div`
     top: 9.5rem;
     left: 19rem;
     font-family: 'PreMedium';
-    line-height: 35.06px;
+    line-height: 2.191rem;
     text-align: right;
     font-weight: 600;
     width: 18rem;
@@ -279,10 +279,10 @@ export const Text1 = styled(Text)`
     text-align: left;
     position: absolute;
     top: 20rem;
-    left: -110px;
+    left: -6.875rem;
     width: 30rem;
     @media (max-width: 1270px) {
-        left: 40px;
+        left: 2.5rem;
         top: 18rem;
     }
 `;
