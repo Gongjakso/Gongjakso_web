@@ -21,6 +21,8 @@ const MAX_PORTFOLIOS = 3;
 
 const ProfilePage = () => {
     const [data, setProfileData] = useState();
+    const authenticated = localStorage.getItem('accessToken');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
     const [postContent1, setPostContent1] = useState();
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
@@ -37,6 +39,9 @@ const ProfilePage = () => {
     const [portfolioList, setPortfolioList] = useState([]);
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            navigate(`/`);
+        }
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
@@ -49,7 +54,7 @@ const ProfilePage = () => {
         getMyParticipated(1, 2).then(response => {
             setPostContent3(response?.data?.content);
         });
-    }, []);
+    }, [isLoggedIn]);
     useEffect(() => {
         if (selectedPortfolioId && selectedPortfolioType) {
             fetchPortfolioDetailsByType(
