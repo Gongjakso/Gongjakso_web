@@ -6,6 +6,7 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
     const [roles, setRoles] = useState({
         기획: 0,
         디자인: 0,
+        개발자: 0,
         ...(isProject && { FE: 0, BE: 0 }),
         기타: 0,
     });
