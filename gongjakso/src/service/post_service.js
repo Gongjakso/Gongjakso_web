@@ -103,7 +103,9 @@ export const getMyPortfolio = async () => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log(error);
+        error.response.data.code = 3004
+            ? localStorage.removeItem('accessToken')
+            : console.log(error.response.data.message);
     }
 };
 
