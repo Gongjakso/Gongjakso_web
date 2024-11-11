@@ -15,6 +15,7 @@ import TeamBox from '../TeamBox/TeamBox';
 import Modal2 from '../../features/modal/LoginModal2';
 import Modal1 from '../../features/modal/LoginModal1';
 import NoContents from '../../features/NoContents/NoContents';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const PostMainPage = () => {
     const authenticated = localStorage.getItem('accessToken');
@@ -184,6 +185,13 @@ const PostMainPage = () => {
 
     return (
         <>
+            <MetaTag
+                title="공모전공고"
+                description="공모전 공고들을 모아볼 수 있는 페이지"
+                keywords="공모전, 프로젝트, 팀빌딩, 개발, 기획, 디자인"
+                imgsrc="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
+                url="https://gongjakso.xyz/contest"
+            />
             <TopButton />
             <S.MainContent>
                 <S.Div>

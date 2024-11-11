@@ -5,6 +5,7 @@ import theme from './styles/theme';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import NoMobilePage from './pages/NoMobilePage/NoMobilePage';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
     const isMobile = useMediaQuery({ query: '(max-width: 1023px)' });
@@ -13,8 +14,10 @@ function App() {
         <div className="container">
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
-                {/* <Router /> */}
-                {isMobile ? <NoMobilePage /> : <Router />}
+                <HelmetProvider>
+                    {/* <Router /> */}
+                    {isMobile ? <NoMobilePage /> : <Router />}
+                </HelmetProvider>
             </ThemeProvider>
         </div>
     );
