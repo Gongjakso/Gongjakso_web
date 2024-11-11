@@ -11,6 +11,7 @@ import ContestListBox from '../ContestListBox/ContestListBox';
 import Pagination from '../../components/Pagination/Pagination';
 import { getContestList } from '../../service/post_service';
 import Modal1 from '../../features/modal/LoginModal1';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const ContestListPage = () => {
     const [banners, setBanners] = useState([]);
@@ -101,6 +102,13 @@ const ContestListPage = () => {
 
     return (
         <>
+            <MetaTag
+                title="공모전리스트"
+                description="다양한 공모전에 참여해보세요."
+                keywords="공모전, 참여, 팀빌딩, 기획, 디자인, 개발, IT"
+                imgsrc="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
+                url="https://gongjakso.xyz/contestList"
+            />
             <TopButton />
             <S.MainContent>
                 <S.Div>
