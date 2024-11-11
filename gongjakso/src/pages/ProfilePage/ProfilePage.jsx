@@ -16,11 +16,14 @@ import {
     getExistPortfolio,
     deleteExistPortfolio,
 } from '../../service/portfolio_service';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const MAX_PORTFOLIOS = 3;
 
 const ProfilePage = () => {
     const [data, setProfileData] = useState();
+    const authenticated = localStorage.getItem('accessToken');
+    const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
     const [postContent1, setPostContent1] = useState();
     const [postContent2, setPostContent2] = useState();
     const [postContent3, setPostContent3] = useState();
@@ -37,6 +40,9 @@ const ProfilePage = () => {
     const [portfolioList, setPortfolioList] = useState([]);
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            navigate(`/`);
+        }
         getMyInfo().then(response => {
             setProfileData(response?.data);
         });
@@ -49,7 +55,7 @@ const ProfilePage = () => {
         getMyParticipated(1, 2).then(response => {
             setPostContent3(response?.data?.content);
         });
-    }, []);
+    }, [isLoggedIn]);
     useEffect(() => {
         if (selectedPortfolioId && selectedPortfolioType) {
             fetchPortfolioDetailsByType(
@@ -292,6 +298,13 @@ const ProfilePage = () => {
 
     return (
         <div style={{ paddingBottom: '10rem' }}>
+            <MetaTag
+                title="프로필페이지"
+                description="내 정보를 확인해봐요."
+                keywords="포트폴리오, 스크랩, 팀빌딩, 모집, 참여, 공모전"
+                imgsrc="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
+                url="https://gongjakso.xyz/contestList"
+            />
             <S.TopBox>
                 <S.InfoBox>
                     <S.DetailBox>
