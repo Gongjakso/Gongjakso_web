@@ -209,8 +209,13 @@ const DetailPageContest = () => {
     // 지원 이유 작성란 기능 설정
     const textarea = useRef();
     const handleResizeHeight = () => {
+        const baseFontSize = parseFloat(
+            getComputedStyle(document.documentElement).fontSize,
+        );
+        const pxToRem = px => px / baseFontSize;
+
         textarea.current.style.height = 'auto';
-        textarea.current.style.height = textarea.current.scrollHeight + 'px';
+        textarea.current.style.height = `${pxToRem(textarea.current.scrollHeight)}rem`;
     };
     const onInputHandler = e => {
         if (e.target.value.length > 1000) {
@@ -278,7 +283,7 @@ const DetailPageContest = () => {
             ) : null}
 
             <S.Layout>
-                <S.Background $s="1150px" $mgt="50px">
+                <S.Background $s="77rem" $mgt="3rem">
                     <S.BgButton>
                         <img
                             src={Close}
@@ -343,7 +348,7 @@ const DetailPageContest = () => {
                     </S.TitleBox>
                 </S.Background>
 
-                <S.Background $s="1100px">
+                <S.Background $s="75.5rem">
                     <S.BlueBox $bg={({ theme }) => theme.Light1}>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
@@ -397,7 +402,7 @@ const DetailPageContest = () => {
                         </S.TextBox>
                         <S.TextBox>
                             <S.TextTitle>공모전 홈페이지</S.TextTitle>
-                            <S.OpenKakao $w="185px">
+                            <S.OpenKakao $w="13rem">
                                 <img
                                     src={postLink}
                                     alt="homepage-link"
@@ -410,7 +415,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             {/* kakao : True, google : False */}
                             <S.TextTitle>기타 문의</S.TextTitle>
-                            <S.OpenKakao $w="140px">
+                            <S.OpenKakao $w="10rem">
                                 {postData?.channel_method ? (
                                     <img
                                         src={OpenKakao}
@@ -715,7 +720,7 @@ const DetailPageContest = () => {
 
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
-                                        $w="280px"
+                                        $w="20rem"
                                         onClick={WarningApply}
                                     >
                                         제출하기
