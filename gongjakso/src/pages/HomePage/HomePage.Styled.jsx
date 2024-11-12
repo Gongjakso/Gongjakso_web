@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import backGroundImage from '../../assets/images/backgroundImg.svg';
 import arrow from '../../assets/images/whiteArrow.svg';
-import homeImg from '../../assets/images/Homepage.png';
-import contestimg from '../../assets/images/Contestpage.svg';
+import homeImg from '../../assets/images/Homepage.svg';
+import contestimg from '../../assets/images/ContestImg.svg';
 import leftBubble from '../../assets/images/LeftBubble.svg';
 import teambuilding1 from '../../assets/images/Teambuilding1.svg';
 import teambuilding2 from '../../assets/images/Teambuilding2.png';
-import contestDetail from '../../assets/images/ContestDetail.svg';
+import contestDetail from '../../assets/images/ContestDetails.svg';
 import rightBubble from '../../assets/images/rightBubble.svg';
 import portfolio from '../../assets/images/Portfolio.png';
-import portfolioPage from '../../assets/images/PortfolioPage.svg';
+import portfolioPage from '../../assets/images/PortfolioPg.svg';
 
 export const HomeContent = styled.div`
     display: flex;
@@ -101,6 +101,8 @@ export const PageImg = styled.div`
 
 export const ContestImg = styled.div`
     background: url(${contestimg});
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 38rem;
     height: 25rem;
     position: absolute;
@@ -244,6 +246,8 @@ export const Section3 = styled(Section1)`
 export const ContestDetail = styled(ContestImg)`
     background: url(${contestDetail});
     position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
     left: 0;
     height: 30rem;
     background-repeat: no-repeat;
@@ -329,6 +333,8 @@ export const PortfolioImg = styled(TeamImg)`
 export const PortfolioDetail = styled(ContestImg)`
     background: url(${portfolioPage});
     position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
     right: 0;
     top: 9.5rem;
     width: 37.7rem;

@@ -209,8 +209,13 @@ const DetailPageContest = () => {
     // 지원 이유 작성란 기능 설정
     const textarea = useRef();
     const handleResizeHeight = () => {
+        const baseFontSize = parseFloat(
+            getComputedStyle(document.documentElement).fontSize,
+        );
+        const pxToRem = px => px / baseFontSize;
+
         textarea.current.style.height = 'auto';
-        textarea.current.style.height = textarea.current.scrollHeight + 'px';
+        textarea.current.style.height = `${pxToRem(textarea.current.scrollHeight)}rem`;
     };
     const onInputHandler = e => {
         if (e.target.value.length > 1000) {
@@ -278,7 +283,7 @@ const DetailPageContest = () => {
             ) : null}
 
             <S.Layout>
-                <S.Background $s="1150px" $mgt="50px">
+                <S.Background $s="77rem" $mgt="1.8rem">
                     <S.BgButton>
                         <img
                             src={Close}
@@ -290,9 +295,7 @@ const DetailPageContest = () => {
                     {checkStatus === 'APPLIER' ? (
                         <div>
                             <S.Title checkStatus={checkStatus}>
-                                <img src={Logo} alt="title-logo" />
                                 <p>{postData?.title}</p>
-                                <img src={Logo} alt="title-logo" />
                             </S.Title>
                             <S.BtnLayout>
                                 {applyType === '합류 완료' ? (
@@ -326,9 +329,7 @@ const DetailPageContest = () => {
                         </div>
                     ) : (
                         <S.Title checkStatus={checkStatus}>
-                            <img src={Logo} alt="title-logo" />
                             <p>{postData?.title}</p>
-                            <img src={Logo} alt="title-logo" />
                         </S.Title>
                     )}
 
@@ -343,7 +344,7 @@ const DetailPageContest = () => {
                     </S.TitleBox>
                 </S.Background>
 
-                <S.Background $s="1100px">
+                <S.Background $s="75.5rem">
                     <S.BlueBox $bg={({ theme }) => theme.Light1}>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
@@ -397,7 +398,7 @@ const DetailPageContest = () => {
                         </S.TextBox>
                         <S.TextBox>
                             <S.TextTitle>공모전 홈페이지</S.TextTitle>
-                            <S.OpenKakao $w="185px">
+                            <S.OpenKakao $w="13rem">
                                 <img
                                     src={postLink}
                                     alt="homepage-link"
@@ -410,7 +411,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             {/* kakao : True, google : False */}
                             <S.TextTitle>기타 문의</S.TextTitle>
-                            <S.OpenKakao $w="140px">
+                            <S.OpenKakao $w="10rem">
                                 {postData?.channel_method ? (
                                     <img
                                         src={OpenKakao}
@@ -703,7 +704,7 @@ const DetailPageContest = () => {
                                             maxLength={'1000'}
                                             rows={1}
                                             placeholder={
-                                                '* 해당 공모전 팀에 합류하고 싶은 이유를 작성해주세요!(최대 1000자)'
+                                                '* 해당 공모전 팀에 합류하고 싶은 이유를 작성해주세요! (최대 1000자)'
                                             }
                                         ></T.InputArea>
                                         <T.InputNum>
@@ -715,7 +716,7 @@ const DetailPageContest = () => {
 
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
-                                        $w="280px"
+                                        $w="18rem"
                                         onClick={WarningApply}
                                     >
                                         제출하기

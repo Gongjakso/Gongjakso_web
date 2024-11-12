@@ -6,7 +6,7 @@ export const Globalstyle = styled.div`
     align-items: center;
     width: 100%;
 
-    @media (max-width: 1270px) {
+    @media (max-width: 90.714rem) {
         transform: scale(0.9);
         transform-origin: top center;
     }
@@ -29,11 +29,10 @@ export const Background = styled.div`
 export const BgButton = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
-    margin-bottom: 50px;
-    margin-right: 20px;
+    margin-bottom: 5.8rem;
+    margin-right: 1.4286rem;
     img {
-        width: 27px;
+        width: 1.8rem;
         cursor: pointer;
     }
 `;
@@ -42,21 +41,21 @@ export const BgButton = styled.div`
 export const TitleBox = styled.div`
     display: flex;
     align-items: center;
-    width: 800px;
-    padding: 0px 40px;
+    width: 57.143rem;
+    padding: 0 2.857rem;
 `;
 
 export const TitleBox2 = styled(TitleBox)`
     justify-content: space-between;
-    margin-left: 30px;
-    margin-bottom: 30px;
+    margin-left: 2.143rem;
+    margin-bottom: 2.143rem;
 `;
 
 export const BtnLayout = styled.div`
     display: flex;
     position: absolute;
-    top: 105px;
-    right: 50px;
+    top: 7.5rem;
+    right: 3.571rem;
 `;
 
 // 타이틀
@@ -64,87 +63,84 @@ export const Title = styled.div`
     display: flex;
     align-items: center;
     font-family: 'TheJamsilRegular';
+    font-weight: 600;
+    letter-spacing: 0.05rem;
     font-size: ${({ theme }) => theme.fontSize.xl};
 
-    img {
-        width: 45px;
-    }
-
     p {
-        margin: 0 15px;
+        margin-left: 0.5rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: ${({ checkStatus }) =>
-            checkStatus === 'APPLIER' ? '530px' : '800px'};
+            checkStatus === 'APPLIER' ? '45rem' : '67rem'};
     }
 
-    margin-left: 80px;
-    margin-bottom: 35px;
+    margin-left: 4.5rem;
+    margin-bottom: 3.2rem;
 `;
 
 // 타이틀 옆 합류 대기 박스
 export const Status = styled.div`
-    padding: 10px;
+    padding: 0.7143rem;
     text-align: center;
-    width: 130px;
+    width: 8rem;
     background: ${props => props.$bg};
-    border-radius: 20px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    border-radius: 1.429rem;
+    font-size: ${({ theme }) => theme.fontSize.base};
     color: white;
     font-family: 'PreBold';
 `;
 
 export const ApplyBtn = styled.button`
     position: relative;
-    padding-right: 10px;
+    padding-right: 0.7143rem;
     background: none;
-    width: 132px;
-    border: 2px solid #c8c8c8;
-    font-size: ${({ theme }) => theme.fontSize.md};
-    margin-left: 20px;
-    border-radius: 10px;
+    width: 8rem;
+    border: 0.143rem solid #c8c8c8;
+    font-size: ${({ theme }) => theme.fontSize.base};
+    margin-left: 1.429rem;
+    border-radius: 0.7143rem;
     font-family: 'PreBold';
     img {
         position: absolute;
-        top: 10px;
-        right: 5px;
-        width: 17px;
+        top: 0.7143rem;
+        right: 0.3571rem;
+        width: 1rem;
     }
 `;
 
 // 팀장 표시 부분
 export const TitleBottom = styled.div`
     font-size: ${({ theme }) => theme.fontSize.mdd};
-    margin-left: 45px;
+    margin-left: 2.3rem;
 `;
 
 export const BlueBox = styled.div`
-    border: 2px solid ${props => props.$bg};
-    border-radius: 40px;
-    margin-top: 15px;
-    margin-bottom: 55px;
-    padding: 55px;
+    border: 0.2rem solid #7cd0ff80;
+    border-radius: 2.857rem;
+    margin-top: 1.071rem;
+    margin-bottom: 3.929rem;
+    padding: 3rem;
 `;
 
 // 박스 안 텍스트 박스 전체 틀
 export const TextBox = styled.div`
     align-items: center;
-    padding: 20px 1px 20px 20px;
+    padding: 1.429rem 0.0714rem 1.429rem 1.429rem;
     display: flex;
-    width:;
 `;
 
 // 텍스트 박스 안 굵은 제목
 export const TextTitle = styled.p`
-    width: 190px;
+    width: 13.571rem;
     font-size: 1.6rem;
     font-family: 'PreBold';
 `;
 
 // 텍스트 박스 안 세부 내용
 export const TextDetail = styled.div`
-    width: 800px;
+    width: 57.143rem;
     flex-flow: wrap;
     font-family: 'PreMedium';
     font-size: 1.45rem;
@@ -154,8 +150,8 @@ export const TextDetail = styled.div`
 export const Meeting = styled(TextDetail)`
     align-items: center;
     img {
-        width: 30px;
-        margin-right: 10px;
+        width: 2.143rem;
+        margin-right: 0.7143rem;
     }
 `;
 
@@ -169,30 +165,30 @@ export const OpenKakao = styled(TextDetail)`
 
 // 검은색 둥근 틀
 export const RoundForm = styled(Globalstyle)`
-    min-width: 140px;
+    min-width: 10rem;
     max-width: 8rem;
-    padding: 12px 6px;
+    padding: 0.857rem 0.429rem;
     background: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 25px;
+    border-radius: 1.786rem;
     font-size: 1.13rem;
     color: white;
     text-align: center;
-    margin: 8px 8px 8px 0px;
+    margin: 0.571rem 0.571rem 0.571rem 0rem;
 `;
 
 export const Line = styled.div`
     width: 100%;
-    border: 1px solid #cecbcb;
-    margin: 30px 0px;
+    border: 0.0714rem solid #cecbcb;
+    margin: 2.143rem 0rem;
 `;
 
 // 설명글 안 내용
 export const MainText = styled.p`
     font-size: 1.25rem;
-    padding-left: 20px;
+    padding-left: 1.429rem;
     line-height: 2;
     padding-bottom: 10rem;
     word-wrap: break-word;
@@ -201,34 +197,33 @@ export const MainText = styled.p`
 
 // 스크랩하기 & 지원하기 버튼
 export const ScrapButton = styled.button`
-    width: 250px;
+    width: 17.857rem;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 60px;
-    border-radius: 15px;
-    margin: 15px;
+    height: 4.286rem;
+    border-radius: 1.071rem;
+    margin: 1.071rem;
     margin-bottom: 10rem;
-    padding: 18px;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: bold;
 
     background: ${props =>
         props.$click === 'false' ? 'none' : ({ theme }) => theme.Green};
     color: ${props => (props.$click === 'false' ? 'black' : 'white')};
-    border: 2px solid ${props => props.$bc};
+    border: 0.143rem solid ${props => props.$bc};
 
     img {
-        margin-right: 18px;
-        margin-left: -20px;
+        margin-right: 1.286rem;
+        margin-left: -1.429rem;
     }
 `;
 
 export const ApplyButton = styled(ScrapButton)`
     background: ${props => (!props.$apply ? 'none' : '#3477FF')};
     color: ${props => (!props.$apply ? ({ theme }) => theme.box1 : 'white')};
-    border: 2.5px solid ${({ theme }) => theme.box1};
+    border: 0.179rem solid ${({ theme }) => theme.box1};
 `;
 
 export const CancelButton = styled(ScrapButton)`
@@ -253,11 +248,11 @@ export const ApplicationBtn = styled.button`
     align-items: center;
     justify-content: center;
     width: ${props => props.$w};
-    height: 50px;
-    border-radius: 16px;
+    height: 3.571rem;
+    border-radius: 1rem;
     margin-top: 15rem;
     margin-bottom: 10rem;
-    padding: 30px;
+    padding: 2rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
