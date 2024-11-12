@@ -53,7 +53,7 @@ export const MainTitle = styled.div`
 
 // 텍스트 전체 틀
 export const DetailBox = styled.div`
-    padding: 15px;
+    padding: 1.8rem;
     position: relative;
 `;
 
@@ -133,7 +133,7 @@ export const InputArea = styled.textarea`
     resize: vertical;
     overflow: hidden;
     color: black;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreRegular';
     line-height: 1.5;
     &:focus {

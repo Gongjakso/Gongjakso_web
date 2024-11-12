@@ -29,11 +29,10 @@ export const Background = styled.div`
 export const BgButton = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: 0.7143rem;
-    margin-bottom: 3.5714rem;
+    margin-bottom: 5.8rem;
     margin-right: 1.4286rem;
     img {
-        width: 1.9286rem;
+        width: 1.8rem;
         cursor: pointer;
     }
 `;
@@ -64,33 +63,31 @@ export const Title = styled.div`
     display: flex;
     align-items: center;
     font-family: 'TheJamsilRegular';
+    font-weight: 600;
+    letter-spacing: 0.05rem;
     font-size: ${({ theme }) => theme.fontSize.xl};
 
-    img {
-        width: 3.214rem;
-    }
-
     p {
-        margin: 0 1.071rem;
+        margin-left: 0.5rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: ${({ checkStatus }) =>
-            checkStatus === 'APPLIER' ? '37.857rem' : '57.143rem'};
+            checkStatus === 'APPLIER' ? '45rem' : '67rem'};
     }
 
-    margin-left: 5.714rem;
-    margin-bottom: 2.5rem;
+    margin-left: 4.5rem;
+    margin-bottom: 3.2rem;
 `;
 
 // 타이틀 옆 합류 대기 박스
 export const Status = styled.div`
     padding: 0.7143rem;
     text-align: center;
-    width: 9.286rem;
+    width: 8rem;
     background: ${props => props.$bg};
     border-radius: 1.429rem;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.base};
     color: white;
     font-family: 'PreBold';
 `;
@@ -99,9 +96,9 @@ export const ApplyBtn = styled.button`
     position: relative;
     padding-right: 0.7143rem;
     background: none;
-    width: 9.429rem;
+    width: 8rem;
     border: 0.143rem solid #c8c8c8;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.base};
     margin-left: 1.429rem;
     border-radius: 0.7143rem;
     font-family: 'PreBold';
@@ -109,14 +106,14 @@ export const ApplyBtn = styled.button`
         position: absolute;
         top: 0.7143rem;
         right: 0.3571rem;
-        width: 1.2143rem;
+        width: 1rem;
     }
 `;
 
 // 팀장 표시 부분
 export const TitleBottom = styled.div`
     font-size: ${({ theme }) => theme.fontSize.mdd};
-    margin-left: 3.214rem;
+    margin-left: 2.3rem;
 `;
 
 export const BlueBox = styled.div`
@@ -124,7 +121,7 @@ export const BlueBox = styled.div`
     border-radius: 2.857rem;
     margin-top: 1.071rem;
     margin-bottom: 3.929rem;
-    padding: 3.929rem;
+    padding: 3rem;
 `;
 
 // 박스 안 텍스트 박스 전체 틀
@@ -209,7 +206,6 @@ export const ScrapButton = styled.button`
     border-radius: 1.071rem;
     margin: 1.071rem;
     margin-bottom: 10rem;
-    padding: 1.286rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: bold;
 
@@ -253,10 +249,10 @@ export const ApplicationBtn = styled.button`
     justify-content: center;
     width: ${props => props.$w};
     height: 3.571rem;
-    border-radius: 1.143rem;
+    border-radius: 1rem;
     margin-top: 15rem;
     margin-bottom: 10rem;
-    padding: 2.143rem;
+    padding: 2rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';

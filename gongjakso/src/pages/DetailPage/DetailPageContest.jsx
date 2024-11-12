@@ -283,7 +283,7 @@ const DetailPageContest = () => {
             ) : null}
 
             <S.Layout>
-                <S.Background $s="77rem" $mgt="3rem">
+                <S.Background $s="77rem" $mgt="1.8rem">
                     <S.BgButton>
                         <img
                             src={Close}
@@ -295,9 +295,7 @@ const DetailPageContest = () => {
                     {checkStatus === 'APPLIER' ? (
                         <div>
                             <S.Title checkStatus={checkStatus}>
-                                <img src={Logo} alt="title-logo" />
                                 <p>{postData?.title}</p>
-                                <img src={Logo} alt="title-logo" />
                             </S.Title>
                             <S.BtnLayout>
                                 {applyType === '합류 완료' ? (
@@ -331,9 +329,7 @@ const DetailPageContest = () => {
                         </div>
                     ) : (
                         <S.Title checkStatus={checkStatus}>
-                            <img src={Logo} alt="title-logo" />
                             <p>{postData?.title}</p>
-                            <img src={Logo} alt="title-logo" />
                         </S.Title>
                     )}
 
@@ -708,7 +704,7 @@ const DetailPageContest = () => {
                                             maxLength={'1000'}
                                             rows={1}
                                             placeholder={
-                                                '* 해당 공모전 팀에 합류하고 싶은 이유를 작성해주세요!(최대 1000자)'
+                                                '* 해당 공모전 팀에 합류하고 싶은 이유를 작성해주세요! (최대 1000자)'
                                             }
                                         ></T.InputArea>
                                         <T.InputNum>
@@ -720,7 +716,7 @@ const DetailPageContest = () => {
 
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
-                                        $w="20rem"
+                                        $w="18rem"
                                         onClick={WarningApply}
                                     >
                                         제출하기
