@@ -9,7 +9,7 @@ import TopButton from '../../pages/HomePage/TopButton';
 import Banner from './Banner';
 import { getMyInfo } from '../../service/auth_service';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const HomePage = () => {
     const authenticated = localStorage.getItem('accessToken');
@@ -54,49 +54,12 @@ const HomePage = () => {
 
     return (
         <>
-            <Helmet>
-                {/* <!-- HTML Meta Tags --> */}
-                <title>공모전 팀빌딩 서비스 | 공작소 gongjakso</title>
-                <meta
-                    name="description"
-                    content="귀찮은 공모전 팀 구인 과정은 이제 그만! 내가 원하는 조건에 맞추어 공모전 팀원을 모집해보세요."
-                />
-
-                {/* <!-- Facebook Meta Tags --> */}
-                <meta property="og:url" content="https://gongjakso.xyz" />
-                <meta property="og:type" content="website" />
-                <meta
-                    property="og:title"
-                    content="공모전 팀빌딩 서비스 | 공작소 gongjakso"
-                />
-                <meta
-                    property="og:description"
-                    content="귀찮은 공모전 팀 구인 과정은 이제 그만! 내가 원하는 조건에 맞추어 공모전 팀원을 모집해보세요."
-                />
-                <meta
-                    property="og:image"
-                    content="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
-                />
-
-                {/* <!-- Twitter Meta Tags --> */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta property="twitter:domain" content="gongjakso.xyz" />
-                <meta property="twitter:url" content="https://gongjakso.xyz" />
-                <meta
-                    name="twitter:title"
-                    content="공모전 팀빌딩 서비스 | 공작소 gongjakso"
-                />
-                <meta
-                    name="twitter:description"
-                    content="귀찮은 공모전 팀 구인 과정은 이제 그만! 내가 원하는 조건에 맞추어 공모전 팀원을 모집해보세요."
-                />
-                <meta
-                    name="twitter:image"
-                    content="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
-                />
-
-                {/* <!-- Meta Tags Generated via https://www.opengraph.xyz/ --> */}
-            </Helmet>
+            <MetaTag
+                title="공모전 팀빌딩 서비스 | 공작소 gongjakso"
+                description="귀찮은 공모전 팀 구인 과정은 이제 그만! 내가 원하는 조건에 맞추어 공모전 팀원을 모집해보세요."
+                keywords="공작소, 공모전, 참여, 팀빌딩, 기획, 디자인, 개발, IT"
+                url="https://gongjakso.xyz"
+            />
             <TopButton />
             <S.HomeContent className="home-section">
                 <S.TitleWrapper>
