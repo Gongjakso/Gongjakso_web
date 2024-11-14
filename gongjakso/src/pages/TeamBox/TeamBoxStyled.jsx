@@ -163,19 +163,13 @@ export const ActivityStatus = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${({ theme, $poststatus }) =>
-        $poststatus === 'ACTIVE' ? theme.box1 : theme.box2};
+    background: ${({ theme, $status }) =>
+        $status === '활동 중' ? theme.box1 : theme.box2};
     border-radius: 50px;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: 600;
     text-align: center;
     color: ${({ theme }) => theme.mainFont2};
-    cursor: ${({ $isleader, $poststatus }) =>
-        $isleader
-            ? $poststatus === 'ACTIVE'
-                ? 'pointer'
-                : 'not-allowed'
-            : 'not-allowed'};
 `;
 
 //검은색 둥근 틀
@@ -213,7 +207,7 @@ export const DeadlineOverlay = styled.div`
     border-radius: 13.5px;
     font-size: ${({ theme }) => theme.fontSize.ll};
     background: ${({ $status }) =>
-        $status === 'EXTENSION'
+        $status === '모집 연장'
             ? `rgba(0, 84, 255, 0.5)`
             : `rgba(0, 0, 0, 0.5)`};
     display: flex;
