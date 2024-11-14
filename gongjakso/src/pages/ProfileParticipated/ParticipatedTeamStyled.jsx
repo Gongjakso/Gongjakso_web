@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TopBox = styled.div`
-    height: 250px;
+    height: 18rem;
     width: 100%;
     background-color: rgba(195, 233, 255, 0.5);
     display: flex;
@@ -16,7 +16,7 @@ export const BoxDetail = styled.div`
     justify-content: center;
     height: 25%;
     flex-direction: column;
-    margin: 100px;
+    margin: 7rem;
 `;
 
 export const Spacer = styled.div`
@@ -35,5 +35,5 @@ export const SubTitleContainer = styled.div`
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    width: 1000px;
+    width: 71.875rem;
 `;
