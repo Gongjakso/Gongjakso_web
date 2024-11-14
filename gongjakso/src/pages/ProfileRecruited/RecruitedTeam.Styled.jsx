@@ -28,7 +28,7 @@ export const BoxDetail = styled.div`
     justify-content: center;
     height: 25%;
     flex-direction: column;
-    margin: 7rem;
+    margin: 3rem 7rem 3rem 7rem;
 `;
 
 export const SubTitleContainer = styled.div`
