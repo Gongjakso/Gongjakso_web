@@ -8,7 +8,10 @@ export const DropdownButton = styled.button`
     width: 160px;
     height: 40px;
     border-bottom: 1px solid ${({ theme }) => theme.borderline};
-    /* border-radius: 15px; */
+    border-color: ${props =>
+        props.$isError
+            ? ({ theme }) => theme.borderline
+            : 'red'}; /* border-radius: 15px; */
     /* padding: 15px; */
     color: var(--festie-gray-800, #3a3a3a);
     font-size: ${({ theme }) => theme.fontSize.base};

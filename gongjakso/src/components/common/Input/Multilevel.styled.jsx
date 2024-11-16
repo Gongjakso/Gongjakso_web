@@ -12,7 +12,7 @@ export const Dropdown = styled.div`
         text-align: left;
         padding: ${props =>
             props.$ispost === 'true' ? '10px 19px' : '12px 18px'};
-        width: ${props => (props.$ispost === 'true' ? '200px' : '190px')};
+        width: ${props => (props.$ispost === 'true' ? '15rem' : '14rem')};
         font-size: ${({ theme, $ispost }) =>
             $ispost === 'true' ? theme.fontSize.base : theme.fontSize.m};
         color: ${props => (props.$ispost === 'true' ? 'gray' : 'black')};
@@ -20,7 +20,7 @@ export const Dropdown = styled.div`
     }
     .rnd__root-menu.rnd__menu {
         width: ${props =>
-            props.$ispost === 'true' ? '200px!important' : '190px!important'};
+            props.$ispost === 'true' ? '15rem!important' : '14rem!important'};
         z-index: 9999;
         font-family: 'PreRegular';
     }

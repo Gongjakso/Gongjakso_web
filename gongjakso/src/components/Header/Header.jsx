@@ -75,30 +75,6 @@ const Header = () => {
                             setActive={setActive}
                         />
                     </li>
-                    {/* <li>
-                        <ProjectBtn
-                            hover={hover}
-                            setHover={setHover}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </li>
-                    <li>
-                        <TeambuildBtn
-                            hover={hover}
-                            setHover={setHover}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </li>
-                    <li>
-                        <CalendarBtn
-                            hover={hover}
-                            setHover={setHover}
-                            active={active}
-                            setActive={setActive}
-                        />
-                    </li> */}
                 </S.ItemList>
                 <S.ProfileArea>
                     <ProfileBtn

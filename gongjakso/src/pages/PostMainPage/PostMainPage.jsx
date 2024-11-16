@@ -199,9 +199,6 @@ const PostMainPage = () => {
                 </S.Div>
                 <S.Search>
                     <S.SearchBar>
-                        <S.Searchmark>
-                            <S.Searchicon onClick={ClickSearchBtn} />
-                        </S.Searchmark>
                         <S.SearchUsernameInput
                             type="text"
                             placeholder={
@@ -213,6 +210,9 @@ const PostMainPage = () => {
                             onChange={e => setSearchKeyword(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
+                        <S.Searchmark>
+                            <S.Searchicon onClick={ClickSearchBtn} />
+                        </S.Searchmark>
                     </S.SearchBar>
                 </S.Search>
                 <S.Fillterbox>
