@@ -285,7 +285,7 @@ const ProfileRecruit = () => {
                                             borderRadius:
                                                 i !== array.length - 1
                                                     ? 'none'
-                                                    : '0 0 15px 15px',
+                                                    : '0 0 0.9375rem 0.9375rem',
                                         }}
                                     >
                                         <S.User>

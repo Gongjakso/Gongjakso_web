@@ -3,7 +3,7 @@ import { ReactComponent as GraySelectBox } from '../../assets/images/GraySelectB
 import { ReactComponent as BlackSelectBox } from '../../assets/images/BlackSelectBox.svg';
 
 export const TopBox = styled.div`
-    height: 250px;
+    height: 15.625rem;
     width: 100%;
     background-color: rgba(195, 233, 255, 0.5);
     display: flex;
@@ -16,7 +16,7 @@ export const Title = styled.p`
     text-align: center;
     font-weight: bold;
     position: relative;
-    top: 20px;
+    top: 1.25rem;
 `;
 
 export const GlobalBox = styled.div`
@@ -33,19 +33,19 @@ export const GlobalBox2 = styled.div`
 
 export const BlueBox = styled.div`
     width: 100%;
-    min-width: 1000px;
-    max-width: 1200px;
-    margin: 70px;
-    border: 2px solid ${({ theme }) => theme.box1};
-    border-radius: 15px;
+    min-width: 62.5rem;
+    max-width: 75rem;
+    margin: 4.375rem;
+    border: 0.125rem solid ${({ theme }) => theme.box1};
+    border-radius: 0.9375rem;
     display: flex;
     flex-direction: row;
 `;
 
 export const Content = styled.div`
     width: 100%;
-    min-width: 1000px;
-    max-width: 1200px;
+    min-width: 62.5rem;
+    max-width: 75rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,7 +57,7 @@ export const InsideBox = styled.div`
     width: 80%;
     flex-direction: column;
     border: none;
-    padding: 30px;
+    padding: 1.875rem;
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: bold;
     justify-content: space-between;
@@ -65,8 +65,8 @@ export const InsideBox = styled.div`
 
 export const Border = styled(InsideBox)`
     width: 50%;
-    border-right: 2px solid ${({ theme }) => theme.box1};
-    border-radius: 15px;
+    border-right: 0.125rem solid ${({ theme }) => theme.box1};
+    border-radius: 0.9375rem;
     display: flex;
     flex-direction: column;
 `;
@@ -75,7 +75,7 @@ export const DetailGlobal = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 15px;
+    padding: 0.9375rem;
     justify-content: center;
 `;
 
@@ -87,8 +87,8 @@ export const ButtonSet = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 15px;
-    gap: 20px;
+    padding: 0.9375rem;
+    gap: 1.25rem;
 `;
 
 export const InsideTitle = styled.div`
@@ -102,19 +102,19 @@ export const InsideTitle = styled.div`
 
 export const InsideTitleFront = styled(InsideTitle)`
     display: block;
-    width: 370px;
+    width: 23.125rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 `;
 
 export const TagNUM = styled.p`
-    margin: 0 25px;
+    margin: 0 1.5625rem;
 `;
 
 export const InsideDetail = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
-    padding: 3px;
+    padding: 0.1875rem;
     font-weight: normal;
 `;
 
@@ -122,9 +122,9 @@ export const GreyBtn = styled.button`
     width: 30%;
     background: ${({ theme }) => theme.Grey};
     text-align: center;
-    padding: 15px 15px;
+    padding: 0.9375rem 0.9375rem;
     font-weight: bold;
-    border-radius: 15px;
+    border-radius: 0.9375rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     &:hover {
         background: black;
@@ -141,26 +141,26 @@ export const SubTitle = styled.div`
 
 export const MainTable = styled.table`
     width: 100%;
-    margin-top: 30px;
+    margin-top: 1.875rem;
     font-size: ${({ theme }) => theme.fontSize.lg};
     text-align: center;
 `;
 
 export const ButtonContainer = styled.div`
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
     width: 45%;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 3.125rem;
 `;
 
 export const NotSelectedBtn = styled.div`
     width: 50%;
     background: ${({ theme }) => theme.LightGrey};
     text-align: center;
-    padding: 15px 15px;
+    padding: 0.9375rem 0.9375rem;
     font-weight: bold;
-    border-radius: 15px;
+    border-radius: 0.9375rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     color: white;
     cursor: pointer;
@@ -170,9 +170,9 @@ export const SelectedBtn = styled.div`
     width: 50%;
     background: ${({ theme }) => theme.box1};
     text-align: center;
-    padding: 15px 15px;
+    padding: 0.9375rem 0.9375rem;
     font-weight: bold;
-    border-radius: 15px;
+    border-radius: 0.9375rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     color: white;
     cursor: pointer;
@@ -180,34 +180,35 @@ export const SelectedBtn = styled.div`
 
 export const Tagth = styled.th`
     width: 30%;
-    height: 60px;
-    padding: 10px 0;
+    height: 3.75rem;
+    padding: 0.625rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: ${({ theme }) => theme.fontSize.mdd};
     ${props =>
         props.$isleft === 'true'
-            ? 'border-right: 0.5px solid #aaaaaa'
-            : 'border-left: 0.5px solid #aaaaaa'}
+            ? 'border-right: 0.03125rem solid #aaaaaa'
+            : 'border-left: 0.03125rem solid #aaaaaa'}
 `;
 
 export const StyledThead = styled.thead``;
+
 export const StyledTr = styled.tr`
-    min-height: 60px;
-    border: 1px solid #aaaaaa;
+    min-height: 3.75rem;
+    border: 0.0625rem solid #aaaaaa;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-radius: 15px 15px 0 0;
+    border-radius: 0.9375rem 0.9375rem 0 0;
 `;
 
 export const StyledTd = styled.td`
-    min-height: 80px;
-    border-bottom: 1px solid #aaaaaa;
-    border-left: 1px solid #aaaaaa;
-    border-right: 1px solid #aaaaaa;
+    min-height: 5rem;
+    border-bottom: 0.0625rem solid #aaaaaa;
+    border-left: 0.0625rem solid #aaaaaa;
+    border-right: 0.0625rem solid #aaaaaa;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -227,7 +228,7 @@ export const CancelBox = styled.div`
 export const TableBox = styled.div`
     width: 30%;
     height: 100%;
-    margin: 15px 0;
+    margin: 0.9375rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,7 +241,7 @@ export const User = styled(TableBox)`
     font-size: ${({ theme }) => theme.fontSize.md};
     img {
         width: 15%;
-        margin-right: 10px;
+        margin-right: 0.625rem;
         z-index: -1;
     }
 `;
@@ -262,10 +263,10 @@ export const ShowBtn = styled.button`
     background: transparent;
     text-align: center;
     font-size: ${({ theme }) => theme.fontSize.md};
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
     img {
-        width: 17px;
-        margin-left: 10px;
+        width: 1.0625rem;
+        margin-left: 0.625rem;
     }
 `;
 
@@ -282,42 +283,42 @@ export const ShowPortBtn = styled.button`
 
 export const StateBtn = styled.div`
     width: 33%;
-    padding: 10px;
+    padding: 0.625rem;
     color: white;
     font-size: ${({ theme }) => theme.fontSize.base};
     background: ${props => props.$bg};
-    border-radius: 20px;
+    border-radius: 1.25rem;
 `;
 
 export const Postcheck = styled.div`
-    width: 140px;
-    height: 45px;
-    margin-top: 5px;
-    border-radius: 10px;
+    width: 8.75rem;
+    height: 2.8125rem;
+    margin-top: 0.3125rem;
+    border-radius: 0.625rem;
     text-align: center;
-    padding: 10px;
+    padding: 0.625rem;
     font-size: ${({ theme }) => theme.fontSize.md};
-    border: 2px solid #c8c8c8;
+    border: 0.125rem solid #c8c8c8;
     font-family: 'PreBold';
     background: none;
     img {
-        width: 17px;
-        margin-top: 2px;
-        margin-left: 10px;
+        width: 1.0625rem;
+        margin-top: 0.125rem;
+        margin-left: 0.625rem;
     }
     cursor: pointer;
 `;
 
 export const GrayBox = styled(GraySelectBox)`
-    width: 60px;
+    width: 3.75rem;
     display: flex;
-    height: 25px;
+    height: 1.5625rem;
     cursor: pointer;
 `;
 
 export const BlackBox = styled(BlackSelectBox)`
-    width: 60px;
+    width: 3.75rem;
     display: flex;
-    height: 25px;
+    height: 1.5625rem;
     cursor: pointer;
 `;
