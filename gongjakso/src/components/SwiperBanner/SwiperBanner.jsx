@@ -12,13 +12,14 @@ const SwiperBanner = banners => {
     return (
         <S.SwiperContainer>
             <Swiper
-                modules={[Navigation, Pagination, A11y]}
+                modules={[Pagination]}
                 spaceBetween={50}
-                loop={false}
+                loop={true}
+                centeredSlides={true}
                 slidesPerView={1}
-                navigation
                 pagination={{
-                    type: 'fraction',
+                    type: 'bullets',
+                    clickable: true,
                 }}
                 scrollbar={{ draggable: true }}
             >
@@ -30,7 +31,7 @@ const SwiperBanner = banners => {
                             rel="noopener noreferrer"
                         >
                             <S.Banners src={img} />
-                        </a>{' '}
+                        </a>
                     </SwiperSlide>
                 ))}
             </Swiper>

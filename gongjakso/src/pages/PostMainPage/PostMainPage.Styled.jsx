@@ -3,16 +3,16 @@ import { ReactComponent as Banner } from '../../assets/images/banner.svg';
 import { ReactComponent as SearchIcon } from '../../assets/images/Search.svg';
 
 export const Searchicon = styled(SearchIcon)`
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
 `;
 
 export const MainContent = styled.div`
     width: 100%;
-    max-width: 1000px;
+    max-width: 70.8rem;
     margin: 0 auto;
-    margin-top: 90px;
+    margin-top: 5.625rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,25 +21,21 @@ export const MainContent = styled.div`
 export const Banners = styled(Banner)`
     svg {
         width: 100%;
-        height: auto;
     }
 `;
 
 export const Div = styled.div`
-    width: 900px;
-    height: 100%;
-    display: flex;
+    width: 90%;
 `;
 
 export const Search = styled.div`
     width: 100%;
-    height: 85px;
     display: flex;
     justify-content: center;
     padding-top: 20px;
 `;
 export const SearchBar = styled.div`
-    width: 70%;
+    width: 80%;
     padding: 10px;
     border: 2px solid ${props => props.theme.Main1};
     border-radius: 40px;
@@ -59,17 +55,18 @@ export const SearchUsernameInput = styled.input`
     color: ${props => props.theme.mainFont};
     border: none;
     outline: none;
+    padding-left: 1rem;
 `;
 
 export const Fillterbox = styled.div`
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-direction: row;
     gap: 10px;
     margin-bottom: 30px;
 `;
 export const Fillter1 = styled.div`
-    width: 190px;
+    width: 14rem;
     border-radius: 6px;
     border: 1.5px solid #c4c4c4;
     padding: 12px 18px;
@@ -100,7 +97,7 @@ export const PostContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 0.6rem;
 `;
 export const ContestContent = styled.div`
     width: 100%;
@@ -109,7 +106,7 @@ export const ContestContent = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 23px;
+    gap: 1.65rem;
 `;
 
 export const TeamBoxContent = styled.div``;

@@ -116,9 +116,6 @@ const ContestListPage = () => {
                 </S.Div>
                 <S.Search>
                     <S.SearchBar>
-                        <S.Searchmark>
-                            <S.Searchicon onClick={ClickSearchBtn} />
-                        </S.Searchmark>
                         <S.SearchUsernameInput
                             type="text"
                             placeholder={
@@ -128,6 +125,9 @@ const ContestListPage = () => {
                             onChange={e => setSearchKeyword(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
+                        <S.Searchmark>
+                            <S.Searchicon onClick={ClickSearchBtn} />
+                        </S.Searchmark>
                     </S.SearchBar>
                 </S.Search>
                 <S.Fillterbox1>
