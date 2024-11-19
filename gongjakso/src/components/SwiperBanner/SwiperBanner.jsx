@@ -1,4 +1,4 @@
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -9,18 +9,18 @@ import * as S from './SwiperBanner.Styled';
 const SwiperBanner = banners => {
     const bannerData = banners?.BannerImg;
     const bannerLinks = banners?.BannerLink;
+
     return (
         <S.SwiperContainer>
             <Swiper
                 modules={[Pagination]}
-                spaceBetween={50}
-                loop={true}
-                centeredSlides={true}
                 slidesPerView={1}
                 pagination={{
-                    type: 'bullets',
+                    dynamicBullets: true,
+                    // type: 'bullets',
                     clickable: true,
                 }}
+                className="mySwiper"
                 scrollbar={{ draggable: true }}
             >
                 {bannerData?.map((img, i) => (

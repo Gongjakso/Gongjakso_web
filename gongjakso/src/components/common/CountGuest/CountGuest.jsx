@@ -133,7 +133,9 @@ const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
             <S.SelectQty $isDisplay={isToggleBox}>
                 {Object.entries(roles).map(([role, quantity]) => (
                     <S.SelectAdultNum key={role}>
-                        <S.Title>{getRoleText(role)}</S.Title>
+                        <S.Title $hasGuests={quantity > 0}>
+                            {getRoleText(role)}
+                        </S.Title>
                         <S.CountBtn>
                             <S.Button
                                 onClick={() =>

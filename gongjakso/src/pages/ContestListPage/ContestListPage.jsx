@@ -118,9 +118,7 @@ const ContestListPage = () => {
                     <S.SearchBar>
                         <S.SearchUsernameInput
                             type="text"
-                            placeholder={
-                                '찾고 있는 공모전이 있나요? 입력 후 Enter/돋보기를 클릭!'
-                            }
+                            placeholder={'찾고 있는 공모전이 있나요?'}
                             value={searchKeyword}
                             onChange={e => setSearchKeyword(e.target.value)}
                             onKeyDown={handleKeyDown}

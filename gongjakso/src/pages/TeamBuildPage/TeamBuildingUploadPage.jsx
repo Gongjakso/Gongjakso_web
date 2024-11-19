@@ -260,7 +260,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.MiniTitle>
                     </S.Title>
                     <S.Label>
-                        <S.TapT>제목</S.TapT>
+                        <S.TapT>
+                            제목<S.Important>*</S.Important>
+                        </S.TapT>
                         <S.TextArea
                             name=""
                             id="title"
@@ -279,7 +281,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             rows="8"
                             value={description}
                             onChange={handleDescriptionChange}
-                            placeholder="사용자들이 공모전을 더 잘 이해할 수 있는 설명글을 적어주세요."
+                            placeholder="사용자들이 팀을 더 잘 이해할 수 있는 설명글을 적어주세요."
                         ></S.TextArea>
                         <S.InputNum>
                             <span>{inputCount}</span>
@@ -302,9 +304,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             label={'인원'}
                             type={'number'}
                             id={'people'}
-                            placeholder={
-                                '모집 총 인원을 입력해주세요. *최대 8명 입니다.'
-                            }
+                            placeholder={'모집 총 인원을 입력해주세요. '}
                             error={errors?.people}
                             register={register}
                             registerOptions={{
@@ -322,6 +322,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             max={8}
                             step={1}
                             isimportant={true}
+                            sub={'*최대 8명 입니다.'}
                         />
                     </S.Label>
                     <S.Label>
@@ -365,11 +366,17 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                     </S.Label>
                     <S.Label>
                         <S.TapP>회의 지역</S.TapP>
-                        <Multilevel
-                            isPost={true}
-                            onItemSelectedCity={handleSelectedDataCity}
-                            onItemSelectedTown={handleSelectedDataTown}
-                        />
+                        <S.Label2>
+                            <Multilevel
+                                isPost={true}
+                                onItemSelectedCity={handleSelectedDataCity}
+                                onItemSelectedTown={handleSelectedDataTown}
+                            />
+                            <S.Important2>
+                                *선택하지 않을 시, 공모전 탭의 지역 카테고리에서
+                                노출되지 않습니다!
+                            </S.Important2>
+                        </S.Label2>
                     </S.Label>
                     <S.Label>
                         <S.TapP>

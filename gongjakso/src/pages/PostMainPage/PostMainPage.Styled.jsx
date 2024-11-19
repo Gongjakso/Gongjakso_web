@@ -26,6 +26,7 @@ export const Banners = styled(Banner)`
 
 export const Div = styled.div`
     width: 90%;
+    /* display: flex; */
 `;
 
 export const Search = styled.div`
@@ -50,6 +51,7 @@ export const Searchmark = styled.div`
 
 export const SearchUsernameInput = styled.input`
     width: 100%;
+    font-weight: 500;
     font-size: ${props => props.theme.fontSize.md};
     font-family: 'PreMedium';
     color: ${props => props.theme.mainFont};

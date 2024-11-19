@@ -69,10 +69,11 @@ export const InputText = styled.input.attrs(props => ({
     type: props.type || 'text',
 }))`
     font-size: ${({ theme }) => theme.fontSize.base};
-
+    font-family: 'PreMedium';
+    font-weight: 500;
     padding: 0.625rem 0;
     border-style: none;
-    border-bottom: 0.063rem solid ${({ theme }) => theme.border};
+    border-bottom: 0.08rem solid ${({ theme }) => theme.borderline};
 
     &:focus {
         outline: none;
@@ -109,4 +110,11 @@ export const Div = styled.div`
 `;
 export const Important = styled.div`
     color: red;
+`;
+export const Important2 = styled.div`
+    font-family: 'PreMedium';
+    font-weight: 500;
+    text-decoration-skip-ink: none;
+    margin-top: 0.5rem;
+    color: ${({ theme }) => theme.subFont};
 `;

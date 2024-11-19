@@ -12,9 +12,10 @@ export const SearchBox = styled.div`
     height: 60px;
     margin-right: 15px;
     background-color: white;
-    border: 1px solid ${({ theme }) => theme.borderline};
-    border-color: ${props =>
-        props.$isError ? ({ theme }) => theme.borderline : 'red'};
+    border: ${props =>
+        props.$isError
+            ? ({ theme }) => `1px solid ${theme.borderline}`
+            : `2px solid red`};
     border-radius: 15px;
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.subFont};
@@ -118,8 +119,9 @@ export const SelectAdultNum = styled.div`
 export const Title = styled.span`
     display: flex;
     font-size: 16px;
+    font-weight: 500;
     font-family: 'PreMedium';
-    color: ${({ theme }) => theme.mainFont};
+    color: ${props => (props.$hasGuests ? theme.mainFont : theme.Grey)};
 `;
 
 export const CountBtn = styled.div`
