@@ -556,7 +556,9 @@ const ProfilePage = () => {
                     )}
                 </S.BoxDetail>
                 <S.BoxDetail>
-                    <S.SubTitle>나의 모집 기록</S.SubTitle>
+                    <S.SubContainer>
+                        <S.SubTitle>나의 모집 기록</S.SubTitle>
+                    </S.SubContainer>
                     <S.SubTitleContainer>
                         {postContent1?.map(post => (
                             <TeamBox
@@ -572,12 +574,14 @@ const ProfilePage = () => {
                     </S.SubTitleContainer>
                 </S.BoxDetail>
                 <S.BoxDetail>
-                    <S.SubTitle>
-                        <span>나의 지원 기록</span>
-                        <Link to="/appliedTeam">
-                            <S.ArrowImage />
-                        </Link>
-                    </S.SubTitle>
+                    <S.SubContainer>
+                        <S.SubTitle>
+                            <span>나의 지원 기록</span>
+                            <Link to="/appliedTeam">
+                                <S.ArrowImage />
+                            </Link>
+                        </S.SubTitle>
+                    </S.SubContainer>
                     <S.SubTitleContainer>
                         {postContent2?.map(post => (
                             <TeamBox
@@ -592,12 +596,15 @@ const ProfilePage = () => {
                     </S.SubTitleContainer>
                 </S.BoxDetail>
                 <S.BoxDetail>
-                    <S.SubTitle>
-                        <span>나의 참여 기록</span>
-                        <Link to="/participatedTeam">
-                            <S.ArrowImage />
-                        </Link>
-                    </S.SubTitle>
+                    <S.SubContainer>
+                        <S.SubTitle>
+                            <span>나의 참여 기록</span>
+                            <Link to="/participatedTeam">
+                                <S.ArrowImage />
+                            </Link>
+                        </S.SubTitle>
+                    </S.SubContainer>
+
                     <S.SubTitleContainer>
                         {postContent3?.map(post => (
                             <TeamBox

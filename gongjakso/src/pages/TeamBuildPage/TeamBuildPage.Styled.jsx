@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as TeamBuildIcon } from '../../assets/images/TeamBuildIcon.svg';
+import theme from '../../styles/theme';
 
 export const Container = styled.div`
     width: 100%;
@@ -111,12 +112,15 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.p`
-    color: ${props => (props.$isMain === 'main' ? 'black' : 'black')};
-    font-family: 'PreBold';
+    color: ${props =>
+        props.$isMain === 'main' ? theme.mainFont : theme.mainFont};
+    font-family: TheJamsilBold;
     letter-spacing: 1px;
     font-size: ${({ theme }) => theme.fontSize.xlg};
     font-weight: 500;
-    line-height: 52.8px;
+    line-height: 39.6px;
     text-align: left;
-    margin-left: 90px;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-left: 7.5%;
 `;

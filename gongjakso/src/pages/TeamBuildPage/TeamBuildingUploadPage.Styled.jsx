@@ -7,15 +7,15 @@ export const Title = styled.div`
     border-bottom: 1px solid black;
     padding-bottom: 10px;
     font-size: ${({ theme }) => theme.fontSize.lg};
-    font-weight: 700;
-    font-family: 'PreBold';
+    font-weight: 800;
+    font-family: 'PreMedium';
     margin-bottom: 30px;
     gap: 30px;
     p {
         font-size: ${({ theme }) => theme.fontSize.base};
         color: ${({ theme }) => theme.subFont};
         font-family: 'PreMedium';
-        font-weight: 100;
+        font-weight: 500;
     }
 `;
 export const MiniTitle = styled.div`
@@ -30,15 +30,21 @@ export const Label = styled.label`
     font-family: 'PreBold';
     margin: 20px 0;
 `;
+export const Label2 = styled.label`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
 
 export const Input = styled.input``;
 
 export const TapT = styled.p`
+    font-family: 'PreMedium';
     display: flex;
     width: 20%;
-    font-weight: 700;
+    font-weight: 800;
     font-size: ${({ theme }) => theme.fontSize.lg};
-    font-family: 'PreMedium';
+    /* font-family: Pretendard; */
 `;
 
 export const TextArea = styled.textarea.attrs(props => ({
@@ -48,13 +54,11 @@ export const TextArea = styled.textarea.attrs(props => ({
     width: 70%;
     height: 100%;
     max-height: 200px;
-    /* font-family: 'PreMedium'; */
+    font-family: 'PreMedium';
     overflow: auto;
-    resize: vertical;
-    /* padding: 10px 0; */
     border-style: none;
     resize: none;
-    border-bottom: 1px solid ${({ theme }) => theme.border};
+    border-bottom: 1px solid ${({ theme }) => theme.borderline};
     margin-bottom: 10px;
 
     font-style: normal;
@@ -66,7 +70,6 @@ export const TextArea = styled.textarea.attrs(props => ({
     font-variant-position: normal;
     font-weight: normal;
     font-stretch: normal;
-    font-family: 'Helvetica Neue', sans-serif; /* 원하는 폰트 패밀리로 설정 */
     font-optical-sizing: auto;
     font-kerning: auto;
     font-feature-settings: normal;
@@ -119,6 +122,8 @@ export const ClickBtn = styled.button`
     width: 130px;
     height: 40px;
     margin-right: 10px;
+    font-family: 'PreMedium';
+    font-weight: 500;
     border: 1px solid ${({ theme }) => theme.border};
     border-radius: 25px;
     margin-bottom: 15px;
@@ -164,4 +169,14 @@ export const DateSet = styled.div`
 
 export const Important = styled.div`
     color: red;
+`;
+export const Important2 = styled.div`
+    font-family: 'PreMedium';
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 17.9px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: ${({ theme }) => theme.subFont};
 `;

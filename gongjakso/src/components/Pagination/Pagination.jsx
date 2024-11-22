@@ -1,6 +1,60 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const Nav = styled.nav`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 8.125rem 0;
+`;
+
+const Button = styled.button`
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    margin: 0;
+    color: ${props => (props['aria-current'] ? 'white' : 'black')};
+    background: ${props => (props['aria-current'] ? 'black' : 'transparent')};
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        cursor: pointer;
+        background: ${props => (props['aria-current'] ? 'black' : '#f0f0f0')};
+    }
+
+    &[disabled] {
+        color: #999;
+        cursor: not-allowed;
+        background: transparent;
+    }
+
+    &[aria-current] {
+        font-weight: bold;
+        transform: none;
+    }
+`;
+
+const ArrowButton = styled(Button)`
+    background: transparent;
+    color: black;
+
+    &:hover {
+        background: #f0f0f0;
+    }
+
+    &[disabled] {
+        color: #999;
+        background: transparent;
+    }
+`;
+
 function Pagination({ total, page, setPage, loadPosts }) {
     const numPages = total;
     const [currentPageRange, setCurrentPageRange] = useState([1, 10]);
@@ -29,9 +83,9 @@ function Pagination({ total, page, setPage, loadPosts }) {
 
     return (
         <Nav>
-            <Button onClick={handlePrevPage} disabled={page === 1}>
+            <ArrowButton onClick={handlePrevPage} disabled={page === 1}>
                 {'<'}
-            </Button>
+            </ArrowButton>
             {Array(numPages)
                 .fill()
                 .map((_, i) => {
@@ -54,46 +108,11 @@ function Pagination({ total, page, setPage, loadPosts }) {
                     }
                     return null;
                 })}
-            <Button onClick={handleNextPage} disabled={page === numPages}>
+            <ArrowButton onClick={handleNextPage} disabled={page === numPages}>
                 {'>'}
-            </Button>
+            </ArrowButton>
         </Nav>
     );
 }
-
-const Nav = styled.nav`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    margin: 130px 0;
-`;
-
-const Button = styled.button`
-    border: none;
-    border-radius: 8px;
-    padding: 8px;
-    margin: 0;
-    color: black;
-    font-size: 1rem;
-
-    &:hover {
-        cursor: pointer;
-        transform: translateY(-2px);
-    }
-
-    &[disabled] {
-        color: white;
-        cursor: revert;
-        transform: revert;
-    }
-
-    &[aria-current] {
-        font-weight: 700;
-        font-size: 1.5rem;
-        cursor: revert;
-        transform: revert;
-    }
-`;
 
 export default Pagination;

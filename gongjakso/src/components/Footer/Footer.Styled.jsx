@@ -10,7 +10,7 @@ export const Footer = styled.div`
     justify-content: center;
     border-top: 0.094rem solid black;
     background: inherit; // Ensures the Footer has the same background as MainContent
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;

@@ -15,6 +15,7 @@ const Input = props => {
         register,
         registerOptions,
         isimportant,
+        sub,
     } = props;
     const isLabel = !!label;
     return (
@@ -32,7 +33,13 @@ const Input = props => {
                     step={step}
                     {...register(id, registerOptions)}
                 />
-                {error && <WarningMsg msg={error.message} />}
+                {error ? (
+                    <WarningMsg msg={error.message} />
+                ) : (
+                    <S.Important2>{sub}</S.Important2>
+                )}
+                {/* {sub && <S.Important2>{sub}</S.Important2>}
+                {error && <WarningMsg msg={error.message} />} */}
             </S.Div>
         </>
     );

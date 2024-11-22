@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { ReactComponent as Fire } from '../../assets/images/Fire2.svg';
 
 export const ContestContainer = styled.div`
-    width: 315px;
-    height: 450px;
+    width: 22.5rem;
+    height: 33rem;
     display: flex;
     flex-direction: column;
     /* align-items: center; */
@@ -12,14 +12,16 @@ export const ContestContainer = styled.div`
 `;
 
 export const ContestImg = styled.img`
-    width: 295px;
-    height: 400px;
+    display: block;
+    margin: 0 auto;
+    width: 22rem;
+    height: 29.5rem;
 `;
 
 export const RemainDate = styled.div`
     width: auto;
     padding: 10px;
-    height: 27px;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,13 +38,13 @@ export const RemainDate = styled.div`
 `;
 
 export const FireImage = styled(Fire)`
-    width: 20px;
+    width: 1.5rem;
     align-items: center;
     margin-right: 4px;
 `;
 
 export const ContestTitle = styled.h2`
-    font-size: 16px;
+    font-size: 1.2rem;
     font-weight: 700;
     line-height: 19.09px;
     text-align: left;
@@ -50,7 +52,7 @@ export const ContestTitle = styled.h2`
 `;
 
 export const ContestCompany = styled.h2`
-    font-size: 13px;
+    font-size: 0.9rem;
     font-weight: 700;
     line-height: 15.51px;
     text-align: left;

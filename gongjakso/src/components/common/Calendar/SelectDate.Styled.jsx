@@ -7,13 +7,14 @@ export const CalendarContainer = styled.div`
 export const DropdownButton = styled.button`
     width: 160px;
     height: 40px;
-    border-bottom: 1px solid ${({ theme }) => theme.borderline};
-    /* border-radius: 15px; */
-    /* padding: 15px; */
-    color: var(--festie-gray-800, #3a3a3a);
+    border-bottom: ${props =>
+        props.$isError
+            ? ({ theme }) => `1px solid ${theme.borderline}`
+            : `2px solid red`};
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.subFont};
     font-style: normal;
+    font-family: 'PreMedium';
     font-weight: 500;
     line-height: 140%;
     text-align: start;
