@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './CountGuest.Styled';
 
-const CountGuest = ({ isProject, maxGuests, onApply }) => {
+const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
     const [isToggleBox, setIsToggleBox] = useState(false);
     const [roles, setRoles] = useState({
         기획: 0,
@@ -10,7 +10,6 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
         ...(isProject && { FE: 0, BE: 0 }),
         기타: 0,
     });
-
     const [totalSelectedGuests, setTotalSelectedGuests] = useState(0);
     useEffect(() => {
         // roles 객체가 변경될 때마다 totalSelectedGuests를 업데이트
@@ -87,11 +86,11 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
 
     return (
         <S.Container>
-            <S.SearchBox>
+            <S.SearchBox $isError={error}>
                 {Number(maxGuests) === 0 ? (
                     <>
                         <S.Span>
-                            {Object.entries(roles).some(
+                            {/* {Object.entries(roles).some(
                                 ([role, quantity]) => quantity > 0,
                             )
                                 ? Object.entries(roles)
@@ -101,9 +100,10 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                                               `${role}: ${quantity}`,
                                       )
                                       .join(', ')
-                                : isProject
-                                  ? '프로젝트에 필요한 역할을 선택해주세요!'
-                                  : '공모전에 필요한 역할을 선택해주세요!'}
+                                :  */}
+                            {isProject
+                                ? '프로젝트에 필요한 역할을 선택해주세요!'
+                                : '공모전에 필요한 역할을 선택해주세요!'}
                         </S.Span>
                         <S.P>
                             <span className="arrow_box">
@@ -113,7 +113,7 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                     </>
                 ) : (
                     <S.Span onClick={handleToggleBoxOpen}>
-                        {Object.entries(roles).some(
+                        {/* {Object.entries(roles).some(
                             ([role, quantity]) => quantity > 0,
                         )
                             ? Object.entries(roles)
@@ -122,10 +122,10 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                                       ([role, quantity]) =>
                                           `${role}: ${quantity}`,
                                   )
-                                  .join(', ')
-                            : isProject
-                              ? '프로젝트에 필요한 역할을 선택해주세요!'
-                              : '공모전에 필요한 역할을 선택해주세요!'}
+                                  .join(', ') */}
+                        {isProject
+                            ? '프로젝트에 필요한 역할을 선택해주세요!'
+                            : '공모전에 필요한 역할을 선택해주세요!'}
                     </S.Span>
                 )}
             </S.SearchBox>
@@ -133,7 +133,9 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
             <S.SelectQty $isDisplay={isToggleBox}>
                 {Object.entries(roles).map(([role, quantity]) => (
                     <S.SelectAdultNum key={role}>
-                        <S.Title>{getRoleText(role)}</S.Title>
+                        <S.Title $hasGuests={quantity > 0}>
+                            {getRoleText(role)}
+                        </S.Title>
                         <S.CountBtn>
                             <S.Button
                                 onClick={() =>
@@ -143,7 +145,7 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                             >
                                 -
                             </S.Button>
-                            {quantity}
+                            <S.ManNum $props={quantity}>{quantity}</S.ManNum>
                             <S.Button
                                 onClick={() => handleQuantityChange(role, true)}
                                 disabled={
@@ -156,14 +158,14 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                         </S.CountBtn>
                     </S.SelectAdultNum>
                 ))}
-                <S.CountBtn>
+                <S.ApplysetBtn>
                     <S.ApplyBtn $isApply={true} onClick={handleToggleBoxClose}>
                         취소
                     </S.ApplyBtn>
                     <S.ApplyBtn $isApply={false} onClick={handleApply}>
                         적용
                     </S.ApplyBtn>
-                </S.CountBtn>
+                </S.ApplysetBtn>
             </S.SelectQty>
         </S.Container>
     );

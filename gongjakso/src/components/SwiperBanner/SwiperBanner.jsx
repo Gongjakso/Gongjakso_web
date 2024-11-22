@@ -1,4 +1,4 @@
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -9,17 +9,18 @@ import * as S from './SwiperBanner.Styled';
 const SwiperBanner = banners => {
     const bannerData = banners?.BannerImg;
     const bannerLinks = banners?.BannerLink;
+
     return (
         <S.SwiperContainer>
             <Swiper
-                modules={[Navigation, Pagination, A11y]}
-                spaceBetween={50}
-                loop={false}
+                modules={[Pagination]}
                 slidesPerView={1}
-                navigation
                 pagination={{
-                    type: 'fraction',
+                    dynamicBullets: true,
+                    // type: 'bullets',
+                    clickable: true,
                 }}
+                className="mySwiper"
                 scrollbar={{ draggable: true }}
             >
                 {bannerData?.map((img, i) => (
@@ -30,7 +31,7 @@ const SwiperBanner = banners => {
                             rel="noopener noreferrer"
                         >
                             <S.Banners src={img} />
-                        </a>{' '}
+                        </a>
                     </SwiperSlide>
                 ))}
             </Swiper>

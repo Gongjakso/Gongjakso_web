@@ -13,6 +13,7 @@ import AlertModal from '../../components/common/AlertModal/AlertModal';
 import useCustomNavigate from '../../hooks/useNavigate';
 import { openConfirmModal } from '../../features/modal/modalSlice/confirmModalSlice';
 import ConfirmModal from '../../components/common/ConfirmModal/ConfirmModal';
+import { WarningMsg } from '../../components/common/Input/WarningMsg';
 
 const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
     const dispatch = useDispatch();
@@ -51,6 +52,10 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
     const [selectedTownData, setSelectedTownData] = useState('');
     const [selectedCityData, setSelectedCityData] = useState('');
 
+    const [checkStartDate, setCheckStartDate] = useState(true);
+    const [checkFinishDate, setCheckFinishDate] = useState(true);
+    const [checkfinalDate, setCheckfinalDate] = useState(true);
+    const [checkRecuritPeople, setCheckRecuritPeople] = useState(true);
     //날짜 포맷팅
     const transformAndSetDates = selectDate => {
         const parsedSelectDate = moment(selectDate);
@@ -146,10 +151,13 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
         const formattedDate = transformAndSetDates(date);
         if (type === 'start') {
             setStartDates(formattedDate);
+            setCheckStartDate(true);
         } else if (type === 'finish') {
             setFinishDates(formattedDate);
+            setCheckFinishDate(true);
         } else if (type === 'recruit') {
             setRecruitFinish(formattedDate);
+            setCheckfinalDate(true);
         }
         setOpenCalendar(type); // Close the calendar after selecting a date
     };
@@ -158,6 +166,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
         // console.log(selectCategory.category);
         //선택한 인원의 숫자 가져오기
         setCategory(selectCategory.category);
+        setCheckRecuritPeople(true);
     };
 
     const handleCancel = () => {
@@ -166,6 +175,19 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
 
     const submitContestBuild = data => {
         // console.log(endDates);
+        if (startDates === '') {
+            setCheckStartDate(false);
+        }
+        if (finishDates === '') {
+            setCheckFinishDate(false);
+        }
+        if (recruitFinish === '') {
+            setCheckfinalDate(false);
+        }
+        if (category?.recruit_part === undefined) {
+            setCheckRecuritPeople(false);
+        }
+
         const newData = {
             title: contestDetail?.title,
             body: description,
@@ -180,40 +202,47 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
             channel_method: complaint,
             channel_link: data.complainLink,
         };
-        postContestTeam(contestData?.id, newData).then(res => {
-            if (res === 5000) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '공모전 팀빌딩',
-                        modalContent: '공고를 더 이상 생성할 수 없습니다!',
-                    }),
-                );
-            } else if (res === 2000) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '공모전 팀빌딩',
-                        modalContent:
-                            '공고의 세부 항목 중 빠진것이 없는지 확인해주세요',
-                    }),
-                );
-            } else if (res === 5004) {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '공모전 팀빌딩',
-                        modalContent:
-                            '파트별 인원수가 전체 인원수와 일치하지 않습니다.',
-                    }),
-                );
-            } else {
-                dispatch(
-                    openAlertModal({
-                        titleContent: '공모전 팀빌딩',
-                        modalContent: '공고가 생성되었습니다!',
-                        redirectUrl: '/contestList',
-                    }),
-                );
-            }
-        });
+        if (
+            checkStartDate &&
+            checkFinishDate &&
+            checkfinalDate &&
+            checkRecuritPeople
+        ) {
+            postContestTeam(contestData?.id, newData).then(res => {
+                if (res === 5000) {
+                    dispatch(
+                        openAlertModal({
+                            titleContent: '공모전 팀빌딩',
+                            modalContent: '공고를 더 이상 생성할 수 없습니다!',
+                        }),
+                    );
+                } else if (res === 2000) {
+                    dispatch(
+                        openAlertModal({
+                            titleContent: '공모전 팀빌딩',
+                            modalContent:
+                                '공고의 세부 항목 중 빠진것이 없는지 확인해주세요',
+                        }),
+                    );
+                } else if (res === 5004) {
+                    dispatch(
+                        openAlertModal({
+                            titleContent: '공모전 팀빌딩',
+                            modalContent:
+                                '파트별 인원수가 전체 인원수와 일치하지 않습니다.',
+                        }),
+                    );
+                } else {
+                    dispatch(
+                        openAlertModal({
+                            titleContent: '공모전 팀빌딩',
+                            modalContent: '공고가 생성되었습니다!',
+                            redirectUrl: '/contestList',
+                        }),
+                    );
+                }
+            });
+        }
     };
 
     return (
@@ -231,7 +260,9 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         </S.MiniTitle>
                     </S.Title>
                     <S.Label>
-                        <S.TapT>제목</S.TapT>
+                        <S.TapT>
+                            제목<S.Important>*</S.Important>
+                        </S.TapT>
                         <S.TextArea
                             name=""
                             id="title"
@@ -250,7 +281,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             rows="8"
                             value={description}
                             onChange={handleDescriptionChange}
-                            placeholder="사용자들이 공모전을 더 잘 이해할 수 있는 설명글을 적어주세요."
+                            placeholder="사용자들이 팀을 더 잘 이해할 수 있는 설명글을 적어주세요."
                         ></S.TextArea>
                         <S.InputNum>
                             <span>{inputCount}</span>
@@ -273,9 +304,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             label={'인원'}
                             type={'number'}
                             id={'people'}
-                            placeholder={
-                                '모집 총 인원을 입력해주세요. *최대 8명 입니다.'
-                            }
+                            placeholder={'모집 총 인원을 입력해주세요. '}
                             error={errors?.people}
                             register={register}
                             registerOptions={{
@@ -293,17 +322,26 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                             max={8}
                             step={1}
                             isimportant={true}
+                            sub={'*최대 8명 입니다.'}
                         />
                     </S.Label>
                     <S.Label>
                         <S.TapP>
                             모집 분야<S.Important>*</S.Important>
                         </S.TapP>
-                        <CountGuest
-                            isProject={false}
-                            maxGuests={watch('people')} // 입력한 숫자를 최대치로 설정
-                            onApply={handleCategory}
-                        />
+                        <S.DateSet>
+                            <CountGuest
+                                isProject={false}
+                                error={checkRecuritPeople}
+                                maxGuests={watch('people')} // 입력한 숫자를 최대치로 설정
+                                onApply={handleCategory}
+                            />
+                            {/* {checkRecuritPeople ? (
+                                <></>
+                            ) : (
+                                <WarningMsg msg={'모집분야를 선택 해주세요.'} />
+                            )} */}
+                        </S.DateSet>
                     </S.Label>
                     <S.Label>
                         <S.TapP>
@@ -328,11 +366,17 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                     </S.Label>
                     <S.Label>
                         <S.TapP>회의 지역</S.TapP>
-                        <Multilevel
-                            isPost={true}
-                            onItemSelectedCity={handleSelectedDataCity}
-                            onItemSelectedTown={handleSelectedDataTown}
-                        />
+                        <S.Label2>
+                            <Multilevel
+                                isPost={true}
+                                onItemSelectedCity={handleSelectedDataCity}
+                                onItemSelectedTown={handleSelectedDataTown}
+                            />
+                            <S.Important2>
+                                *선택하지 않을 시, 공모전 탭의 지역 카테고리에서
+                                노출되지 않습니다!
+                            </S.Important2>
+                        </S.Label2>
                     </S.Label>
                     <S.Label>
                         <S.TapP>
@@ -346,7 +390,13 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                                 }
                                 isOpend={openCalendar === 'start'}
                                 text={'시작날짜를 입력해주세요.'}
+                                error={checkStartDate}
                             />
+                            {/* {checkStartDate ? (
+                                <></>
+                            ) : (
+                                <WarningMsg msg={'날짜를 입력해주세요'} />
+                            )} */}
                             <SelectDate
                                 value={finishDates}
                                 onChange={date =>
@@ -354,7 +404,13 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                                 }
                                 isOpend={openCalendar === 'finish'}
                                 text={'종료날짜를 입력해주세요.'}
+                                error={checkFinishDate}
                             />
+                            {/* {checkFinishDate ? (
+                                <></>
+                            ) : (
+                                <WarningMsg msg={'날짜를 입력해주세요'} />
+                            )} */}
                         </S.DateSet>
                     </S.Label>
                     <S.Label>
@@ -369,7 +425,13 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                                 }
                                 isOpend={openCalendar === 'recruit'}
                                 text={'공고 마감일을 입력해주세요.'}
+                                error={checkfinalDate}
                             />
+                            {/* {checkfinalDate ? (
+                                <></>
+                            ) : (
+                                <WarningMsg msg={'날짜를 입력해주세요'} />
+                            )} */}
                         </S.DateSet>
                     </S.Label>
                     <S.Label>
@@ -395,6 +457,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                                 type={'url'}
                                 id={'complainLink'}
                                 placeholder={'*링크를 입력해주세요.'}
+                                error={errors?.complainLink}
                                 register={register}
                                 registerOptions={{
                                     required: '*링크를 입력하세요',

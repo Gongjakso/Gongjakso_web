@@ -4,7 +4,7 @@ import { Calendar } from 'react-date-range';
 import moment from 'moment';
 import { ko } from 'date-fns/locale';
 
-const SelectDate = ({ onChange, value, isOpend, text, minDate }) => {
+const SelectDate = ({ onChange, value, isOpend, text, minDate, error }) => {
     const [nowDate, setNowDate] = useState();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +22,7 @@ const SelectDate = ({ onChange, value, isOpend, text, minDate }) => {
 
     return (
         <S.CalendarContainer>
-            <S.DropdownButton onClick={handleToggleCalendar}>
+            <S.DropdownButton $isError={error} onClick={handleToggleCalendar}>
                 {nowDate === undefined ? text : nowDate}
             </S.DropdownButton>
             <S.CalendarWrapper $isopen={isOpen.toString()}>
