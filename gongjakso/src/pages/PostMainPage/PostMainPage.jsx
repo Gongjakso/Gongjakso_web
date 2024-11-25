@@ -204,7 +204,7 @@ const PostMainPage = () => {
                             placeholder={
                                 isProject
                                     ? '찾고 있는 프로젝트가 있나요?'
-                                    : '찾고 있는 공고가 있나요?'
+                                    : '찾고 있는 공모전이 있나요?'
                             }
                             value={searchKeyword}
                             onChange={e => setSearchKeyword(e.target.value)}

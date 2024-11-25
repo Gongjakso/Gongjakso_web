@@ -27,9 +27,16 @@ export const ContestInfo = styled.div`
 `;
 
 export const ContestTitle = styled.p`
+    font-family: 'TheJamsilRegular';
     font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: 700;
     text-align: left;
+    margin-left: 0.4rem;
+    margin-bottom: 0.5rem;
+`;
+
+export const ContestTitle2 = styled(ContestTitle)`
+    font-family: 'PreBold';
 `;
 
 export const ContestInfoTop = styled.h1`
@@ -43,38 +50,38 @@ export const ContestImg = styled.img`
 `;
 export const RemainDate = styled.div`
     width: auto;
-    height: 3rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid ${({ theme }) => theme.Purple};
     border-radius: 50px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     text-align: center;
     color: ${({ theme }) => theme.mainFont2};
     background-color: ${({ theme }) => theme.Purple};
-    padding: 0.5rem 1rem;
+    padding: 0rem 0.5rem;
 `;
 
 export const SpanP = styled.p`
     width: auto;
-    min-width: 4rem;
+    min-width: 4.5rem;
 `;
 
 export const FireImage = styled(Fire)`
     width: 1.5rem;
     align-items: center;
-    margin-right: 4px;
 `;
 
 export const Organization = styled.h2`
     font-size: ${({ theme }) => theme.fontSize.mdd};
-    font-weight: 700;
+
     line-height: 28.64px;
     text-align: left;
     margin-bottom: 2rem;
     padding-left: 0.5rem;
+    font-family: 'PreSemiBold';
 `;
 
 export const InfoContent = styled.h3`
@@ -86,6 +93,7 @@ export const InfoContent = styled.h3`
     line-height: 23.87px;
     text-align: left;
     gap: 10px;
+    padding-left: 0.5rem;
 `;
 export const InfoSpan = styled.p`
     // font-family: 'Pretendard';
@@ -93,6 +101,7 @@ export const InfoSpan = styled.p`
     font-weight: 500;
     line-height: 23.87px;
     text-align: left;
+    padding-left: 0.5rem;
 `;
 
 export const ContestButtonOption = styled.div`
