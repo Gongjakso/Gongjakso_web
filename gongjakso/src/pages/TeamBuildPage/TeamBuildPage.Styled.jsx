@@ -114,10 +114,10 @@ export const Button = styled.button`
 export const Text = styled.p`
     color: ${props =>
         props.$isMain === 'main' ? theme.mainFont : theme.mainFont};
-    font-family: TheJamsilBold;
+    font-family: 'TheJamsilRegular';
     letter-spacing: 1px;
     font-size: ${({ theme }) => theme.fontSize.xlg};
-    font-weight: 500;
+    font-weight: 600;
     line-height: 39.6px;
     text-align: left;
     text-underline-position: from-font;

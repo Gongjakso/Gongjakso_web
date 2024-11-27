@@ -17,7 +17,7 @@ const TeamBuildPage = () => {
     return (
         <>
             <S.Container>
-                <S.Text>{contestData?.title}의 팀 만들기</S.Text>
+                <S.Text>'{contestData?.title}'의 팀 만들기</S.Text>
                 {/* <S.TitleContent>*/}
                 {/*
                     <S.ButtonSet>

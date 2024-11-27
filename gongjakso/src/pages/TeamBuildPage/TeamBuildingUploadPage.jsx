@@ -250,7 +250,7 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
             {posts === 'contest' && (
                 <>
                     <S.Title>
-                        모집 기본 정보를 입력해주세요
+                        모집 기본 정보를 입력해주세요!
                         <S.MiniTitle>
                             <p>
                                 추후에 공모전/프로젝트 홈에 올라갈 게시글
