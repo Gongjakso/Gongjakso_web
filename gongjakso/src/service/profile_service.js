@@ -26,9 +26,12 @@ export const getMyInfo = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -40,9 +43,12 @@ export const getMyRecruiting = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -54,9 +60,12 @@ export const getMyApplied = async page => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -69,9 +78,12 @@ export const getMyParticipated = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        // error.response.data.code = 3004
-        //     ? localStorage.removeItem('accessToken')
-        //     : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -81,9 +93,12 @@ export const getMyContestScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -93,9 +108,12 @@ export const getMyProjectScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 export const getMyTeamScrap = async (page, size) => {
@@ -104,8 +122,11 @@ export const getMyTeamScrap = async (page, size) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
