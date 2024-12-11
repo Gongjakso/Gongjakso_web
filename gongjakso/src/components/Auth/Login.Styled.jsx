@@ -1,14 +1,29 @@
 import styled from 'styled-components';
 import kakaoLogin from '../../assets/images/kakao_login.svg';
+import GoogleLogin from '../../assets/images/Google_Login.svg';
+import NaverLogin from '../../assets/images/Naver_Login.svg';
 import macbookImage from '../../assets/images/macBookImage.svg';
 
-export const Button = styled.button`
+export const KakaoButton = styled.button`
     cursor: pointer;
     width: 450px;
     height: 68px;
-    margin: 30px 0;
     background-size: cover;
     background: url(${kakaoLogin}) no-repeat;
+`;
+export const GoogleButton = styled.button`
+    cursor: pointer;
+    width: 450px;
+    height: 68px;
+    background-size: cover;
+    background: url(${GoogleLogin}) no-repeat;
+`;
+export const NaverButton = styled.button`
+    cursor: pointer;
+    width: 450px;
+    height: 68px;
+    background-size: cover;
+    background: url(${NaverLogin}) no-repeat;
 `;
 export const LoginInfo = styled.div`
     align-items: baseline;
@@ -17,6 +32,14 @@ export const LoginInfo = styled.div`
     font-size: ${({ theme }) => theme.fontSize.ll};
     flex-direction: column;
     line-height: 150%;
+    font-weight: 700;
+    gap: 1.5rem;
+`;
+export const LoginBtn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    display: flex;
 `;
 
 export const LoginContent = styled.div`

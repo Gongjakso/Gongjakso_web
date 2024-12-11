@@ -1,12 +1,13 @@
 import { axiosInstance } from './axiosInstance';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-export const getToken = async (code, REDIRECT_URI) => {
+export const getToken = async (code, REDIRECT_URI, type) => {
     if (!code) {
         return alert('Please log in normally');
     }
+    console.log(code, REDIRECT_URI, type);
     const response = await fetch(
-        `${BaseUrl}auth/sign-in?code=${code}&redirect-uri=${REDIRECT_URI}`,
+        `${BaseUrl}auth/sign-in?code=${code}&redirect-uri=${REDIRECT_URI}&type=${type}`,
         {
             method: 'POST',
             headers: {

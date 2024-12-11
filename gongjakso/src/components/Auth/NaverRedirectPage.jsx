@@ -1,12 +1,13 @@
-import { getToken } from '../../service/auth_service';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import * as S from './KakaoRedirectPage.Styled';
+import { getToken } from '../../service/auth_service';
 
-const KakaoRedirectPage = () => {
-    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const NaverRedirectPage = () => {
+    const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
     const code = new URL(window.location.href).searchParams.get('code');
+    const type = 'NAVER';
+
     useEffect(() => {
-        const type = 'KAKAO';
         getToken(code, REDIRECT_URI, type)
             .then(result => {
                 localStorage.setItem('accessToken', result?.accessToken);
@@ -23,4 +24,4 @@ const KakaoRedirectPage = () => {
     );
 };
 
-export default KakaoRedirectPage;
+export default NaverRedirectPage;
