@@ -161,6 +161,8 @@ import RecruitedTeam from '../pages/ProfileRecruited/RecruitedTeam';
 import MyInfo from '../pages/ProfileInfo/MyInfo';
 import Scrap from '../pages/ScrapPage/Scrap';
 import ScrollToTop from '../pages/HomePage/ScrollToTop';
+import GoogleRedirectPage from '../components/Auth/GoogleRedirectPage';
+import NaverRedirectPage from '../components/Auth/NaverRedirectPage';
 
 const Router = () => {
     return (
@@ -223,6 +225,14 @@ const Router = () => {
                             <Route
                                 path="/kakao/callback"
                                 element={<KakaoRedirectPage />}
+                            />
+                            <Route
+                                path="/oauth2callback"
+                                element={<GoogleRedirectPage />}
+                            />
+                            <Route
+                                path="/naver/callback"
+                                element={<NaverRedirectPage />}
                             />
                             <Route
                                 path="/profile/makeportfolio"

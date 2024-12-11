@@ -165,9 +165,9 @@ const ContestDetailPage = () => {
                     </S.TeamBuildBtn>
                 </S.ContestButtonOption>
                 <S.ContestInfo>
-                    <S.ContestTitle>
+                    <S.ContestTitle2>
                         '{contestDetail?.title}' 의 팀 찾기
-                    </S.ContestTitle>
+                    </S.ContestTitle2>
                     <S.Organization>
                         현재 {contestPosts?.length}명이 팀을 모집하고 있어요
                     </S.Organization>
