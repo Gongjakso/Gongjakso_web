@@ -9,9 +9,11 @@ export const getAllPortfolio = async () => {
         const response = await axiosInstanceV2.get(reqURL);
         return response;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
         return error.response.data.code;
     }
 };
@@ -51,10 +53,12 @@ export const getPortfolio = async id => {
         const response = await axiosInstanceV2.get(reqURL);
         return response;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
-        return error.response?.data.code;
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -66,9 +70,11 @@ export const getExistPortfolio = async (id, type) => {
         const response = await axiosInstanceV2.get(reqURL);
         return response;
     } catch (error) {
-        error.response.data.code = 3004
-            ? localStorage.removeItem('accessToken')
-            : console.log(error.response.data.message);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
         return error.response.data.code;
     }
 };
