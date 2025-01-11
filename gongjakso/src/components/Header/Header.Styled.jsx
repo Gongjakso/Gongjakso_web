@@ -33,7 +33,7 @@ export const logo = styled.div`
 export const ProfileArea = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: 21.875rem;
+    margin-left: 40%;
     align-items: center;
     width: 0;
     font-weight: 700;
