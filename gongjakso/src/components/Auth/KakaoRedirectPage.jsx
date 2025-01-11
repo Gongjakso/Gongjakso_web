@@ -6,9 +6,9 @@ const KakaoRedirectPage = () => {
     const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
     const code = new URL(window.location.href).searchParams.get('code');
     useEffect(() => {
-        getToken(code, REDIRECT_URI)
+        const type = 'KAKAO';
+        getToken(code, REDIRECT_URI, type)
             .then(result => {
-                console.log(result);
                 localStorage.setItem('accessToken', result?.accessToken);
                 window.location.replace('/');
             })

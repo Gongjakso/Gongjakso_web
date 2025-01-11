@@ -3,10 +3,11 @@ import linkicon from '../../assets/images/linkIcon.svg';
 import plus from '../../assets/images/PlusIcon.svg';
 import pdf from '../../assets/images/pdf.svg';
 import trash from '../../assets/images/trash.svg';
-import { SelectInput } from '../../components/common/Input/Input';
+import unchecked from '../../assets/images/unchecked.svg';
+import checked from '../../assets/images/checked.svg';
 
 export const TopBox = styled.div`
-    height: 250px;
+    height: 15.625rem;
     width: 100%;
     background-color: rgba(195, 233, 255, 0.5);
     display: flex;
@@ -16,14 +17,13 @@ export const TopBox = styled.div`
 
 export const BoxDetail = styled.div`
     display: flex;
-    flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
 `;
 export const PortfolioInfo = styled.div`
     display: flex;
     flex-direction: column;
-    width: 74rem;
+    width: 64rem;
 `;
 
 export const UserName = styled.span`
@@ -40,30 +40,38 @@ export const Description = styled.span`
 `;
 
 export const GlobalBox = styled.div`
-    width: 74rem;
-    margin: 5rem auto 0 auto; // 가운데 정렬
+    width: 100%;
+    max-width: 62.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto; // 가운데 정렬
 `;
 
 export const SubTitle = styled.p`
     width: 100%;
+    max-width: 62.5rem;
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: 700;
-    margin-bottom: 25px;
+    margin-bottom: 1.563rem;
     font-family: 'PreMedium';
     display: flex;
     align-items: center;
-    margin: 0 auto;
+    margin: 0;
     line-height: 1.79rem;
 `;
 
 export const UploadInfo = styled.p`
     width: 100%;
+    max-width: 62.5rem;
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     color: #565656;
     margin: 0.625rem 0;
     line-height: 1.343rem;
     margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
 `;
 
 export const LinkIcon = styled.div`
@@ -77,9 +85,9 @@ export const LinkIcon = styled.div`
 `;
 
 export const SNSInput = styled.input`
-    width: 65.109rem;
+    width: 60rem;
     height: 3.438rem;
-    border: 1.5px solid var(--system-grey4, #d2d2d7);
+    border: 0.094rem solid var(--system-grey4, #d2d2d7);
     padding: 0.983rem 1.125rem;
     font-family: 'PreRegular';
     font-size: ${({ theme }) => theme.fontSize.m};
@@ -95,7 +103,7 @@ export const LinkContainer = styled.div`
 
 export const TitleSection = styled.div`
     display: flex;
-    width: 69rem;
+    width: 64rem;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 1rem;
@@ -125,6 +133,7 @@ export const BackBtn = styled.button`
     height: 4rem;
     background-color: ${({ theme }) => theme.Grey};
     color: black;
+    cursor: pointer;
     padding: 1rem 6rem;
     border-radius: 1rem;
     font-family: 'PreMedium';
@@ -137,21 +146,26 @@ export const SaveBtn = styled.button`
     background-color: ${({ theme }) => theme.box1};
     color: white;
     padding: 1rem 6rem;
+    cursor: pointer;
     border-radius: 1rem;
     font-family: 'PreMedium';
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.mdd};
 `;
 
+export const NameInput = styled(SNSInput)`
+    width: 64rem;
+`;
 export const TestInput = styled(SNSInput)`
     width: 32.188rem;
 `;
 
 export const InputContainer = styled.div`
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     gap: 0.625rem;
-    width: 100%;
+    width: 64rem;
 `;
 
 export const ScoreInput = styled(SNSInput)`
@@ -163,28 +177,33 @@ export const ActivityInput = styled(SNSInput)`
 `;
 
 export const EducationInput = styled(SNSInput)`
-    width: 33.25rem;
+    width: 33rem;
 `;
 
-export const Fillter1 = styled.div`
-    width: 16.813rem;
+export const Filter1 = styled.div`
+    width: 13.6rem;
+    height: 3.438rem;
+    font-family: 'PreRegular';
     border-radius: 0.688rem;
-    border: 1.5px solid ${({ theme }) => theme.Grey};
+    color: #828293;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    border: 0.094rem solid ${({ theme }) => theme.Grey};
     display: flex;
+    padding: 0.7rem 1.35rem;
     align-items: center;
 `;
 
 export const CompanyInput = styled(SNSInput)`
-    width: 39rem;
+    width: 37rem;
 `;
 export const PositionInput = styled(SNSInput)`
-    width: 29.188rem;
+    width: 27rem;
 `;
 
 export const Textarea = styled.textarea`
-    width: 69rem;
+    width: 64rem;
     height: 9.813rem;
-    border: 1.5px solid var(--system-grey4, #d2d2d7);
+    border: 0.094rem solid var(--system-grey4, #d2d2d7);
     padding: 0.983rem 1.125rem;
     font-family: 'PreRegular';
     font-size: ${({ theme }) => theme.fontSize.m};
@@ -205,10 +224,10 @@ export const FileUploadBox = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 69rem;
+    width: 64rem;
     height: 15.125rem;
     background-color: #f7f7f7;
-    border: 1.5px dotted var(--system-grey4, #d2d2d7);
+    border: 0.094rem dotted var(--system-grey4, #d2d2d7);
     font-size: ${({ theme }) => theme.fontSize.lg};
     padding: 2rem 27.313rem;
     border-radius: 1rem;
@@ -216,7 +235,6 @@ export const FileUploadBox = styled.div`
     line-height: 2.088rem;
     font-family: 'PreRegular';
     margin: 1rem 0;
-    margin-bottom: 7rem;
 `;
 
 export const pdfImg = styled.div`
@@ -236,6 +254,7 @@ export const UploadBtn = styled.button`
     color: white;
     width: 15rem;
     height: 3.25rem;
+    cursor: pointer;
     padding: 0.813rem 2.625rem;
     border-radius: 1rem;
     font-size: ${({ theme }) => theme.fontSize.md};
@@ -254,18 +273,88 @@ export const DeleteBtn = styled.div`
     width: 3.25rem;
     height: 3.25rem;
     margin-left: 2rem;
+    cursor: pointer;
     background-size: contain;
+    background-repeat: no-repeat;
 `;
 
 export const BtnWrapper = styled.div`
     display: flex;
+    width: 64rem;
     flex-direction: column;
     gap: 0.5rem;
 `;
 
 export const BtnBox = styled.div`
-    height: 19.219rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+`;
+
+export const CheckContainer = styled.div`
+    display: flex;
+    align-items: center;
+    height: 3.438rem;
+    gap: 0.625rem;
+    justify-content: space-between;
+`;
+export const CareerCheck = styled.div`
+    font-family: 'PreRegular';
+    font-size: ${({ theme }) => theme.fontSize.m};
+`;
+
+export const CheckImg = styled.div`
+    background-image: url(${props => (props.checked ? checked : unchecked)});
+    cursor: pointer;
+    width: 2.063rem;
+    height: 2.063rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+`;
+
+export const CalendarSection = styled.div`
+    display: flex;
+    gap: 0.625rem;
+`;
+export const FileInfo = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.313rem;
+    margin-bottom: 7rem;
+    background-color: #f7f7f7;
+
+    border-radius: 0.313rem;
+    border: 0.094rem dotted #d2d2d7;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    color: #333;
+    max-width: 62.5rem;
+    word-wrap: break-word;
+`;
+
+export const FileName = styled.div`
+    flex: 1;
+    font-size: 0.875rem;
+    color: #333;
+`;
+export const FileSize = styled.div`
+    flex: 0.5;
+    font-size: 0.875rem;
+    color: #666;
+    text-align: right;
+    margin-right: 0.625rem;
+`;
+
+export const FileList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: 100%;
+`;
+
+export const FileItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.313rem;
 `;

@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance, axiosInstanceV2 } from './axiosInstance';
 
 //나의 정보
 export const putMyInfo = async (name, major, job, status, phone) => {
@@ -14,6 +14,7 @@ export const putMyInfo = async (name, major, job, status, phone) => {
         });
         return response.data;
     } catch (error) {
+        console.log(error);
         throw new Error('나의 정보를 가져올 수 없습니다.');
     }
 };
@@ -25,45 +26,64 @@ export const getMyInfo = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 지원한 게시글을 가져올 수 없습니다.');
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
 //팀박스->내가 모집 중
-export const getMyRecruiting = async () => {
-    const reqURL = `post/my`;
+export const getMyRecruiting = async (page, size) => {
+    const reqURL = `team/my-recruit?page=${page - 1}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 모집 중인 게시글을 가져올 수 없습니다.', error);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
 //팀박스->내가 지원
-export const getMyApplied = async (page, size) => {
-    const reqURL = `apply/my?page=${page}&size=${size}&sort=`;
+export const getMyApplied = async page => {
+    const reqURL = `apply/my?page=${page - 1}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 지원한 게시글을 가져올 수 없습니다.');
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
-//팀박스->내가 참여
-
 //내가 참여 상세페이지
+//팀박스->내가 참여
 export const getMyParticipated = async (page, size) => {
-    const reqURL = `apply/my-participation-post?page=${page}&size=${size}`;
+    const reqURL = `team/my-participate?page=${page - 1}&size=${size}`;
 
     try {
-        const response = await axiosInstance.get(reqURL);
+        const response = await axiosInstanceV2.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log(error);
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -73,7 +93,12 @@ export const getMyContestScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 스크랩한 공모전 정보를 가져올 수 없습니다.');
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
 
@@ -83,6 +108,25 @@ export const getMyProjectScrap = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        console.log('내가 스크랩한 프로젝트 정보를 가져올 수 없습니다.');
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
+    }
+};
+export const getMyTeamScrap = async (page, size) => {
+    const reqURL = `team/scrap/list?page=${page - 1}&size=${size}`;
+    try {
+        const response = await axiosInstanceV2.get(reqURL);
+        return response.data;
+    } catch (error) {
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };

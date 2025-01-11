@@ -24,13 +24,14 @@ export const Modal = styled.div`
     transform: translate(-50%, -50%);
     background: white;
     border-radius: 40px;
-    padding: 50px;
+    padding: 50px 100px;
     /* width: 60%; //추가 해봤어요
     height: 90%; //추가 해봤어요 */
 `;
 
 export const Backbtn = styled.button`
     position: absolute;
+
     right: 6%;
 `;
 
@@ -44,15 +45,15 @@ export const Decisionbtn = styled.div`
 
 export const MainTitle = styled.div`
     text-align: center;
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: 1.5rem;
     font-family: 'PreBold';
     letter-spacing: 0.5px;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 `;
 
 // 텍스트 전체 틀
 export const DetailBox = styled.div`
-    padding: 15px;
+    padding: 1.8rem;
     position: relative;
 `;
 
@@ -61,8 +62,7 @@ export const DetailBox2 = styled.div`
 `;
 
 export const SubTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.md};
-    letter-spacing: 0.5px;
+    font-size: ${({ theme }) => theme.fontSize.lg};
     font-family: 'PreBold';
 `;
 
@@ -72,20 +72,35 @@ export const FormBox = styled.div`
     flex-flow: wrap;
     top: 60px;
     left: 0;
+    img {
+        margin-top: 1.4rem;
+        margin-right: 1.7rem;
+        width: 17rem;
+        cursor: pointer;
+    }
 `;
 
 export const RoundForm = styled.button`
     min-width: 120px;
     height: auto;
     border: 1px solid #a3a3a3;
-    border-radius: 30px;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    border-radius: 20px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     text-align: center;
-    padding: 8px;
-    margin-right: 10px;
+    padding: 0.7rem;
+    margin-right: 1rem;
     margin-top: 20px;
     background-color: ${props => (props.$isselected ? 'black' : 'white')};
     color: ${props => (props.$isselected ? 'white' : props.theme.subFont)};
+`;
+
+export const PortForm = styled(RoundForm)`
+    min-width: 230px;
+    display: inline-block;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 // textarea 감싸는 틀
@@ -113,12 +128,12 @@ export const InputArea = styled.textarea`
     max-height: ${props => props.$maxHeight};
     display: block;
     border: none;
-    border-bottom: 1.5px solid black;
+    border-bottom: 2px solid black;
     padding: 5px;
     resize: vertical;
     overflow: hidden;
-    color: #5c5c5c;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    color: black;
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreRegular';
     line-height: 1.5;
     &:focus {
@@ -152,16 +167,15 @@ export const ApplyBox2 = styled.div`
 `;
 
 export const newBtn = styled.button`
-    width: 250px;
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 60px;
+    padding: 1.2rem;
     border-radius: 15px;
-    margin: 15px;
-    padding: 18px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    margin: 10px;
+    font-size: ${({ theme }) => theme.fontSize.m};
     background: ${props => props.$bg};
     font-family: 'PreBold';
     color: ${props => props.$c};
@@ -173,10 +187,9 @@ export const ApplyBtn = styled.button`
     align-items: center;
     justify-content: center;
     width: ${props => props.$w};
-    height: 50px;
     border-radius: 10px;
     margin: 15px;
-    padding: 27px;
+    padding: 1.2rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
@@ -227,7 +240,7 @@ export const CompletedBox = styled.div`
     align-items: center;
     flex-direction: column;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreMedium';
     gap: 8px;
 `;

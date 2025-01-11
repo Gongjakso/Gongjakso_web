@@ -1,281 +1,346 @@
 import styled from 'styled-components';
-import backGroundImage from '../../assets/images/background.png';
-import teambuilding1 from '../../assets/images/Teambuilding1.png';
+import backGroundImage from '../../assets/images/backgroundImg.svg';
+import arrow from '../../assets/images/whiteArrow.svg';
+import homeImg from '../../assets/images/Homepage.svg';
+import contestimg from '../../assets/images/ContestImg.svg';
+import leftBubble from '../../assets/images/LeftBubble.svg';
+import teambuilding1 from '../../assets/images/Teambuilding1.svg';
 import teambuilding2 from '../../assets/images/Teambuilding2.png';
-import teambuilding3 from '../../assets/images/Teambuilding3.png';
-import portfolioimg from '../../assets/images/Portfolio.png';
-
-export const Title = styled.div`
-    font-size: ${({ theme }) => theme.fontSize.lg};
-    font-family: 'PreBold';
-    text-align: center;
-    padding: 5px;
-`;
-
-export const Title1 = styled.div`
-    color: white;
-    font-family: 'PreBold';
-    font-size: ${({ theme }) => theme.fontSize.lg};
-`;
-
-export const Title2 = styled.div`
-    color: white;
-    padding: 5px;
-    font-family: 'PreBold';
-    font-size: ${({ theme }) => theme.fontSize.lg};
-`;
-
-export const Title3 = styled.div`
-    color: black;
-    font-family: 'PreBold';
-    padding: 2px;
-    font-size: ${({ theme }) => theme.fontSize.lg};
-`;
-
-export const Subtitle2 = styled.div`
-    color: white;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.md};
-    padding: 20px;
-`;
-
-export const Subtitle3 = styled.div`
-    color: ${({ theme }) => theme.Main1};
-    align-items: center;
-    font-weight: bold;
-    padding: 1px;
-    font-family: 'PreBold';
-    font-size: ${({ theme }) => theme.fontSize.l};
-`;
-
-export const Detail1 = styled.p`
-    font-family: 'PreRegualr';
-    font-size: ${({ theme }) => theme.fontSize.base};
-    padding: 2px;
-    color: white;
-`;
-
-export const Detail2 = styled.p`
-    font-family: 'PreRegular';
-    font-size: ${({ theme }) => theme.fontSize.m};
-    padding: 15px;
-    color: white;
-`;
-
-export const Detail3 = styled.p`
-    color: black;
-    padding: 15px;
-    font-family: 'PreRegular';
-    font-size: ${({ theme }) => theme.fontSize.m};
-`;
-
-export const Button = styled.p`
-    display: flex;
-    margin-top: 10px;
-    flex-direction: row;
-`;
-
-export const Button1 = styled.button`
-    background-color: black;
-    border: none;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.m};
-    border-radius: 10px;
-    color: white;
-    width: 17em;
-    height: 3.5em;
-    margin: 10px;
-    cursor: pointer;
-`;
-export const Button2 = styled.button`
-    background-color: white;
-    border: none;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.m};
-    border-radius: 10px;
-    color: black;
-    font-weight: bold;
-    width: 17em;
-    height: 3.5em;
-    margin: 10px;
-    cursor: pointer;
-`;
-
-export const Button3 = styled.button`
-    background-color: ${({ theme }) => theme.Main1};
-    border: none;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.m};
-    border-radius: 10px;
-    color: white;
-    width: 300px;
-    height: 65px;
-    padding: 20px;
-    cursor: pointer;
-`;
+import contestDetail from '../../assets/images/ContestDetails.svg';
+import rightBubble from '../../assets/images/rightBubble.svg';
+import portfolio from '../../assets/images/Portfolio.png';
+import portfolioPage from '../../assets/images/PortfolioPg.svg';
 
 export const HomeContent = styled.div`
     display: flex;
-    background-image: linear-gradient(
-            to left,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0.1)
-        ),
-        linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0)
-        ),
-        url(${backGroundImage});
+    background-image: url(${backGroundImage});
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-repeat: no-repeat;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 `;
 
-export const Box = styled.div`
-    color: black;
-    background-color: rgba(255, 255, 255, 0.47);
-    border-radius: 100px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    padding: 25px;
-    width: 370px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 22px;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.m};
-    text-align: center;
-    margin: 7px 10px;
-`;
-export const BoxContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-`;
-
-export const HomeContent1 = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    flex-direction: column;
-    background-color: ${({ theme }) => theme.Main1};
-`;
-
-export const Wrapper = styled.div`
-    background-color: rgba(255, 255, 255, 0.4);
-    margin: 30px 0;
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 40px;
-    width: 920px;
-    height: 400px;
-    font-family: 'PreMedium';
-    font-size: ${({ theme }) => theme.fontSize.base};
+export const TitleWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 1.25rem;
+    margin-top: 10rem;
+`;
+
+export const TitleWrapper1 = styled(TitleWrapper)`
+    gap: 0.438rem;
+`;
+
+export const Title = styled.span`
+    font-family: 'PreMedium';
+    font-size: ${({ theme }) => theme.fontSize.xxlg};
+    font-weight: 900;
+    line-height: 2.188rem;
     text-align: center;
+    color: #212121;
+`;
+
+export const SubTitle = styled.span`
+    font-family: 'PreRegular';
+    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-weight: 600;
+    text-align: center;
+    color: #7b7b7b;
+`;
+
+export const Title1 = styled(Title)`
+    font-size: ${({ theme }) => theme.fontSize.xl};
+`;
+export const LoginBtn = styled.div`
+    margin-top: 5rem;
+    cursor: pointer;
+    display: flex;
+    padding-left: 0.938rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 25rem;
+    position: absolute;
+    top: 0;
+    height: 4.5rem;
+    border-radius: 0.938rem;
+    background: ${({ theme }) => theme.box1};
+    font-family: 'PreMedium';
     color: white;
+    font-size: ${({ theme }) => theme.fontSize.mdd};
+    font-weight: 700;
+    line-height: 1.343rem;
+    text-align: center;
 `;
 
-export const ImageBox = styled.div`
+export const Arrow = styled.div`
+    background: url(${arrow});
+    width: 1.5rem;
+    height: 1.17rem;
+    margin-left: 0.938rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+`;
+
+export const PageImg = styled.div`
+    display: flex;
+    background: url(${homeImg});
+    width: 82.8rem;
+    height: 59.7rem;
+    position: absolute;
+    margin-top: 5rem;
+    background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+    }
+`;
+
+export const ContestImg = styled.div`
+    background: url(${contestimg});
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 38rem;
+    height: 25rem;
+    position: absolute;
+    margin-top: 1rem;
+    right: 0;
+    background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+        margin-top: 0;
+    }
+`;
+
+export const Section = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80rem;
+    width: 100%;
+    padding: 0;
+    position: relative;
+`;
+
+export const Section1 = styled.div`
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    max-width: 77rem;
+    height: 45rem;
+    padding: 4rem 0;
+    flex-direction: row;
+    position: relative;
+
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
+`;
+
+export const Bubble = styled.div`
+    display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    width: 75%;
-    flex-direction: row;
+    width: 31rem;
+    height: 5.8rem;
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    padding-top: 0.938rem;
+    background-repeat: no-repeat;
+    background: url(${leftBubble});
+    font-weight: 600;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+    }
 `;
-export const HomeContent2 = styled.div`
+
+export const Text = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 9.5rem;
+    left: 19rem;
+    font-family: 'PreMedium';
+    line-height: 2.191rem;
+    text-align: right;
+    font-weight: 600;
+    width: 18rem;
+    position: absolute;
+    font-size: ${({ theme }) => theme.fontSize.lg};
+    @media (max-width: 1270px) {
+        left: 12rem;
+        top: 8rem;
+        font-size: ${({ theme }) => theme.fontSize.md};
+    }
+`;
+
+export const TextContainer = styled.div`
+    display: flex;
+    position: absolute;
     flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    background-color: black;
 `;
-export const Container = styled.div`
+
+export const TeamImg = styled.div`
     display: flex;
-    flex-direction: row;
-    width: 1000px;
-    height: 50%;
-    padding: 10px;
-    justify-content: space-around;
-    margin: 10px 0;
-`;
-
-export const HomeContent3 = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    background-color: white;
-`;
-
-export const WhiteBox = styled.div`
-    width: 400px;
-    background-color: white;
-    margin-top: 20px;
-    height: 320px;
-    border-radius: 30px;
-`;
-
-export const Image = styled.img`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    object-fit: contain;
-`;
-
-export const TeamBuildingImg1 = styled.div`
-    width: 180px;
     background: url(${teambuilding1});
-    height: 180px;
-    background-size: contain;
+    position: absolute;
+    top: 14rem;
     background-repeat: no-repeat;
+    left: 24.5rem;
+    z-index: 1;
+    width: 18rem;
+    background-size: cover;
+    height: 16rem;
+    @media (max-width: 1270px) {
+        left: 16rem;
+        top: 12rem;
+        transform: scale(0.9);
+    }
 `;
 
-export const TeamBuildingImg2 = styled.div`
-    width: 180px;
+export const RightBubble = styled(Bubble)`
+    background: url(${rightBubble});
+    right: 0;
+    background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+        margin-top: 1rem;
+    }
+`;
+
+export const RightBubble1 = styled(RightBubble)`
+    position: absolute;
+    left: 7.5rem;
+    top: 6.5rem;
+    @media (max-width: 1270px) {
+        transform: scale(0.8);
+        left: 1.5rem;
+        top: 5.5rem;
+        margin-top: 0;
+    }
+`;
+
+export const Section2 = styled(Section1)`
+    max-width: 80rem;
+    width: 100%;
+    height: 45rem;
+    position: relative;
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
+`;
+
+export const Section3 = styled(Section1)`
+    max-width: 80rem;
+    width: 100%;
+    height: 40rem;
+    margin-bottom: 30rem;
+    position: relative;
+    @media (max-width: 1270px) {
+        max-width: 64rem;
+    }
+`;
+
+export const ContestDetail = styled(ContestImg)`
+    background: url(${contestDetail});
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    left: 0;
+    height: 30rem;
+    background-repeat: no-repeat;
+    @media (max-width: 1270px) {
+        transform: scale(0.85);
+    }
+`;
+
+export const TextContainer1 = styled(TextContainer)`
+    right: 0;
+`;
+
+export const TextContainer2 = styled(TextContainer)`
+    left: 0;
+`;
+
+export const Bubble1 = styled(Bubble)`
+    position: absolute;
+    right: 8.5rem;
+    top: 6.5rem;
+    @media (max-width: 1270px) {
+        right: 0.8rem;
+    }
+`;
+
+export const Bubble2 = styled(Bubble)`
+    position: absolute;
+    left: 0;
+    top: 0;
+`;
+
+export const Text1 = styled(Text)`
+    text-align: left;
+    position: absolute;
+    top: 20rem;
+    left: -6.875rem;
+    width: 30rem;
+    @media (max-width: 1270px) {
+        left: 2.5rem;
+        top: 18rem;
+    }
+`;
+
+export const Text2 = styled(Text)`
+    text-align: right;
+    top: 29.5rem;
+    left: 8.5rem;
+    width: 32rem;
+    @media (max-width: 1270px) {
+        left: 2rem;
+        top: 24rem;
+    }
+`;
+
+export const TeamImg2 = styled(TeamImg)`
     background: url(${teambuilding2});
-    height: 180px;
-    background-size: contain;
-    background-repeat: no-repeat;
+    width: 19rem;
+    height: 17rem;
+    background-size: cover;
+    left: 17.5rem;
+    top: 14.5rem;
+    @media (max-width: 1270px) {
+        left: 19.5rem;
+        top: 15rem;
+        transform: scale(0.7);
+    }
 `;
 
-export const TeamBuildingImg3 = styled.div`
-    width: 180px;
-    background: url(${teambuilding3});
-    height: 180px;
-    background-size: contain;
-    background-repeat: no-repeat;
+export const PortfolioImg = styled(TeamImg)`
+    background: url(${portfolio});
+    width: 16rem;
+    height: 15rem;
+    background-size: cover;
+    left: 26rem;
+    top: 13rem;
+    @media (max-width: 1270px) {
+        left: 17rem;
+        transform: scale(0.8);
+        top: 10rem;
+    }
 `;
 
-export const TeamImage = styled.div`
-    font-size: ${({ theme }) => theme.fontSize.md};
-    margin: 20px 0;
-`;
-
-export const PortFolioimg = styled.div`
-    background: url(${portfolioimg});
-    width: 350px;
-    padding: 60px 0;
-    height: auto;
-    display: flex;
-    justify-content: center;
+export const PortfolioDetail = styled(ContestImg)`
+    background: url(${portfolioPage});
+    position: absolute;
     background-size: contain;
     background-repeat: no-repeat;
+    right: 0;
+    top: 9.5rem;
+    width: 37.7rem;
+    height: 28rem;
+    @media (max-width: 1270px) {
+        top: 7.2rem;
+        transform: scale(0.8);
+    }
 `;

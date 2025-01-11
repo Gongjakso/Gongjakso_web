@@ -3,41 +3,59 @@ import * as S from './RecruitedTeam.Styled';
 import TeamBox from '../TeamBox/TeamBox';
 import TopButton from '../../pages/HomePage/TopButton';
 import Pagination from '../../components/Pagination/Pagination';
-import { getMyRecruiting } from '../../service/profile_service';
+import { getMyInfo, getMyRecruiting } from '../../service/profile_service';
 
 const RecruitedTeam = () => {
+    const [data, setProfileData] = useState();
     const [postContent1, setPostContent1] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalpage, setTotalPage] = useState();
 
     useEffect(() => {
-        getMyRecruiting().then(response => {
-            setPostContent1(response?.data);
+        getMyRecruiting(page, 6).then(response => {
+            setTotalPage(response.data.totalPages);
+            setPostContent1(response?.data.content);
+        });
+    }, [page]);
+
+    useEffect(() => {
+        getMyInfo().then(response => {
+            setProfileData(response?.data); // 'response'를 바로 전달
         });
     }, []);
+
+    const loadMyRecruiting = page =>
+        getMyRecruiting(page, 6).then(res => {
+            setPostContent1(res?.data.content);
+        });
 
     return (
         <div>
             <TopButton />
             <S.TopBox>
                 <S.Spacer />
-                <S.Title>내가 모집 중인 팀</S.Title>
+                <S.Title>{data?.name}님의 모집 기록</S.Title>
             </S.TopBox>
             <S.BoxDetail>
-                {postContent1?.map(postContent1 => (
-                    <TeamBox
-                        key={postContent1?.postId}
-                        showMoreDetail={true}
-                        showWaitingJoin={false}
-                        showSubBox={true}
-                        borderColor={
-                            postContent1.postType === false
-                                ? 'rgba(0, 163, 255, 0.5)'
-                                : 'rgba(231, 137, 255, 0.5)'
-                        }
-                        postContent={postContent1}
-                        isMyParticipation={false}
-                        postId={postContent1?.postId}
-                    />
-                ))}
+                <S.SubTitleContainer>
+                    {postContent1?.map(postContent1 => (
+                        <TeamBox
+                            key={postContent1?.id}
+                            showMoreDetail={true}
+                            showWaitingJoin={false}
+                            showSubBox={true}
+                            postContent={postContent1}
+                            isMyParticipation={false}
+                            postId={postContent1?.id}
+                        />
+                    ))}
+                </S.SubTitleContainer>
+                <Pagination
+                    total={totalpage}
+                    page={page}
+                    setPage={setPage}
+                    loadPosts={loadMyRecruiting}
+                />
             </S.BoxDetail>
         </div>
     );

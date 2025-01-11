@@ -6,14 +6,15 @@ export const CalendarContainer = styled.div`
 
 export const DropdownButton = styled.button`
     width: 160px;
-    height: 60px;
-    border: 1px solid ${({ theme }) => theme.borderline};
-    border-radius: 15px;
-    padding: 15px;
-    color: var(--festie-gray-800, #3a3a3a);
+    height: 40px;
+    border-bottom: ${props =>
+        props.$isError
+            ? ({ theme }) => `1px solid ${theme.borderline}`
+            : `2px solid red`};
     font-size: ${({ theme }) => theme.fontSize.base};
     color: ${({ theme }) => theme.subFont};
     font-style: normal;
+    font-family: 'PreMedium';
     font-weight: 500;
     line-height: 140%;
     text-align: start;
@@ -25,9 +26,14 @@ export const DropdownButton = styled.button`
 `;
 
 export const CalendarWrapper = styled.div`
-    z-index: 11;
+    z-index: 15;
     position: absolute;
     top: 100%;
     left: 0;
     display: ${props => (props.$isopen === 'true' ? 'block' : 'none')};
+
+    .rdrCalendarWrapper {
+        border: 1px solid #000; /* 원하는 border 스타일로 변경 가능 */
+        border-radius: 15px;
+    }
 `;

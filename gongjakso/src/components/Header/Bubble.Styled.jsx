@@ -13,12 +13,12 @@ export const BubbleContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    top: 55px;
-    width: 370px;
-    right: 5%;
+    top: 3.438rem;
+    width: 27rem;
+    right: -3.8rem;
     display: flex;
-    border-radius: 20px;
-    border: 2px solid #eee;
+    border-radius: 1.25rem;
+    border: 0.125rem solid #eee;
     background-color: white;
     position: absolute;
     z-index: 100;
@@ -27,12 +27,12 @@ export const BubbleContainer = styled.div`
         content: '';
         position: absolute;
         border: none;
-        width: 20px;
-        height: 20px;
+        width: 1.25rem;
+        height: 1.25rem;
         background-color: white;
-        border-left: 2px solid #eee;
-        border-top: 2px solid #eee;
-        top: -12px;
+        border-left: 0.125rem #eee;
+        border-top: 0.125rem solid #eee;
+        top: -0.75rem;
         right: 17%;
         transform: rotate(45deg);
     }
@@ -40,7 +40,7 @@ export const BubbleContainer = styled.div`
 export const SubTitle = styled.span`
     font-size: ${({ theme }) => theme.fontSize.base};
     font-family: 'PreMedium';
-    margin: 10px;
+    margin: 0.625rem;
     display: flex;
     cursor: pointer;
     justify-content: space-between;
@@ -48,7 +48,7 @@ export const SubTitle = styled.span`
 `;
 
 export const ArrowImage = styled(Arrow)`
-    width: 15px;
+    width: 0.938rem;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -66,7 +66,7 @@ export const MypageImg = styled(Mypage)`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
+    width: 6.25rem;
     height: auto;
     cursor: pointer;
 `;
@@ -82,22 +82,22 @@ export const InfoBox = styled.div`
 export const NameTitle = styled.p`
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-family: 'PreMedium';
-    margin: 2px 0px;
+    margin: 0.125rem 0;
 `;
 
 //학과
 export const MajorTitle = styled.p`
     font-family: 'PreRegular';
     font-size: ${({ theme }) => theme.fontSize.base};
-    margin: 2px 0px;
+    margin: 0.125rem 0;
 `;
 
 //프로필 이미지
 export const ProfileImage = styled(defaultProfile)`
-    width: 60px;
+    width: 3.75rem;
     display: flex;
     justify-content: center;
-    padding: 5px;
+    padding: 0.313rem;
 `;
 
 export const ProfileDetail = styled.div`
@@ -110,19 +110,19 @@ export const InfoDetail = styled.div`
     flex-direction: column;
     align-items: baseline;
     justify-content: center;
-    margin: 0 10px;
+    margin: 0 0.625rem;
 `;
 
 export const BlueLine = styled.div`
     display: flex;
     width: 100%;
-    border-top: 0.7px solid #c2d6ff;
+    border-top: 0.044rem solid #c2d6ff;
 `;
 
 export const GreyLine = styled.div`
     display: flex;
     width: 100%;
-    border-top: 0.7px solid #dcdcdc;
+    border-top: 0.044rem solid #dcdcdc;
 `;
 
 export const LoginButton = styled.button`
@@ -130,7 +130,7 @@ export const LoginButton = styled.button`
     cursor: pointer;
     justify-content: baseline;
     font-family: 'PreRegular';
-    padding: 5px;
-    margin: 10px 10px 10px 30px;
+    padding: 0.313rem;
+    margin: 0.625rem 0.625rem 0.625rem 1.875rem;
     text-decoration: underline;
 `;

@@ -15,6 +15,7 @@ import TeamBox from '../TeamBox/TeamBox';
 import Modal2 from '../../features/modal/LoginModal2';
 import Modal1 from '../../features/modal/LoginModal1';
 import NoContents from '../../features/NoContents/NoContents';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const PostMainPage = () => {
     const authenticated = localStorage.getItem('accessToken');
@@ -30,8 +31,7 @@ const PostMainPage = () => {
     const [banners, setBanners] = useState([]);
     const [links, setLinks] = useState([]);
     const [contestTotalPage, setContestTotalPage] = useState();
-    const [ProjectTotalPage, setProjectTotalPage] = useState();
-    const [sortBy, setSortBy] = useState('createdAt');
+    const [sortBy, setSortBy] = useState('createdAt,desc');
 
     const [selectedLocalData, setSelectedLocalData] = useState('');
     const [selectedCityData, setSelectedCityData] = useState('');
@@ -42,16 +42,16 @@ const PostMainPage = () => {
     const [modal1Open, setModal1Open] = useState(false);
 
     const encodeSpaces = searchKeyword => {
-        return searchKeyword.replace(/ /g, '%20');
+        return searchKeyword?.replace(/ /g, '%20');
     };
     // 띄어쓰기 인코딩 하는 부분
 
     useEffect(() => {
         setPage(1);
-    }, [isProject, sortBy, selectedLocalData]);
+    }, [sortBy, selectedLocalData]);
 
     useEffect(() => {
-        setSortBy('createdAt');
+        setSortBy('createdAt,desc');
         setSelectedTownData('');
         setSelectedCityData('');
         setSearchKeyword('');
@@ -89,22 +89,13 @@ const PostMainPage = () => {
     ];
 
     const ClickSearchBtn = () => {
-        isProject
-            ? loadProjectPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  selectedStack,
-                  searchKeyword,
-              )
-            : loadContestPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  searchKeyword,
-              );
+        loadContestPosts(
+            page,
+            sortBy,
+            selectedCityData,
+            selectedTownData,
+            searchKeyword,
+        );
     };
 
     const handleKeyDown = event => {
@@ -120,22 +111,13 @@ const PostMainPage = () => {
             const LinkUrls = res?.data?.map(item => item?.linkUrl);
             setLinks(LinkUrls);
         });
-        isProject
-            ? loadProjectPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  selectedStack,
-                  searchKeyword,
-              )
-            : loadContestPosts(
-                  page,
-                  sortBy,
-                  selectedCityData,
-                  selectedTownData,
-                  searchKeyword,
-              );
+        loadContestPosts(
+            page,
+            sortBy,
+            selectedCityData,
+            selectedTownData,
+            searchKeyword,
+        );
     }, [
         page,
         sortBy,
@@ -164,35 +146,14 @@ const PostMainPage = () => {
         });
     };
 
-    const loadProjectPosts = (
-        page,
-        sort,
-        selectedCityData,
-        selectedTownData,
-        selectedStack,
-        searchKeyword,
-    ) => {
-        getProjectPosts(
-            page,
-            sort,
-            selectedCityData,
-            selectedTownData,
-            selectedStack,
-            encodeSpaces(searchKeyword),
-        ).then(res => {
-            setProjectPosts(res?.data?.content);
-            setProjectTotalPage(res?.data?.totalPages);
-        });
-    };
-
     const handleSelectChange = selectedValue => {
         //선택한 정렬 방식으로 반환
         if (selectedValue === '인기순') {
-            setSortBy('scrapCount');
+            setSortBy('scrap,desc');
         } else if (selectedValue === '최신순') {
-            setSortBy('createdAt');
+            setSortBy('createdAt,desc');
         } else {
-            setSortBy(null);
+            setSortBy('createdAt,desc');
         }
     };
 
@@ -224,6 +185,13 @@ const PostMainPage = () => {
 
     return (
         <>
+            <MetaTag
+                title="공모전공고"
+                description="공모전 공고들을 모아볼 수 있는 페이지"
+                keywords="공모전, 프로젝트, 팀빌딩, 개발, 기획, 디자인"
+                imgsrc="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
+                url="https://gongjakso.xyz/contest"
+            />
             <TopButton />
             <S.MainContent>
                 <S.Div>
@@ -231,20 +199,20 @@ const PostMainPage = () => {
                 </S.Div>
                 <S.Search>
                     <S.SearchBar>
-                        <S.Searchmark>
-                            <S.Searchicon onClick={ClickSearchBtn} />
-                        </S.Searchmark>
                         <S.SearchUsernameInput
                             type="text"
                             placeholder={
                                 isProject
-                                    ? '찾고 있는 프로젝트가 있나요? 입력 후 Enter/돋보기를 클릭!'
-                                    : '찾고 있는 공모전이 있나요? 입력 후 Enter/돋보기를 클릭!'
+                                    ? '찾고 있는 프로젝트가 있나요?'
+                                    : '찾고 있는 공모전이 있나요?'
                             }
                             value={searchKeyword}
                             onChange={e => setSearchKeyword(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
+                        <S.Searchmark>
+                            <S.Searchicon onClick={ClickSearchBtn} />
+                        </S.Searchmark>
                     </S.SearchBar>
                 </S.Search>
                 <S.Fillterbox>
@@ -266,20 +234,6 @@ const PostMainPage = () => {
                             case={true}
                         />
                     </S.Fillter1>
-                    {isProject && (
-                        <S.Fillter1>
-                            <SelectInput
-                                id={'local'}
-                                error={errors.local}
-                                selectOptions={stackOptions}
-                                placeholder={'사용 언어'}
-                                register={register}
-                                case={true}
-                                scroll={true}
-                                onChange={handleSelectStack}
-                            />
-                        </S.Fillter1>
-                    )}
                 </S.Fillterbox>
                 {isProject ? ( //여기는 프로젝트
                     <S.PostContent>
@@ -329,11 +283,11 @@ const PostMainPage = () => {
                     <S.PostContent>
                         {contestPosts && contestPosts.length > 0 ? (
                             contestPosts.map(contest => (
-                                <React.Fragment key={contest?.postId}>
+                                <React.Fragment key={contest?.id}>
                                     {isLoggedIn ? (
                                         <Link
-                                            key={contest?.postId}
-                                            to={`/contest/${contest?.postId}`}
+                                            key={contest?.id}
+                                            to={`/contest/${contest?.contest_id}/team/${contest?.id}`}
                                         >
                                             <TeamBox
                                                 showWaitingJoin={false}
@@ -370,21 +324,12 @@ const PostMainPage = () => {
                         )}
                     </S.PostContent>
                 )}
-                {isProject ? (
-                    <Pagination
-                        total={ProjectTotalPage}
-                        page={page}
-                        setPage={setPage}
-                        loadPosts={loadContestPosts}
-                    />
-                ) : (
-                    <Pagination
-                        total={contestTotalPage}
-                        page={page}
-                        setPage={setPage}
-                        loadPosts={loadProjectPosts}
-                    />
-                )}
+                <Pagination
+                    total={contestTotalPage}
+                    page={page}
+                    setPage={setPage}
+                    loadPosts={loadContestPosts}
+                />
             </S.MainContent>
             {modal1Open && <Modal1 closeModal1={closeModal1} />}
         </>

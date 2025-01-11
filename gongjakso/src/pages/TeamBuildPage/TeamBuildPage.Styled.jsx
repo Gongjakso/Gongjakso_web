@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as TeamBuildIcon } from '../../assets/images/TeamBuildIcon.svg';
+import theme from '../../styles/theme';
 
 export const Container = styled.div`
     width: 100%;
@@ -10,8 +11,9 @@ export const Container = styled.div`
     flex-direction: column;
     padding: 0 25px;
     justify-content: center;
-    align-items: center;
-    margin-top: 90px;
+    /* align-items: center; */
+    margin-top: 160px;
+    margin-bottom: 90px;
 `;
 
 export const TitleContent = styled.div`
@@ -110,8 +112,15 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.p`
-    color: ${props => (props.$isMain === 'main' ? 'black' : '#ffffff')};
-    font-family: 'PreBold';
+    color: ${props =>
+        props.$isMain === 'main' ? theme.mainFont : theme.mainFont};
+    font-family: 'TheJamsilRegular';
     letter-spacing: 1px;
-    font-size: ${({ theme }) => theme.fontSize.l};
+    font-size: ${({ theme }) => theme.fontSize.xlg};
+    font-weight: 600;
+    line-height: 39.6px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-left: 7.5%;
 `;

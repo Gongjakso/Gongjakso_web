@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 
 export const getCalendar = async (selectYear, selectMonth) => {
     const reqURL = `calendar?year=${selectYear}&month=${selectMonth}`;

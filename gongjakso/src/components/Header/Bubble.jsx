@@ -91,14 +91,14 @@ const Bubble = ({ closeBubble }) => {
                         <S.SubTitle
                             onClick={() => handleButtonClick('/recruitedTeam')}
                         >
-                            <span>내가 모집 중인 팀</span>
+                            <span>{data?.name}님의 모집 기록</span>
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />
                         <S.SubTitle
                             onClick={() => handleButtonClick('/appliedTeam')}
                         >
-                            <span>내가 지원한 팀</span>
+                            <span>{data?.name}님의 지원 기록</span>
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />
@@ -107,12 +107,12 @@ const Bubble = ({ closeBubble }) => {
                                 handleButtonClick('/participatedTeam')
                             }
                         >
-                            <span>내가 참여한 공모전/프로젝트</span>
+                            <span>{data?.name}님의 참여 기록</span>
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />
                         <S.SubTitle onClick={() => handleButtonClick('/scrap')}>
-                            <span>나의 스크랩</span>
+                            <span>{data?.name}님의 스크랩</span>
                             <S.ArrowImage />
                         </S.SubTitle>
                         <S.GreyLine />

@@ -14,12 +14,15 @@ const Input = props => {
         step,
         register,
         registerOptions,
+        isimportant,
+        sub,
     } = props;
     const isLabel = !!label;
     return (
         <>
             <S.InputLabel $islabel={isLabel?.toString()} htmlFor={id}>
                 {label}
+                {isimportant ? <S.Important>*</S.Important> : ''}
             </S.InputLabel>
             <S.Div>
                 <S.InputText
@@ -30,7 +33,13 @@ const Input = props => {
                     step={step}
                     {...register(id, registerOptions)}
                 />
-                {error && <WarningMsg msg={error.message} />}
+                {error ? (
+                    <WarningMsg msg={error.message} />
+                ) : (
+                    <S.Important2>{sub}</S.Important2>
+                )}
+                {/* {sub && <S.Important2>{sub}</S.Important2>}
+                {error && <WarningMsg msg={error.message} />} */}
             </S.Div>
         </>
     );

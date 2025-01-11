@@ -6,11 +6,11 @@ export const Div = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 130px;
+    margin-bottom: 8.125rem;
 `;
 
 export const TopBox = styled.div`
-    height: 300px;
+    height: 18.75rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@ export const TopBox = styled.div`
 
 export const DetailBox = styled.div`
     position: relative;
-    line-height: 25px;
+    line-height: 1.5625rem;
     text-align: left;
     display: flex;
     justify-content: center;
@@ -28,22 +28,22 @@ export const DetailBox = styled.div`
 `;
 
 export const InputField = styled.input`
-    width: 430px;
-    height: 55px;
-    padding: 15px;
-    border: 1.5px solid #a3a3a3;
-    border-radius: 7px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    width: 26.875rem;
+    height: 3.4375rem;
+    padding: 0.9375rem;
+    border: 0.09375rem solid #a3a3a3;
+    border-radius: 0.4375rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreMedium';
 `;
 
 export const Formset = styled.div`
     width: 100%;
-    max-width: 1200px;
+    max-width: 75rem;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    gap: 50px;
+    gap: 3.125rem;
 `;
 
 export const Spacer = styled.div`
@@ -64,41 +64,33 @@ export const SubTitle = styled.p`
 `;
 
 export const Wrapper = styled.div`
-    height: 300px;
+    height: 18.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
 export const SetBox = styled.button`
-    width: 240px;
-    padding: 15px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    width: 15rem;
+    padding: 0.9375rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
     background-color: #0054ff;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ffffff;
-    border-radius: 10px;
+    border-radius: 0.625rem;
 `;
-/*
-const SelectField = styled.select`
-    width: 100%;
-    height: 40px;
-    max-height: 200px;
-    overflow-y: auto;
-    // 기타 스타일 설정
-`;
-*/
+
 export const SelectField = styled.select`
-    width: 430px;
-    height: 55px;
-    max-height: 50px;
+    width: 26.875rem;
+    height: 3.4375rem;
+    max-height: 3.125rem;
     overflow-y: auto;
-    padding: 10px;
-    border: 1.5px solid #a3a3a3;
-    border-radius: 7px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 0.625rem;
+    border: 0.09375rem solid #a3a3a3;
+    border-radius: 0.4375rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreMedium';
 
     background-color: white;
@@ -116,48 +108,50 @@ export const SelectField = styled.select`
 `;
 
 export const Fillter1 = styled.div`
-    width: 430px;
-    padding: 1px;
-    border-radius: 7px;
-    border: 1.5px solid #a3a3a3;
+    width: 26.875rem;
+    padding: 0.0625rem;
+    height: 3.4375rem;
+    padding: 0.75rem 1.125rem;
+    border-radius: 0.4375rem;
+    border: 0.09375rem solid #a3a3a3;
     display: flex;
     align-items: center;
 `;
 
 export const PhoneNum = styled.div`
-    width: 430px;
-    height: 55px;
+    width: 26.875rem;
+    height: 3.4375rem;
     text-align: left;
     display: flex;
-    padding: 15px;
-    border: 1.5px solid #a3a3a3;
-    border-radius: 7px;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    padding: 0.9375rem;
+    border: 0.09375rem solid #a3a3a3;
+    border-radius: 0.4375rem;
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreMedium';
 `;
 
 export const Num = styled.input`
     &.Num-first {
-        width: 40px;
+        width: 2.5rem;
     }
     &.Num-second {
-        width: 60px;
+        width: 3.75rem;
     }
     &.Num-third {
-        width: 60px;
+        width: 3.75rem;
     }
     &.Num-first,
     &.Num-second,
     &.Num-third {
         text-align: center;
         border: none;
-        border-bottom: 1px solid black;
-        font-size: ${({ theme }) => theme.fontSize.md};
+        border-bottom: 0.0625rem solid black;
+        font-size: ${({ theme }) => theme.fontSize.m};
     }
 `;
 
 export const Hyphen = styled.div`
-    width: 20px;
+    width: 1.25rem;
     text-align: center;
-    font-size: ${({ theme }) => theme.fontSize.lg};
+    font-size: ${({ theme }) => theme.fontSize.l};
 `;

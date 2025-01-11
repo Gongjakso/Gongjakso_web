@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './CountGuest.Styled';
 
-const CountGuest = ({ isProject, maxGuests, onApply }) => {
+const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
     const [isToggleBox, setIsToggleBox] = useState(false);
     const [roles, setRoles] = useState({
-        PLAN: 0,
-        DESIGN: 0,
+        기획: 0,
+        디자인: 0,
+        개발: 0,
         ...(isProject && { FE: 0, BE: 0 }),
-        ETC: 0,
+        기타: 0,
     });
-
     const [totalSelectedGuests, setTotalSelectedGuests] = useState(0);
-
     useEffect(() => {
         // roles 객체가 변경될 때마다 totalSelectedGuests를 업데이트
         const total = Object.values(roles).reduce(
@@ -63,18 +62,18 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
     };
 
     const category = {
-        categories: Object.entries(roles)
+        recruit_part: Object.entries(roles)
             .filter(([_, size]) => size !== 0) // Filter out categories with size 0
-            .map(([categoryType, size]) => ({ categoryType, size })),
+            .map(([position, recruit_count]) => ({ position, recruit_count })),
     };
 
     const getRoleText = role => {
         switch (role) {
-            case 'PLAN':
+            case '기획':
                 return '기획/아이디어';
-            case 'DESIGN':
+            case '디자인':
                 return '디자이너';
-            case 'ETC':
+            case '기타':
                 return '기타';
             case 'FE':
                 return '프론트엔드';
@@ -87,25 +86,56 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
 
     return (
         <S.Container>
-            <S.SearchBox>
-                <S.Span onClick={handleToggleBoxOpen}>
-                    {Object.entries(roles).some(
-                        ([role, quantity]) => quantity > 0,
-                    )
-                        ? Object.entries(roles)
-                              .filter(([_, quantity]) => quantity > 0)
-                              .map(([role, quantity]) => `${role}: ${quantity}`)
-                              .join(', ')
-                        : isProject
-                          ? '프로젝트에 필요한 역할을 선택해주세요!'
-                          : '공모전에 필요한 역할을 선택해주세요!'}
-                </S.Span>
+            <S.SearchBox $isError={error}>
+                {Number(maxGuests) === 0 ? (
+                    <>
+                        <S.Span>
+                            {/* {Object.entries(roles).some(
+                                ([role, quantity]) => quantity > 0,
+                            )
+                                ? Object.entries(roles)
+                                      .filter(([_, quantity]) => quantity > 0)
+                                      .map(
+                                          ([role, quantity]) =>
+                                              `${role}: ${quantity}`,
+                                      )
+                                      .join(', ')
+                                :  */}
+                            {isProject
+                                ? '프로젝트에 필요한 역할을 선택해주세요!'
+                                : '공모전에 필요한 역할을 선택해주세요!'}
+                        </S.Span>
+                        <S.P>
+                            <span className="arrow_box">
+                                인원을 먼저 입력해주세요
+                            </span>
+                        </S.P>
+                    </>
+                ) : (
+                    <S.Span onClick={handleToggleBoxOpen}>
+                        {/* {Object.entries(roles).some(
+                            ([role, quantity]) => quantity > 0,
+                        )
+                            ? Object.entries(roles)
+                                  .filter(([_, quantity]) => quantity > 0)
+                                  .map(
+                                      ([role, quantity]) =>
+                                          `${role}: ${quantity}`,
+                                  )
+                                  .join(', ') */}
+                        {isProject
+                            ? '프로젝트에 필요한 역할을 선택해주세요!'
+                            : '공모전에 필요한 역할을 선택해주세요!'}
+                    </S.Span>
+                )}
             </S.SearchBox>
 
             <S.SelectQty $isDisplay={isToggleBox}>
                 {Object.entries(roles).map(([role, quantity]) => (
                     <S.SelectAdultNum key={role}>
-                        <S.Title>{getRoleText(role)}</S.Title>
+                        <S.Title $hasGuests={quantity > 0}>
+                            {getRoleText(role)}
+                        </S.Title>
                         <S.CountBtn>
                             <S.Button
                                 onClick={() =>
@@ -115,7 +145,7 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                             >
                                 -
                             </S.Button>
-                            {quantity}
+                            <S.ManNum $props={quantity}>{quantity}</S.ManNum>
                             <S.Button
                                 onClick={() => handleQuantityChange(role, true)}
                                 disabled={
@@ -128,14 +158,14 @@ const CountGuest = ({ isProject, maxGuests, onApply }) => {
                         </S.CountBtn>
                     </S.SelectAdultNum>
                 ))}
-                <S.CountBtn>
+                <S.ApplysetBtn>
                     <S.ApplyBtn $isApply={true} onClick={handleToggleBoxClose}>
                         취소
                     </S.ApplyBtn>
                     <S.ApplyBtn $isApply={false} onClick={handleApply}>
                         적용
                     </S.ApplyBtn>
-                </S.CountBtn>
+                </S.ApplysetBtn>
             </S.SelectQty>
         </S.Container>
     );

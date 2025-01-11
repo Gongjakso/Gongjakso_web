@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TopBox = styled.div`
-    height: 250px;
+    height: 18rem;
     width: 100%;
     background-color: rgba(195, 233, 255, 0.5);
     display: flex;
@@ -16,7 +16,7 @@ export const BoxDetail = styled.div`
     justify-content: center;
     height: 25%;
     flex-direction: column;
-    margin: 100px;
+    margin: 3rem 7rem 3rem 7rem;
 `;
 
 export const Spacer = styled.div`
@@ -28,4 +28,12 @@ export const Title = styled.p`
     font-size: ${({ theme }) => theme.fontSize.xl};
     text-align: center;
     font-weight: bold;
+`;
+
+export const SubTitleContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: 71.875rem;
 `;

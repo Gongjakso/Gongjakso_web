@@ -8,39 +8,22 @@ import SignUpModal from '../../features/modal/SignUpModal';
 import TopButton from '../../pages/HomePage/TopButton';
 import Banner from './Banner';
 import { getMyInfo } from '../../service/auth_service';
+import { useNavigate } from 'react-router-dom';
+import MetaTag from '../../components/common/MetaTag/MetaTag';
 
 const HomePage = () => {
     const authenticated = localStorage.getItem('accessToken');
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
-    const [modal1Open, setModal1Open] = useState(false);
     const [modal2Open, setModal2Open] = useState(false);
     const [SignUpModalOpen, setSignUpModalOpen] = useState(false);
-    const [path, setPath] = useState();
+    const navigate = useNavigate();
     const [myName, setMyName] = useState();
-    const goToPage = useCustomNavigate();
-
-    const handleButtonClick = path => {
-        if (isLoggedIn) {
-            goToPage(path);
-        } else {
-            if (path === '/contest' || path === '/project') {
-                setPath(path);
-                showModal2();
-            } else {
-                showModal1();
-            }
-        }
-    };
-
-    const handleButtonEmailClick = path => {
-        goToPage(path);
-    };
 
     useEffect(() => {
         if (isLoggedIn) {
             getMyInfo().then(res => {
                 setMyName(res?.data?.name);
-                if (res?.data?.job === undefined || '') {
+                if (!res?.data?.job) {
                     setSignUpModalOpen(true);
                 } else {
                     setSignUpModalOpen(false);
@@ -49,16 +32,16 @@ const HomePage = () => {
         }
     }, [isLoggedIn]);
 
-    const showModal1 = () => {
-        setModal1Open(true);
+    const handleButtonClick = () => {
+        if (isLoggedIn) {
+            navigate('/contest'); // 로그인 상태일 때 공모전 공고 페이지로 이동
+        } else {
+            navigate('/login'); // 비로그인 상태일 때 로그인 페이지로 이동
+        }
     };
 
     const showModal2 = () => {
         setModal2Open(true);
-    };
-
-    const closeModal1 = () => {
-        setModal1Open(false);
     };
 
     const closeModal2 = () => {
@@ -71,161 +54,101 @@ const HomePage = () => {
 
     return (
         <>
+            <MetaTag
+                title="공모전 팀빌딩 서비스 | 공작소 gongjakso"
+                description="귀찮은 공모전 팀 구인 과정은 이제 그만! 내가 원하는 조건에 맞추어 공모전 팀원을 모집해보세요."
+                keywords="공작소, 공모전, 참여, 팀빌딩, 기획, 디자인, 개발, IT"
+                url="https://gongjakso.xyz"
+            />
             <TopButton />
             <S.HomeContent className="home-section">
-                <S.Title>
-                    공모전/프로젝트, 어떻게 시작해야할지 막막하셨나요?
-                </S.Title>
-                <S.Title>공작소에서 원하는 사람들과 시작해보세요 !</S.Title>
-
-                <Banner />
-
-                <S.BoxContainer>
-                    <S.Box>
-                        <div>😔 공모전은 처음인데 어떻게 시작해야 하나요</div>
-                    </S.Box>
-                    <S.Box>
-                        <div>😔 학교 밖 사람들과 프로젝트를 해보고 싶어요</div>
-                    </S.Box>
-                </S.BoxContainer>
-                <S.BoxContainer>
-                    <S.Box>
-                        <div>🙁 친구랑 같이 하기엔 놀기만 할 것 같아요</div>
-                    </S.Box>
-                    <S.Box>
-                        <div> 🤯 사이드 프로젝트를 찾고 싶어요 </div>
-                    </S.Box>
-                </S.BoxContainer>
-
-                <S.Button>
-                    <S.Button1 onClick={() => handleButtonClick('/contest')}>
-                        공모전 공고 바로가기
-                    </S.Button1>
-                    <S.Button2
-                        style={{ marginLeft: '15px' }}
-                        onClick={() => handleButtonClick('/project')}
-                    >
-                        프로젝트 공고 바로가기
-                    </S.Button2>
-                </S.Button>
+                <S.TitleWrapper>
+                    <S.Title>공모전 팀빌딩을 위한 단 하나의 플랫폼</S.Title>
+                    <S.SubTitle>
+                        공작소와 함께 공모전 팀빌딩을 시작해보세요
+                    </S.SubTitle>
+                </S.TitleWrapper>
+                <S.Section>
+                    {' '}
+                    <S.LoginBtn onClick={handleButtonClick}>
+                        {isLoggedIn
+                            ? '공모전 공고 바로가기'
+                            : '공작소 로그인하러가기'}
+                        <S.Arrow />
+                    </S.LoginBtn>
+                    <S.PageImg />
+                </S.Section>
+                <S.TitleWrapper1>
+                    <S.Title1>공모전 팀원이 없어도</S.Title1>
+                    <S.SubTitle>
+                        아직 혼자라도 금방 팀원을 구할 수 있어요
+                    </S.SubTitle>
+                </S.TitleWrapper1>
+                <S.Section1>
+                    <S.TextContainer>
+                        <S.Bubble>
+                            나가고 싶은 공모전이 있는데, 팀원이 없어요
+                        </S.Bubble>
+                        <S.Text>
+                            공작소에서 공모전을 선택하고, <br /> 팀 모집을
+                            시작해보세요!
+                        </S.Text>
+                        <S.TeamImg />
+                    </S.TextContainer>
+                    <S.ContestImg />
+                </S.Section1>
+                <S.TitleWrapper1>
+                    <S.Title1>원하는 분야의 팀원을 바로</S.Title1>
+                    <S.SubTitle>
+                        필요한 팀원을 모집하거나 나에게 맞는 팀에 지원할 수
+                        있어요
+                    </S.SubTitle>
+                </S.TitleWrapper1>
+                <S.Section2>
+                    <S.ContestDetail />
+                    <S.TextContainer1>
+                        <S.RightBubble>
+                            팀원을 거의 다 모았는데, 딱 1명이 부족해요
+                        </S.RightBubble>
+                        <S.Bubble1>
+                            개발자를 구하는 공모전 팀을 찾고 싶어요
+                        </S.Bubble1>
+                        <S.Text1>
+                            공작소에서는 모집 인원과 파트를 선택할 수 있어요!
+                            <br />
+                            팀장은 필요한 팀원을 바로 찾아보고,
+                            <br /> 팀원은 원하는 팀을 알아볼 수 있어요
+                        </S.Text1>
+                        <S.TeamImg2 />
+                    </S.TextContainer1>
+                </S.Section2>
+                <S.TitleWrapper1>
+                    <S.Title1>포트폴리오까지 한번에</S.Title1>
+                    <S.SubTitle>
+                        나만의 포트폴리오를 만들어 팀빌딩 확률을 높일 수 있어요
+                    </S.SubTitle>
+                </S.TitleWrapper1>
+                <S.Section3>
+                    <S.TextContainer2>
+                        <S.Bubble2>
+                            팀에 맞는 역량을 가진 팀원이 필요해요
+                        </S.Bubble2>
+                        <S.RightBubble1>
+                            아직 포트폴리오가 없어 지원하기 어려워요
+                        </S.RightBubble1>
+                        <S.PortfolioImg />
+                        <S.Text2>
+                            공작소에서는 지원 시 포트폴리오를 첨부할 수 있어요!
+                            <br />
+                            아직 포트폴리오가 없다면, 공작소에서 도와드릴게요
+                        </S.Text2>
+                    </S.TextContainer2>
+                    <S.PortfolioDetail />
+                </S.Section3>
             </S.HomeContent>
-
-            <S.HomeContent1 className="home-section">
-                <S.Title1>📍다양한 유형의 팀빌딩 서비스 지원</S.Title1>
-                <S.Wrapper>
-                    <S.Detail1>
-                        로그인 후 '팀 빌딩' 탭을 들어가면 팀장으로 팀을 꾸릴 수
-                        있습니다!{' '}
-                    </S.Detail1>
-                    <S.Detail1>
-                        오프라인 회의를 선호하는 이들을 위해서 시/군/구의 정보를
-                        선택하여 해당 지역에서 회의하는 공모전 팀을 모아볼 수
-                        있습니다.
-                    </S.Detail1>
-                    <S.ImageBox>
-                        <S.TeamImage>
-                            <S.TeamBuildingImg1 />
-                            <p>팀장으로 모집하기</p>
-                        </S.TeamImage>
-                        <S.TeamImage>
-                            <S.TeamBuildingImg2 />
-                            <p>팀원으로 지원하기</p>
-                        </S.TeamImage>
-                        <S.TeamImage>
-                            <S.TeamBuildingImg3 />
-                            <p>지역으로 팀 찾기</p>
-                        </S.TeamImage>
-                    </S.ImageBox>
-                </S.Wrapper>
-                <S.Button1 onClick={() => handleButtonClick('/teambuild')}>
-                    팀빌딩 바로가기
-                </S.Button1>
-            </S.HomeContent1>
-
-            <S.HomeContent2 className="home-section">
-                <S.Subtitle2>
-                    팀빌딩 서비스만 가능한가요? 아닙니다!🙅🏻
-                </S.Subtitle2>
-
-                <S.Title2>
-                    내가 스크랩한 공모전을 📆캘린더로 모아볼 수 있어요.
-                </S.Title2>
-
-                <S.Container>
-                    <S.WhiteBox>
-                        <S.Image src={calendarImage} alt="캘린더 이미지" />
-                    </S.WhiteBox>
-
-                    <div style={{ padding: '10px' }}>
-                        <S.Detail2>
-                            내가 스크랩한 공모전/프로젝트 정보를 캘린더로 모아볼
-                            수 있습니다.
-                        </S.Detail2>
-                        <S.Detail2>
-                            여러 가지 정보가 기재되어 있는 다른 캘린더들과 달리
-                        </S.Detail2>
-                        <S.Detail2>공모전/프로젝트 정보를 모아두고</S.Detail2>
-                        <S.Detail2>
-                            관련한 할 일들을 정리할 수 있어요.
-                        </S.Detail2>
-
-                        <S.Button2
-                            style={{ marginTop: '70px' }}
-                            onClick={() => handleButtonClick('/calendar')}
-                        >
-                            캘린더 바로가기
-                        </S.Button2>
-                    </div>
-                </S.Container>
-            </S.HomeContent2>
-            <S.HomeContent3 className="home-section">
-                <S.Subtitle3>Coming Soon</S.Subtitle3>
-                <S.Detail3>
-                    공모전/프로젝트의 사후 관리도 공작소에서 만나보세요!😉
-                </S.Detail3>
-
-                <S.Title3>
-                    마이페이지의 '포트폴리오' 탭에서 다양한 템플릿을
-                    제공해드려요.
-                </S.Title3>
-
-                <S.Container>
-                    <div>
-                        <S.Detail3>
-                            노션? pdf? 어떤 툴을 써야하는지도,
-                        </S.Detail3>
-                        <S.Detail3>
-                            어떤 내용을 채워야하는지도 감이 안오셨다고요?
-                        </S.Detail3>
-                        <S.Detail3>
-                            공작소에서는 공작가 여러분들이 열심히 쌓아주신
-                        </S.Detail3>
-                        <S.Detail3>
-                            포트폴리오를 정리하는 것을 돕기 위해
-                        </S.Detail3>
-                        <S.Detail3>
-                            다양한 형태의 템플릿을 제공해드립니다.
-                        </S.Detail3>
-
-                        <S.Button3
-                            style={{ marginTop: '70px' }}
-                            onClick={() =>
-                                handleButtonEmailClick('/teamPortfolio')
-                            }
-                        >
-                            출시 메일 받으러 가기
-                        </S.Button3>
-                    </div>
-                    <S.PortFolioimg />
-                </S.Container>
-            </S.HomeContent3>
-            {modal1Open && (
-                <Modal1
-                    closeModal1={closeModal1}
-                    setIsLoggedIn={setIsLoggedIn}
-                />
+            {modal2Open && (
+                <Modal2 goPath={'/home'} closeModal2={closeModal2} />
             )}
-            {modal2Open && <Modal2 goPath={path} closeModal2={closeModal2} />}
             {SignUpModalOpen && (
                 <SignUpModal
                     closeSignUpModal={closeSignUpModal}

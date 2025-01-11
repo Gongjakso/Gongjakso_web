@@ -18,9 +18,11 @@ const MyPageTeam = props => {
     const [dates, setDates] = useState();
     const dispatch = useDispatch();
 
+    const { recruitFinishedAt } = props;
+
     const handleApply = date => {
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
+        const month = date.getMonth() + 1;
         const day = date.getDate();
 
         setDates(
@@ -29,27 +31,27 @@ const MyPageTeam = props => {
     };
 
     const ClickFinishBtn = () => {
-        patchFinish(props.id);
+        patchFinish(props?.id.contest_id, props?.id.id);
     };
 
     const ClickExtensionDate = () => {
-        // 아래 부분 2 로 넣은 부분 수정해야함
         props.CloseModal(false);
-        patchExtension(props.id, dates).then(response => {
-            if (response.code === 1000) {
-                alert('모집이 연장 되었습니다!');
-                window.location.reload();
-            } else {
-                alert('모집 연장에 실패 하였습니다.');
-            }
-        });
+        patchExtension(props?.id.contest_id, props?.id.id, dates).then(
+            response => {
+                if (response?.code === 1000) {
+                    alert('모집이 연장 되었습니다!');
+                    window.location.reload();
+                } else {
+                    alert('모집 연장에 실패 하였습니다.');
+                }
+            },
+        );
     };
 
     const ClickCancelBtn = () => {
-        patchCancel(props.id);
+        patchCancel(props.id.contest_id, props.id.id);
     };
 
-    // 스크롤 방지
     useEffect(() => {
         document.body.style.cssText = `
           position: fixed; 
@@ -84,10 +86,11 @@ const MyPageTeam = props => {
 
                         {checkedCase === '2' && (
                             <S.CompletedBox>
-                                <p>희망하는 마감일을 선택해주세요!</p>
                                 <SelectDate
                                     value={handleApply}
                                     onChange={handleApply}
+                                    text={'희망하는 마감일을 선택해주세요!'}
+                                    minDate={new Date(recruitFinishedAt)} // 기존 모집 마감일 이후부터 선택 가능
                                 />
                             </S.CompletedBox>
                         )}
@@ -123,7 +126,6 @@ const MyPageTeam = props => {
                     </S.ApplyBox>
                 </S.Modal>
             </S.Background>
-            {/* <AlertModal /> */}
         </>
     );
 };

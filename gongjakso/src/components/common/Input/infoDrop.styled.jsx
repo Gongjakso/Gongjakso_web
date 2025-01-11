@@ -48,33 +48,33 @@ export const Dropdown1 = styled.div`
 `;
 export const Dropdown2 = styled.div`
     .rnd > button {
-        border: 1.5px solid #a3a3a3;
+        border: 0.09375rem solid #a3a3a3;
         text-align: left;
-        padding: 13px 15px;
-        width: 430px;
-        font-size: ${({ theme }) => theme.fontSize.md};
+        padding: 0.8125rem 0.9375rem;
+        width: 26.875rem;
+        font-size: ${({ theme }) => theme.fontSize.m};
         color: black;
-        border-radius: 7px;
+        border-radius: 0.4375rem;
         font-family: 'PreMedium';
     }
     .rnd__root-menu.rnd__menu {
-        width: 430px !important;
+        width: 26.875rem !important;
         z-index: 1;
         font-family: 'PreRegular';
     }
 
     .rnd .rnd__root-menu.rnd__menu .rnd__option .rnd__option-label {
-        font-size: ${({ theme }) => theme.fontSize.md};
-        padding-left: 5px;
+        font-size: ${({ theme }) => theme.fontSize.m};
+        padding-left: 0.3125rem;
     }
 
     .rnd
         .rnd__root-menu.rnd__menu
         .rnd__option.rnd__option--with-menu
         .rnd__menu.rnd__submenu.rnd__submenu--opened {
-        max-height: 250px;
+        max-height: 15.625rem;
         overflow-y: scroll;
-        width: 210px !important;
+        width: 13.125rem !important;
     }
     .rnd__option--with-menu:hover > .rnd__submenu {
         display: block;
@@ -84,7 +84,7 @@ export const Dropdown2 = styled.div`
         background-color: black;
         color: white;
         transition: background-color 0.1s ease;
-        border-radius: 4px;
+        border-radius: 0.25rem;
     }
 `;
 

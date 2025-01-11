@@ -5,16 +5,17 @@ export const Header = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
-    padding: 15px;
-    padding-left: 80px;
+    padding: 0.938rem;
+    align-items: center;
     position: absolute;
     top: 0;
 `;
 export const HeaderBase = styled.div`
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-around;
     align-items: center;
-    height: 40px;
+    height: 2.5rem;
 `;
 export const ItemList = styled.ul`
     display: flex;
@@ -22,16 +23,17 @@ export const ItemList = styled.ul`
     align-items: center;
 `;
 export const logo = styled.div`
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 30px;
+    margin: 0 1.875rem;
 `;
 
 export const ProfileArea = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: 350px;
+    margin-left: 40%;
     align-items: center;
     width: 0;
     font-weight: 700;

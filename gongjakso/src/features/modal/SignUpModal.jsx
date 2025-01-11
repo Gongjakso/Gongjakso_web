@@ -120,7 +120,7 @@ const SignUpModal = ({ closeSignUpModal, name }) => {
             <S.Container>
                 <S.Title>안녕하세요, 공작소에 오신 것을 환영합니다.</S.Title>
                 <S.Title>
-                    3가지만 입력하면 맞춤형 활동을 시작할 수 있습니다!
+                    4가지만 입력하면 맞춤형 활동을 시작할 수 있습니다!
                 </S.Title>
                 <S.BoxContainer>
                     <S.Box>

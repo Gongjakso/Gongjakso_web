@@ -1,12 +1,13 @@
-import axiosInstance from './axiosInstance';
+import { axiosInstance } from './axiosInstance';
 const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-export const getToken = async (code, REDIRECT_URI) => {
+export const getToken = async (code, REDIRECT_URI, type) => {
     if (!code) {
         return alert('Please log in normally');
     }
+    console.log(code, REDIRECT_URI, type);
     const response = await fetch(
-        `${BaseUrl}auth/sign-in?code=${code}&redirect-uri=${REDIRECT_URI}`,
+        `${BaseUrl}auth/sign-in?code=${code}&redirect-uri=${REDIRECT_URI}&type=${type}`,
         {
             method: 'POST',
             headers: {
@@ -30,7 +31,6 @@ export const logout = async accessToken => {
             },
         });
         localStorage.removeItem('accessToken');
-        console.log(localStorage.getItem(accessToken));
     } catch (error) {
         console.error('Error logging out:', error);
     }
@@ -55,6 +55,11 @@ export const getMyInfo = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        return error.response;
+        if (error.response.data.code === 3004) {
+            localStorage.removeItem('accessToken');
+        } else {
+            console.log(error.response.data.code);
+        }
+        return error.response.data.code;
     }
 };
