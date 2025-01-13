@@ -64,6 +64,13 @@ export const DetailBox2 = styled.div`
 export const SubTitle = styled.p`
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-family: 'PreBold';
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
+    }
 `;
 
 // RoundForm 감싸는 틀
@@ -92,6 +99,13 @@ export const RoundForm = styled.button`
     margin-top: 20px;
     background-color: ${props => (props.$isselected ? 'black' : 'white')};
     color: ${props => (props.$isselected ? 'white' : props.theme.subFont)};
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        min-width: 10rem;
+        font-size: 1.5rem;
+        padding: 1rem;
+        border-radius: 2rem;
+    }
 `;
 
 export const PortForm = styled(RoundForm)`
@@ -120,6 +134,10 @@ export const WarningTitle = styled.p`
     color: red;
     font-weight: bold;
     margin-left: 20px;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 1.5rem;
+    }
 `;
 
 export const InputArea = styled.textarea`
@@ -142,6 +160,13 @@ export const InputArea = styled.textarea`
     &::placeholder {
         color: ${({ theme }) => theme.greyFont};
     }
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.9rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.7rem;
+    }
 `;
 
 // 글자 수 체크
@@ -152,6 +177,10 @@ export const InputNum = styled.p`
     letter-spacing: 1px;
     margin-top: 10px;
     text-align: right;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 1.3rem;
+    }
 `;
 
 // 지원하기 버튼 감싸는 틀

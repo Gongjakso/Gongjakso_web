@@ -10,6 +10,28 @@ export const Globalstyle = styled.div`
         transform: scale(0.9);
         transform-origin: top center;
     }
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        transform: scale(0.35);
+        transform-origin: top center;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        transform: scale(0.5);
+        transform-origin: top center;
+    }
+`;
+
+export const Globalstyle2 = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    @media (max-width: 90.714rem) {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
 `;
 
 // 전체 감싸는 틀
@@ -34,6 +56,13 @@ export const BgButton = styled.div`
     img {
         width: 1.8rem;
         cursor: pointer;
+
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 2.7rem;
+        }
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 2.5rem;
+        }
     }
 `;
 
@@ -43,6 +72,10 @@ export const TitleBox = styled.div`
     align-items: center;
     width: 57.143rem;
     padding: 0 2.857rem;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: 100%;
+    }
 `;
 
 export const TitleBox2 = styled(TitleBox)`
@@ -78,6 +111,13 @@ export const Title = styled.div`
 
     margin-left: 4.5rem;
     margin-bottom: 3.2rem;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 3.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 3rem;
+    }
 `;
 
 // 타이틀 옆 합류 대기 박스
@@ -114,6 +154,13 @@ export const ApplyBtn = styled.button`
 export const TitleBottom = styled.div`
     font-size: ${({ theme }) => theme.fontSize.mdd};
     margin-left: 2.3rem;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.5rem;
+    }
 `;
 
 export const BlueBox = styled.div`
@@ -122,6 +169,10 @@ export const BlueBox = styled.div`
     margin-top: 1.071rem;
     margin-bottom: 3.929rem;
     padding: 3rem;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        margin-bottom: 0rem;
+    }
 `;
 
 // 박스 안 텍스트 박스 전체 틀
@@ -136,6 +187,15 @@ export const TextTitle = styled.p`
     width: 13.571rem;
     font-size: 1.6rem;
     font-family: 'PreBold';
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2.5rem;
+        width: 20rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
+        width: 17rem;
+    }
 `;
 
 // 텍스트 박스 안 세부 내용
@@ -145,6 +205,15 @@ export const TextDetail = styled.div`
     font-family: 'PreMedium';
     font-size: 1.45rem;
     display: flex;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2rem;
+        gap: 1rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.8rem;
+        gap: 0.5rem;
+    }
 `;
 
 export const Meeting = styled(TextDetail)`
@@ -160,23 +229,43 @@ export const OpenKakao = styled(TextDetail)`
     img {
         width: ${props => props.$w};
         cursor: pointer;
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            width: ${props => props.$Mww};
+        }
     }
 `;
 
 // 검은색 둥근 틀
-export const RoundForm = styled(Globalstyle)`
+export const RoundForm = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     min-width: 10rem;
     max-width: 8rem;
     padding: 0.857rem 0.429rem;
     background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 1.786rem;
     font-size: 1.13rem;
     color: white;
     text-align: center;
     margin: 0.571rem 0.571rem 0.571rem 0rem;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.7rem;
+        min-width: 10rem;
+        margin: 0rem;
+        padding: 1rem 1rem;
+        border-radius: 5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.5rem;
+        min-width: 10rem;
+        margin: 0rem;
+        padding: 0.8rem 1rem;
+        border-radius: 4rem;
+    }
 `;
 
 export const Line = styled.div`
@@ -193,6 +282,13 @@ export const MainText = styled.p`
     padding-bottom: 10rem;
     word-wrap: break-word;
     white-space: pre-wrap;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.8rem;
+    }
 `;
 
 // 스크랩하기 & 지원하기 버튼
@@ -217,6 +313,23 @@ export const ScrapButton = styled.button`
     img {
         margin-right: 1.286rem;
         margin-left: -1.429rem;
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            width: 3rem;
+        }
+    }
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2.7rem;
+        width: 50rem;
+        padding: 4rem;
+        border-radius: 2rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2.3rem;
+        width: 35rem;
+        padding: 3.3rem;
+        border-radius: 2rem;
     }
 `;
 
@@ -241,6 +354,10 @@ export const ApplicationBg = styled.div`
 export const ApplicationTitle = styled.div`
     font-family: 'PreBold';
     font-size: ${({ theme }) => theme.fontSize.xl};
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 3rem;
+    }
 `;
 
 export const ApplicationBtn = styled.button`
@@ -257,6 +374,19 @@ export const ApplicationBtn = styled.button`
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2.5rem;
+        width: ${props => props.$Mw};
+        padding: 3.5rem;
+        border-radius: 2rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
+        width: ${props => props.$Mww};
+        padding: 3rem;
+        border-radius: 1.5rem;
+    }
 `;
 
 export const TitleFormBox = styled.div`
@@ -266,5 +396,9 @@ export const TitleFormBox = styled.div`
         margin-top: -0.3rem;
         width: 15rem;
         cursor: pointer;
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            width: 20rem;
+        }
     }
 `;
