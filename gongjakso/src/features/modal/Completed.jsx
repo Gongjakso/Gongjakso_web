@@ -41,9 +41,15 @@ const Completed = props => {
                     <S.Modal
                         $w="700px"
                         $h="400px"
+                        $Mw="25rem"
+                        $Mh="20rem"
+                        $Mww="35rem"
+                        $Mhh="20rem"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>
+                            '{props.title}' <br /> 팀 지원하기
+                        </S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
