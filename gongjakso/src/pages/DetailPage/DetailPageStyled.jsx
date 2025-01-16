@@ -89,6 +89,9 @@ export const BtnLayout = styled.div`
     position: absolute;
     top: 7.5rem;
     right: 3.571rem;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+    }
 `;
 
 // 타이틀
@@ -130,6 +133,13 @@ export const Status = styled.div`
     font-size: ${({ theme }) => theme.fontSize.base};
     color: white;
     font-family: 'PreBold';
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: 10rem;
+        padding: 1.5rem;
+        font-size: 1.5rem;
+        border-radius: 2rem;
+    }
 `;
 
 export const ApplyBtn = styled.button`
@@ -142,11 +152,23 @@ export const ApplyBtn = styled.button`
     margin-left: 1.429rem;
     border-radius: 0.7143rem;
     font-family: 'PreBold';
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 1.5rem;
+        width: 10rem;
+        border-radius: 1rem;
+    }
+
     img {
         position: absolute;
         top: 0.7143rem;
         right: 0.3571rem;
         width: 1rem;
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            width: 1.5rem;
+            top: 1.5rem;
+        }
     }
 `;
 

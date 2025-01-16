@@ -41,7 +41,7 @@ export const Modal = styled.div`
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: ${props => props.$Mww};
         height: ${props => props.$Mhh};
-        padding: 2rem;
+        padding: 2.5rem;
         border-radius: 2rem;
     }
 `;
@@ -49,6 +49,19 @@ export const Modal = styled.div`
 export const Backbtn = styled.button`
     position: absolute;
     right: 6%;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        right: 3%;
+    }
+
+    img {
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 1rem;
+        }
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 1.2rem;
+        }
+    }
 `;
 
 export const Decisionbtn = styled.div`
@@ -243,8 +256,6 @@ export const newBtn = styled.button`
     }
 `;
 export const ApplyBtn = styled.button`
-    position: absolute;
-    bottom: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -256,6 +267,18 @@ export const ApplyBtn = styled.button`
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 13rem;
+        font-size: 0.8rem;
+        padding: 0.8rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 15rem;
+        font-size: 1rem;
+        padding: 1rem;
+    }
 `;
 
 // 내가 모집중인 팀 지원서 모달창 버튼 틀
