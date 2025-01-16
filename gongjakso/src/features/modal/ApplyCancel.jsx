@@ -27,7 +27,15 @@ const ApplyCancel = props => {
     return (
         <div>
             <S.Background>
-                <S.Modal $w="600px" $h="400px" $bc={({ theme }) => theme.box1}>
+                <S.Modal
+                    $w="600px"
+                    $h="400px"
+                    $Mw="22rem"
+                    $Mh="20rem"
+                    $Mww="35rem"
+                    $Mhh="22rem"
+                    $bc={({ theme }) => theme.box1}
+                >
                     <S.Backbtn onClick={() => props.CloseModal(false)}>
                         <img src={Close} alt="close-btn" />
                     </S.Backbtn>
