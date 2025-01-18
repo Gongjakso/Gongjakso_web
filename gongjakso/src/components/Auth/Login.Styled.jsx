@@ -86,7 +86,7 @@ export const LoginContent = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 10rem 0;
+    padding: 15rem 0;
     flex-direction: row;
 `;
 export const Image = styled.div`
