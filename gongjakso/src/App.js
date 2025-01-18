@@ -8,9 +8,9 @@ import { HelmetProvider } from 'react-helmet-async';
 function App() {
     const isPC = useMediaQuery({ query: '(min-width: 1024px)' });
     const isTablet = useMediaQuery({
-        query: '(min-width: 426px) and (max-width: 1023px)',
+        query: '(min-width: 550px) and (max-width: 1023px)',
     });
-    const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+    const isMobile = useMediaQuery({ query: '(max-width: 549px)' });
 
     const getTheme = () => {
         if (isPC) return theme.pc;

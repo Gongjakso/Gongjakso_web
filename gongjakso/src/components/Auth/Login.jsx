@@ -27,15 +27,17 @@ const Login = () => {
 
     return (
         <S.LoginContent>
-            <S.LoginInfo>
-                3초만에 로그인하고 <br /> 공모전을 시작해보세요!
-                <S.LoginBtn>
-                    <S.KakaoButton onClick={handleKakaoLogin} />
-                    <S.NaverButton onClick={handleNaverLogin} />
-                    <S.GoogleButton onClick={handleGoogleLogin} />
-                </S.LoginBtn>
-            </S.LoginInfo>
-            <S.Image />
+            <S.Box>
+                <S.LoginInfo>
+                    3초만에 로그인하고 <br /> 공모전 팀 모집을 시작해보세요!
+                    <S.LoginBtn>
+                        <S.KakaoButton onClick={handleKakaoLogin} />
+                        <S.NaverButton onClick={handleNaverLogin} />
+                        <S.GoogleButton onClick={handleGoogleLogin} />
+                    </S.LoginBtn>
+                </S.LoginInfo>
+                <S.Image />
+            </S.Box>
         </S.LoginContent>
     );
 };

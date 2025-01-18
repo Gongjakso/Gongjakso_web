@@ -406,12 +406,14 @@ export const SkyBlueBubble = styled.div`
         left: 8.3rem;
         padding-top: 0.5rem;
         font-size: 0.75rem;
+        transform: scale(1);
         line-height: 1.125rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 16rem;
         height: 6rem;
         top: 5rem;
+        transform: scale(1);
         left: 19rem;
         padding-top: 0.5rem;
         font-size: 1.1rem;
@@ -440,6 +442,7 @@ export const SkyBlueBubble1 = styled(SkyBlueBubble)`
         padding-right: 0;
         background-position: center;
         font-size: 0.75rem;
+        transform: scale(1);
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 30rem;
@@ -450,6 +453,7 @@ export const SkyBlueBubble1 = styled(SkyBlueBubble)`
         padding-right: 0;
         background-position: center;
         font-size: 1.1rem;
+        transform: scale(1);
     }
 `;
 
@@ -473,6 +477,7 @@ export const SkyBlueBubble2 = styled(SkyBlueBubble)`
         font-size: 0.75rem;
         background-position: center;
         padding: 0;
+        transform: scale(1);
         padding-top: 0.938rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
@@ -480,6 +485,7 @@ export const SkyBlueBubble2 = styled(SkyBlueBubble)`
         height: 9rem;
         top: 10.5rem;
         left: 10rem;
+        transform: scale(1);
         background-position: center;
         padding: 0;
         padding-top: 0.938rem;
