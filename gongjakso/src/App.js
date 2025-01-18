@@ -15,8 +15,8 @@ function App() {
             <ThemeProvider theme={theme}>
                 <GlobalStyle />
                 <HelmetProvider>
-                    {/* <Router /> */}
-                    {isMobile ? <NoMobilePage /> : <Router />}
+                    <Router />
+                    {/* {isMobile ? <NoMobilePage /> : <Router />} */}
                 </HelmetProvider>
             </ThemeProvider>
         </div>
