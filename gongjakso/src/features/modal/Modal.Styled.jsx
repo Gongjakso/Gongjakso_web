@@ -29,6 +29,16 @@ export const Container = styled.div`
     border-radius: 20px;
     flex-direction: column;
     padding: 50px 0;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 90%;
+        gap: 0.75rem;
+        padding: 25px 0;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 60%;
+        gap: 0.75rem;
+        padding: 25px 0;
+    }
 `;
 
 export const ModalBg = styled.div`
@@ -44,14 +54,22 @@ export const ModalBg = styled.div`
 `;
 
 export const Image = styled.div`
-    height: auto;
-    padding: 130px;
+    height: 20rem;
+    width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background: url(${loginmodalimg});
     background-size: contain;
     background-repeat: no-repeat;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        height: 11rem;
+        width: 11rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        height: 15rem;
+        width: 15rem;
+    }
 `;
 
 export const Title = styled.div`
@@ -60,15 +78,33 @@ export const Title = styled.div`
     padding: 3px;
     font-size: ${({ theme }) => theme.fontSize.lg};
     text-align: center;
+    align-items: center;
+    justify-content: center;
     display: flex;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.125rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const ButtonBox = styled.div`
     display: flex;
     flex-direction: row;
-    width: 70%;
+    width: 75%;
     justify-content: center;
     align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 90%;
+        height: 2.625rem;
+        gap: 0.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 80%;
+        height: 3.5rem;
+        gap: 0.5rem;
+    }
 `;
 
 export const GreyButton = styled.button`
@@ -82,6 +118,20 @@ export const GreyButton = styled.button`
     text-align: center;
     padding: 18px;
     margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 48%;
+        font-size: 1rem;
+        margin: 0;
+        height: 100%;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1rem;
+        margin: 0;
+        height: 100%;
+    }
 `;
 
 export const BlueButton = styled.button`
@@ -94,7 +144,21 @@ export const BlueButton = styled.button`
     height: 90%;
     text-align: center;
     padding: 18px;
+    display: flex;
     margin: 10px;
+    align-items: center;
+    justify-content: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 48%;
+        margin: 0;
+        height: 100%;
+        font-size: 1rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1rem;
+        margin: 0;
+        height: 100%;
+    }
 `;
 
 export const BoxContainer = styled.div`

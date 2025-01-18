@@ -230,6 +230,9 @@ export const Section = styled.div`
     width: 100%;
     padding: 0;
     position: relative;
+    @media (max-width: 1270px) {
+        height: 70rem;
+    }
     @media screen and (min-width: 375px) and (max-width: 549px) {
         height: 27.875rem;
     }
