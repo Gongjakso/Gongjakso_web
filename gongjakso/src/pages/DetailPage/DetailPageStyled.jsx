@@ -10,16 +10,6 @@ export const Globalstyle = styled.div`
         transform: scale(0.9);
         transform-origin: top center;
     }
-
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        transform: scale(0.35);
-        transform-origin: top center;
-    }
-
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        transform: scale(0.5);
-        transform-origin: top center;
-    }
 `;
 
 export const Globalstyle2 = styled.div`
@@ -37,7 +27,6 @@ export const Globalstyle2 = styled.div`
 // 전체 감싸는 틀
 export const Layout = styled(Globalstyle)`
     flex-direction: column;
-    margin-bottom: 8rem;
 `;
 
 // 틀 세분화
@@ -45,6 +34,10 @@ export const Background = styled.div`
     margin-top: ${props => props.$mgt};
     width: ${props => props.$s};
     position: relative;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: ${props => props.$Ms};
+    }
 `;
 
 // X 버튼
@@ -58,10 +51,10 @@ export const BgButton = styled.div`
         cursor: pointer;
 
         @media screen and (min-width: 375px) and (max-width: 549px) {
-            width: 2.7rem;
+            width: 1.8rem;
         }
         @media screen and (min-width: 550px) and (max-width: 1023px) {
-            width: 2.5rem;
+            width: 2rem;
         }
     }
 `;
@@ -75,6 +68,7 @@ export const TitleBox = styled.div`
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
         width: 100%;
+        padding: 0;
     }
 `;
 
@@ -89,9 +83,6 @@ export const BtnLayout = styled.div`
     position: absolute;
     top: 7.5rem;
     right: 3.571rem;
-
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-    }
 `;
 
 // 타이틀
@@ -116,10 +107,14 @@ export const Title = styled.div`
     margin-bottom: 3.2rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 3.5rem;
+        font-size: 2rem;
+        margin-left: 1rem;
+        margin-bottom: 2rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 3rem;
+        font-size: 2.2rem;
+        margin-left: 1rem;
+        margin-bottom: 2rem;
     }
 `;
 
@@ -178,10 +173,11 @@ export const TitleBottom = styled.div`
     margin-left: 2.3rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.1rem;
+        margin-left: 2rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -194,6 +190,8 @@ export const BlueBox = styled.div`
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
         margin-bottom: 0rem;
+        padding: 1rem;
+        border-radius: 2rem;
     }
 `;
 
@@ -202,6 +200,10 @@ export const TextBox = styled.div`
     align-items: center;
     padding: 1.429rem 0.0714rem 1.429rem 1.429rem;
     display: flex;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        padding: 1rem;
+    }
 `;
 
 // 텍스트 박스 안 굵은 제목
@@ -211,12 +213,12 @@ export const TextTitle = styled.p`
     font-family: 'PreBold';
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
-        width: 20rem;
+        font-size: 1.3rem;
+        width: 35rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2rem;
-        width: 17rem;
+        font-size: 1.6rem;
+        width: 30rem;
     }
 `;
 
@@ -229,11 +231,11 @@ export const TextDetail = styled.div`
     display: flex;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.2rem;
         gap: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         gap: 0.5rem;
     }
 `;
@@ -243,6 +245,10 @@ export const Meeting = styled(TextDetail)`
     img {
         width: 2.143rem;
         margin-right: 0.7143rem;
+
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            margin-right: 0rem;
+        }
     }
 `;
 
@@ -264,8 +270,7 @@ export const RoundForm = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-width: 10rem;
-    max-width: 8rem;
+    width: 8rem;
     padding: 0.857rem 0.429rem;
     background: black;
     border-radius: 1.786rem;
@@ -275,17 +280,16 @@ export const RoundForm = styled.div`
     margin: 0.571rem 0.571rem 0.571rem 0rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.7rem;
-        min-width: 10rem;
-        margin: 0rem;
-        padding: 1rem 1rem;
-        border-radius: 5rem;
+        font-size: 1rem;
+        width: 5rem;
+        margin: 0;
+        margin-right: -0.5rem;
+        border-radius: 1.3rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.5rem;
-        min-width: 10rem;
+        font-size: 1.2rem;
+        width: 7rem;
         margin: 0rem;
-        padding: 0.8rem 1rem;
         border-radius: 4rem;
     }
 `;
@@ -306,10 +310,10 @@ export const MainText = styled.p`
     white-space: pre-wrap;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.2rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -337,21 +341,22 @@ export const ScrapButton = styled.button`
         margin-left: -1.429rem;
 
         @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 3rem;
+            width: 2rem;
+            margin-left: 0;
         }
     }
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.7rem;
-        width: 50rem;
-        padding: 4rem;
-        border-radius: 2rem;
+        font-size: 1.3rem;
+        margin: 0.5rem;
+        margin-bottom: 5rem;
+        padding: 1rem;
+        border-radius: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2.3rem;
-        width: 35rem;
-        padding: 3.3rem;
-        border-radius: 2rem;
+        font-size: 1.7rem;
+        padding: 2.5rem;
+        border-radius: 1.2rem;
     }
 `;
 
