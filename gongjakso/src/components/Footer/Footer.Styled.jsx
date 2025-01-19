@@ -21,7 +21,7 @@ export const Footer = styled.div`
     }
 
     @media screen and (max-width: 629px) {
-        padding: 2rem 1rem;
+        padding: 1.5rem 2rem;
     }
 `;
 
@@ -36,16 +36,14 @@ export const FooterContainer = styled.ul`
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 0 1rem;
+        gap: 0.5rem;
     }
 
     @media screen and (max-width: 629px) {
         flex-direction: row;
         align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
+        justify-content: space-between;
         gap: 0.5rem;
-        padding: 0.5rem;
     }
 `;
 
@@ -66,12 +64,12 @@ export const FooterInfoBox = styled.div`
     flex-direction: column;
     margin: auto;
 
-    @media screen and (min-width: 630px) and (max-width: 1023px) {
+    @media screen and (min-width: 677px) and (max-width: 1023px) {
         margin: 0 1rem;
         width: 100%;
     }
 
-    @media screen and (max-width: 629px) {
+    @media screen and (max-width: 676px) {
         display: none;
     }
 `;
@@ -98,12 +96,12 @@ export const FooterButtonBox = styled.div`
     align-items: center;
     justify-content: center;
 
-    @media screen and (min-width: 630px) and (max-width: 1023px) {
+    @media screen and (min-width: 677px) and (max-width: 1023px) {
         flex-wrap: nowrap;
         justify-content: flex-end;
     }
 
-    @media screen and (max-width: 629px) {
+    @media screen and (max-width: 676px) {
         width: auto;
         margin: 0;
         gap: 1.5rem;
@@ -113,17 +111,18 @@ export const FooterButtonBox = styled.div`
 export const FooterButton = styled.button`
     font-size: 0.938rem;
     font-weight: bold;
+    width: max-content;
     display: flex;
     cursor: pointer;
     border: none;
     margin: 0.625rem;
 
-    @media screen and (min-width: 630px) and (max-width: 1023px) {
+    @media screen and (min-width: 677px) and (max-width: 1023px) {
         font-size: 0.875rem;
         margin: 0 0.4rem;
     }
 
-    @media screen and (max-width: 629px) {
+    @media screen and (max-width: 676px) {
         font-size: 0.75rem;
         margin: 0 0.3rem;
 
@@ -138,11 +137,11 @@ export const FooterLogo = styled.img`
     width: 170px;
     height: auto;
 
-    @media screen and (min-width: 630px) and (max-width: 1023px) {
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 150px;
     }
 
-    @media screen and (max-width: 629px) {
+    @media screen and (max-width: 549px) {
         width: 100px;
     }
 `;
