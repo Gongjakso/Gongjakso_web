@@ -16,20 +16,20 @@ const fontSize = {
     xxlg: '2.8rem',
 };
 const mobileFontSize = {
-    xs: `${(0.5 * 0.509).toFixed(3)}rem`, // 0.255rem
-    sm: `${(0.75 * 0.509).toFixed(3)}rem`, // 0.382rem
-    base: `${(1 * 0.509).toFixed(3)}rem`, // 0.509rem
-    md: `${(1.25 * 0.509).toFixed(3)}rem`, // 0.636rem
-    lg: `${(1.5 * 0.509).toFixed(3)}rem`, // 0.764rem
+    xs: `${(0.5 * 0.6).toFixed(3)}rem`, // 0.255rem
+    sm: `${(0.75 * 0.6).toFixed(3)}rem`, // 0.382rem
+    base: `${(1 * 0.6).toFixed(3)}rem`, // 0.509rem
+    md: `${(1.25 * 0.6).toFixed(3)}rem`, // 0.636rem
+    lg: `${(1.5 * 0.6).toFixed(3)}rem`, // 0.764rem
 
     // 추가한 사이즈
-    m: `${(1.125 * 0.509).toFixed(3)}rem`, // 0.573rem
-    mdd: `${(1.35 * 0.509).toFixed(3)}rem`, // 0.687rem
-    l: `${(1.75 * 0.509).toFixed(3)}rem`, // 0.891rem
-    ll: `${(2 * 0.509).toFixed(3)}rem`, // 1.018rem
-    xl: `${(2.25 * 0.509).toFixed(3)}rem`, // 1.145rem
-    xlg: `${(2.5 * 0.509).toFixed(3)}rem`, // 1.273rem
-    xxlg: `${(2.8 * 0.509).toFixed(3)}rem`, // 1.425rem
+    m: `${(1.125 * 0.6).toFixed(3)}rem`, // 0.573rem
+    mdd: `${(1.35 * 0.6).toFixed(3)}rem`, // 0.687rem
+    l: `${(1.75 * 0.6).toFixed(3)}rem`, // 0.891rem
+    ll: `${(2 * 0.6).toFixed(3)}rem`, // 1.018rem
+    xl: `${(2.25 * 0.6).toFixed(3)}rem`, // 1.145rem
+    xlg: `${(2.5 * 0.6).toFixed(3)}rem`, // 1.273rem
+    xxlg: `${(2.8 * 0.6).toFixed(3)}rem`, // 1.425rem
 };
 const tabletFontSize = {
     xs: `${((0.5 + 0.255) / 2).toFixed(3)}rem`, // 0.377rem
