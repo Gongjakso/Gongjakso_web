@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import * as S from './Buttons.styled';
 import useCustomNavigate from '../../hooks/useNavigate';
 import myPageImage from '../../assets/images/My_page.svg';
@@ -6,11 +7,14 @@ import Modal1 from '../../features/modal/LoginModal1';
 import Modal2 from '../../features/modal/LoginModal2';
 import Bubble from './Bubble';
 import { logout } from '../../service/auth_service';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
     const authenticated = localStorage.getItem('accessToken');
     const handleNavigate = useCustomNavigate();
+    const navigate = useNavigate();
+
+    const isMobileOrTablet = useMediaQuery({ maxWidth: 1023 }); // 모바일/태블릿 환경 감지
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
     const [modal1Open, setModal1Open] = useState(false);
     const [modal2Open, setModal2Open] = useState(false);
@@ -18,7 +22,7 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
     const [path, setPath] = useState();
 
     const location = useLocation();
-
+    const goToPage = useCustomNavigate();
     const currentPage = location.pathname.substring(1).includes('/')
         ? location.pathname.split('/')[1]
         : location.pathname.substring(1);
@@ -27,9 +31,6 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
         const iconNames = {
             contestList: '공모전 리스트',
             contest: '공모전 공고',
-            // project: '프로젝트 공고',
-            // teambuild: '팀빌딩',
-            // calendar: '캘린더',
             profile: 'MY',
             login: isLoggedIn ? '로그아웃' : '로그인',
         };
@@ -46,10 +47,18 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             if (type === 'profile') {
-                setBubbleOpen(true);
-            } else handleNavigate(`/${type}`);
+                if (isMobileOrTablet) {
+                    // 모바일/태블릿 환경에서는 페이지로 이동
+                    goToPage('/bubble');
+                } else {
+                    // 데스크톱 환경에서는 모달 열기
+                    setBubbleOpen(true);
+                }
+            } else {
+                handleNavigate(`/${type}`);
+            }
         } else {
-            setModal1Open(true);
+            setModal1Open(true); // 로그인 모달 열기
         }
     };
 
@@ -60,6 +69,7 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
             setModal2Open(true);
         }
     };
+
     const handleLogout = async () => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
@@ -74,6 +84,7 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
     const closeModal1 = () => {
         setModal1Open(false);
     };
+
     const closeModal2 = () => {
         setModal2Open(false);
     };
@@ -129,7 +140,9 @@ const GenericIconButton = ({ type, hover, setHover, active, setActive }) => {
                     )}
                 </S.IconNameSpan>
             </S.IconButton>
-            {bubbleOpen && <Bubble closeBubble={closeBubble} />}
+            {bubbleOpen && !isMobileOrTablet && (
+                <Bubble closeBubble={closeBubble} />
+            )}
             {modal1Open && <Modal1 closeModal1={closeModal1} />}
             {modal2Open && <Modal2 goPath={path} closeModal2={closeModal2} />}
         </>
@@ -142,15 +155,6 @@ export const ContestBtn = props => (
 export const ContestListBtn = props => (
     <GenericIconButton type="contestList" {...props} />
 );
-// export const ProjectBtn = props => (
-//     <GenericIconButton type="project" {...props} />
-// );
-// export const TeambuildBtn = props => (
-//     <GenericIconButton type="teambuild" {...props} />
-// );
-// export const CalendarBtn = props => (
-//     <GenericIconButton type="calendar" {...props} />
-// );
 export const ProfileBtn = props => (
     <GenericIconButton type="profile" {...props} />
 );
