@@ -21,6 +21,10 @@ export const BoxContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    @media screen and (max-width: 549px) {
+        width: 100%;
+    }
 `;
 
 export const BubbleContainer = styled.div`
@@ -49,6 +53,17 @@ export const BubbleContainer = styled.div`
         top: -0.75rem;
         right: 17%;
         transform: rotate(45deg);
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 24rem;
+        right: -3rem;
+    }
+
+    @media screen and (max-width: 549px) {
+        width: 20rem;
+        right: -1rem;
+        top: 2.8rem;
     }
 `;
 
