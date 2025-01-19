@@ -15,6 +15,9 @@ export const Background2 = styled(Background)`
 `;
 
 export const Modal = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border: 2px solid ${props => props.$bc};
     position: relative;
     top: 50%;
@@ -27,12 +30,38 @@ export const Modal = styled.div`
     padding: 50px 100px;
     /* width: 60%; //추가 해봤어요
     height: 90%; //추가 해봤어요 */
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: ${props => props.$Mw};
+        height: ${props => props.$Mh};
+        padding: 2rem;
+        border-radius: 2rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: ${props => props.$Mww};
+        height: ${props => props.$Mhh};
+        padding: 2.5rem;
+        border-radius: 2rem;
+    }
 `;
 
 export const Backbtn = styled.button`
     position: absolute;
-
     right: 6%;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        right: 3%;
+    }
+
+    img {
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 1rem;
+        }
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 1.2rem;
+        }
+    }
 `;
 
 export const Decisionbtn = styled.div`
@@ -48,7 +77,10 @@ export const MainTitle = styled.div`
     font-size: 1.5rem;
     font-family: 'PreBold';
     letter-spacing: 0.5px;
-    margin-bottom: 1rem;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.2rem;
+    }
 `;
 
 // 텍스트 전체 틀
@@ -64,6 +96,13 @@ export const DetailBox2 = styled.div`
 export const SubTitle = styled.p`
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-family: 'PreBold';
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 2.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
+    }
 `;
 
 // RoundForm 감싸는 틀
@@ -92,6 +131,13 @@ export const RoundForm = styled.button`
     margin-top: 20px;
     background-color: ${props => (props.$isselected ? 'black' : 'white')};
     color: ${props => (props.$isselected ? 'white' : props.theme.subFont)};
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        min-width: 10rem;
+        font-size: 1.5rem;
+        padding: 1rem;
+        border-radius: 2rem;
+    }
 `;
 
 export const PortForm = styled(RoundForm)`
@@ -120,6 +166,10 @@ export const WarningTitle = styled.p`
     color: red;
     font-weight: bold;
     margin-left: 20px;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 1.5rem;
+    }
 `;
 
 export const InputArea = styled.textarea`
@@ -142,6 +192,13 @@ export const InputArea = styled.textarea`
     &::placeholder {
         color: ${({ theme }) => theme.greyFont};
     }
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.9rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.7rem;
+    }
 `;
 
 // 글자 수 체크
@@ -152,6 +209,10 @@ export const InputNum = styled.p`
     letter-spacing: 1px;
     margin-top: 10px;
     text-align: right;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        font-size: 1.3rem;
+    }
 `;
 
 // 지원하기 버튼 감싸는 틀
@@ -179,10 +240,22 @@ export const newBtn = styled.button`
     background: ${props => props.$bg};
     font-family: 'PreBold';
     color: ${props => props.$c};
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 10rem;
+        font-size: 0.9rem;
+        padding: 0.8rem;
+        border-radius: 0.7rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 15rem;
+        font-size: 1rem;
+        padding: 1rem;
+        border-radius: 0.8rem;
+    }
+    }
 `;
 export const ApplyBtn = styled.button`
-    position: absolute;
-    bottom: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,6 +267,18 @@ export const ApplyBtn = styled.button`
     background: ${({ theme }) => theme.box1};
     font-family: 'PreBold';
     color: white;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 13rem;
+        font-size: 0.8rem;
+        padding: 0.8rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 15rem;
+        font-size: 1rem;
+        padding: 1rem;
+    }
 `;
 
 // 내가 모집중인 팀 지원서 모달창 버튼 틀
@@ -233,8 +318,6 @@ export const Content = styled.div`
 // 지원 완료 창 텍스트 틀
 export const CompletedBox = styled.div`
     width: 100%;
-    height: 55%;
-    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -243,6 +326,14 @@ export const CompletedBox = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
     font-family: 'PreMedium';
     gap: 8px;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.9rem;
+        height: 35%;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.1rem;
+    }
 `;
 export const NameP = styled.p`
     margin: 5px;

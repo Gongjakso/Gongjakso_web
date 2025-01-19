@@ -398,7 +398,7 @@ const DetailPageContest = () => {
                         </S.TextBox>
                         <S.TextBox>
                             <S.TextTitle>공모전 홈페이지</S.TextTitle>
-                            <S.OpenKakao $w="13rem">
+                            <S.OpenKakao $w="13rem" $Mw="16rem" $Mww="15rem">
                                 <img
                                     src={postLink}
                                     alt="homepage-link"
@@ -411,7 +411,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             {/* kakao : True, google : False */}
                             <S.TextTitle>기타 문의</S.TextTitle>
-                            <S.OpenKakao $w="10rem">
+                            <S.OpenKakao $w="10rem" $Mw="13rem" $Mww="11.5rem">
                                 {postData?.channel_method ? (
                                     <img
                                         src={OpenKakao}
@@ -444,7 +444,7 @@ const DetailPageContest = () => {
                         {checkStatus === 'LEADER' ? (
                             <div></div>
                         ) : (
-                            <S.Globalstyle>
+                            <S.Globalstyle2>
                                 <S.ScrapButton
                                     $bc={({ theme }) => theme.Green}
                                     $click={scrapStatus?.toString()}
@@ -476,7 +476,7 @@ const DetailPageContest = () => {
                                         지원서 작성하기
                                     </S.ApplyButton>
                                 )}
-                            </S.Globalstyle>
+                            </S.Globalstyle2>
                         )}
 
                         {apply ? (
@@ -717,6 +717,8 @@ const DetailPageContest = () => {
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
                                         $w="18rem"
+                                        $Mw="30rem"
+                                        $Mww="25rem"
                                         onClick={WarningApply}
                                     >
                                         제출하기
