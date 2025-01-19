@@ -6,6 +6,7 @@ import fileExceededImg from '../../assets/images/FileExceeded.svg';
 import unchecked from '../../assets/images/unchecked.svg';
 import checked from '../../assets/images/checked.svg';
 import Close from '../../assets/images/Close.svg';
+import trash from '../../assets/images/trash.svg';
 
 export const TopBox = styled.div`
     height: 15.625rem;
@@ -23,6 +24,7 @@ export const TopBox = styled.div`
 export const BoxDetail = styled.div`
     display: flex;
     gap: 0.5rem;
+    position: relative;
     margin-bottom: 1rem;
 `;
 
@@ -93,6 +95,7 @@ export const SubTitle = styled.p`
     margin: 0;
     line-height: 1.79rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.938rem;
         max-width: 20.75rem;
     }
     @media screen and (min-width: 375px) and (max-width: 549px) {
@@ -145,11 +148,11 @@ export const SNSInput = styled.input`
     font-size: ${({ theme }) => theme.fontSize.m};
     border-radius: 0.688rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 17.688rem;
+        width: 17rem;
         font-size: 0.938rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 30rem;
+        width: 31rem;
         font-size: 1.1rem;
     }
 `;
@@ -266,34 +269,72 @@ export const NameInput = styled(SNSInput)`
         width: 35rem;
     }
 `;
+
 export const TestInput = styled(SNSInput)`
     width: 32.188rem;
-`;
-
-export const InputContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    gap: 0.625rem;
-    width: 64rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
         width: 20.75rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 42rem;
+        width: 35rem;
+    }
+`;
+
+export const InputContainer = styled.div`
+    display: flex;
+    justify-content: baseline;
+    gap: 1rem;
+    flex-direction: row;
+    width: 64rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+        flex-direction: column;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+        flex-direction: column;
     }
 `;
 
 export const ScoreInput = styled(SNSInput)`
     width: 17.125rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 9.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+    }
 `;
 
 export const ActivityInput = styled(SNSInput)`
     width: 50.625rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+    }
 `;
 
 export const EducationInput = styled(SNSInput)`
-    width: 33rem;
+    width: 35rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 100%;
+    }
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 100%;
+    }
+`;
+
+export const FilterRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    position: relative;
+    @media (max-width: 1023px) {
+        justify-content: space-between;
+        width: 100%;
+    }
 `;
 
 export const Filter1 = styled.div`
@@ -307,13 +348,53 @@ export const Filter1 = styled.div`
     display: flex;
     padding: 0.7rem 1.35rem;
     align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        height: 3.5rem;
+        font-size: 0.938rem;
+        width: 10rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 18rem;
+    }
+`;
+
+export const Filter2 = styled.div`
+    width: 13.6rem;
+    height: 3.438rem;
+    font-family: 'PreRegular';
+    border-radius: 0.688rem;
+    color: #828293;
+    font-size: ${({ theme }) => theme.fontSize.m};
+    border: 0.094rem solid ${({ theme }) => theme.Grey};
+    display: flex;
+    padding: 0.7rem 1.35rem;
+    align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 100%;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 100%;
+    }
 `;
 
 export const CompanyInput = styled(SNSInput)`
     width: 37rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+    }
 `;
+
 export const PositionInput = styled(SNSInput)`
     width: 27rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+    }
 `;
 
 export const Textarea = styled.textarea`
@@ -331,6 +412,14 @@ export const Textarea = styled.textarea`
     &:focus {
         outline: none;
         box-shadow: none;
+    }
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+        font-size: 0.938rem;
+        height: 7.375rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
     }
 `;
 
@@ -419,6 +508,35 @@ export const DeleteBtn = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
 `;
+
+export const TrashDeleteBtn = styled.div`
+    background: url(${trash});
+    width: 2.625rem;
+    height: 2.625rem;
+    right: -4rem;
+    position: absolute;
+    margin-top: 0.25rem;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        position: absolute;
+        left: 18rem;
+        top: 0;
+        margin-top: 0.8rem;
+        width: 1.875rem;
+        height: 1.875rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        position: absolute;
+        left: 32rem;
+        top: 0;
+        margin-top: 0.8rem;
+        width: 1.875rem;
+        height: 1.875rem;
+    }
+`;
+
 export const FileInfoBox = styled.div`
     display: flex;
     gap: 0.3rem;
@@ -429,6 +547,12 @@ export const BtnWrapper = styled.div`
     width: 64rem;
     flex-direction: column;
     gap: 0.5rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 20.75rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 35rem;
+    }
 `;
 
 export const BtnBox = styled.div`
@@ -443,10 +567,22 @@ export const CheckContainer = styled.div`
     height: 3.438rem;
     gap: 0.625rem;
     justify-content: space-between;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        justify-content: flex-start;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        justify-content: flex-start;
+    }
 `;
 export const CareerCheck = styled.div`
     font-family: 'PreRegular';
     font-size: ${({ theme }) => theme.fontSize.m};
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.938rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1rem;
+    }
 `;
 
 export const CheckImg = styled.div`
@@ -456,12 +592,20 @@ export const CheckImg = styled.div`
     height: 2.063rem;
     background-size: contain;
     background-repeat: no-repeat;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        transform: scale(0.7);
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 31rem;
+    }
 `;
 
 export const CalendarSection = styled.div`
     display: flex;
     gap: 0.625rem;
+    position: relative;
 `;
+
 export const FileInfo = styled.div`
     display: flex;
     align-items: center;
@@ -491,6 +635,7 @@ export const FileName = styled.div`
     font-family: 'PreMedium';
     color: #979797;
 `;
+
 export const FileSize = styled.div`
     flex: 0.5;
     font-size: 0.75rem;
