@@ -42,10 +42,7 @@ const SelectPortfolio = ({ showModal, closePortfolioModal }) => {
                         첨부된 포트폴리오가 지원서와 함께 다운돼요
                     </S.BtnInfo>
                 </S.BtnContainer>
-                <S.Backbtn
-                    onClick={closePortfolioModal}
-                    src={Close}
-                ></S.Backbtn>
+                <S.Backbtn onClick={closePortfolioModal} src={Close} />
             </S.ModalContent>
         </S.ModalOverlay>
     );

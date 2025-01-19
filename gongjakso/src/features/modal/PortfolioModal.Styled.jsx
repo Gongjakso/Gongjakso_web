@@ -135,6 +135,14 @@ export const DeleteButton = styled.div`
     border-radius: 12px;
     color: white;
     background-color: ${({ theme }) => theme.box1};
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 13.5rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.8rem;
+    }
 `;
 
 export const ModalDesc = styled.span`
@@ -145,4 +153,11 @@ export const ModalDesc = styled.span`
     line-height: 21.48px;
     width: 70%;
     margin: 2.5rem 0;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.75rem;
+        margin: 1rem 0;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.8rem;
+    }
 `;
