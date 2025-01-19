@@ -41,11 +41,7 @@ export const Modal = styled.div`
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: ${props => props.$Mww};
         height: ${props => props.$Mhh};
-<<<<<<< HEAD
         padding: 2.5rem;
-=======
-        padding: 2rem;
->>>>>>> 42e17fb (:recycle: Refactor Apply Modal Mobile size)
         border-radius: 2rem;
     }
 `;
