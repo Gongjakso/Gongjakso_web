@@ -9,6 +9,10 @@ export const TopBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        background-color: transparent;
+    }
 `;
 
 export const Title = styled.p`

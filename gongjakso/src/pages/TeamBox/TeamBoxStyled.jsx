@@ -24,7 +24,7 @@ export const Box = styled.div`
     @media screen and (min-width: 375px) and (max-width: 549px) {
         max-width: 20.75rem;
         height: auto;
-        padding: 1rem;
+        padding: 1.25rem 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         max-width: 35rem;
@@ -46,7 +46,7 @@ export const Title = styled.p`
     text-overflow: ellipsis;
     @media screen and (min-width: 375px) and (max-width: 549px) {
         font-size: 1rem;
-        width: 100%;
+        width: 90%;
         order: 1;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
@@ -95,7 +95,7 @@ export const MainBox = styled.div`
     display: flex;
     justify-content: space-between;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        flex-direction: column;
+        flex-direction: row;
     }
 `;
 
@@ -111,12 +111,7 @@ export const SubBox = styled.div`
     justify-content: space-between;
     gap: 1rem;
     margin-top: 0.5rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 100%;
-        justify-content: flex-start;
-        margin-top: 0.5rem;
-        order: 3;
-    }
+
 `;
 
 //프로필페이지-파트명
@@ -133,13 +128,10 @@ export const BoxBottomDetail = styled.div`
     }
 `;
 
-//프로필 이미지
+//스크랩 이미지
 export const UnScrapImage = styled(UnScrap)`
     width: 1.5625rem;
     margin-right: 0.5rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 1.25rem;
-    }
 `;
 
 //마감 일수 이미지
@@ -147,9 +139,6 @@ export const FireImage = styled(Fire)`
     width: 1.5rem;
     align-items: center;
     margin-right: 0.5rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 1.25rem;
-    }
 `;
 
 export const CloseImage = styled(CloseWhite)`
@@ -318,13 +307,10 @@ export const RoundForm = styled.div`
 export const MoreDetail = styled(ArrowDetail)`
     position: absolute;
     top: 50%;
-    right: 1rem;
+    right: 0.25rem;
     transform: translateY(-50%);
     height: 100%;
     z-index: 3;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        right: 0.5rem;
-    }
 `;
 
 //프로필페이지 -> 모집 마감, 연장, 취소 오버레이

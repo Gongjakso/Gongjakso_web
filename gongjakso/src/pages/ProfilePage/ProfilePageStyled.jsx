@@ -406,7 +406,7 @@ export const SubTitleContainer = styled.div`
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    width: 71.875rem;
+    width: 100%;
     @media screen and (min-width: 375px) and (max-width: 549px) {
         width: 20.75rem;
     }

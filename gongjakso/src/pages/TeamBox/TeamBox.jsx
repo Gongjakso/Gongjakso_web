@@ -20,6 +20,13 @@ const TopRow = styled.div`
     margin-bottom: 0.75rem;
 `;
 
+const CenterRow = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 0.75rem;
+`;
+
 const BottomRow = styled.div`
     display: flex;
     justify-content: space-between;
@@ -143,12 +150,11 @@ const TeamBox = ({
     const isMobileOrTablet = windowWidth < 1024; // 375~1023
     const isDesktop = windowWidth >= 1024; // 1024 이상
 
-    // 모바일 + 태블릿: 상단(TopRow)에 SubBox 또는 ActivityStatus, 하단(BottomRow)에 MainBox + WaitingJoin
+    // 모바일 + 태블릿
     if (isMobileOrTablet) {
         return (
             <S.Container>
                 <S.Box $bordercolor={borderColor}>
-                    {/* 1) 상단(TopRow) : showSubBox가 true면 SubBox, 아니면 ActivityStatus */}
                     <TopRow>
                         {showSubBox ? (
                             <S.SubBox>
@@ -190,19 +196,17 @@ const TeamBox = ({
                             </S.ActivityStatus>
                         )}
                     </TopRow>
+                    <CenterRow>
+                        {/* 2) Title */}
+                        <S.Title>{postContent?.title}</S.Title>
 
-                    {/* 2) Title */}
-                    <S.Title>{postContent?.title}</S.Title>
-
-                    {/* 3) subTitle */}
-                    <S.subTitle>
-                        {`| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
-                    </S.subTitle>
-
-                    {/* 4) 하단(BottomRow) : MainBox + WaitingJoin */}
+                        {/* 3) subTitle */}
+                        <S.subTitle>
+                            {`${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
+                        </S.subTitle>
+                    </CenterRow>
                     <BottomRow>
                         <S.MainBox>
-                            {/* 파트 관련 조건 유지 */}
                             {isMyParticipation ? (
                                 <div></div>
                             ) : isMyParticipation === null ? (
@@ -230,7 +234,6 @@ const TeamBox = ({
                             )}
                         </S.MainBox>
 
-                        {/* WaitingJoin을 우측 끝에 배치 */}
                         {showWaitingJoin && (
                             <S.WaitingJoin $status={postContent?.status}>
                                 {postContent?.status === '합류 완료'
@@ -265,7 +268,7 @@ const TeamBox = ({
         );
     }
 
-    // 데스크탑(1024px 이상): 기존 레이아웃, 기존 조건 로직 그대로 유지
+    // 데스크탑(1024px 이상)
     return (
         <S.Container>
             <S.Box $bordercolor={borderColor}>
