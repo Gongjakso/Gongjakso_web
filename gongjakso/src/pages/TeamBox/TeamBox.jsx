@@ -165,7 +165,7 @@ const TeamBox = ({
                                         : postContent?.status === '모집 마감'
                                           ? '마감'
                                           : postContent?.d_day > 0
-                                            ? `마감 D-${postContent?.d_day}`
+                                            ? `D-${postContent?.d_day}`
                                             : postContent?.d_day === 0
                                               ? '마감 D-day'
                                               : '마감'}
