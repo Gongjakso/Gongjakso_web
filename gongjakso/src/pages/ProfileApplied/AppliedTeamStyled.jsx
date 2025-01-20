@@ -11,6 +11,11 @@ export const TopBox = styled.div`
     align-items: center;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
+        height: 11rem;
+        background-color: transparent;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        height: 14rem;
         background-color: transparent;
     }
 `;
@@ -33,4 +38,10 @@ export const BoxDetail = styled.div`
     height: 25%;
     flex-direction: column;
     margin: 3rem 7rem 3rem 7rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        margin: 0rem 7rem 3rem 7rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        margin: 0rem 7rem 3rem 7rem;
+    }
 `;
