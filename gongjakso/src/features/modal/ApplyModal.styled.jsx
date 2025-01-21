@@ -87,6 +87,10 @@ export const MainTitle = styled.div`
 export const DetailBox = styled.div`
     padding: 1.8rem;
     position: relative;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        padding: 1.2rem;
+    }
 `;
 
 export const DetailBox2 = styled.div`
@@ -98,10 +102,10 @@ export const SubTitle = styled.p`
     font-family: 'PreBold';
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
+        font-size: 1.3rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
 `;
 
@@ -133,10 +137,21 @@ export const RoundForm = styled.button`
     color: ${props => (props.$isselected ? 'white' : props.theme.subFont)};
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
-        min-width: 10rem;
-        font-size: 1.5rem;
-        padding: 1rem;
-        border-radius: 2rem;
+        min-width: 5.2rem;
+        font-size: 1.1rem;
+        padding: 0.6rem;
+        border-radius: 1rem;
+        margin-top: 1rem;
+        margin-right: 0.6rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        min-width: 5.7rem;
+        font-size: 1.2rem;
+        padding: 0.6rem;
+        border-radius: 1.2rem;
+        margin-top: 1rem;
+        margin-right: 0.6rem;
     }
 `;
 
@@ -147,6 +162,16 @@ export const PortForm = styled(RoundForm)`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: 10rem;
+        max-width: 10rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        min-width: 16rem;
+        max-width: 16rem;
+    }
 `;
 
 // textarea 감싸는 틀
@@ -167,8 +192,12 @@ export const WarningTitle = styled.p`
     font-weight: bold;
     margin-left: 20px;
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 1.5rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.2rem;
     }
 `;
 
@@ -194,10 +223,10 @@ export const InputArea = styled.textarea`
     }
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.9rem;
+        font-size: 1.1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.7rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -210,8 +239,12 @@ export const InputNum = styled.p`
     margin-top: 10px;
     text-align: right;
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 1.3rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.9rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.1rem;
     }
 `;
 

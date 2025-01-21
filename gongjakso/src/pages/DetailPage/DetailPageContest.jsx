@@ -717,7 +717,7 @@ const DetailPageContest = () => {
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
                                         $w="18rem"
-                                        $Mw="30rem"
+                                        $Mw="20rem"
                                         $Mww="25rem"
                                         onClick={WarningApply}
                                     >
