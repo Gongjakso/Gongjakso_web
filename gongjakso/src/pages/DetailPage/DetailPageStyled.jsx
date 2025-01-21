@@ -343,6 +343,7 @@ export const ScrapButton = styled.button`
         @media screen and (min-width: 375px) and (max-width: 1023px) {
             width: 2rem;
             margin-left: 0;
+            margin-right: 0.5rem;
         }
     }
 
@@ -382,8 +383,12 @@ export const ApplicationTitle = styled.div`
     font-family: 'PreBold';
     font-size: ${({ theme }) => theme.fontSize.xl};
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 3rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.8rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
     }
 `;
 
@@ -403,16 +408,16 @@ export const ApplicationBtn = styled.button`
     color: white;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
+        font-size: 1.3rem;
         width: ${props => props.$Mw};
-        padding: 3.5rem;
-        border-radius: 2rem;
+        padding: 1.4rem;
+        border-radius: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2rem;
+        font-size: 1.6rem;
         width: ${props => props.$Mww};
-        padding: 3rem;
-        border-radius: 1.5rem;
+        padding: 2.3rem;
+        border-radius: 1rem;
     }
 `;
 
@@ -424,8 +429,13 @@ export const TitleFormBox = styled.div`
         width: 15rem;
         cursor: pointer;
 
-        @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 20rem;
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 12rem;
+            margin-left: 0.6rem;
+        }
+
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 15rem;
         }
     }
 `;
