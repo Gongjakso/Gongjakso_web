@@ -11,6 +11,7 @@ export const Container = styled.div`
 
 export const Box = styled.div`
     position: relative;
+    width: 100%;
     width: 71.875rem;
     height: 10rem;
     background-color: transparent;
@@ -20,15 +21,19 @@ export const Box = styled.div`
     color: ${({ theme }) => theme.mainFont};
     border-radius: 0.9375rem;
     padding: 1.25rem 3.125rem;
-    margin: 0.625rem 0rem;
+    margin: 0.525rem auto;
+
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        max-width: 20.75rem;
+        width: 32.75rem;
         height: auto;
+        margin: 1rem auto 0.3rem auto;
         padding: 1.25rem 1rem;
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        max-width: 35rem;
+        width: 55rem;
         height: auto;
+        margin: 0.525rem auto 0.325rem auto;
         padding: 1rem 2rem;
     }
 `;
@@ -111,7 +116,6 @@ export const SubBox = styled.div`
     justify-content: space-between;
     gap: 1rem;
     margin-top: 0.5rem;
-
 `;
 
 //프로필페이지-파트명

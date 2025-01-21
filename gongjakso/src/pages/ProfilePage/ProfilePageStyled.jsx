@@ -18,6 +18,7 @@ export const TopBox = styled.div`
         height: 12rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
+        background-color: transparent;
         height: 14rem;
     }
 `;
@@ -30,11 +31,9 @@ export const DetailBox = styled.div`
     justify-content: space-between;
     @media screen and (min-width: 375px) and (max-width: 549px) {
         flex-direction: column;
-        align-items: center;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         flex-direction: column;
-        align-items: center;
     }
 `;
 
@@ -50,11 +49,9 @@ export const InfoBox = styled.div`
     margin-left: -28rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
         margin-left: 0;
-        align-items: center;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         margin-left: 0;
-        align-items: center;
     }
 `;
 
@@ -93,21 +90,26 @@ export const MajorTitle = styled.p`
 
 //소제목
 export const SubTitle = styled.p`
-    width: 62.5rem;
+    width: 100%; /* 부모 컨테이너의 너비를 따름 */
+    max-width: 62.5rem; /* 최대 너비 제한 */
     font-size: ${({ theme }) => theme.fontSize.l};
     font-weight: 900;
-    padding-bottom: 1.5625rem;
+    padding-bottom: 1rem;
     display: flex;
     align-items: center;
+
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 0.938rem;
-        width: 100%;
+        font-size: 1.4rem;
+        padding-bottom: 0rem;
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.125rem;
-        width: 100%;
+        font-size: 1.525rem;
+        font-weight: 600;
+        padding-bottom: 0.5rem;
     }
 `;
+
 
 //프로필 이미지
 export const ProfileImage = styled(My_page_big)`
@@ -119,10 +121,19 @@ export const ProfileImage = styled(My_page_big)`
     justify-content: center;
     align-items: center;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 10rem;
+        width: 5rem;
+        margin-left: 0;
+        position: relative; /* Change from absolute to relative */
+        left: auto; /* Reset left positioning */
+        right: auto; /* Reset right positioning */
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 11rem;
+        width: 9.5rem;
+        margin-left: 0;
+        position: relative; /* Change from absolute to relative */
+        left: auto; /* Reset left positioning */
+        right: auto; /* Reset right positioning */
     }
 `;
 
@@ -180,27 +191,33 @@ export const PortfolioBox = styled.button`
 
 export const GlobalBox = styled.div`
     width: 100%;
-    margin: 11.25rem auto 0 auto; // 가운데 정렬
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        margin: 5rem auto 0 auto;
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        margin: 7rem auto 0 auto;
-    }
+    max-width: 1200px; /* 최대 너비 제한 */
+    margin: 11.25rem auto; /* 수평 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 자식 요소를 수평으로 중앙 정렬 */
 `;
+
 
 export const BoxDetail = styled.div`
     width: 100%;
+    max-width: 100%; /* 부모 크기를 넘지 않도록 제한 */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* 수직 방향 중앙 정렬 */
+    align-items: center; /* 수평 방향 중앙 정렬 */
     padding-bottom: 5.625rem;
+
     @media screen and (min-width: 375px) and (max-width: 549px) {
         padding-bottom: 3rem;
+        padding-left: 0;
+        padding-right: 0;
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         padding-bottom: 4rem;
+        padding-left: 0;
+        padding-right: 0;
     }
 `;
 
@@ -392,31 +409,27 @@ export const SubContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 71.875rem;
+    width: 100%;
+    max-width: 71.875rem;
+    margin: 0 auto;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 20.75rem;
+        width: 32.75rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 35rem;
+        width: 55rem;
     }
 `;
 
 export const SubTitleContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    /* justify-content: center; 수평 중앙 정렬 */
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 20.75rem;
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 35rem;
-    }
+    align-items: left; /* 수직 중앙 정렬 */
+    width: 100%; /* 부모 컨테이너 전체 너비 */
+    margin: 0 auto; /* 중앙 정렬 */
 `;
 
-export const Plus = styled.div`
-    width: 1.688rem;
+export const Plus = styled.div`    width: 1.688rem;
     height: 1.688rem;
     background: url(${plus});
     background-repeat: no-repeat;
@@ -476,3 +489,4 @@ export const PortfolioInfo = styled.div`
         width: 35rem;
     }
 `;
+
