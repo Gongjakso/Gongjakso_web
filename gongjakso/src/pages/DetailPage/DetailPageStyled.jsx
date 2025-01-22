@@ -80,19 +80,19 @@ export const TitleBox2 = styled(TitleBox)`
 
 export const BtnLayout = styled.div`
     display: flex;
-    position: absolute;
-    top: 7.5rem;
-    right: 3.571rem;
 `;
 
 // 타이틀
 export const Title = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     font-family: 'TheJamsilRegular';
     font-weight: 600;
     letter-spacing: 0.05rem;
     font-size: ${({ theme }) => theme.fontSize.xl};
+    padding-right: 5%;
 
     p {
         margin-left: 0.5rem;
@@ -100,7 +100,11 @@ export const Title = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: ${({ checkStatus }) =>
-            checkStatus === 'APPLIER' ? '45rem' : '67rem'};
+            checkStatus === 'APPLIER' ? '70%' : '100%'};
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            max-width: 100%;
+        }
     }
 
     margin-left: 4.5rem;
@@ -110,8 +114,16 @@ export const Title = styled.div`
         font-size: 2rem;
         margin-left: 1rem;
         margin-bottom: 2rem;
+        flex-wrap: wrap;
+        align-items: center; /* 수직 정렬 */
+        justify-content: flex-start; /* 수평 정렬 */
+        gap: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
+        flex-wrap: wrap;
+        align-items: center; /* 수직 정렬 */
+        justify-content: flex-start; /* 수평 정렬 */
+        gap: 1rem;
         font-size: 2.2rem;
         margin-left: 1rem;
         margin-bottom: 2rem;
@@ -129,11 +141,18 @@ export const Status = styled.div`
     color: white;
     font-family: 'PreBold';
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 8rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border-radius: 1.5rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 10rem;
-        padding: 1.5rem;
-        font-size: 1.5rem;
-        border-radius: 2rem;
+        padding: 0.8rem;
+        font-size: 1.2rem;
+        border-radius: 1.5rem;
     }
 `;
 
@@ -148,10 +167,18 @@ export const ApplyBtn = styled.button`
     border-radius: 0.7143rem;
     font-family: 'PreBold';
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 1.5rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+        width: 8rem;
+        border-radius: 1.5rem;
+        margin-left: 0.5rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.2rem;
         width: 10rem;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
+        margin-left: 0.7rem;
     }
 
     img {
@@ -160,9 +187,12 @@ export const ApplyBtn = styled.button`
         right: 0.3571rem;
         width: 1rem;
 
-        @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 1.5rem;
-            top: 1.5rem;
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 1.2rem;
+        }
+
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 1.6rem;
         }
     }
 `;

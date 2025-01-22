@@ -30,10 +30,10 @@ const ApplyCancel = props => {
                 <S.Modal
                     $w="600px"
                     $h="400px"
-                    $Mw="22rem"
-                    $Mh="20rem"
-                    $Mww="35rem"
-                    $Mhh="22rem"
+                    $Mw="80%"
+                    $Mh="22rem"
+                    $Mww="80%"
+                    $Mhh="25rem"
                     $bc={({ theme }) => theme.box1}
                 >
                     <S.Backbtn onClick={() => props.CloseModal(false)}>

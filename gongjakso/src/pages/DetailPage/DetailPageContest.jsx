@@ -296,36 +296,40 @@ const DetailPageContest = () => {
                         <div>
                             <S.Title checkStatus={checkStatus}>
                                 <p>{postData?.title}</p>
-                            </S.Title>
-                            <S.BtnLayout>
-                                {applyType === '합류 완료' ? (
-                                    <S.Status $bg={({ theme }) => theme.box1}>
-                                        합류 완료
-                                    </S.Status>
-                                ) : applyType === '미선발' ? (
-                                    <S.Status
-                                        $bg={({ theme }) => theme.LightGrey}
-                                    >
-                                        미선발
-                                    </S.Status>
-                                ) : (
-                                    <S.Status $bg={({ theme }) => theme.Light1}>
-                                        합류 대기중
-                                    </S.Status>
-                                )}
+                                <S.BtnLayout>
+                                    {applyType === '합류 완료' ? (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.box1}
+                                        >
+                                            합류 완료
+                                        </S.Status>
+                                    ) : applyType === '미선발' ? (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.LightGrey}
+                                        >
+                                            미선발
+                                        </S.Status>
+                                    ) : (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.Light1}
+                                        >
+                                            합류 대기중
+                                        </S.Status>
+                                    )}
 
-                                <S.ApplyBtn
-                                    onClick={() => {
-                                        window.open(
-                                            `${window.location.origin}/application/${applyId}`,
-                                            '_blank',
-                                        );
-                                    }}
-                                >
-                                    지원서 보기
-                                    <img src={arrow} />
-                                </S.ApplyBtn>
-                            </S.BtnLayout>
+                                    <S.ApplyBtn
+                                        onClick={() => {
+                                            window.open(
+                                                `${window.location.origin}/application/${applyId}`,
+                                                '_blank',
+                                            );
+                                        }}
+                                    >
+                                        지원서 보기
+                                        <img src={arrow} />
+                                    </S.ApplyBtn>
+                                </S.BtnLayout>
+                            </S.Title>
                         </div>
                     ) : (
                         <S.Title checkStatus={checkStatus}>
