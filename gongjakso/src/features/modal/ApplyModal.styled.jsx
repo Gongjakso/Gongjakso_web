@@ -34,14 +34,14 @@ export const Modal = styled.div`
     @media screen and (min-width: 375px) and (max-width: 549px) {
         width: ${props => props.$Mw};
         height: ${props => props.$Mh};
-        padding: 2rem;
+        padding: 3.5rem 2rem 2rem 2rem;
         border-radius: 2rem;
     }
 
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: ${props => props.$Mww};
         height: ${props => props.$Mhh};
-        padding: 2.5rem;
+        padding: 3.5rem 2rem 2rem 2rem;
         border-radius: 2rem;
     }
 `;
@@ -51,15 +51,16 @@ export const Backbtn = styled.button`
     right: 6%;
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
-        right: 3%;
+        right: 4%;
+        top: 1.5rem;
     }
 
     img {
         @media screen and (min-width: 375px) and (max-width: 549px) {
-            width: 1rem;
+            width: 1.2rem;
         }
         @media screen and (min-width: 550px) and (max-width: 1023px) {
-            width: 1.2rem;
+            width: 1.4rem;
         }
     }
 `;
@@ -79,7 +80,7 @@ export const MainTitle = styled.div`
     letter-spacing: 0.5px;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -275,14 +276,14 @@ export const newBtn = styled.button`
     color: ${props => props.$c};
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 10rem;
-        font-size: 0.9rem;
-        padding: 0.8rem;
+        width: 50%;
+        font-size: 1.1rem;
+        padding: 0.9rem;
         border-radius: 0.7rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 15rem;
-        font-size: 1rem;
+        width: 50%;
+        font-size: 1.3rem;
         padding: 1rem;
         border-radius: 0.8rem;
     }
@@ -302,14 +303,14 @@ export const ApplyBtn = styled.button`
     color: white;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 13rem;
-        font-size: 0.8rem;
-        padding: 0.8rem;
+        width: 80%;
+        font-size: 1.2rem;
+        padding: 1rem;
     }
 
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 15rem;
-        font-size: 1rem;
+        width: 70%;
+        font-size: 1.3rem;
         padding: 1rem;
     }
 `;
@@ -361,11 +362,11 @@ export const CompletedBox = styled.div`
     gap: 8px;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
         height: 35%;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 `;
 export const NameP = styled.p`
