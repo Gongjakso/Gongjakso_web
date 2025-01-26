@@ -202,7 +202,7 @@ const TeamBox = ({
 
                         {/* 3) subTitle */}
                         <S.subTitle>
-                            {`${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
+                            {`${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at}`}
                         </S.subTitle>
                     </CenterRow>
                     <BottomRow>

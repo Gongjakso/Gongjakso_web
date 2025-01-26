@@ -18,32 +18,31 @@ export const TopBox = styled.div`
     align-items: center;
 `;
 
-export const DetailBox = styled.div`
-    position: relative;
-    line-height: 1.5625rem;
-    text-align: left;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
 export const InputField = styled.input`
     width: 26.875rem;
     height: 3.4375rem;
     padding: 0.9375rem;
     border: 0.09375rem solid #a3a3a3;
     border-radius: 0.4375rem;
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: 1.05rem;
     font-family: 'PreMedium';
 `;
 
 export const Formset = styled.div`
-    width: 100%;
+    width: 60%;
     max-width: 75rem;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     gap: 3.125rem;
+    @media screen and (max-width: 549px) {
+        width: auto;
+        flex-direction: column;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: auto;
+        flex-direction: column;
+    }
 `;
 
 export const Spacer = styled.div`
@@ -52,15 +51,40 @@ export const Spacer = styled.div`
 
 export const Title = styled.p`
     flex-grow: 4;
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: 1.8rem;
     text-align: center;
     font-weight: bold;
 `;
 
+export const DetailBox = styled.div`
+    position: relative;
+    line-height: 1.5625rem;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        flex-direction: column;
+        width: fit-content;
+        justify-content: center;
+        align-items: center;
+    }
+`;
+
 export const SubTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: 1.35rem;
     font-weight: bold;
-    width: 8%;
+    width: 15%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: auto;
+        text-align: left;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -73,7 +97,7 @@ export const Wrapper = styled.div`
 export const SetBox = styled.button`
     width: 15rem;
     padding: 0.9375rem;
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: 1.2rem;
     background-color: #0054ff;
     display: flex;
     justify-content: center;
@@ -146,7 +170,7 @@ export const Num = styled.input`
         text-align: center;
         border: none;
         border-bottom: 0.0625rem solid black;
-        font-size: ${({ theme }) => theme.fontSize.m};
+        // font-size: ${({ theme }) => theme.fontSize.m};
     }
 `;
 
