@@ -14,12 +14,26 @@ export const TopBox = styled.div`
     justify-content: center;
     align-items: flex-end;
     @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 32.75rem;
+        height: 10rem;
+        margin: 1rem auto 0.3rem auto;
+        padding: 1.25rem 1rem;
         background-color: transparent;
-        height: 12rem;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+        background-color: transparent;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 55rem;
+        height: 13rem;
+        margin: 0.525rem auto 0.325rem auto;
+        padding: 1rem 2rem;
         background-color: transparent;
-        height: 14rem;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+        background-color: transparent;
     }
 `;
 
@@ -29,11 +43,11 @@ export const DetailBox = styled.div`
     text-align: left;
     display: flex;
     justify-content: space-between;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        flex-direction: column;
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        flex-direction: column;
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding-top: 0.5rem;
     }
 `;
 
@@ -48,10 +62,14 @@ export const InfoBox = styled.div`
     flex-direction: column;
     margin-left: -28rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        margin-left: 0;
+        transform: translateY(80%);
+        padding-left: 30rem; /* 좌측 여백 추가 */
+        width: auto; /* 부모 컨테이너에 맞춤 */
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        margin-left: 0;
+        transform: translateY(115%);
+        padding-left: 15rem; /* 좌측 여백 추가 */
+        width: auto; /* 부모 컨테이너에 맞춤 */
     }
 `;
 
@@ -61,10 +79,13 @@ export const NameTitle = styled.p`
     font-family: 'PreBold';
     margin-bottom: 0.3125rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.75rem;
+        font-size: 2.65rem;
+        margin-bottom: 1rem;
     }
 `;
 
@@ -77,14 +98,41 @@ export const MajorTitle = styled.p`
     overflow: hidden;
     text-overflow: ellipsis;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1rem;
-        width: 100%;
-        text-align: center;
+        font-size: 1.3rem;
+        width: auto; /* 부모 너비에 맞춤 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        color: rgba(145, 145, 145, 1);
     }
+
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.25rem;
-        width: 100%;
+        font-size: 1.3rem;
+        width: auto;
         text-align: center;
+        color: rgba(145, 145, 145, 1);
+    }
+`;
+
+//프로필 이미지
+export const ProfileImage = styled(My_page_big)`
+    width: 12.5rem;
+    transform: translate(50%, 50%);
+    right: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 6.5rem;
+        margin-left: 0;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 9.5rem;
+        margin-left: 0;
+        position: relative;
+        border-radius: 50%;
     }
 `;
 
@@ -110,40 +158,23 @@ export const SubTitle = styled.p`
     }
 `;
 
-
-//프로필 이미지
-export const ProfileImage = styled(My_page_big)`
-    width: 12.5rem;
-    transform: translate(50%, 50%);
-    right: 50%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 5rem;
-        margin-left: 0;
-        position: relative; /* Change from absolute to relative */
-        left: auto; /* Reset left positioning */
-        right: auto; /* Reset right positioning */
-    }
-
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 9.5rem;
-        margin-left: 0;
-        position: relative; /* Change from absolute to relative */
-        left: auto; /* Reset left positioning */
-        right: auto; /* Reset right positioning */
-    }
-`;
-
 export const EditImage = styled(Edit)`
     height: 1.75rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        height: 1.5rem;
+        height: 5rem;
+        position: absolute;
+        top: 0%;
+        right: 0.1rem;
+        transform: translateY(-50%);
+        transform: translateX(250%);
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        height: 1.6rem;
+        height: 5rem;
+        position: absolute;
+        top: 0%;
+        right: 0.1rem;
+        transform: translateY(-50%);
+        transform: translateX(700%);
     }
 `;
 
@@ -197,7 +228,6 @@ export const GlobalBox = styled.div`
     flex-direction: column;
     align-items: center; /* 자식 요소를 수평으로 중앙 정렬 */
 `;
-
 
 export const BoxDetail = styled.div`
     width: 100%;
@@ -429,7 +459,8 @@ export const SubTitleContainer = styled.div`
     margin: 0 auto; /* 중앙 정렬 */
 `;
 
-export const Plus = styled.div`    width: 1.688rem;
+export const Plus = styled.div`
+    width: 1.688rem;
     height: 1.688rem;
     background: url(${plus});
     background-repeat: no-repeat;
@@ -489,4 +520,3 @@ export const PortfolioInfo = styled.div`
         width: 35rem;
     }
 `;
-
