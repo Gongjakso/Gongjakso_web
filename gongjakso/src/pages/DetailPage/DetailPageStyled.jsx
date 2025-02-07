@@ -10,16 +10,6 @@ export const Globalstyle = styled.div`
         transform: scale(0.9);
         transform-origin: top center;
     }
-
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        transform: scale(0.35);
-        transform-origin: top center;
-    }
-
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        transform: scale(0.5);
-        transform-origin: top center;
-    }
 `;
 
 export const Globalstyle2 = styled.div`
@@ -37,7 +27,6 @@ export const Globalstyle2 = styled.div`
 // 전체 감싸는 틀
 export const Layout = styled(Globalstyle)`
     flex-direction: column;
-    margin-bottom: 8rem;
 `;
 
 // 틀 세분화
@@ -45,6 +34,10 @@ export const Background = styled.div`
     margin-top: ${props => props.$mgt};
     width: ${props => props.$s};
     position: relative;
+
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: ${props => props.$Ms};
+    }
 `;
 
 // X 버튼
@@ -58,10 +51,10 @@ export const BgButton = styled.div`
         cursor: pointer;
 
         @media screen and (min-width: 375px) and (max-width: 549px) {
-            width: 2.7rem;
+            width: 1.8rem;
         }
         @media screen and (min-width: 550px) and (max-width: 1023px) {
-            width: 2.5rem;
+            width: 2rem;
         }
     }
 `;
@@ -75,6 +68,7 @@ export const TitleBox = styled.div`
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
         width: 100%;
+        padding: 0;
     }
 `;
 
@@ -86,22 +80,19 @@ export const TitleBox2 = styled(TitleBox)`
 
 export const BtnLayout = styled.div`
     display: flex;
-    position: absolute;
-    top: 7.5rem;
-    right: 3.571rem;
-
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-    }
 `;
 
 // 타이틀
 export const Title = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     font-family: 'TheJamsilRegular';
     font-weight: 600;
     letter-spacing: 0.05rem;
     font-size: ${({ theme }) => theme.fontSize.xl};
+    padding-right: 5%;
 
     p {
         margin-left: 0.5rem;
@@ -109,17 +100,33 @@ export const Title = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: ${({ checkStatus }) =>
-            checkStatus === 'APPLIER' ? '45rem' : '67rem'};
+            checkStatus === 'APPLIER' ? '70%' : '100%'};
+
+        @media screen and (min-width: 375px) and (max-width: 1023px) {
+            max-width: 100%;
+        }
     }
 
     margin-left: 4.5rem;
     margin-bottom: 3.2rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 3.5rem;
+        font-size: 2rem;
+        margin-left: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        align-items: center; /* 수직 정렬 */
+        justify-content: flex-start; /* 수평 정렬 */
+        gap: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 3rem;
+        flex-wrap: wrap;
+        align-items: center; /* 수직 정렬 */
+        justify-content: flex-start; /* 수평 정렬 */
+        gap: 1rem;
+        font-size: 2.2rem;
+        margin-left: 1rem;
+        margin-bottom: 2rem;
     }
 `;
 
@@ -134,11 +141,18 @@ export const Status = styled.div`
     color: white;
     font-family: 'PreBold';
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 8rem;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border-radius: 1.5rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 10rem;
-        padding: 1.5rem;
-        font-size: 1.5rem;
-        border-radius: 2rem;
+        padding: 0.8rem;
+        font-size: 1.2rem;
+        border-radius: 1.5rem;
     }
 `;
 
@@ -153,10 +167,18 @@ export const ApplyBtn = styled.button`
     border-radius: 0.7143rem;
     font-family: 'PreBold';
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 1.5rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+        width: 8rem;
+        border-radius: 1.5rem;
+        margin-left: 0.5rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.2rem;
         width: 10rem;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
+        margin-left: 0.7rem;
     }
 
     img {
@@ -165,9 +187,12 @@ export const ApplyBtn = styled.button`
         right: 0.3571rem;
         width: 1rem;
 
-        @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 1.5rem;
-            top: 1.5rem;
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 1.2rem;
+        }
+
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 1.6rem;
         }
     }
 `;
@@ -178,10 +203,11 @@ export const TitleBottom = styled.div`
     margin-left: 2.3rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.1rem;
+        margin-left: 2rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -194,6 +220,8 @@ export const BlueBox = styled.div`
 
     @media screen and (min-width: 375px) and (max-width: 1023px) {
         margin-bottom: 0rem;
+        padding: 1rem;
+        border-radius: 2rem;
     }
 `;
 
@@ -202,6 +230,10 @@ export const TextBox = styled.div`
     align-items: center;
     padding: 1.429rem 0.0714rem 1.429rem 1.429rem;
     display: flex;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        padding: 1rem;
+    }
 `;
 
 // 텍스트 박스 안 굵은 제목
@@ -211,12 +243,12 @@ export const TextTitle = styled.p`
     font-family: 'PreBold';
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
-        width: 20rem;
+        font-size: 1.3rem;
+        width: 35rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2rem;
-        width: 17rem;
+        font-size: 1.6rem;
+        width: 30rem;
     }
 `;
 
@@ -229,11 +261,11 @@ export const TextDetail = styled.div`
     display: flex;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.2rem;
         gap: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         gap: 0.5rem;
     }
 `;
@@ -243,6 +275,10 @@ export const Meeting = styled(TextDetail)`
     img {
         width: 2.143rem;
         margin-right: 0.7143rem;
+
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            margin-right: 0rem;
+        }
     }
 `;
 
@@ -264,8 +300,7 @@ export const RoundForm = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-width: 10rem;
-    max-width: 8rem;
+    width: 8rem;
     padding: 0.857rem 0.429rem;
     background: black;
     border-radius: 1.786rem;
@@ -275,17 +310,16 @@ export const RoundForm = styled.div`
     margin: 0.571rem 0.571rem 0.571rem 0rem;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.7rem;
-        min-width: 10rem;
-        margin: 0rem;
-        padding: 1rem 1rem;
-        border-radius: 5rem;
+        font-size: 1rem;
+        width: 5rem;
+        margin: 0;
+        margin-right: -0.5rem;
+        border-radius: 1.3rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.5rem;
-        min-width: 10rem;
+        font-size: 1.2rem;
+        width: 7rem;
         margin: 0rem;
-        padding: 0.8rem 1rem;
         border-radius: 4rem;
     }
 `;
@@ -306,10 +340,10 @@ export const MainText = styled.p`
     white-space: pre-wrap;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
+        font-size: 1.2rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
     }
 `;
 
@@ -337,21 +371,23 @@ export const ScrapButton = styled.button`
         margin-left: -1.429rem;
 
         @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 3rem;
+            width: 2rem;
+            margin-left: 0;
+            margin-right: 0.5rem;
         }
     }
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.7rem;
-        width: 50rem;
-        padding: 4rem;
-        border-radius: 2rem;
+        font-size: 1.3rem;
+        margin: 0.5rem;
+        margin-bottom: 5rem;
+        padding: 1rem;
+        border-radius: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2.3rem;
-        width: 35rem;
-        padding: 3.3rem;
-        border-radius: 2rem;
+        font-size: 1.7rem;
+        padding: 2.5rem;
+        border-radius: 1.2rem;
     }
 `;
 
@@ -377,8 +413,12 @@ export const ApplicationTitle = styled.div`
     font-family: 'PreBold';
     font-size: ${({ theme }) => theme.fontSize.xl};
 
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
-        font-size: 3rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.8rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 2rem;
     }
 `;
 
@@ -398,16 +438,16 @@ export const ApplicationBtn = styled.button`
     color: white;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
+        font-size: 1.3rem;
         width: ${props => props.$Mw};
-        padding: 3.5rem;
-        border-radius: 2rem;
+        padding: 1.4rem;
+        border-radius: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2rem;
+        font-size: 1.6rem;
         width: ${props => props.$Mww};
-        padding: 3rem;
-        border-radius: 1.5rem;
+        padding: 2.3rem;
+        border-radius: 1rem;
     }
 `;
 
@@ -419,8 +459,13 @@ export const TitleFormBox = styled.div`
         width: 15rem;
         cursor: pointer;
 
-        @media screen and (min-width: 375px) and (max-width: 1023px) {
-            width: 20rem;
+        @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 12rem;
+            margin-left: 0.6rem;
+        }
+
+        @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 15rem;
         }
     }
 `;

@@ -41,10 +41,10 @@ const Completed = props => {
                     <S.Modal
                         $w="700px"
                         $h="400px"
-                        $Mw="25rem"
-                        $Mh="20rem"
-                        $Mww="35rem"
-                        $Mhh="20rem"
+                        $Mw="90%"
+                        $Mh="27rem"
+                        $Mww="70%"
+                        $Mhh="30rem"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.MainTitle>
@@ -85,10 +85,10 @@ const Completed = props => {
                     <S.Modal
                         $w="700px"
                         $h="400px"
-                        $Mw="22rem"
-                        $Mh="20rem"
-                        $Mww="37rem"
-                        $Mhh="23rem"
+                        $Mw="90%"
+                        $Mh="23rem"
+                        $Mww="90%"
+                        $Mhh="25rem"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.Backbtn

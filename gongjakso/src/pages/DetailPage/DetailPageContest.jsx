@@ -283,7 +283,7 @@ const DetailPageContest = () => {
             ) : null}
 
             <S.Layout>
-                <S.Background $s="77rem" $mgt="1.8rem">
+                <S.Background $s="77rem" $mgt="1.8rem" $Ms="100%">
                     <S.BgButton>
                         <img
                             src={Close}
@@ -296,36 +296,40 @@ const DetailPageContest = () => {
                         <div>
                             <S.Title checkStatus={checkStatus}>
                                 <p>{postData?.title}</p>
-                            </S.Title>
-                            <S.BtnLayout>
-                                {applyType === '합류 완료' ? (
-                                    <S.Status $bg={({ theme }) => theme.box1}>
-                                        합류 완료
-                                    </S.Status>
-                                ) : applyType === '미선발' ? (
-                                    <S.Status
-                                        $bg={({ theme }) => theme.LightGrey}
-                                    >
-                                        미선발
-                                    </S.Status>
-                                ) : (
-                                    <S.Status $bg={({ theme }) => theme.Light1}>
-                                        합류 대기중
-                                    </S.Status>
-                                )}
+                                <S.BtnLayout>
+                                    {applyType === '합류 완료' ? (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.box1}
+                                        >
+                                            합류 완료
+                                        </S.Status>
+                                    ) : applyType === '미선발' ? (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.LightGrey}
+                                        >
+                                            미선발
+                                        </S.Status>
+                                    ) : (
+                                        <S.Status
+                                            $bg={({ theme }) => theme.Light1}
+                                        >
+                                            합류 대기중
+                                        </S.Status>
+                                    )}
 
-                                <S.ApplyBtn
-                                    onClick={() => {
-                                        window.open(
-                                            `${window.location.origin}/application/${applyId}`,
-                                            '_blank',
-                                        );
-                                    }}
-                                >
-                                    지원서 보기
-                                    <img src={arrow} />
-                                </S.ApplyBtn>
-                            </S.BtnLayout>
+                                    <S.ApplyBtn
+                                        onClick={() => {
+                                            window.open(
+                                                `${window.location.origin}/application/${applyId}`,
+                                                '_blank',
+                                            );
+                                        }}
+                                    >
+                                        지원서 보기
+                                        <img src={arrow} />
+                                    </S.ApplyBtn>
+                                </S.BtnLayout>
+                            </S.Title>
                         </div>
                     ) : (
                         <S.Title checkStatus={checkStatus}>
@@ -344,7 +348,7 @@ const DetailPageContest = () => {
                     </S.TitleBox>
                 </S.Background>
 
-                <S.Background $s="75.5rem">
+                <S.Background $s="75.5rem" $Ms="100%">
                     <S.BlueBox $bg={({ theme }) => theme.Light1}>
                         <S.TextBox>
                             <S.TextTitle>진행 기간</S.TextTitle>
@@ -398,7 +402,7 @@ const DetailPageContest = () => {
                         </S.TextBox>
                         <S.TextBox>
                             <S.TextTitle>공모전 홈페이지</S.TextTitle>
-                            <S.OpenKakao $w="13rem" $Mw="16rem" $Mww="15rem">
+                            <S.OpenKakao $w="13rem" $Mww="12rem">
                                 <img
                                     src={postLink}
                                     alt="homepage-link"
@@ -411,7 +415,7 @@ const DetailPageContest = () => {
                         <S.TextBox>
                             {/* kakao : True, google : False */}
                             <S.TextTitle>기타 문의</S.TextTitle>
-                            <S.OpenKakao $w="10rem" $Mw="13rem" $Mww="11.5rem">
+                            <S.OpenKakao $w="10rem" $Mww="9rem">
                                 {postData?.channel_method ? (
                                     <img
                                         src={OpenKakao}
@@ -717,7 +721,7 @@ const DetailPageContest = () => {
                                 <T.ApplyBox>
                                     <S.ApplicationBtn
                                         $w="18rem"
-                                        $Mw="30rem"
+                                        $Mw="20rem"
                                         $Mww="25rem"
                                         onClick={WarningApply}
                                     >
