@@ -2,12 +2,11 @@ import styled, { css } from 'styled-components';
 
 export const SelectContainer = styled.div`
     position: relative;
-    width: 100%;
 `;
 
 export const SelectValue = styled.div`
     display: block;
-    width: 11rem;
+    width: ${props => (props.$case === 'true' ? '11rem' : '25rem')};
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,21 +20,13 @@ export const SelectValue = styled.div`
     &:hover {
         border-color: #007bff;
     }
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 0.938rem;
-        width: ${props => (props.$case === 'true' ? '7.5rem' : '18rem')};
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1rem;
-        width: ${props => (props.$case === 'true' ? '14rem' : '32rem')};
-    }
 `;
 
 export const OptionList = styled.div`
     position: absolute;
     font-family: 'PreMedium';
-    right: -1.45rem;
-    width: 13.6rem;
+    right: -1.15rem;
+    width: ${props => (props.$case === 'true' ? '13.6rem' : '26.875rem')};
     font-size: ${({ theme }) => theme.fontSize.m};
     margin: ${props =>
         props.$case === 'true' ? '1.25rem 0rem' : '1.25rem 0rem'};
@@ -61,13 +52,6 @@ export const OptionList = styled.div`
             background-color: black;
             color: white;
         }
-    }
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: ${props => (props.$case === 'true' ? '9.9rem' : '20.9rem')};
-        right: -1.45rem;
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: ${props => (props.$case === 'true' ? '17rem' : '35rem')};
     }
 `;
 

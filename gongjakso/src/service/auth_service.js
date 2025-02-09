@@ -55,11 +55,6 @@ export const getMyInfo = async () => {
         const response = await axiosInstance.get(reqURL);
         return response.data;
     } catch (error) {
-        if (error.response.data.code === 3004) {
-            localStorage.removeItem('accessToken');
-        } else {
-            console.log(error.response.data.code);
-        }
-        return error.response.data.code;
+        return error.response;
     }
 };

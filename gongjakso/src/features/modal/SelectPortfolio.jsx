@@ -1,7 +1,7 @@
 import * as S from './PortfolioModal.Styled';
 import { useState } from 'react';
-import useCustomNavigate from '../../hooks/useNavigate';
 import Close from '../../assets/images/Close.svg';
+import useCustomNavigate from '../../hooks/useNavigate';
 
 const SelectPortfolio = ({ showModal, closePortfolioModal }) => {
     const [selectedOption, setSelectedOption] = useState('input');
@@ -42,7 +42,9 @@ const SelectPortfolio = ({ showModal, closePortfolioModal }) => {
                         첨부된 포트폴리오가 지원서와 함께 다운돼요
                     </S.BtnInfo>
                 </S.BtnContainer>
-                <S.Backbtn onClick={closePortfolioModal} src={Close} />
+                <S.Backbtn onClick={closePortfolioModal}>
+                    <img src={Close} alt="close-btn" />
+                </S.Backbtn>
             </S.ModalContent>
         </S.ModalOverlay>
     );
