@@ -18,7 +18,6 @@ const UsePortfolio = () => {
     const [error, setError] = useState('');
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState(null);
-    const [isExceeded, setIsExceeded] = useState(false);
 
     useEffect(() => {
         const fetchPortfolio = async () => {
@@ -73,18 +72,15 @@ const UsePortfolio = () => {
             setError(
                 '파일 크기가 10MB를 초과했습니다. 다른 파일을 선택해 주세요.',
             );
-            setIsExceeded(true); // 초과 상태 활성화
         } else {
             setError('');
             setFile(selectedFile);
             setExistingFile(null);
-            setIsExceeded(false); // 초과 상태 해제
         }
     };
 
     const handleFileDelete = () => {
         setFile(null);
-        setIsExceeded(false); // 파일 삭제 시 초과 상태도 초기화
         setExistingFile(null);
     };
     const handleSubmit = async () => {
@@ -129,7 +125,7 @@ const UsePortfolio = () => {
     };
 
     return (
-        <>
+        <div>
             <S.TopBox>
                 <S.PortfolioInfo>
                     <S.UserName>{data?.name}님의 포트폴리오</S.UserName>
@@ -151,7 +147,7 @@ const UsePortfolio = () => {
                 </S.TitleSection>
 
                 <S.FileUploadBox>
-                    <S.PdfImg $isExceeded={isExceeded} />
+                    <S.pdfImg />
                     <S.UploadBtn onClick={handleButtonClick}>
                         + &nbsp;파일 업로드하기
                     </S.UploadBtn>
@@ -168,33 +164,29 @@ const UsePortfolio = () => {
                     <S.FileInfo>
                         <S.FileList>
                             <S.FileItem>
-                                <S.FileInfoBox>
-                                    <S.FileName>
-                                        {file ? file.name : existingFile?.name}
-                                    </S.FileName>
-                                    {file && file?.size && (
-                                        <S.FileSize>
-                                            {(
-                                                file?.size /
-                                                (1024 * 1024)
-                                            ).toFixed(2)}
-                                            MB
-                                        </S.FileSize>
-                                    )}
-                                </S.FileInfoBox>
-
+                                <S.FileName>
+                                    {file ? file.name : existingFile?.name}
+                                </S.FileName>
+                                {file && file?.size && (
+                                    <S.FileSize>
+                                        {(file?.size / (1024 * 1024)).toFixed(
+                                            2,
+                                        )}{' '}
+                                        MB
+                                    </S.FileSize>
+                                )}
                                 <S.DeleteBtn onClick={handleFileDelete} />
                             </S.FileItem>
                         </S.FileList>
                     </S.FileInfo>
                 )}
 
+                {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
                 <S.TitleSection style={{ flexDirection: 'column' }}>
-                    <S.SubTitle>노션 포트폴리오 공유하기</S.SubTitle>
+                    <S.SubTitle>노션 포트폴리오 링크 입력하기</S.SubTitle>
                     <S.UploadInfo>
-                        노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요!
-                        <br />
-                        게시가 허용되지 않았을 경우 링크 확인이 불가능해요.
+                        노션 공유에서 ‘웹에 게시’ 여부를 확인해주세요! 게시가
+                        허용되지 않았을 경우 링크 확인이 불가능해요.
                     </S.UploadInfo>
                 </S.TitleSection>
 
@@ -203,7 +195,9 @@ const UsePortfolio = () => {
                     <S.LinkContainer>
                         <S.LinkIcon />
                         <S.SNSInput
-                            placeholder={!snsLink ? '링크를 입력해주세요.' : ''}
+                            placeholder={
+                                !snsLink ? '노션 링크를 입력해주세요.' : ''
+                            }
                             value={snsLink} // 디폴트 값으로 상태에서 가져온 snsLink 사용
                             onChange={e => setSnsLink(e.target.value)}
                         />
@@ -215,7 +209,7 @@ const UsePortfolio = () => {
                     <S.SaveBtn onClick={handleSubmit}>저장하기</S.SaveBtn>
                 </S.BtnContainer>
             </S.GlobalBox>
-        </>
+        </div>
     );
 };
 

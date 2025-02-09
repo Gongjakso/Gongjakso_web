@@ -37,11 +37,11 @@ export const MobileContent = styled.div`
 export const ContentDiv = styled.div``;
 
 export const subTitleP = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${theme.fontSize.md};
     font-weight: bolder;
 `;
 export const MainTitle = styled.h2`
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${theme.fontSize.xl};
     font-weight: bolder;
     position: relative;
     display: flex;

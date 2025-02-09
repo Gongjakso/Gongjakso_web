@@ -1,3 +1,4 @@
+// TopButton.jsx
 import React, { useState, useEffect } from 'react';
 import * as S from './TopButton.Styled';
 
@@ -5,8 +6,7 @@ const TopButton = ({ onClick }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const handleScroll = () => {
-        const scrollThreshold = window.innerHeight * 0.6; // 화면 높이의 60%
-        if (window.scrollY > scrollThreshold) {
+        if (window.scrollY > 600) {
             setIsVisible(true);
         } else {
             setIsVisible(false);
@@ -14,6 +14,7 @@ const TopButton = ({ onClick }) => {
     };
 
     const scrollToTop = () => {
+        // 맨 위로 스크롤
         window.scroll({
             top: 0,
             behavior: 'smooth',
