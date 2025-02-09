@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './HomePage.Styled';
-import useCustomNavigate from '../../hooks/useNavigate';
-import calendarImage from '../../assets/images/calendar.png';
-import Modal1 from '../../features/modal/LoginModal1';
 import Modal2 from '../../features/modal/LoginModal2';
 import SignUpModal from '../../features/modal/SignUpModal';
 import TopButton from '../../pages/HomePage/TopButton';
-import Banner from './Banner';
 import { getMyInfo } from '../../service/auth_service';
 import { useNavigate } from 'react-router-dom';
 import MetaTag from '../../components/common/MetaTag/MetaTag';
@@ -69,7 +65,6 @@ const HomePage = () => {
                     </S.SubTitle>
                 </S.TitleWrapper>
                 <S.Section>
-                    {' '}
                     <S.LoginBtn onClick={handleButtonClick}>
                         {isLoggedIn
                             ? '공모전 공고 바로가기'
@@ -89,20 +84,20 @@ const HomePage = () => {
                         <S.Bubble>
                             나가고 싶은 공모전이 있는데, 팀원이 없어요
                         </S.Bubble>
-                        <S.Text>
+                        <S.SkyBlueBubble>
                             공작소에서 공모전을 선택하고, <br /> 팀 모집을
                             시작해보세요!
-                        </S.Text>
+                        </S.SkyBlueBubble>
                         <S.TeamImg />
                     </S.TextContainer>
                     <S.ContestImg />
                 </S.Section1>
                 <S.TitleWrapper1>
                     <S.Title1>원하는 분야의 팀원을 바로</S.Title1>
-                    <S.SubTitle>
-                        필요한 팀원을 모집하거나 나에게 맞는 팀에 지원할 수
-                        있어요
-                    </S.SubTitle>
+                    <S.SubTitle1>
+                        필요한 팀원을 모집하거나
+                        <span> 나에게 맞는 팀에 지원할 수 있어요</span>
+                    </S.SubTitle1>
                 </S.TitleWrapper1>
                 <S.Section2>
                     <S.ContestDetail />
@@ -113,20 +108,21 @@ const HomePage = () => {
                         <S.Bubble1>
                             개발자를 구하는 공모전 팀을 찾고 싶어요
                         </S.Bubble1>
-                        <S.Text1>
+                        <S.SkyBlueBubble1>
                             공작소에서는 모집 인원과 파트를 선택할 수 있어요!
+                            <br />
                             <br />
                             팀장은 필요한 팀원을 바로 찾아보고,
                             <br /> 팀원은 원하는 팀을 알아볼 수 있어요
-                        </S.Text1>
+                        </S.SkyBlueBubble1>
                         <S.TeamImg2 />
                     </S.TextContainer1>
                 </S.Section2>
                 <S.TitleWrapper1>
                     <S.Title1>포트폴리오까지 한번에</S.Title1>
-                    <S.SubTitle>
+                    <S.SubTitle2>
                         나만의 포트폴리오를 만들어 팀빌딩 확률을 높일 수 있어요
-                    </S.SubTitle>
+                    </S.SubTitle2>
                 </S.TitleWrapper1>
                 <S.Section3>
                     <S.TextContainer2>
@@ -136,12 +132,12 @@ const HomePage = () => {
                         <S.RightBubble1>
                             아직 포트폴리오가 없어 지원하기 어려워요
                         </S.RightBubble1>
-                        <S.PortfolioImg />
-                        <S.Text2>
+                        <S.SkyBlueBubble2>
                             공작소에서는 지원 시 포트폴리오를 첨부할 수 있어요!
                             <br />
                             아직 포트폴리오가 없다면, 공작소에서 도와드릴게요
-                        </S.Text2>
+                        </S.SkyBlueBubble2>
+                        <S.PortfolioImg />
                     </S.TextContainer2>
                     <S.PortfolioDetail />
                 </S.Section3>

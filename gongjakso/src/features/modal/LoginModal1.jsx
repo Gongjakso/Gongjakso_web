@@ -30,11 +30,11 @@ const Modal1 = ({ closeModal1 }) => {
         <S.ModalBg>
             <S.Container>
                 <S.CloseButton onClick={handleCloseClick} />
-                <S.Title>공작소에 로그인 후</S.Title>
-                <S.Title>무한한 기회를 창출해보세요!</S.Title>
-
+                <div>
+                    <S.Title>공작소에 로그인 후</S.Title>
+                    <S.Title>무한한 기회를 창출해보세요!</S.Title>
+                </div>
                 <S.Image />
-
                 <S.ButtonBox>
                     <S.BlueButton onClick={() => handleModalClick('/login')}>
                         로그인하기
