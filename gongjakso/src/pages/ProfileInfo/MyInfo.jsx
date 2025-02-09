@@ -131,6 +131,14 @@ const MyInfo = () => {
         })),
     }));
 
+    // status_options 배열을 Dropdown 형식에 맞춰 변환
+    const itemsStatus = status_options.map(option => ({
+        label: option,
+        onSelect: () => {
+            setStatus(option);
+        },
+    }));
+
     return (
         <S.Div>
             <S.TopBox>
@@ -148,15 +156,26 @@ const MyInfo = () => {
                 </S.DetailBox>
                 <S.DetailBox>
                     <S.SubTitle>현재 상태</S.SubTitle>
-                    <S.Fillter1>
-                        <SelectInput
-                            id={'status'}
-                            selectOptions={status_options}
-                            placeholder={status}
-                            onChange={handleSelectStatus}
-                            case={false}
-                        />
-                    </S.Fillter1>
+                    <T.Dropdown2>
+                        <Dropdown items={itemsStatus} closeOnScroll={false}>
+                            {({ isOpen, onClick }) => (
+                                <T.Button
+                                    type="button"
+                                    onClick={() => {
+                                        onClick();
+                                        setIsOpen(isOpen);
+                                    }}
+                                >
+                                    {status}
+                                    {isOpen ? (
+                                        <img src={Up} alt="arrow-up" />
+                                    ) : (
+                                        <img src={Down} alt="arrow-down" />
+                                    )}
+                                </T.Button>
+                            )}
+                        </Dropdown>
+                    </T.Dropdown2>
                 </S.DetailBox>
                 <S.DetailBox>
                     <S.SubTitle>전공</S.SubTitle>

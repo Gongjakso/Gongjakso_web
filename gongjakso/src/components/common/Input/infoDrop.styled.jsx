@@ -52,7 +52,7 @@ export const Dropdown2 = styled.div`
         text-align: left;
         padding: 0.8125rem 0.9375rem;
         width: 26.875rem;
-        font-size: ${({ theme }) => theme.fontSize.m};
+        font-size: 1.05rem;
         color: black;
         border-radius: 0.4375rem;
         font-family: 'PreMedium';
@@ -64,7 +64,7 @@ export const Dropdown2 = styled.div`
     }
 
     .rnd .rnd__root-menu.rnd__menu .rnd__option .rnd__option-label {
-        font-size: ${({ theme }) => theme.fontSize.m};
+        // font-size: ${({ theme }) => theme.fontSize.m};
         padding-left: 0.3125rem;
     }
 
