@@ -179,7 +179,7 @@ const MyInfo = () => {
                 </S.DetailBox>
                 <S.DetailBox>
                     <S.SubTitle>전공</S.SubTitle>
-                    <T.Dropdown2>
+                    <T.Dropdown3>
                         <Dropdown items={items1} closeOnScroll={false}>
                             {({ isOpen, onClick }) => (
                                 <T.Button
@@ -198,11 +198,11 @@ const MyInfo = () => {
                                 </T.Button>
                             )}
                         </Dropdown>
-                    </T.Dropdown2>
+                    </T.Dropdown3>
                 </S.DetailBox>
                 <S.DetailBox>
                     <S.SubTitle>희망 직무</S.SubTitle>
-                    <T.Dropdown2>
+                    <T.Dropdown3>
                         <Dropdown items={items2} closeOnScroll={false}>
                             {({ isOpen, onClick }) => (
                                 <T.Button
@@ -221,7 +221,7 @@ const MyInfo = () => {
                                 </T.Button>
                             )}
                         </Dropdown>
-                    </T.Dropdown2>
+                    </T.Dropdown3>
                 </S.DetailBox>
                 <S.DetailBox>
                     <S.SubTitle>연락처</S.SubTitle>

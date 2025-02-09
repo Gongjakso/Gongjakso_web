@@ -26,6 +26,13 @@ export const InputField = styled.input`
     border-radius: 0.4375rem;
     font-size: 1.05rem;
     font-family: 'PreMedium';
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 85vw;
+        }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 90vw;
+    }
 `;
 
 export const Formset = styled.div`
@@ -36,11 +43,11 @@ export const Formset = styled.div`
     margin: 0 auto;
     gap: 3.125rem;
     @media screen and (max-width: 549px) {
-        width: auto;
+        width: 85vw;
         flex-direction: column;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: auto;
+        width: 90vw;
         flex-direction: column;
     }
 `;
@@ -156,6 +163,13 @@ export const PhoneNum = styled.div`
     border-radius: 0.4375rem;
     font-size: ${({ theme }) => theme.fontSize.m};
     font-family: 'PreMedium';
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+            width: 85vw;
+        }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+            width: 90vw;
+    }
 `;
 
 export const Num = styled.input`
