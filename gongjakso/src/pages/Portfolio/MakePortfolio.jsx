@@ -1,5 +1,5 @@
 import * as S from './Portfolio.Styled';
-import { SelectInput } from '../../components/common/Input/Input';
+import { SelectInput } from '../../components/common/Input/PortfolioInput';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
