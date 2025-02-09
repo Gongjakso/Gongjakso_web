@@ -4,7 +4,7 @@ import { ReactComponent as NoPost } from '../../assets/images/NoPost.svg';
 import { ReactComponent as go } from '../../assets/images/Nowgo.svg';
 
 export const NoContentsContainer = styled.div`
-    width: 550px;
+    width: 100%;
     margin-top: 10px;
     min-height: 300px;
     display: flex;

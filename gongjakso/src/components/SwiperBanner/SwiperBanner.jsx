@@ -16,8 +16,7 @@ const SwiperBanner = banners => {
                 modules={[Pagination]}
                 slidesPerView={1}
                 pagination={{
-                    dynamicBullets: true,
-                    // type: 'bullets',
+                    type: 'bullets',
                     clickable: true,
                 }}
                 className="mySwiper"

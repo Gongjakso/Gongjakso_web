@@ -10,6 +10,29 @@ import {
 import { openAlertModal } from '../../features/modal/modalSlice/alertModalSlice';
 import ConfirmModal from '../../components/common/ConfirmModal/ConfirmModal';
 import AlertModal from '../../components/common/AlertModal/AlertModal';
+import styled from 'styled-components';
+
+// 상단, 하단 영역을 가로 정렬하기 위한 임시 래퍼 styled-components
+const TopRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+`;
+
+const CenterRow = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 0.75rem;
+`;
+
+const BottomRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 0.75rem;
+`;
 
 const TeamBox = ({
     showMoreDetail,
@@ -22,7 +45,8 @@ const TeamBox = ({
     overlayType,
 }) => {
     const [isOverlayVisible, setIsOverlayVisible] = useState(true);
-    const [isLeader, setIsLeader] = useState();
+    const [isLeader, setIsLeader] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation();
     const dispatch = useDispatch();
     const { isOpen, confirmClick, cancelClick } = useSelector(
@@ -30,20 +54,29 @@ const TeamBox = ({
     );
 
     useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+
+        // 로컬 스토리지의 오버레이 숨김 여부 확인
         const overlayVisibility = localStorage.getItem(
             `overlayVisible-${postId}`,
         );
         if (overlayVisibility === 'false') {
             setIsOverlayVisible(false);
         }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, [postId]);
 
     const hideOverlay = () => {
         setIsOverlayVisible(false);
+        localStorage.setItem(`overlayVisible-${postId}`, 'false');
     };
 
     const handleAPIRequest = postId => {
-        // 활동 종료 api
+        // 활동 종료 API
         patchCompletedPost(postId).then(response => {
             if (response?.code === 1000) {
                 dispatch(
@@ -62,6 +95,7 @@ const TeamBox = ({
             }
         });
     };
+
     const handleOpenModal = id => {
         dispatch(
             openConfirmModal({
@@ -91,61 +125,158 @@ const TeamBox = ({
     };
 
     function getDisplayCategory(recruit_part) {
-        let displayCategory;
-
         switch (recruit_part) {
             case '기획':
-                displayCategory = '기획';
-                break;
             case '디자인':
-                displayCategory = '디자인';
-                break;
             case '기타':
-                displayCategory = '기타';
-                break;
+                return recruit_part;
             default:
-                displayCategory = recruit_part;
+                return recruit_part;
         }
-
-        return displayCategory;
     }
 
     function getDisplayApplyCategory(apply_part) {
-        let displayApplyCategory;
-
         switch (apply_part) {
             case '기획':
-                displayApplyCategory = '기획';
-                break;
             case '디자인':
-                displayApplyCategory = '디자인';
-                break;
             case '기타':
-                displayApplyCategory = '기타';
-                break;
+                return apply_part;
             default:
-                displayApplyCategory = apply_part;
+                return apply_part;
         }
-
-        return displayApplyCategory;
     }
 
+    // 반응형 분기
+    const isMobileOrTablet = windowWidth < 1024; // 375~1023
+    const isDesktop = windowWidth >= 1024; // 1024 이상
+
+    // 모바일 + 태블릿
+    if (isMobileOrTablet) {
+        return (
+            <S.Container>
+                <S.Box $bordercolor={borderColor}>
+                    <TopRow>
+                        {showSubBox ? (
+                            <S.SubBox>
+                                <S.DeadLine>
+                                    <S.FireImage />
+                                    {postContent?.status === '모집 취소'
+                                        ? '취소'
+                                        : postContent?.status === '모집 마감'
+                                          ? '마감'
+                                          : postContent?.d_day > 0
+                                            ? `D-${postContent?.d_day}`
+                                            : postContent?.d_day === 0
+                                              ? '마감 D-day'
+                                              : '마감'}
+                                </S.DeadLine>
+                                <S.ScrapNum>
+                                    <S.UnScrapImage />
+                                    {postContent?.scrap_count}회
+                                </S.ScrapNum>
+                            </S.SubBox>
+                        ) : (
+                            <S.ActivityStatus
+                                $poststatus={postContent?.postStatus}
+                                $isleader={isLeader}
+                                onClick={
+                                    isLeader
+                                        ? postContent?.status === '활동 중'
+                                            ? () =>
+                                                  handleOpenModal(
+                                                      postContent?.id,
+                                                  )
+                                            : null
+                                        : null
+                                }
+                            >
+                                {postContent?.status === '활동 중'
+                                    ? '활동 중'
+                                    : '활동 종료'}
+                            </S.ActivityStatus>
+                        )}
+                    </TopRow>
+                    <CenterRow>
+                        {/* 2) Title */}
+                        <S.Title>{postContent?.title}</S.Title>
+
+                        {/* 3) subTitle */}
+                        <S.subTitle>
+                            {`${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at}`}
+                        </S.subTitle>
+                    </CenterRow>
+                    <BottomRow>
+                        <S.MainBox>
+                            {isMyParticipation ? (
+                                <div></div>
+                            ) : isMyParticipation === null ? (
+                                postContent?.recruit_part?.map(
+                                    (category, index) => (
+                                        <S.RoundForm key={index}>
+                                            {getDisplayCategory(category)}
+                                        </S.RoundForm>
+                                    ),
+                                )
+                            ) : postContent?.applicant_id ? (
+                                <S.RoundForm>
+                                    {getDisplayApplyCategory(
+                                        postContent?.apply_part,
+                                    )}
+                                </S.RoundForm>
+                            ) : (
+                                postContent?.recruit_part?.map(
+                                    (categoryList, index) => (
+                                        <S.RoundForm key={index}>
+                                            {getDisplayCategory(categoryList)}
+                                        </S.RoundForm>
+                                    ),
+                                )
+                            )}
+                        </S.MainBox>
+
+                        {showWaitingJoin && (
+                            <S.WaitingJoin $status={postContent?.status}>
+                                {postContent?.status === '합류 완료'
+                                    ? '합류 완료'
+                                    : postContent?.status === '미선발'
+                                      ? '미선발'
+                                      : '합류 대기중'}
+                            </S.WaitingJoin>
+                        )}
+                    </BottomRow>
+
+                    {/* 세부 정보 보기 아이콘 (조건부) */}
+                    {showMoreDetail && (
+                        <Link
+                            to={`/teamdetail/${postId}`}
+                            state={{ postContent }}
+                        >
+                            <S.MoreDetail />
+                        </Link>
+                    )}
+                </S.Box>
+
+                <AlertModal />
+                {isOpen && (
+                    <ConfirmModal
+                        question="정말 활동을 종료 하시겠습니까?"
+                        confirmClick={handleClick}
+                        cancelClick={handleCancel}
+                    />
+                )}
+            </S.Container>
+        );
+    }
+
+    // 데스크탑(1024px 이상)
     return (
         <S.Container>
-            <S.Box
-                $bordercolor={borderColor}
-                $showmoredetail={showMoreDetail.toString()}
-            >
+            <S.Box $bordercolor={borderColor}>
                 <S.BoxTopDetail>
                     <S.MainBox>
                         <S.Title>{postContent?.title}</S.Title>
                         <S.subTitle>
-                            {isMyParticipation === false &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
-                            {isMyParticipation === true &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at}~${postContent?.finished_at} |`}
-                            {isMyParticipation === null &&
-                                `| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
+                            {`| ${postContent?.leader_name} | ${postContent?.started_at} ~ ${postContent?.finished_at} |`}
                         </S.subTitle>
                     </S.MainBox>
                     {showSubBox ? (
@@ -153,14 +284,14 @@ const TeamBox = ({
                             <S.DeadLine>
                                 <S.FireImage />
                                 {postContent?.status === '모집 취소'
-                                    ? `취소`
+                                    ? '취소'
                                     : postContent?.status === '모집 마감'
-                                      ? `마감`
+                                      ? '마감'
                                       : postContent?.d_day > 0
                                         ? `마감 D-${postContent?.d_day}`
                                         : postContent?.d_day === 0
-                                          ? `마감 D-day`
-                                          : `마감`}
+                                          ? '마감 D-day'
+                                          : '마감'}
                             </S.DeadLine>
                             <S.ScrapNum>
                                 <S.UnScrapImage />
@@ -185,19 +316,18 @@ const TeamBox = ({
                         </S.ActivityStatus>
                     )}
                 </S.BoxTopDetail>
+
                 <S.BoxBottomDetail>
                     <S.MainBox>
                         {isMyParticipation ? (
                             <div></div>
                         ) : isMyParticipation === null ? (
                             postContent?.recruit_part?.map(
-                                (category, index) => {
-                                    return (
-                                        <S.RoundForm key={index}>
-                                            {getDisplayCategory(category)}
-                                        </S.RoundForm>
-                                    );
-                                },
+                                (category, index) => (
+                                    <S.RoundForm key={index}>
+                                        {getDisplayCategory(category)}
+                                    </S.RoundForm>
+                                ),
                             )
                         ) : postContent?.applicant_id ? (
                             <S.RoundForm>
@@ -206,27 +336,16 @@ const TeamBox = ({
                                 )}
                             </S.RoundForm>
                         ) : (
-                            // 내가 모집 중인 팀
                             postContent?.recruit_part?.map(
-                                (categoryList, index) => {
-                                    return (
-                                        <S.RoundForm key={index}>
-                                            {getDisplayCategory(categoryList)}
-                                        </S.RoundForm>
-                                    );
-                                },
+                                (categoryList, index) => (
+                                    <S.RoundForm key={index}>
+                                        {getDisplayCategory(categoryList)}
+                                    </S.RoundForm>
+                                ),
                             )
                         )}
                     </S.MainBox>
-                    {/* {postContent?.status === 'EXTENSION' &&
-                        isOverlayVisible && (
-                            <>
-                                <S.DeadlineOverlay $status={postContent.status}>
-                                    모집이 연장되었습니다.
-                                </S.DeadlineOverlay>
-                                <S.CloseImage onClick={hideOverlay} />
-                            </>
-                        )} */}
+
                     {showWaitingJoin && (
                         <S.WaitingJoin $status={postContent?.status}>
                             {postContent?.status === '합류 완료'
@@ -234,17 +353,6 @@ const TeamBox = ({
                                 : postContent?.status === '미선발'
                                   ? '미선발'
                                   : '합류 대기중'}
-                            {/*수정 필요. status X*/}
-                            {postContent?.status === 'CLOSE' && (
-                                <S.DeadlineOverlay $status={postContent.status}>
-                                    모집이 마감되었습니다.
-                                </S.DeadlineOverlay>
-                            )}
-                            {postContent?.status === 'CANCEL' && (
-                                <S.DeadlineOverlay $status={postContent.status}>
-                                    모집이 취소되었습니다.
-                                </S.DeadlineOverlay>
-                            )}
                         </S.WaitingJoin>
                     )}
                     {showMoreDetail && (
@@ -257,6 +365,7 @@ const TeamBox = ({
                     )}
                 </S.BoxBottomDetail>
             </S.Box>
+
             <AlertModal />
             {isOpen && (
                 <ConfirmModal
