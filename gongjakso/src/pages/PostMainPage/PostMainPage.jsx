@@ -216,12 +216,6 @@ const PostMainPage = () => {
                     </S.SearchBar>
                 </S.Search>
                 <S.Fillterbox>
-                    <Multilevel
-                        isPost={false}
-                        onItemSelectedCity={handleSelectedDataCity}
-                        onItemSelectedTown={handleSelectedDataTown}
-                    />
-
                     <S.Fillter1>
                         <SelectInput
                             id={'sortBy'}
@@ -234,6 +228,11 @@ const PostMainPage = () => {
                             case={true}
                         />
                     </S.Fillter1>
+                    <Multilevel
+                        isPost={false}
+                        onItemSelectedCity={handleSelectedDataCity}
+                        onItemSelectedTown={handleSelectedDataTown}
+                    />
                 </S.Fillterbox>
                 {isProject ? ( //여기는 프로젝트
                     <S.PostContent>

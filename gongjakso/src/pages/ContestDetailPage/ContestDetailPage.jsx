@@ -120,40 +120,89 @@ const ContestDetailPage = () => {
         <>
             <S.MainContent>
                 <S.ContestDetail>
-                    <S.ContestImg src={contestDetail?.imgUrl} />
-                    <S.ContestInfo>
-                        <S.ContestInfoTop>
-                            <S.ContestTitle>
-                                {contestDetail?.title}
-                            </S.ContestTitle>
-                            <S.RemainDate>
-                                <S.FireImage />
-                                <S.SpanP>{contestDetail?.dayState}</S.SpanP>
-                            </S.RemainDate>
-                        </S.ContestInfoTop>
-                        <S.Organization>
-                            {contestDetail?.institution}
-                        </S.Organization>
-                        <S.InfoContent>
-                            조회수 :
-                            <S.InfoSpan>
-                                {contestDetail?.viewCount}회
-                            </S.InfoSpan>
-                        </S.InfoContent>
-                        <S.InfoContent>
-                            <p>진행기간</p>
-                            <S.InfoSpan>
-                                {contestDetail?.startedAt}~
-                                {contestDetail?.finishedAt}
-                            </S.InfoSpan>
-                        </S.InfoContent>
-                        <S.Headline />
-                        <S.InfoContent>설명글</S.InfoContent>
-                        <S.InfoSpan
-                            dangerouslySetInnerHTML={{ __html: contentHtml }}
-                        />
-                        {/* <S.InfoSpan>{contestDetail?.body}</S.InfoSpan> */}
-                    </S.ContestInfo>
+                    {window.innerWidth > 768 ? (
+                        <>
+                            <S.ContestImg src={contestDetail?.imgUrl} />
+                            <S.ContestInfo>
+                                <S.ContestInfoTop>
+                                    <S.ContestTitle>
+                                        {contestDetail?.title}
+                                    </S.ContestTitle>
+                                    <S.RemainDate>
+                                        <S.FireImage />
+                                        <S.SpanP>
+                                            {contestDetail?.dayState}
+                                        </S.SpanP>
+                                    </S.RemainDate>
+                                </S.ContestInfoTop>
+                                <S.Organization>
+                                    {contestDetail?.institution}
+                                </S.Organization>
+                                <S.InfoContent>
+                                    조회수 :
+                                    <S.InfoSpan>
+                                        {contestDetail?.viewCount}회
+                                    </S.InfoSpan>
+                                </S.InfoContent>
+                                <S.InfoContent>
+                                    <p>진행기간</p>
+                                    <S.InfoSpan>
+                                        {contestDetail?.startedAt}~
+                                        {contestDetail?.finishedAt}
+                                    </S.InfoSpan>
+                                </S.InfoContent>
+                                <S.Headline />
+                                <S.InfoContent>설명글</S.InfoContent>
+                                <S.InfoSpan
+                                    dangerouslySetInnerHTML={{
+                                        __html: contentHtml,
+                                    }}
+                                />
+                                {/* <S.InfoSpan>{contestDetail?.body}</S.InfoSpan> */}
+                            </S.ContestInfo>
+                        </>
+                    ) : (
+                        <>
+                            <S.ContestInfo>
+                                <S.ContestInfoTop>
+                                    <S.ContestTitle>
+                                        {contestDetail?.title}
+                                    </S.ContestTitle>
+                                    <S.RemainDate>
+                                        <S.FireImage />
+                                        <S.SpanP>
+                                            {contestDetail?.dayState}
+                                        </S.SpanP>
+                                    </S.RemainDate>
+                                </S.ContestInfoTop>
+                                <S.Organization>
+                                    {contestDetail?.institution}
+                                </S.Organization>
+                                <S.InfoContent>
+                                    조회수 :
+                                    <S.InfoSpan>
+                                        {contestDetail?.viewCount}회
+                                    </S.InfoSpan>
+                                </S.InfoContent>
+                                <S.InfoContent>
+                                    <p>진행기간</p>
+                                    <S.InfoSpan>
+                                        {contestDetail?.startedAt}~
+                                        {contestDetail?.finishedAt}
+                                    </S.InfoSpan>
+                                </S.InfoContent>
+                                <S.ContestImg src={contestDetail?.imgUrl} />
+                                <S.Headline />
+                                <S.InfoContent>설명글</S.InfoContent>
+                                <S.InfoSpan
+                                    dangerouslySetInnerHTML={{
+                                        __html: contentHtml,
+                                    }}
+                                />
+                                {/* <S.InfoSpan>{contestDetail?.body}</S.InfoSpan> */}
+                            </S.ContestInfo>
+                        </>
+                    )}
                 </S.ContestDetail>
                 <S.ContestButtonOption>
                     <S.GotohomeBtn onClick={handlegotoHomePage}>
@@ -172,12 +221,6 @@ const ContestDetailPage = () => {
                         현재 {contestPosts?.length}명이 팀을 모집하고 있어요
                     </S.Organization>
                     <S.Fillterbox>
-                        <Multilevel
-                            isPost={false}
-                            onItemSelectedCity={handleSelectedDataCity}
-                            onItemSelectedTown={handleSelectedDataTown}
-                        />
-
                         <S.Fillter1>
                             <SelectInput
                                 id={'sortBy'}
@@ -190,6 +233,11 @@ const ContestDetailPage = () => {
                                 case={true}
                             />
                         </S.Fillter1>
+                        <Multilevel
+                            isPost={false}
+                            onItemSelectedCity={handleSelectedDataCity}
+                            onItemSelectedTown={handleSelectedDataTown}
+                        />
                     </S.Fillterbox>
                     {contestPosts && contestPosts.length > 0 ? (
                         <>

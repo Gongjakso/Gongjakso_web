@@ -11,8 +11,14 @@ export const Dropdown = styled.div`
         border: 1.5px solid #c4c4c4;
         text-align: left;
         padding: ${props =>
-            props.$ispost === 'true' ? '10px 19px' : '12px 18px'};
-        width: ${props => (props.$ispost === 'true' ? '15rem' : '14rem')};
+            props.$ispost === 'true' ? '0.7vw 1.3vw' : '0.8vw 1.25vw'};
+        width: 13.6vw;
+        height: 3.5vw;
+        max-width: 196px;
+        min-width: 93px;
+        max-height: 51px;
+        min-height: 28px;
+        /* width: ${props => (props.$ispost === 'true' ? '15rem' : '14rem')}; */
         font-size: ${({ theme, $ispost }) =>
             $ispost === 'true' ? theme.fontSize.base : theme.fontSize.m};
         color: ${props => (props.$ispost === 'true' ? 'gray' : 'black')};
@@ -42,6 +48,12 @@ export const Dropdown = styled.div`
     .rnd__option--with-menu:hover > .rnd__submenu {
         display: block;
         color: black;
+    }
+    .svg,
+    img {
+        max-width: 24px;
+        min-width: 12px;
+        width: 0.8vw;
     }
     .rnd__option:not(.rnd__option--disabled):hover {
         background-color: black;

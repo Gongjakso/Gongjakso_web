@@ -8,8 +8,10 @@ export const SearchBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 60px;
+    width: 70%;
+    max-width: 301px;
+    max-height: 60px;
+    height: 7vw;
     margin-right: 15px;
     background-color: white;
     border: ${props =>
@@ -52,16 +54,27 @@ export const P = styled.p`
     .arrow_box {
         display: none;
         position: absolute;
-        width: 180px; /* Adjust width as needed */
+        width: 180px;
         padding: 8px;
-        top: 65px; /* Adjust top as needed */
-        left: 50%;
-        transform: translateX(-50%);
         border-radius: 8px;
         background: #333;
         color: #fff;
         font-size: 14px;
-        text-align: center; /* Center text */
+        text-align: center;
+
+        @media screen and (min-width: 1024px) {
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @media screen and (max-width: 1023px) {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            position: fixed;
+            z-index: 9999;
+        }
     }
 
     .arrow_box:after {
@@ -94,9 +107,10 @@ export const SelectQty = styled.div`
     display: ${props => (props.$isDisplay ? 'flex' : 'none')};
     flex-direction: column;
     text-align: center;
-    width: 21.5rem;
+    max-width: 21.5rem;
+    width: 70%;
     background-color: white;
-    padding: 20px;
+    padding: clamp(12px, 2vw, 20px);
     border: 1px solid ${({ theme }) => theme.borderline};
     border-radius: 14px;
     margin-top: 10px; /* Adjust this value as needed */
@@ -113,12 +127,13 @@ export const SelectAdultNum = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: clamp(10px, 2vw, 30px);
 `;
 
 export const Title = styled.span`
     display: flex;
-    font-size: 16px;
+    align-items: center;
+    font-size: clamp(8px, 2vw, 16px);
     font-weight: 500;
     font-family: 'PreMedium';
     color: ${props => (props.$hasGuests ? theme.mainFont : theme.Grey)};
@@ -135,19 +150,19 @@ export const Button = styled.div`
     border-radius: 50%;
     font-family: 'PreMedium';
     text-align: center;
-    border: 0.7px solid ${({ theme }) => theme.border};
-    color: ${({ theme }) => theme.mainFont};
+    border: 0.7px solid
+        ${({ theme, disabled }) => (disabled ? 'gray' : theme.Main1)};
+    color: ${({ theme, disabled }) => (disabled ? 'gray' : theme.Main1)};
     font-size: 1.2rem;
-    margin: 0px 10px;
+    margin: clamp(0px 5px, 2vw, 0px 10px);
     cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    color: ${({ disabled }) => (disabled ? 'gray' : theme.Main1)};
-    border-color: ${({ disabled }) => (disabled ? 'gray' : theme.Main1)};
 `;
 
 export const ManNum = styled.p`
     width: 0.6rem;
     margin: 0 10px;
-    color: ${props => (props.$props === 0 ? theme.Grey : theme.box1)};
+    color: ${props =>
+        props.$props === 0 ? props.theme.Grey : props.theme.box1};
 `;
 export const ApplysetBtn = styled.div`
     display: flex;
@@ -156,9 +171,11 @@ export const ApplysetBtn = styled.div`
 `;
 
 export const ApplyBtn = styled.div`
-    color: ${props => (props.$isApply ? theme.mainFont : theme.mainFont2)};
+    color: ${props =>
+        props.$isApply ? props.theme.mainFont : props.theme.mainFont2};
     width: 100%;
-    background-color: ${props => (props.$isApply ? theme.Grey : theme.box1)};
+    background-color: ${props =>
+        props.$isApply ? props.theme.Grey : props.theme.box1};
     cursor: pointer;
     border-radius: 2rem;
     padding: 0.5rem 0;

@@ -3,10 +3,8 @@ import styled from 'styled-components';
 export const Title = styled.div`
     display: flex;
     width: 100%;
-    align-items: center;
     border-bottom: 1px solid black;
     padding-bottom: 10px;
-    font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: 800;
     font-family: 'PreMedium';
     margin-bottom: 30px;
@@ -16,6 +14,20 @@ export const Title = styled.div`
         color: ${({ theme }) => theme.subFont};
         font-family: 'PreMedium';
         font-weight: 500;
+    }
+    @media screen and (max-width: 549px) {
+        font-size: ${({ theme }) => theme.fontSize.base};
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: ${({ theme }) => theme.fontSize.md};
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSize.lg};
+        align-items: center;
     }
 `;
 export const MiniTitle = styled.div`
@@ -27,13 +39,50 @@ export const Label = styled.label`
     display: flex;
     gap: 10px;
     color: ${({ theme }) => theme.mainFont};
-    font-family: 'PreBold';
     margin: 20px 0;
+    @media screen and (max-width: 549px) {
+        font-size: ${({ theme }) => theme.fontSize.base};
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: ${({ theme }) => theme.fontSize.md};
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSize.lg};
+        align-items: center;
+    }
 `;
 export const Label2 = styled.label`
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 1rem;
+`;
+
+export const Label3 = styled.label`
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    color: ${({ theme }) => theme.mainFont};
+    margin: 20px 0;
+    margin-right: 50px;
+    @media screen and (max-width: 549px) {
+        font-size: ${({ theme }) => theme.fontSize.base};
+        flex-direction: row;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: ${({ theme }) => theme.fontSize.md};
+        flex-direction: row;
+    }
+
+    @media screen and (min-width: 1024px) {
+        font-size: ${({ theme }) => theme.fontSize.lg};
+        align-items: center;
+    }
 `;
 
 export const Input = styled.input``;
@@ -42,6 +91,7 @@ export const TapT = styled.p`
     font-family: 'PreMedium';
     display: flex;
     width: 20%;
+    min-width: 89px;
     font-weight: 800;
     font-size: ${({ theme }) => theme.fontSize.lg};
     /* font-family: Pretendard; */
@@ -51,7 +101,7 @@ export const TextArea = styled.textarea.attrs(props => ({
     type: props.type || 'text',
 }))`
     font-size: ${({ theme }) => theme.fontSize.base};
-    width: 70%;
+    width: 100%;
     height: 100%;
     max-height: 200px;
     font-family: 'PreMedium';
@@ -105,7 +155,7 @@ export const Container = styled.div`
 export const TapP = styled.span`
     display: flex;
     align-items: center;
-    width: 190px;
+    width: 20%;
     font-family: 'PreMedium';
     font-weight: 700;
     font-size: ${({ theme }) => theme.fontSize.lg};
@@ -119,8 +169,10 @@ export const ButtonDiv = styled.div`
 `;
 
 export const ClickBtn = styled.button`
-    width: 130px;
-    height: 40px;
+    max-width: 130px;
+    width: 25vw;
+    max-height: 40px;
+    height: 7vw;
     margin-right: 10px;
     font-family: 'PreMedium';
     font-weight: 500;
@@ -134,7 +186,7 @@ export const ClickBtn = styled.button`
 
 export const Complain = styled.div`
     display: flex;
-    width: 500px;
+    width: 100%;
     flex-direction: column;
 `;
 
@@ -150,8 +202,13 @@ export const ButtonContent = styled.div`
 
 export const Button = styled.button`
     border-radius: 15px;
-    width: 260px;
-    height: 60px;
+    max-width: 260px;
+    min-width: 130px;
+    width: 19vw;
+    max-height: 60px;
+    min-height: 30px;
+    height: 4vw;
+
     margin-top: 50px;
     background-color: ${props =>
         props.$isDelete ? props.theme.Grey : props.theme.Main1};
@@ -161,7 +218,7 @@ export const Button = styled.button`
 `;
 
 export const DateSet = styled.div`
-    width: 500px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -172,7 +229,7 @@ export const Important = styled.div`
 `;
 export const Important2 = styled.div`
     font-family: 'PreMedium';
-    font-size: 15px;
+    font-size: clamp(8px, 2vw, 14px);
     font-weight: 500;
     line-height: 17.9px;
     text-align: left;

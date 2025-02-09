@@ -10,12 +10,17 @@ export const MainContent = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 7rem;
+    padding: 0 20px 0 20px;
 `;
 
 export const ContestDetail = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 export const ContestInfo = styled.div`
@@ -24,6 +29,12 @@ export const ContestInfo = styled.div`
     flex-direction: column;
     margin-left: 15px;
     margin-right: 15px;
+
+    @media screen and (max-width: 768px) {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 2rem;
+    }
 `;
 
 export const ContestTitle = styled.p`
@@ -45,8 +56,21 @@ export const ContestInfoTop = styled.h1`
 `;
 
 export const ContestImg = styled.img`
-    width: 22rem;
-    height: 29.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 30vw;
+    max-width: 22rem;
+    min-height: 29.5rem;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        max-width: 22rem;
+        min-height: 29.5rem;
+        margin-top: 2rem;
+    }
 `;
 export const RemainDate = styled.div`
     width: auto;
@@ -115,7 +139,11 @@ export const ContestButtonOption = styled.div`
 
 export const GotohomeBtn = styled.button`
     background-color: ${({ theme }) => theme.border};
-    width: 25%;
+    width: 15.8vw;
+    max-width: 228px;
+    min-width: 138px;
+    max-height: 47px;
+    min-height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,7 +152,7 @@ export const GotohomeBtn = styled.button`
     border-radius: 12px;
     margin: 1rem;
     padding: 1.2rem;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: clamp(10px, 1.2vw, 20px);
     font-weight: bold;
 
     img {
@@ -134,17 +162,21 @@ export const GotohomeBtn = styled.button`
 `;
 export const TeamBuildBtn = styled.button`
     background-color: ${({ theme }) => theme.box1};
-    width: 24%;
+    width: 15.8vw;
+    max-width: 228px;
+    min-width: 138px;
+    max-height: 47px;
+    min-height: 36px;
+    height: 3vw;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 3rem;
     border-radius: 12px;
     margin: 1rem;
     padding: 1.2rem;
     color: ${({ theme }) => theme.mainFont2};
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: clamp(10px, 1.2vw, 20px);
     font-weight: 500;
 `;
 
@@ -165,12 +197,18 @@ export const Fillterbox = styled.div`
     margin-bottom: 1.7rem;
 `;
 export const Fillter1 = styled.div`
-    width: 14rem;
+    width: 13.6vw;
+    height: 3.5vw;
+    max-width: 196px;
+    min-width: 93px;
+    max-height: 51px;
+    min-height: 28px;
     border-radius: 6px;
     border: 1.5px solid #c4c4c4;
-    padding: 12px 18px;
+    padding: 0.8vw 1.25vw;
     display: flex;
     align-items: center;
+    margin-left: 1%;
 `;
 
 export const ContestContent = styled.div`
