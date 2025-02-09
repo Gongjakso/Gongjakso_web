@@ -104,6 +104,10 @@ export const SetBox = styled.button`
     align-items: center;
     color: #ffffff;
     border-radius: 0.625rem;
+    @media screen and (min-width: 375px) and (max-width: 1023px) {
+        width: 18rem;
+        font-size: 1.4rem;
+    }
 `;
 
 export const SelectField = styled.select`

@@ -9,6 +9,14 @@ export const TopBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        height: 11rem;
+        background-color: transparent;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        height: 14rem;
+        background-color: transparent;
+    }
 `;
 
 export const Title = styled.p`
@@ -54,7 +62,7 @@ export const Content = styled.div`
 
 export const InsideBox = styled.div`
     display: flex;
-    width: 80%;
+    width: 60%;
     flex-direction: column;
     border: none;
     padding: 1.875rem;
