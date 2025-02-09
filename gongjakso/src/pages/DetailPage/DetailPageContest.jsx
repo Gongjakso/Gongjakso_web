@@ -272,7 +272,7 @@ const DetailPageContest = () => {
                 />
             )} */}
 
-            {/* 지원 취소 모달 */}
+            {/* 지원 취소 모달ㄹ */}
             {showCancel ? (
                 <ApplyCancel
                     CloseModal={setshowCancel}
