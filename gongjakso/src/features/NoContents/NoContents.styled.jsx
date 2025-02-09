@@ -17,7 +17,7 @@ export const NoContentsContainer = styled.div`
         display: block;
         text-align: center;
         font-family: 'PreMedium';
-        font-size: ${({ theme }) => theme.fontSize.md};
+        font-size: ${theme.fontSize.md};
     }
 
     span:first-child {

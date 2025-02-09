@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as S from './Bubble.Styled';
-import { useMediaQuery } from 'react-responsive';
 import useCustomNavigate from '../../hooks/useNavigate';
 import { logout } from '../../service/auth_service';
+import Header from './Header';
 import { getMyInfo } from '../../service/profile_service';
 
 const Bubble = ({ closeBubble }) => {
     const [data, setProfileData] = useState();
     const [open, setOpen] = useState();
-    const isMobileOrTablet = useMediaQuery({ maxWidth: 1023 });
+    //로그인 여부
     const authenticated = localStorage.getItem('accessToken');
     const [isLoggedIn, setIsLoggedIn] = useState(!!authenticated);
 
@@ -48,6 +48,11 @@ const Bubble = ({ closeBubble }) => {
         }
     };
 
+    const handleProfileIcon = () => {
+        setOpen(prev => !prev);
+    };
+
+    // 모달 영역 외의 클릭을 감지하여 모달을 닫습니다.
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -60,7 +65,6 @@ const Bubble = ({ closeBubble }) => {
             setProfileData(response?.data); // 'response'를 바로 전달
         });
     }, []);
-
     const truncatedMajor =
         data?.major && data.major.length > 10
             ? `${data.major.slice(0, 10)}···`
@@ -118,6 +122,8 @@ const Bubble = ({ closeBubble }) => {
                     {isLoggedIn ? '로그아웃' : '로그인'}
                 </S.LoginButton>
             </S.BubbleContainer>
+
+            {open && <Header handleProfileIcon={handleProfileIcon} />}
         </div>
     );
 };

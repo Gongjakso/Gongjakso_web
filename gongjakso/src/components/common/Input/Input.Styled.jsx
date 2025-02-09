@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const SelectContainer = styled.div`
     position: relative;
-    width: 100%;
 `;
 
 export const SelectValue = styled.div`
