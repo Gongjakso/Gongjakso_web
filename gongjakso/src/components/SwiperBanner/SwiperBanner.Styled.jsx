@@ -6,13 +6,7 @@ export const Banners = styled.img`
 `;
 
 export const SwiperContainer = styled.div`
-    position: relative;
-    /* width: 100%; */
-    padding-top: 45%;
     .swiper {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
     }
@@ -37,19 +31,22 @@ export const SwiperContainer = styled.div`
     .swiper-pagination-custom,
     .swiper-horizontal > .swiper-pagination-bullets,
     .swiper-pagination-bullets.swiper-pagination-horizontal {
-        width: auto;
-        padding: 0.3rem 0;
-        border-radius: 10px;
         background: transparent;
-        background-color: #eaeaea;
     }
     .swiper-pagination-bullet {
-        width: 0.7rem;
-        height: 0.7rem;
-        border: 1px solid #eaeaea;
         background-color: white;
         opacity: 1;
         transition: background-color 0.3s ease;
+    }
+
+    .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+    .swiper-pagination-horizontal.swiper-pagination-bullets
+        .swiper-pagination-bullet {
+        width: 1vw;
+        max-width: 10px;
+        height: 1vw;
+        max-height: 10px;
+        margin: 0 0.5vw;
     }
 
     .swiper-pagination-bullet-active {

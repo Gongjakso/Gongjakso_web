@@ -163,6 +163,7 @@ import Scrap from '../pages/ScrapPage/Scrap';
 import ScrollToTop from '../pages/HomePage/ScrollToTop';
 import GoogleRedirectPage from '../components/Auth/GoogleRedirectPage';
 import NaverRedirectPage from '../components/Auth/NaverRedirectPage';
+import BubblePage from '../components/Header/BubblePage';
 
 const Router = () => {
     return (
@@ -252,6 +253,7 @@ const Router = () => {
                                 path="/profile/useportfolio/:id"
                                 element={<UsePortfolio />}
                             />
+                            <Route path="/bubble" element={<BubblePage />} />
                         </Route>
 
                         {/* 지원서 보기 부분은 헤더 제거 */}

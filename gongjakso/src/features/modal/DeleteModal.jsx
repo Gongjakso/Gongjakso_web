@@ -29,9 +29,7 @@ const DeleteModal = ({ showModal, closeModal, confirmDelete, title, type }) => {
                 <S.DeleteButton onClick={confirmDelete}>
                     삭제하기
                 </S.DeleteButton>
-                <S.Backbtn onClick={closeModal}>
-                    <img src={Close} alt="close-btn" />
-                </S.Backbtn>
+                <S.Backbtn onClick={closeModal} src={Close} />
             </S.ModalContent>
         </S.ModalOverlay>
     );

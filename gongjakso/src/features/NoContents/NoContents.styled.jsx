@@ -4,7 +4,7 @@ import { ReactComponent as NoPost } from '../../assets/images/NoPost.svg';
 import { ReactComponent as go } from '../../assets/images/Nowgo.svg';
 
 export const NoContentsContainer = styled.div`
-    width: 550px;
+    width: 100%;
     margin-top: 10px;
     min-height: 300px;
     display: flex;
@@ -17,7 +17,7 @@ export const NoContentsContainer = styled.div`
         display: block;
         text-align: center;
         font-family: 'PreMedium';
-        font-size: ${theme.fontSize.md};
+        font-size: ${({ theme }) => theme.fontSize.md};
     }
 
     span:first-child {

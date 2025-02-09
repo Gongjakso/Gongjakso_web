@@ -2,12 +2,6 @@ import styled from 'styled-components';
 import { ReactComponent as Banner } from '../../assets/images/banner.svg';
 import { ReactComponent as SearchIcon } from '../../assets/images/Search.svg';
 
-export const Searchicon = styled(SearchIcon)`
-    width: 2.5rem;
-    height: 2.5rem;
-    cursor: pointer;
-`;
-
 export const MainContent = styled.div`
     width: 100%;
     max-width: 70.8rem;
@@ -36,17 +30,35 @@ export const Search = styled.div`
     padding-top: 20px;
 `;
 export const SearchBar = styled.div`
-    width: 80%;
+    display: flex;
+    width: 80vw;
+    max-width: 80%;
+    height: 5vw;
+    max-height: 64px;
     padding: 10px;
-    border: 2px solid ${props => props.theme.Main1};
+    border: 1px solid ${props => props.theme.Main1};
     border-radius: 40px;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    align-items: center;
+    text-align: center;
 `;
 
 export const Searchmark = styled.div`
-    padding-right: 10px;
+    padding-right: 1vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const Searchicon = styled(SearchIcon)`
+    width: 3vw;
+    max-width: 30px;
+    height: 3vw;
+    max-height: 30px;
+    cursor: pointer;
 `;
 
 export const SearchUsernameInput = styled.input`
@@ -61,20 +73,25 @@ export const SearchUsernameInput = styled.input`
 `;
 
 export const Fillterbox = styled.div`
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 10px;
     margin-bottom: 30px;
 `;
 export const Fillter1 = styled.div`
-    width: 14rem;
+    width: 13.6vw;
+    height: 3.5vw;
+    max-width: 196px;
+    min-width: 93px;
+    max-height: 51px;
+    min-height: 28px;
     border-radius: 6px;
     border: 1.5px solid #c4c4c4;
-    padding: 12px 18px;
+    padding: 0.8vw 1.25vw;
     display: flex;
     align-items: center;
-    margin-right: 30px;
+    margin-left: 10%;
 `;
 export const Fillter2 = styled.div`
     width: 100%;
@@ -87,7 +104,7 @@ export const Fillterbox1 = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: start;
     gap: 10px;
     margin-bottom: 30px;
 `;
@@ -102,10 +119,11 @@ export const PostContent = styled.div`
     gap: 0.6rem;
 `;
 export const ContestContent = styled.div`
-    width: 100%;
+    width: 93%;
     height: auto;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     gap: 1.65rem;

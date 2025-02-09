@@ -11,6 +11,7 @@ export const Container = styled.div`
 
 export const Box = styled.div`
     position: relative;
+    width: 100%;
     width: 71.875rem;
     height: 10rem;
     background-color: transparent;
@@ -20,7 +21,21 @@ export const Box = styled.div`
     color: ${({ theme }) => theme.mainFont};
     border-radius: 0.9375rem;
     padding: 1.25rem 3.125rem;
-    margin: 0.625rem 0rem;
+    margin: 0.525rem auto;
+
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 32.75rem;
+        height: auto;
+        margin: 1rem auto 0.3rem auto;
+        padding: 1.25rem 1rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 55rem;
+        height: auto;
+        margin: 0.525rem auto 0.325rem auto;
+        padding: 1rem 2rem;
+    }
 `;
 
 export const Title = styled.p`
@@ -34,6 +49,16 @@ export const Title = styled.p`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+        width: 90%;
+        order: 1;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1.25rem;
+        width: 100%;
+        margin-top: 0.55rem;
+    }
 `;
 
 export const subTitle = styled.p`
@@ -42,6 +67,19 @@ export const subTitle = styled.p`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 0.5rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        order: 2;
+        width: 100%;
+        justify-content: left;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 1rem;
+        margin-top: 1.05rem;
+        justify-content: left;
+    }
 `;
 
 //프로필페이지-제목 등
@@ -51,12 +89,19 @@ export const BoxTopDetail = styled.div`
     align-items: center;
     justify-content: space-between;
     text-align: left;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 export const MainBox = styled.div`
     width: auto;
     display: flex;
     justify-content: space-between;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        flex-direction: row;
+    }
 `;
 
 export const BottomBox = styled.div`
@@ -70,6 +115,7 @@ export const SubBox = styled.div`
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    margin-top: 0.5rem;
 `;
 
 //프로필페이지-파트명
@@ -80,9 +126,13 @@ export const BoxBottomDetail = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
-//프로필 이미지
+//스크랩 이미지
 export const UnScrapImage = styled(UnScrap)`
     width: 1.5625rem;
     margin-right: 0.5rem;
@@ -118,6 +168,17 @@ export const DeadLine = styled.div`
     font-weight: 600;
     text-align: center;
     color: ${({ theme }) => theme.Purple};
+    /* 모바일·태블릿에서만 축소 */
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.75rem;
+        height: 2.2rem;
+        min-width: 6rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.875rem;
+        height: 2.4rem;
+        min-width: 7rem;
+    }
 `;
 
 //스크랩 횟수
@@ -134,6 +195,17 @@ export const ScrapNum = styled.div`
     font-weight: 600;
     text-align: center;
     color: ${({ theme }) => theme.Green};
+    /* 모바일·태블릿에서만 축소 */
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.75rem;
+        height: 2.2rem;
+        min-width: 6rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.875rem;
+        height: 2.4rem;
+        min-width: 7rem;
+    }
 `;
 
 //합류 대기중
@@ -150,10 +222,23 @@ export const WaitingJoin = styled.div`
               ? theme.LightGrey
               : theme.Light1};
     border-radius: 3.125rem;
-    font-size: ${({ theme }) => theme.fontSize.md};
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 600;
     text-align: center;
     color: ${({ theme }) => theme.mainFont2};
+    /* 모바일·태블릿에서만 축소 */
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.75rem;
+        height: 2.2rem;
+        width: 5rem;
+        margin-bottom: 0.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.875rem;
+        height: 2.4rem;
+        width: 7rem;
+        margin-bottom: 0.5rem;
+    }
 `;
 
 //활동 중 or 활동 중단
@@ -176,28 +261,57 @@ export const ActivityStatus = styled.div`
                 ? 'pointer'
                 : 'not-allowed'
             : 'not-allowed'};
+    /* 모바일·태블릿에서만 축소 */
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 0.75rem;
+        height: 2.2rem;
+        width: 5rem;
+        margin-bottom: 0.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        font-size: 0.875rem;
+        height: 2.4rem;
+        width: 7rem;
+        margin-bottom: 0.5rem;
+    }
 `;
 
 //검은색 둥근 틀
 export const RoundForm = styled.div`
+    display: inline-flex;
     min-width: 8rem;
     height: 2.6rem;
-    display: flex;
     align-items: center;
     justify-content: center;
     background: black;
     border-radius: 1.2rem;
-    font-size: ${({ theme }) => theme.fontSize.mm};
+    font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: 500;
     color: ${({ theme }) => theme.mainFont2};
     margin-right: 0.8rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        /* 모바일에서 축소 */
+        min-width: 4rem;
+        height: 2rem;
+        font-size: 0.75rem;
+        margin-right: 0.4rem;
+        padding: 0 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        /* 태블릿에서 축소 */
+        min-width: 5rem;
+        height: 2.2rem;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
 `;
 
 //프로필페이지-자세히보기
 export const MoreDetail = styled(ArrowDetail)`
     position: absolute;
     top: 50%;
-    right: 1rem;
+    right: 0.25rem;
     transform: translateY(-50%);
     height: 100%;
     z-index: 3;
@@ -220,4 +334,7 @@ export const DeadlineOverlay = styled.div`
     justify-content: center;
     align-items: center;
     color: white;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+    }
 `;
