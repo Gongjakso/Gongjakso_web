@@ -268,16 +268,18 @@ export const NoPortfolio = styled.div`
     line-height: 2.088rem;
     font-family: 'PreRegular';
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 20.75rem;
-        height: 20rem;
-        padding: 2rem;
+        width: 85vw;
+        padding: 1.75rem;
         font-size: 0.875rem;
+        height: 10.938rem;
+        gap: 1.5rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 35rem;
-        height: 22rem;
-        padding: 2.5rem;
+        width: 90vw;
+        height: 14rem;
+        padding: 2rem;
         font-size: 1rem;
+        gap: 1.5rem;
     }
 `;
 
@@ -295,14 +297,16 @@ export const MakePortfolioBtn = styled.button`
     font-size: ${({ theme }) => theme.fontSize.mdd};
     font-family: 'PreMedium';
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 15rem;
-        height: 3.5rem;
-        font-size: 0.875rem;
+        width: 14.75rem;
+        height: auto;
+        padding: 0.875rem 1.875rem;
+        font-size: 1rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 20rem;
-        height: 4rem;
-        font-size: 1rem;
+        height: auto;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
     }
 `;
 
@@ -343,7 +347,7 @@ export const PortfolioTitle = styled.span`
     max-width: 43.75rem;
     font-size: ${({ theme }) => theme.fontSize.md};
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 0.875rem;
+        font-size: 0.938rem;
         max-width: 20rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
@@ -373,9 +377,11 @@ export const EditPortfolioButton = styled.button`
     width: 3.5rem;
     height: 3.5rem;
     transform: scale(0.8);
+    background-size: contain;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        transform: scale(1);
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 3rem;
@@ -391,9 +397,11 @@ export const DeletePortfolioButton = styled.button`
     width: 3.6rem;
     height: 3.6rem;
     transform: scale(0.8);
+    background-size: contain;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        transform: scale(1);
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 3rem;
@@ -408,17 +416,18 @@ export const PortfolioContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-radius: 1.5rem;
+    border-radius: 12px;
     border: 0.125rem solid #c3e9ff;
     background: #e5f5ff;
     padding: 1.5rem 3rem;
     box-sizing: border-box;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 20.75rem;
-        padding: 1rem;
+        width: 85vw;
+        padding: 0.875rem 1.25rem;
+        min-height: 3.563rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 35rem;
+        width: 90vw;
         padding: 1.5rem;
     }
 `;
@@ -443,10 +452,11 @@ export const SubContainer = styled.div`
     max-width: 71.875rem;
     margin: 0 auto;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 32.75rem;
+        width: 85vw;
+        margin-bottom: 0.625rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 55rem;
+        width: 90vw;
     }
 `;
 
@@ -468,8 +478,9 @@ export const Plus = styled.div`
     cursor: pointer;
     margin-bottom: 1.5625rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 1.125rem;
-        height: 1.125rem;
+        width: 0.875rem;
+        height: 0.875rem;
+        margin-bottom: 0rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 1.25rem;
@@ -501,7 +512,9 @@ export const LinkDetail = styled.div`
     text-align: left;
     margin-top: 0.5rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 0.75rem;
+        font-size: 0.563rem;
+        margin-top: 0rem;
+        height: 0.688rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         font-size: 0.875rem;
@@ -514,9 +527,9 @@ export const PortfolioInfo = styled.div`
     gap: 0.5rem;
     flex-direction: column;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 20.75rem;
+        width: 85vw;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 35rem;
+        width: 90vw;
     }
 `;
