@@ -77,23 +77,6 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
         },
     });
 
-    // const handleOptionChange = option => {
-    //     if (option === 'ONLINE') {
-    //         if (meeting === 'ONLINE') {
-    //             alert('온라인 모임은 이미 선택되어 있습니다.');
-    //         } else {
-    //             setMeeting('ONLINE');
-    //         }
-    //     } else if (option === 'OFFLINE') {
-    //         if (meeting === 'OFFLINE') {
-    //             alert('오프라인 모임은 이미 선택되어 있습니다.');
-    //         } else {
-    //             setMeeting('OFFLINE');
-    //         }
-    //     }
-    //     setBtn(true);
-    // };
-
     const handleOptionChange = option => {
         if (option === 'ONLINE') {
             if (meeting === 'ONLINE') {
@@ -136,16 +119,6 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
         //선택한 지역 반환
         setSelectedTownData(data);
     };
-
-    // const handleDateStartChange = date => {
-    //     setStartDates(transformAndSetDates(date));
-    // };
-    // const handleDateFinishedChange = date => {
-    //     setFinishDates(transformAndSetDates(date));
-    // };
-    // const handleDateStartRecruitFinishedChange = date => {
-    //     setRecruitFinish(transformAndSetDates(date));
-    // };
 
     const handleDateChange = (date, type) => {
         const formattedDate = transformAndSetDates(date);
@@ -347,22 +320,25 @@ const TeamBuildingUploadPage = ({ posts, contestDetail, contestData }) => {
                         <S.TapP>
                             회의 방식<S.Important>*</S.Important>
                         </S.TapP>
-                        <S.ClickBtn
-                            $isselected={
-                                meeting === 'OFFLINE' || meeting === 'HYBRID'
-                            }
-                            onClick={() => handleOptionChange('OFFLINE')}
-                        >
-                            오프라인
-                        </S.ClickBtn>
-                        <S.ClickBtn
-                            $isselected={
-                                meeting === 'ONLINE' || meeting === 'HYBRID'
-                            }
-                            onClick={() => handleOptionChange('ONLINE')}
-                        >
-                            온라인
-                        </S.ClickBtn>
+                        <S.Label3>
+                            <S.ClickBtn
+                                $isselected={
+                                    meeting === 'OFFLINE' ||
+                                    meeting === 'HYBRID'
+                                }
+                                onClick={() => handleOptionChange('OFFLINE')}
+                            >
+                                오프라인
+                            </S.ClickBtn>
+                            <S.ClickBtn
+                                $isselected={
+                                    meeting === 'ONLINE' || meeting === 'HYBRID'
+                                }
+                                onClick={() => handleOptionChange('ONLINE')}
+                            >
+                                온라인
+                            </S.ClickBtn>
+                        </S.Label3>
                     </S.Label>
                     <S.Label>
                         <S.TapP>회의 지역</S.TapP>
