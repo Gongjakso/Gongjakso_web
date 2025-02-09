@@ -86,9 +86,12 @@ export const LoginContent = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
+    margin-top: 2.5rem;
     padding: 15rem 0;
+    box-sizing: border-box;
     flex-direction: row;
 `;
+
 export const Image = styled.div`
     background: url(${macbookImage});
     width: 30rem;
