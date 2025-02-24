@@ -660,10 +660,15 @@ export const TeamImg2 = styled(TeamImg)`
     background-size: cover;
     left: 73.5rem;
     top: 18.5rem;
-    @media (max-width: 1270px) {
-        left: 26.5rem;
+    @media (max-width: 1440px) {
+        left: 29.5rem;
         top: 15rem;
-        transform: scale(0.7);
+        transform: scale(0.9);
+    }
+    @media (max-width: 1270px) {
+        left: 25.5rem;
+        top: 14rem;
+        transform: scale(0.9);
     }
     @media screen and (min-width: 375px) and (max-width: 549px) {
         left: 6rem;

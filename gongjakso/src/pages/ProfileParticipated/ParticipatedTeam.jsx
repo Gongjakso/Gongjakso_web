@@ -13,7 +13,7 @@ const TeamPart = () => {
     useEffect(() => {
         getMyParticipated(page, 6).then(response => {
             setTotalPage(response?.data?.totalPages);
-            setPostContent3(response?.data.content);
+            setPostContent3(response?.data?.content);
         });
     }, [page]);
 
