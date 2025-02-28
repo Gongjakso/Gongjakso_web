@@ -24,14 +24,14 @@ export const Box = styled.div`
     margin: 0.525rem auto;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 32.75rem;
+        width: 85vw;
         height: auto;
         margin: 1rem auto 0.3rem auto;
         padding: 1.25rem 1rem;
     }
 
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 55rem;
+        width: 90vw;
         height: auto;
         margin: 0.525rem auto 0.325rem auto;
         padding: 1rem 2rem;

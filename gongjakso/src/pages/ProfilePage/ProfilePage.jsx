@@ -306,16 +306,16 @@ const ProfilePage = () => {
                 url="https://gongjakso.xyz/contestList"
             />
             <S.TopBox>
-                <S.InfoBox>
-                    <S.DetailBox>
+                <S.ProfileImage />
+                <S.DetailBox>
+                    <S.NameWrapper>
                         <S.NameTitle>{data?.name}</S.NameTitle>
                         <Link to={'/myinfo'}>
                             <S.EditImage />
                         </Link>
-                    </S.DetailBox>
+                    </S.NameWrapper>
                     <S.MajorTitle>{data?.major}</S.MajorTitle>
-                </S.InfoBox>
-                <S.ProfileImage />
+                </S.DetailBox>
             </S.TopBox>
             <S.GlobalBox>
                 <S.BoxDetail>
