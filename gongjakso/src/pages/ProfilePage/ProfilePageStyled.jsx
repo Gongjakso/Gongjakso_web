@@ -14,7 +14,7 @@ export const TopBox = styled.div`
     justify-content: center;
     align-items: flex-end;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 75vw;
+        width: 80vw;
         margin: auto;
         height: 8.5rem;
         background-color: transparent;
@@ -22,17 +22,40 @@ export const TopBox = styled.div`
         align-items: center;
         padding-top: 1rem;
     }
-    // @media screen and (min-width: 550px) and (max-width: 1023px) {
-    //     width: 90vw;
-    //     height: 13rem;
-    //     margin: 0.525rem auto 0.325rem auto;
-    //     padding: 1rem 2rem;
-    //     background-color: transparent;
-    //     flex-direction: column;
-    //     align-items: center;
-    //     padding-top: 1rem;
-    //     background-color: transparent;
-    // }
+`;
+
+//프로필 이미지
+export const ProfileImage = styled(My_page_big)`
+    width: 12.5rem;
+    transform: translate(50%, 50%);
+    right: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        transform: translate(40%, 17%);
+        width: 5.25rem;
+        border-radius: 50%;
+        position: relative;
+        // display: none;
+    }
+`;
+
+export const MobileWrapper = styled.div`
+    width: 60%;
+    display: flex;
+    // justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+`;
+
+export const MobileInfo = styled.div`
+    transform: translate(-80%, 58%);
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    // position: relative;
 `;
 
 export const DetailBox = styled.div`
@@ -44,13 +67,13 @@ export const DetailBox = styled.div`
     justify-content: space-between;
     flex-direction: column;
     margin-left: -30rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        // width: 40vw;
-        position: absolute;
-        // transform: translate(-70%);
-        margin-right: -100vw; /* 좌측 여백 추가 */
-        width: 70vw; /* 부모 컨테이너에 맞춤 */
-    }
+    // @media screen and (min-width: 375px) and (max-width: 549px) {
+    //     transform: translate(40%, 115%);
+    //     // position: absolute;
+    //     margin-right: -100vw; /* 좌측 여백 추가 */
+    //     min-width: 50vw; /* 부모 컨테이너에 맞춤 */
+    //     margin-left: -32rem;
+    // }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         // flex-direction: row;
         // justify-content: space-between;
@@ -86,7 +109,7 @@ export const InfoBox = styled.div`
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         transform: translateY(135%);
         margin-left: -23rem;
-        width: auto; /* 부모 컨테이너에 맞춤 */
+        width: 20%; /* 부모 컨테이너에 맞춤 */
     }
 `;
 
@@ -96,14 +119,8 @@ export const NameTitle = styled.p`
     font-family: 'PreBold';
     margin-bottom: 0.3125rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+        font-size: 1.9rem;
     }
-
-    // @media screen and (min-width: 550px) and (max-width: 1023px) {
-    //     font-size: 2.65rem;
-    //     margin-bottom: 1rem;
-    // }
 `;
 
 //학과
@@ -115,33 +132,14 @@ export const MajorTitle = styled.p`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
     @media screen and (min-width: 375px) and (max-width: 549px) {
         font-size: 1rem;
-        width: 100%; /* 부모 너비에 맞춤 */
+        width: 35vw;
         text-align: left; /* 왼쪽 정렬 */
         color: rgba(145, 145, 145, 1);
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         width: 9rem;
-    }
-`;
-
-//프로필 이미지
-export const ProfileImage = styled(My_page_big)`
-    width: 12.5rem;
-    transform: translate(50%, 50%);
-    right: 50%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        transform: translate(40%, 17%);
-        width: 6rem;
-        border-radius: 50%;
-        position: relative;
-        // display: none;
     }
 `;
 
@@ -169,6 +167,7 @@ export const SubTitle = styled.p`
 export const EditImage = styled(Edit)`
     height: 1.75rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
+        transform: translate(40%, 150%);
         height: 4.5rem;
         width: 3.3rem;
         position: absolute;

@@ -296,6 +296,53 @@ const ProfilePage = () => {
         };
     }, [showModal]);
 
+    const DesktopProfile = ({ data }) => (
+        <S.TopBox>
+            <S.ProfileImage />
+            <S.DetailBox>
+                <S.NameWrapper>
+                    <S.NameTitle>{data?.name}</S.NameTitle>
+                    <Link to={'/myinfo'}>
+                        <S.EditImage />
+                    </Link>
+                </S.NameWrapper>
+                <S.MajorTitle>{data?.major}</S.MajorTitle>
+            </S.DetailBox>
+        </S.TopBox>
+    );
+
+    const MobileProfile = ({ data }) => (
+        <S.TopBox>
+            <S.MobileWrapper>
+                <S.ProfileImage />
+                <S.MobileInfo>
+                    <S.NameTitle>{data?.name}</S.NameTitle>
+                    <S.MajorTitle>{data?.major}</S.MajorTitle>
+                </S.MobileInfo>
+            </S.MobileWrapper>
+            <Link to={'/myinfo'}>
+                <S.EditImage />
+            </Link>
+        </S.TopBox>
+    );
+
+    const ProfileComponent = ({ data }) => {
+        const [isMobile, setIsMobile] = useState(window.innerWidth <= 549);
+
+        useEffect(() => {
+            const handleResize = () => {
+                setIsMobile(window.innerWidth <= 549);
+            };
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }, []);
+
+        return isMobile ? (
+            <MobileProfile data={data} />
+        ) : (
+            <DesktopProfile data={data} />
+        );
+    };
     return (
         <div style={{ paddingBottom: '10rem' }}>
             <MetaTag
@@ -305,18 +352,9 @@ const ProfilePage = () => {
                 imgsrc="https://opengraph.b-cdn.net/production/images/5585fb04-c501-4717-8122-8c9d3d05f246.png?token=hOfHzJ7eKbz1nuru47epxsiWBHDGHpfIodgv5PB7b0Y&height=557&width=1200&expires=33266696940"
                 url="https://gongjakso.xyz/contestList"
             />
-            <S.TopBox>
-                <S.ProfileImage />
-                <S.DetailBox>
-                    <S.NameWrapper>
-                        <S.NameTitle>{data?.name}</S.NameTitle>
-                        <Link to={'/myinfo'}>
-                            <S.EditImage />
-                        </Link>
-                    </S.NameWrapper>
-                    <S.MajorTitle>{data?.major}</S.MajorTitle>
-                </S.DetailBox>
-            </S.TopBox>
+
+            {/* 모바일 사이즈일 때 다른 레이아웃으로 구성 */}
+            <ProfileComponent data={data} />
             <S.GlobalBox>
                 <S.BoxDetail>
                     <S.SubContainer>

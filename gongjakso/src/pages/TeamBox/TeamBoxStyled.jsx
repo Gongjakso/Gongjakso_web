@@ -135,14 +135,14 @@ export const BoxBottomDetail = styled.div`
 //스크랩 이미지
 export const UnScrapImage = styled(UnScrap)`
     width: 1.5625rem;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 `;
 
 //마감 일수 이미지
 export const FireImage = styled(Fire)`
     width: 1.5rem;
     align-items: center;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 `;
 
 export const CloseImage = styled(CloseWhite)`
