@@ -12,9 +12,11 @@ export const TopBox = styled.div`
     @media screen and (min-width: 375px) and (max-width: 549px) {
         height: 11rem;
         background-color: transparent;
+        margin-bottom: -3.5rem;
     }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         height: 14rem;
+        margin-bottom: -5rem;
         background-color: transparent;
     }
 `;
@@ -28,10 +30,14 @@ export const Title = styled.p`
 `;
 
 export const GlobalBox = styled.div`
+    position: relative;
     width: 100%;
+    // width: 71.875rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1.25rem 3.125rem;
+    margin: 0.525rem auto;
 `;
 
 export const GlobalBox2 = styled.div`
@@ -40,6 +46,7 @@ export const GlobalBox2 = styled.div`
 `;
 
 export const BlueBox = styled.div`
+    position: relative;
     width: 100%;
     min-width: 62.5rem;
     max-width: 75rem;
@@ -48,6 +55,16 @@ export const BlueBox = styled.div`
     border-radius: 0.9375rem;
     display: flex;
     flex-direction: row;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: auto;
+        height: auto;
+        margin: 1rem auto 0.3rem auto;
+        flex-direction: column;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 90vw;
+        min-width: 50rem;
+    }
 `;
 
 export const Content = styled.div`
@@ -58,6 +75,16 @@ export const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: auto;
+        height: auto;
+        margin: 1rem auto 0.3rem auto;
+        margin-top: 2rem;
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 90vw;
+        min-width: 50rem;
+    }
 `;
 
 export const InsideBox = styled.div`
@@ -69,6 +96,13 @@ export const InsideBox = styled.div`
     font-size: ${({ theme }) => theme.fontSize.lg};
     font-weight: bold;
     justify-content: space-between;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 100%;
+        // width: 85vw;
+        height: auto;
+        flex-direction: column;
+        padding: 1.35rem;
+    }
 `;
 
 export const Border = styled(InsideBox)`
@@ -77,13 +111,19 @@ export const Border = styled(InsideBox)`
     border-radius: 0.9375rem;
     display: flex;
     flex-direction: column;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        // width: 100%;
+        min-width: 80vw;
+        border-right: none;
+        margin-bottom: -2.5rem;
+    }
 `;
 
 export const DetailGlobal = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 0.9375rem;
+    padding: 0.45em;
     justify-content: center;
 `;
 
@@ -95,7 +135,7 @@ export const ButtonSet = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 0.9375rem;
+    padding: 0.45rem;
     gap: 1.25rem;
 `;
 
@@ -148,10 +188,18 @@ export const SubTitle = styled.div`
 `;
 
 export const MainTable = styled.table`
+    position: relative;
     width: 100%;
     margin-top: 1.875rem;
     font-size: ${({ theme }) => theme.fontSize.lg};
     text-align: center;
+    margin: 4.375rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: auto;
+        height: auto;
+        margin: 1rem auto 0.3rem auto;
+        padding: 1.25rem 1rem;
+    }
 `;
 
 export const ButtonContainer = styled.div`
@@ -172,6 +220,9 @@ export const NotSelectedBtn = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
     color: white;
     cursor: pointer;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: 18vw;
+    }
 `;
 
 export const SelectedBtn = styled.div`
@@ -184,6 +235,9 @@ export const SelectedBtn = styled.div`
     font-size: ${({ theme }) => theme.fontSize.md};
     color: white;
     cursor: pointer;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        min-width: 18vw;
+    }
 `;
 
 export const Tagth = styled.th`
@@ -296,6 +350,9 @@ export const StateBtn = styled.div`
     font-size: ${({ theme }) => theme.fontSize.base};
     background: ${props => props.$bg};
     border-radius: 1.25rem;
+    // @media screen and (min-width: 375px) and (max-width: 549px) {
+    //     width: 40%;
+    // }
 `;
 
 export const Postcheck = styled.div`
@@ -315,6 +372,19 @@ export const Postcheck = styled.div`
         margin-left: 0.625rem;
     }
     cursor: pointer;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        width: 6.5rem;
+        height: 2.45rem;
+        padding: 0.625rem;
+        img {
+            margin-top: -0.1rem;
+            margin-left: 0.625rem;
+        }
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 8.5rem;
+        padding: 0.625rem;
+    }
 `;
 
 export const GrayBox = styled(GraySelectBox)`
