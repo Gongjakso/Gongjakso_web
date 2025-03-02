@@ -167,7 +167,7 @@ const TeamBox = ({
                                           : postContent?.d_day > 0
                                             ? `D-${postContent?.d_day}`
                                             : postContent?.d_day === 0
-                                              ? '마감 D-day'
+                                              ? '오늘 마감'
                                               : '마감'}
                                 </S.DeadLine>
                                 <S.ScrapNum>
