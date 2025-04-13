@@ -90,7 +90,7 @@ const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
                 {Number(maxGuests) === 0 ? (
                     <>
                         <S.Span>
-                            {/* {Object.entries(roles).some(
+                            {Object.entries(roles).some(
                                 ([role, quantity]) => quantity > 0,
                             )
                                 ? Object.entries(roles)
@@ -100,10 +100,9 @@ const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
                                               `${role}: ${quantity}`,
                                       )
                                       .join(', ')
-                                :  */}
-                            {isProject
-                                ? '프로젝트에 필요한 역할을 선택해주세요!'
-                                : '공모전에 필요한 역할을 선택해주세요!'}
+                                : isProject
+                                  ? '프로젝트에 필요한 역할을 선택해주세요!'
+                                  : '공모전에 필요한 역할을 선택해주세요!'}
                         </S.Span>
                         <S.P>
                             <span className="arrow_box">
@@ -113,7 +112,7 @@ const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
                     </>
                 ) : (
                     <S.Span onClick={handleToggleBoxOpen}>
-                        {/* {Object.entries(roles).some(
+                        {Object.entries(roles).some(
                             ([role, quantity]) => quantity > 0,
                         )
                             ? Object.entries(roles)
@@ -122,10 +121,10 @@ const CountGuest = ({ isProject, maxGuests, onApply, error }) => {
                                       ([role, quantity]) =>
                                           `${role}: ${quantity}`,
                                   )
-                                  .join(', ') */}
-                        {isProject
-                            ? '프로젝트에 필요한 역할을 선택해주세요!'
-                            : '공모전에 필요한 역할을 선택해주세요!'}
+                                  .join(', ')
+                            : isProject
+                              ? '프로젝트에 필요한 역할을 선택해주세요!'
+                              : '공모전에 필요한 역할을 선택해주세요!'}
                     </S.Span>
                 )}
             </S.SearchBox>

@@ -6,17 +6,19 @@ const Footer = () => {
     return (
         <S.Footer>
             <S.FooterContainer>
-                <li>
-                    <img
-                        src={footerLogoImage}
-                        alt="footer logo"
-                        style={{ width: '170px', height: 'auto' }}
-                    />
-                </li>
-                <S.FooterInfoBox>
-                    <S.FooterInfo>Contact: gongjaksoo@gmail.com</S.FooterInfo>
-                    <S.FooterInfo>All copyright by 2024 공작소</S.FooterInfo>
-                </S.FooterInfoBox>
+                <S.TopContainer>
+                    <li>
+                        <S.FooterLogo src={footerLogoImage} alt="footer logo" />
+                    </li>
+                    <S.FooterInfoBox>
+                        <S.FooterInfo>
+                            Contact: gongjaksoo@gmail.com
+                        </S.FooterInfo>
+                        <S.FooterInfo>
+                            All copyright by 2024 공작소
+                        </S.FooterInfo>
+                    </S.FooterInfoBox>
+                </S.TopContainer>
                 <li>
                     <S.FooterButtonBox>
                         <S.FooterButton
@@ -35,7 +37,6 @@ const Footer = () => {
                         >
                             이용약관
                         </S.FooterButton>
-
                         <S.FooterButton
                             onClick={() =>
                                 window.open(
@@ -45,7 +46,6 @@ const Footer = () => {
                         >
                             개인정보처리방침
                         </S.FooterButton>
-
                         <S.FooterButton
                             onClick={() =>
                                 window.open('https://gongjakso.oopy.io/')

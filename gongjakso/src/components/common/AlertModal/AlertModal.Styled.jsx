@@ -32,8 +32,12 @@ export const AlertModalInnerContainer = styled.div`
     border-radius: 40px;
     padding: 30px;
     position: relative;
-    width: 40%;
-    height: 40%;
+    max-width: 700px;
+    min-width: 347px;
+    max-height: 343px;
+    min-height: 190px;
+    width: 100%;
+    height: 50vw;
 `;
 export const MainTitle = styled.p`
     text-align: center;

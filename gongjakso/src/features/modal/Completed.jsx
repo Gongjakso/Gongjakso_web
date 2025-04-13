@@ -41,9 +41,15 @@ const Completed = props => {
                     <S.Modal
                         $w="700px"
                         $h="400px"
+                        $Mw="90%"
+                        $Mh="27rem"
+                        $Mww="70%"
+                        $Mhh="30rem"
                         $bc={({ theme }) => theme.box1}
                     >
-                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>
+                            '{props.title}' <br /> 팀 지원하기
+                        </S.MainTitle>
                         <S.CompletedBox>
                             <p>지원서를 정말 제출하시겠습니까?</p>
                             <p>제출 완료 시 수정이 불가합니다.</p>
@@ -79,6 +85,10 @@ const Completed = props => {
                     <S.Modal
                         $w="700px"
                         $h="400px"
+                        $Mw="90%"
+                        $Mh="23rem"
+                        $Mww="90%"
+                        $Mhh="25rem"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.Backbtn
@@ -88,7 +98,9 @@ const Completed = props => {
                         >
                             <img src={Close} alt="close-btn" />
                         </S.Backbtn>
-                        <S.MainTitle>'{props.title}' 팀 지원하기</S.MainTitle>
+                        <S.MainTitle>
+                            '{props.title}' <br /> 팀 지원하기
+                        </S.MainTitle>
                         <S.CompletedBox>
                             <p>지원이 완료되었습니다!</p>
                             <p>
@@ -114,6 +126,10 @@ const Completed = props => {
                     <S.Modal
                         $w="650px"
                         $h="420px"
+                        $Mw="22rem"
+                        $Mh="20rem"
+                        $Mww="34rem"
+                        $Mhh="20rem"
                         $bc={({ theme }) => theme.box1}
                     >
                         <S.MainTitle>포트폴리오 만들러 가기</S.MainTitle>

@@ -1,5 +1,5 @@
 import * as S from './Portfolio.Styled';
-import { SelectInput } from '../../components/common/Input/Input';
+import { SelectInput } from '../../components/common/Input/PortfolioInput';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getMyInfo } from '../../service/profile_service';
@@ -128,7 +128,6 @@ const MakePortfolio = ({ portfolioId }) => {
 
     useEffect(() => {
         if (id) {
-            // 포트폴리오 수정 모드
             const fetchPortfolioData = async () => {
                 try {
                     const response = await getPortfolio(id);
@@ -365,42 +364,51 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setEducationSections(updatedSections);
                                 }}
                             />
-                            <S.Filter1>
-                                <SelectInput
-                                    id={`Gradestatus-${index}`}
-                                    selectOptions={gradeStatus_options}
-                                    placeholder={section.gradeStatus || '학년'}
-                                    value={section.gradeStatus || ''}
-                                    onChange={value => {
-                                        const updatedSections = [
-                                            ...educationSections,
-                                        ];
-                                        updatedSections[index].gradeStatus =
-                                            value;
-                                        setEducationSections(updatedSections);
-                                    }}
-                                    case={true}
-                                />
-                            </S.Filter1>
-                            <S.Filter1>
-                                <SelectInput
-                                    id={`Educationstatus-${index}`}
-                                    selectOptions={status_options}
-                                    placeholder={section.state || '상태'}
-                                    value={section.state || ''}
-                                    onChange={value => {
-                                        const updatedSections = [
-                                            ...educationSections,
-                                        ];
-                                        updatedSections[index].state = value;
-                                        setEducationSections(updatedSections);
-                                    }}
-                                    case={true}
-                                />
-                            </S.Filter1>
+                            <S.FilterRow>
+                                <S.Filter1>
+                                    <SelectInput
+                                        id={`Gradestatus-${index}`}
+                                        selectOptions={gradeStatus_options}
+                                        placeholder={
+                                            section.gradeStatus || '학년'
+                                        }
+                                        value={section.gradeStatus || ''}
+                                        onChange={value => {
+                                            const updatedSections = [
+                                                ...educationSections,
+                                            ];
+                                            updatedSections[index].gradeStatus =
+                                                value;
+                                            setEducationSections(
+                                                updatedSections,
+                                            );
+                                        }}
+                                        case={true}
+                                    />
+                                </S.Filter1>
+                                <S.Filter1>
+                                    <SelectInput
+                                        id={`Educationstatus-${index}`}
+                                        selectOptions={status_options}
+                                        placeholder={section.state || '상태'}
+                                        value={section.state || ''}
+                                        onChange={value => {
+                                            const updatedSections = [
+                                                ...educationSections,
+                                            ];
+                                            updatedSections[index].state =
+                                                value;
+                                            setEducationSections(
+                                                updatedSections,
+                                            );
+                                        }}
+                                        case={true}
+                                    />
+                                </S.Filter1>
+                            </S.FilterRow>
                         </S.InputContainer>
                         {educationSections.length > 1 && (
-                            <S.DeleteBtn
+                            <S.TrashDeleteBtn
                                 onClick={() =>
                                     handleDeleteSection('education', section.id)
                                 }
@@ -518,7 +526,7 @@ const MakePortfolio = ({ portfolioId }) => {
                         </S.BtnWrapper>
                         {careerSections.length > 1 && (
                             <S.BtnBox>
-                                <S.DeleteBtn
+                                <S.TrashDeleteBtn
                                     style={{
                                         display: 'flex',
                                         alignContent: 'center',
@@ -559,7 +567,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setActivitySections(updatedSections);
                                 }}
                             />
-                            <S.Filter1>
+                            <S.Filter2>
                                 <SelectInput
                                     id={`Activitystatus-${index}`}
                                     selectOptions={activityStatus_options}
@@ -575,12 +583,12 @@ const MakePortfolio = ({ portfolioId }) => {
                                             value;
                                         setActivitySections(updatedSections);
                                     }}
-                                    case={true}
+                                    case={false}
                                 />
-                            </S.Filter1>
+                            </S.Filter2>
                         </S.InputContainer>
                         {activitySections.length > 1 && (
-                            <S.DeleteBtn
+                            <S.TrashDeleteBtn
                                 onClick={() =>
                                     handleDeleteSection('activity', section.id)
                                 }
@@ -611,32 +619,38 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setAwardSections(updatedSections);
                                 }}
                             />
-                            <S.ScoreInput
-                                placeholder="수상"
-                                value={section.award || ''}
-                                onChange={e => {
-                                    const updatedSections = [...awardSections];
-                                    updatedSections[index].award =
-                                        e.target.value;
-                                    setAwardSections(updatedSections);
-                                }}
-                            />
-                            <SelectOne
-                                onApply={date =>
-                                    handleApplyDate(
-                                        date,
-                                        'awardDate',
-                                        section.id,
-                                        'award',
-                                    )
-                                }
-                                placeholder={section.awardDate || '수상 날짜'}
-                                width={'16rem'}
-                                value={section.awardDate || ''}
-                            />
+                            <S.FilterRow>
+                                <S.ScoreInput
+                                    placeholder="수상"
+                                    value={section.award || ''}
+                                    onChange={e => {
+                                        const updatedSections = [
+                                            ...awardSections,
+                                        ];
+                                        updatedSections[index].award =
+                                            e.target.value;
+                                        setAwardSections(updatedSections);
+                                    }}
+                                />
+                                <SelectOne
+                                    onApply={date =>
+                                        handleApplyDate(
+                                            date,
+                                            'awardDate',
+                                            section.id,
+                                            'award',
+                                        )
+                                    }
+                                    placeholder={
+                                        section.awardDate || '수상 날짜'
+                                    }
+                                    componentType={'short'}
+                                    value={section.awardDate || ''}
+                                />
+                            </S.FilterRow>
                         </S.InputContainer>
                         {awardSections.length > 1 && (
-                            <S.DeleteBtn
+                            <S.TrashDeleteBtn
                                 onClick={() =>
                                     handleDeleteSection('award', section.id)
                                 }
@@ -672,36 +686,38 @@ const MakePortfolio = ({ portfolioId }) => {
                                     setCertificateSections(updatedSections);
                                 }}
                             />
-                            <S.ScoreInput
-                                placeholder="점수/급수"
-                                value={section.score || ''}
-                                onChange={e => {
-                                    const updatedSections = [
-                                        ...certificateSections,
-                                    ];
-                                    updatedSections[index].score =
-                                        e.target.value;
-                                    setCertificateSections(updatedSections);
-                                }}
-                            />
-                            <SelectOne
-                                onApply={date =>
-                                    handleApplyDate(
-                                        date,
-                                        'certificationDate',
-                                        section.id,
-                                        'certificate',
-                                    )
-                                }
-                                width={'16rem'}
-                                placeholder={
-                                    section.certificationDate || '취득 날짜'
-                                }
-                                value={section.certificationDate || ''}
-                            />
+                            <S.FilterRow>
+                                <S.ScoreInput
+                                    placeholder="점수/급수"
+                                    value={section.score || ''}
+                                    onChange={e => {
+                                        const updatedSections = [
+                                            ...certificateSections,
+                                        ];
+                                        updatedSections[index].score =
+                                            e.target.value;
+                                        setCertificateSections(updatedSections);
+                                    }}
+                                />
+                                <SelectOne
+                                    onApply={date =>
+                                        handleApplyDate(
+                                            date,
+                                            'certificationDate',
+                                            section.id,
+                                            'certificate',
+                                        )
+                                    }
+                                    placeholder={
+                                        section.certificationDate || '취득 날짜'
+                                    }
+                                    componentType={'short'}
+                                    value={section.certificationDate || ''}
+                                />
+                            </S.FilterRow>
                         </S.InputContainer>
                         {certificateSections.length > 1 && (
-                            <S.DeleteBtn
+                            <S.TrashDeleteBtn
                                 onClick={() =>
                                     handleDeleteSection(
                                         'certificate',
@@ -731,7 +747,7 @@ const MakePortfolio = ({ portfolioId }) => {
                                 }}
                             />
                             {snsLinks.length > 1 && (
-                                <S.DeleteBtn
+                                <S.TrashDeleteBtn
                                     onClick={() => {
                                         if (snsLinks.length > 1) {
                                             setSnsLinks(

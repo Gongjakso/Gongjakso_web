@@ -24,14 +24,14 @@ export const Box = styled.div`
     margin: 0.525rem auto;
 
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 32.75rem;
+        width: 85vw;
         height: auto;
         margin: 1rem auto 0.3rem auto;
         padding: 1.25rem 1rem;
     }
 
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 55rem;
+        width: 90vw;
         height: auto;
         margin: 0.525rem auto 0.325rem auto;
         padding: 1rem 2rem;
@@ -135,14 +135,14 @@ export const BoxBottomDetail = styled.div`
 //스크랩 이미지
 export const UnScrapImage = styled(UnScrap)`
     width: 1.5625rem;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 `;
 
 //마감 일수 이미지
 export const FireImage = styled(Fire)`
     width: 1.5rem;
     align-items: center;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 `;
 
 export const CloseImage = styled(CloseWhite)`

@@ -14,101 +14,13 @@ export const TopBox = styled.div`
     justify-content: center;
     align-items: flex-end;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 32.75rem;
-        height: 10rem;
-        margin: 1rem auto 0.3rem auto;
-        padding: 1.25rem 1rem;
+        width: 80vw;
+        margin: auto;
+        height: 8.5rem;
         background-color: transparent;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 1rem;
-        background-color: transparent;
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 55rem;
-        height: 13rem;
-        margin: 0.525rem auto 0.325rem auto;
-        padding: 1rem 2rem;
-        background-color: transparent;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 1rem;
-        background-color: transparent;
-    }
-`;
-
-export const DetailBox = styled.div`
-    position: relative;
-    line-height: 1.875rem;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    @media screen and (min-width: 375px) and (max-width: 1023px) {
         flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-        padding-top: 0.5rem;
-    }
-`;
-
-export const InfoBox = styled.div`
-    position: absolute;
-    transform: translateY(150%);
-    padding-right: 3.125rem;
-    line-height: 1.5625rem;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-left: -28rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        transform: translateY(80%);
-        padding-left: 30rem; /* 좌측 여백 추가 */
-        width: auto; /* 부모 컨테이너에 맞춤 */
-    }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        transform: translateY(115%);
-        padding-left: 15rem; /* 좌측 여백 추가 */
-        width: auto; /* 부모 컨테이너에 맞춤 */
-    }
-`;
-
-//이름
-export const NameTitle = styled.p`
-    font-size: ${({ theme }) => theme.fontSize.ll};
-    font-family: 'PreBold';
-    margin-bottom: 0.3125rem;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-    }
-
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 2.65rem;
-        margin-bottom: 1rem;
-    }
-`;
-
-//학과
-export const MajorTitle = styled.p`
-    font-family: 'PreRegular';
-    font-size: ${({ theme }) => theme.fontSize.md};
-    width: 12rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @media screen and (min-width: 375px) and (max-width: 549px) {
-        font-size: 1.3rem;
-        width: auto; /* 부모 너비에 맞춤 */
-        text-align: center; /* 텍스트 중앙 정렬 */
-        color: rgba(145, 145, 145, 1);
-    }
-
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        font-size: 1.3rem;
-        width: auto;
-        text-align: center;
-        color: rgba(145, 145, 145, 1);
+        align-items: center;
+        padding-top: 1rem;
     }
 `;
 
@@ -122,17 +34,112 @@ export const ProfileImage = styled(My_page_big)`
     justify-content: center;
     align-items: center;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        width: 6.5rem;
-        margin-left: 0;
+        transform: translate(40%, 17%);
+        width: 5.25rem;
         border-radius: 50%;
         position: relative;
+        // display: none;
     }
+`;
 
+export const MobileWrapper = styled.div`
+    width: 60%;
+    display: flex;
+    // justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+`;
+
+export const MobileInfo = styled.div`
+    transform: translate(-80%, 58%);
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    // position: relative;
+`;
+
+export const DetailBox = styled.div`
+    position: absolute;
+    transform: translateY(150%);
+    line-height: 1.5625rem;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-left: -30rem;
+    // @media screen and (min-width: 375px) and (max-width: 549px) {
+    //     transform: translate(40%, 115%);
+    //     // position: absolute;
+    //     margin-right: -100vw; /* 좌측 여백 추가 */
+    //     min-width: 50vw; /* 부모 컨테이너에 맞춤 */
+    //     margin-left: -32rem;
+    // }
     @media screen and (min-width: 550px) and (max-width: 1023px) {
-        width: 9.5rem;
-        margin-left: 0;
-        position: relative;
-        border-radius: 50%;
+        // flex-direction: row;
+        // justify-content: space-between;
+        // width: 85%;
+        padding-top: 0.5rem;
+        transform: translateY(135%);
+        margin-left: -23rem;
+        width: auto; /* 부모 컨테이너에 맞춤 */
+    }
+`;
+
+export const NameWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* 부모 크기에 맞춤 */
+`;
+
+export const InfoBox = styled.div`
+    position: absolute;
+    transform: translateY(150%);
+    line-height: 1.5625rem;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-left: -30rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        // transform: translate(-70%);
+        margin-right: -70vw; /* 좌측 여백 추가 */
+        // width: 85vw; /* 부모 컨테이너에 맞춤 */
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        transform: translateY(135%);
+        margin-left: -23rem;
+        width: 20%; /* 부모 컨테이너에 맞춤 */
+    }
+`;
+
+//이름
+export const NameTitle = styled.p`
+    font-size: ${({ theme }) => theme.fontSize.ll};
+    font-family: 'PreBold';
+    margin-bottom: 0.3125rem;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1.9rem;
+    }
+`;
+
+//학과
+
+export const MajorTitle = styled.p`
+    font-family: 'PreRegular';
+    font-size: ${({ theme }) => theme.fontSize.md};
+    width: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        font-size: 1rem;
+        width: 35vw;
+        text-align: left; /* 왼쪽 정렬 */
+        color: rgba(145, 145, 145, 1);
+    }
+    @media screen and (min-width: 550px) and (max-width: 1023px) {
+        width: 9rem;
     }
 `;
 
@@ -154,28 +161,27 @@ export const SubTitle = styled.p`
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         font-size: 1.525rem;
         font-weight: 600;
-        padding-bottom: 0.5rem;
     }
 `;
 
 export const EditImage = styled(Edit)`
     height: 1.75rem;
     @media screen and (min-width: 375px) and (max-width: 549px) {
-        height: 5rem;
+        transform: translate(40%, 150%);
+        height: 4.5rem;
+        width: 3.3rem;
         position: absolute;
         top: 0%;
-        right: 0.1rem;
-        transform: translateY(-50%);
-        transform: translateX(250%);
     }
-    @media screen and (min-width: 550px) and (max-width: 1023px) {
-        height: 5rem;
-        position: absolute;
-        top: 0%;
-        right: 0.1rem;
-        transform: translateY(-50%);
-        transform: translateX(700%);
-    }
+    // @media screen and (min-width: 550px) and (max-width: 1023px) {
+    //     height: 5rem;
+    //     position: absolute;
+    //     top: 0%;
+    //     right: 0rem;
+    //     transform: translateY(-50%);
+    //     transform: translateX(500%);
+    //     padding-left: 0rem;
+    // }
 `;
 
 export const ArrowImage = styled(Arrow)`
@@ -227,6 +233,9 @@ export const GlobalBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center; /* 자식 요소를 수평으로 중앙 정렬 */
+    @media screen and (min-width: 375px) and (max-width: 549px) {
+        margin: 7rem auto; /* 수평 중앙 정렬 */
+    }
 `;
 
 export const BoxDetail = styled.div`
@@ -242,12 +251,14 @@ export const BoxDetail = styled.div`
         padding-bottom: 3rem;
         padding-left: 0;
         padding-right: 0;
+        width: 85vw;
     }
 
     @media screen and (min-width: 550px) and (max-width: 1023px) {
         padding-bottom: 4rem;
         padding-left: 0;
         padding-right: 0;
+        width: 90vw;
     }
 `;
 
